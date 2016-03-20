@@ -1,0 +1,1991 @@
+#+STARTUP: content
+* Grundeinstellungen
+** Einst
+#+BEGIN_SRC emacs-lisp
+(setq split-width-threshold 120)
+(setq inhibit-splash-screen t) ;;Remove splash screen
+(desktop-save-mode 1) ;; Erinnert die zuletzt geöffneten Dateien
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(transient-mark-mode nil) ;; No region when it is not highlighted
+(global-font-lock-mode 1) ;;syntax highlighting everywhere
+(global-visual-line-mode 1) ;;Add proper word wrapping
+(global-auto-revert-mode t) ;;aktualisiert buffer automatisch, wenn auf Platte geändert.
+(set-language-environment "UTF-8")
+(set-terminal-coding-system 'utf-8) ;;UTF 8 by default
+(set-keyboard-coding-system 'utf-8)
+;;(prefer-coding-system 'utf-8)
+(setq-default indent-tabs-mode nil ;; Insert tabs as spaces (not tabs)
+	        indicate-buffer-boundaries 'left	;; Graphical gimmick
+	        indicate-empty-lines t	;; Graphical gimmick
+)
+
+
+;; (add-hook 'text-mode-hook (lambda () (variable-pitch-mode t)))
+(dolist (hook '(LaTeX-mode-hook
+                ))
+  (add-hook hook (lambda () (variable-pitch-mode t))))
+#+END_SRC
+
+** Backups
+#+begin_src emacs-lisp
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(setq delete-old-versions -1)
+(setq version-control t)1
+(setq vc-make-backup-files t)
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+#+end_src
+
+** Archive und Packages
+#+begin_src emacs-lisp
+(require 'package)
+(setq package-archives '(("gnu"       . "http://elpa.gnu.org/packages/")
+                         ("melpa"     . "http://melpa.milkbox.net/packages/")
+                         ("org"       . "http://orgmode.org/elpa/")))
+#+end_src
+
+* use-package, bind-key
+#+begin_src emacs-lisp
+(require 'use-package)
+(use-package bind-key
+  :ensure t)
+#+end_src
+
+* Appearance
+tool-bar-mode
+menu-bar-mode
+müssen manuell deaktiviert werden
+** Font
+#+begin_src emacs-lisp
+(add-to-list 'default-frame-alist '(font . "Inconsolata"))
+#+end_src
+
+** Themes
+#+begin_src emacs-lisp
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(load-theme 'greylines t)
+;;(load-theme 'leuven t)
+#+end_src
+
+** smart-mode-line
+#+begin_src emacs-lisp
+(use-package smart-mode-line
+  :ensure t
+  :init
+   (setq sml/theme 'dark)
+   (sml/setup)
+   (setq sml/shorten-directory t)
+   (setq sml/shorten-modes t)
+   (setq sml/name-width 25)
+   (setq sml/mode-width 'full)
+   (add-to-list 'sml/replacer-regexp-list '("^:DB:diss/" ":ds:") t)
+   (add-to-list 'sml/replacer-regexp-list '("^:ds:tex/" ":ds:tx:") t)
+   (add-to-list 'sml/replacer-regexp-list '("^:ds:tx:part/" ":ds:tx:p:") t)
+   (add-to-list 'sml/replacer-regexp-list '("^~/Dokumente/" ":Dok:") t)
+   (add-to-list 'sml/replacer-regexp-list '("^~/archiv/" ":arch:") t)
+   (add-to-list 'sml/replacer-regexp-list '("^~/Downloads/" ":DL:") t)
+   (add-to-list 'sml/replacer-regexp-list '("^~/texte/" ":TXT:") t))
+#+end_src
+
+* Bedienung & Interface
+** cursor
+#+begin_src emacs-lisp
+(use-package multiple-cursors
+  :ensure t
+  :diminish multiple-cursors
+  :bind ("C-S-c C-S-c" . mc/edit-lines)
+        ("C-<" . mc/mark-next-like-this)
+        ("C-c C-<" . mc/mark-all-like-this))
+#+end_src
+
+** scrollen
+http://zeekat.nl/articles/making-emacs-work-for-me.html
+#+begin_src emacs-lisp
+(setq redisplay-dont-pause t
+      scroll-margin 3
+      scroll-step 1
+      scroll-conservatively 10000
+      scroll-preserve-screen-position 1)
+
+(setq mouse-wheel-follow-mouse 't)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+
+(global-set-key (kbd "M-n") (kbd "C-u 1 C-v"))
+(global-set-key (kbd "M-p") (kbd "C-u 1 M-v"))
+#+end_src
+
+** show keystrokes
+#+begin_src emacs-lisp
+;; Show unfinished keystrokes early.
+(setq echo-keystrokes 0.1)
+#+end_src
+
+** menu-key
+#+begin_src emacs-lisp
+(bind-key "<menu>" 'switch-to-buffer)
+#+end_src
+
+** char-menu
+#+begin_src emacs-lisp
+(use-package char-menu
+ :ensure t
+;;  :bind ("H-s" . char-menu)
+ :config 
+  (setq char-menu '("–" "—" "‘’" "“”" "»«" "…"
+                            ("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
+                            ("Math"       "≈" "≡" "≠" "∞" "×" "±" "∓" "÷" "√")
+                            ("Arrows"     "←" "→" "↑" "↓" "⇐" "⇒" "⇑" "⇓")
+                            ("Greek"      "α" "β" "Y" "δ" "ε" "ζ" "η" "θ" "ι" "κ" "λ" "μ" "ν" "ξ" "ο" "π" "ρ" "σ" "τ" "υ" "φ" "χ" "ψ" "ω"))))
+#+end_src
+
+** key-chord
+#+begin_src emacs-lisp
+(use-package key-chord
+  :config
+  (progn
+    (setq key-chord-two-keys-delay 0.15)
+    (setq key-chord-one-key-delay 0.25)
+    (key-chord-mode 1)
+    (key-chord-define-global "jk" 'avy-goto-char-timer)
+    (key-chord-define-global "jl" 'avy-goto-line)
+    (key-chord-define-global "jf" 'ace-window)))
+#+end_src
+
+** ace-window
+#+begin_src emacs-lisp
+(use-package ace-window
+; :bind ("M-" . ace-window)
+ :config
+  (progn
+   (setq aw-scope 'frame)
+   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+   (setq aw-dispatch-always nil))
+)
+#+end_src
+
+** helm 
+#+begin_src emacs-lisp
+(use-package helm
+  :ensure t
+  :diminish helm-mode
+  :init
+   (progn
+	 (require 'helm-config)
+ 	 (helm-mode -1)
+      (helm-autoresize-mode 1)
+      (setq helm-autoresize-max-height 66)
+      (setq helm-autoresize-min-height 25)
+      (setq helm-display-header-line nil) ;; t by default
+      (set-face-attribute 'helm-source-header nil :height 0.1)
+
+   	 ;; From https://gist.github.com/antifuchs/9238468
+    	(setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
+            helm-input-idle-delay 0.01  ; this actually updates things reeeelatively quickly.
+            helm-quick-update t
+            helm-M-x-requires-pattern nil
+            helm-ff-skip-boring-files t)
+	(setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+	      helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+            helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+            helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+            helm-ff-file-name-history-use-recentf t)
+	(setq helm-buffers-fuzzy-matching           t
+            helm-recentf-fuzzy-match              t
+            helm-locate-fuzzy-match	            t
+            helm-M-x-fuzzy-match                  t))
+   :bind (;;("C-x b"   . helm-mini)
+  ;;       ("C-x C-b" . helm-for-files)
+  ;;	     ("C-x C-f" . helm-find-files)
+  ;;       ("C-x C-m" . helm-M-x)
+  ;;       ("M-y"     . helm-show-kill-ring)
+  ;;       ("C-x c SPC" . helm-all-mark-rings)
+))
+
+(bind-key "<tab>" 'helm-execute-persistent-action helm-map) ; rebind tab to run persistent action
+(bind-key "C-z"  'helm-select-action helm-map) ; list actions using C-z
+#+end_src
+
+** swiper/ivy
+#+BEGIN_SRC emacs-lisp
+(use-package swiper
+    :ensure t
+    :diminish ivy-mode
+    :bind (("C-S-s" . swiper)
+          ("C-r" . swiper)
+          ("C-c C-r" . ivy-resume))
+    :init
+     (ivy-mode 1)
+     (setq ivy-use-virtual-buffers t)
+    :config
+     (setq ivy-display-style 'fancy)
+)
+#+END_SRC
+
+** counsel
+#+begin_src emacs-lisp
+(use-package counsel
+  :ensure t
+  :bind (("C-c u" . counsel-linux-app)
+         ("C-M-s" . counsel-ag)
+;;         ("C-S-s" . counsel-imenu)
+         ("C-x l". counsel-locate)
+         ("M-y" . counsel-yank-pop)))
+#+end_src
+
+** smex
+#+BEGIN_SRC emacs-lisp
+(use-package smex
+    :load-path "~/.emacs.d/non-elpa/smex-abo-abo"
+    :init
+	 (require 'smex)
+     (setq smex-completion-method 'ivy)
+     (smex-initialize)
+     (bind-key "M-x" 'smex)
+     (bind-key "M-X" 'smex-major-mode-commands)
+     (bind-key "C-c C-c M-x" 'execute-extended-command)
+)
+#+END_SRC
+
+* org-mode
+** allgemein
+#+begin_src emacs-lisp
+(use-package org
+  :ensure t)
+
+(use-package org-plus-contrib
+  :ensure t :defer t)
+
+;; 18.23 Highlight clock when running overtime ;; in theme!!!
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "Ubuntu Mono" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
+ '(org-mode-line-clock ((t (:foreground "red" :box (:line-width -1 :style released-button)))) t))
+#+end_src
+
+** agenda
+#+begin_src emacs-lisp
+;; Aktuelle Zeile in der Agenda hervorheben
+(add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1 ))) ;; lieber ins theme?
+
+(setq org-agenda-dim-blocked-tasks t)
+(setq org-agenda-skip-scheduled-if-deadline-is-shown 'not-today)
+(setq org-agenda-start-on-weekday nil)
+
+(setq org-stuck-projects
+           '("+TODO={PROJ}" ("NEXT") ("longterm")))
+#+end_src
+
+*** agen
+da-commands
+#+begin_src emacs-lisp
+;; Custom agenda command definitions
+(setq org-agenda-custom-commands
+ '(
+	(" " "Custom-Agenda"
+           ((todo "NEXT"
+			((org-agenda-overriding-header "Next Tasks:")
+			 (org-agenda-remove-tags t)))
+            (agenda ""    
+                  ((org-agenda-span 7)
+		         (org-agenda-remove-tags t)
+                   (org-agenda-show-all-dates t)
+                   (org-agenda-skip-function
+                    '(org-agenda-skip-entry-if 'todo '("NEXT")))))
+		  (tags "INBOX"
+			((org-agenda-overriding-header "Inbox:")
+			 (org-agenda-remove-tags t)))
+		  (todo "PROJ|TODO|NEXT"
+                  ((org-agenda-overriding-header "Projects & Tasks:")
+			 (org-agenda-remove-tags t)
+                   (org-tags-match-list-sublevels 'indented)
+			 (org-agenda-skip-function  
+                    '(org-agenda-skip-entry-if 'deadline 'scheduled))
+                   (org-agenda-skip-function
+                    '(org-agenda-skip-subtree-if 
+                      'regexp ":txt:"))
+                   (org-agenda-sorting-strategy
+                    '( category-keep))
+                   (org-agenda-prefix-format "%l")))
+            (todo "WAITING"
+			((org-agenda-overriding-header "Waiting Tasks:")
+			 (org-agenda-remove-tags t)))
+            (todo "HOLD"
+			((org-agenda-overriding-header "Postponed Tasks:")
+			 (org-agenda-remove-tags t)))))
+  ("d" "Dissertation"
+           ((tags-todo "diss"
+			((org-agenda-overriding-header "Dissertation")
+			 (org-agenda-remove-tags t)
+			 (org-tags-match-list-sublevels 'indented)
+			 (org-agenda-sorting-strategy
+                             '(category-up))))))
+  ("t" "Texte"
+           ((tags-todo "literature"
+			((org-agenda-overriding-header "Texts & Tasks")
+			 (org-agenda-remove-tags t)
+			 (org-tags-match-list-sublevels 'indented)
+			 (org-agenda-sorting-strategy
+                             '(category-up))))))
+	("p" "Produktion"
+	         ((tags-todo "produktion"
+			((org-agenda-overriding-header "Projekte:")
+			 (org-agenda-remove-tags t)
+			 (org-tags-match-list-sublevels 'indented)
+			 (org-agenda-sorting-strategy
+                             '(category-keep))))
+            (todo "ENTWURF"
+			((org-agenda-overriding-header "Entwürfe:")
+			 (org-agenda-remove-tags t)))
+   	  (todo "IDEE"
+			((org-agenda-overriding-header "Ideen:")
+			 (org-agenda-remove-tags t)))))
+	("k" "Kalender & Termine"
+        	 ((agenda "" 
+               ((org-agenda-span 96)
+		      (org-agenda-show-all-dates t)
+		      (org-agenda-skip-function 
+                 '(org-agenda-skip-entry-if 'deadline 'scheduled))))))
+	("c" "Clean up"
+           ((tags-todo "/WAITING"
+		     ((org-agenda-overriding-header "Waiting but unscheduled:")
+		      (org-agenda-skip-function  '(org-agenda-skip-entry-if 'deadline 'scheduled))
+		      (org-agenda-remove-tags t)))
+	        (todo "DONE"
+			((org-agenda-overriding-header "Tasks to Archive:")
+			 (org-agenda-remove-tags t)))))))
+#+end_src
+
+** appearance
+#+begin_src emacs-lisp
+(use-package org-indent
+;;  :commands org-indent-mode
+  :diminish org-indent-mode
+  :init
+  (progn
+   (setq org-startup-indented t))
+)
+
+(setq org-hide-leading-stars t)
+(setq org-startup-folded nil)
+(setq org-ellipsis "…")
+
+(add-to-list 'auto-mode-alist '("\\.txt\\'" . org-mode))
+#+end_src
+
+** behaviour
+#+begin_src emacs-lisp
+;; shift-select
+(setq org-support-shift-select t)
+;; autolist
+(use-package org-autolist
+  :commands org-autolist-mode
+  :diminish org-autolist-mode
+  :init
+  (progn
+    (add-hook 'org-mode-hook 'org-autolist-mode)))
+#+end_src
+
+** key-bindings
+#+begin_src emacs-lisp
+(bind-key "C-c l" 'org-store-link)
+(bind-key "C-c a" 'org-agenda)
+(bind-key  "C-c c" 'org-capture)
+(fset 'my-clock-in "\C-c\C-x\C-i")
+(bind-key "<f11>" 'my-clock-in)
+(fset 'my-clock-out "\C-c\C-x\C-o")
+;;(bind-key "C-<f11>" 'my-clock-out)
+;;(bind-key "S-<f11>" 'org-pomodoro)
+#+end_src
+
+** speedkeys
+#+begin_src emacs-lisp
+(setq org-use-speed-commands t)
+(setq org-speed-commands-user
+'(("S" . (widen))))
+#+end_src
+
+** Pfade
+#+begin_src emacs-lisp
+(setq org-directory "~/Dropbox/db/org")
+(setq org-default-notes-file "~/Dropbox/db/org/inbox.org")
+;;(setq org-agenda-files '("~/Dropbox/db/org"))
+(setq org-agenda-diary-file "~/Dropbox/db/org/kalender.org")
+(setq org-agenda-include-diary nil)
+#+end_src
+
+** habits
+#+begin_src emacs-lisp
+(require 'org-habit)
+
+(setq org-habit-graph-column 36)
+(setq org-habit-preceding-days 31)
+(setq org-habit-following-days 7)
+(setq org-habit-show-habits-only-for-today t)
+#+end_src
+
+** Prioritäten
+#+begin_src emacs-lisp
+(setq org-highest-priority ?A)
+(setq org-default-priority ?D)
+(setq org-lowest-priority ?E)
+#+end_src
+
+** todo-states und -tags
+#+begin_src emacs-lisp
+;; Ein "!" bedeutet Zeitstempel
+;; Ein "@" bedeutet Notiz
+(setq org-todo-keywords
+      (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+              (sequence "APPT(a)" "PROJ(p)" "WAITING(w@/!)" "HOLD(h@/!)" "|"  "DELEGATED(D@/!)" "CANCELLED(c@/!)")
+	      (sequence "|" "IDEE(i)" "ENTWURF(e)"))))
+
+(setq org-log-done 'time)
+
+;; Formatierung für TODO-tags
+(setq org-todo-keyword-faces ;; in theme!!
+      (quote (("PROJ" :foreground "dark red" :weight semi-bold)
+              ("NEXT" :foreground "blue" :weight semi-bold)
+              ("WAITING" :foreground "orange" :weight semi-bold)
+              ("HOLD" :foreground "magenta" :weight semi-bold))))
+#+end_src
+
+** capture
+#+begin_src emacs-lisp
+(setq org-capture-templates
+      (quote (("a" "appt" entry (file+datetree+prompt "~/Dropbox/db/org/kalender.org")
+               "* APPT %^{Appt}\n%T\n%?")
+              ("t" "todo" entry (file "~/Dropbox/db/org/inbox.org")
+               "* TODO %^{Task}\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %T\n:END:\n%?")
+              ("n" "note" entry (file "~/Dropbox/db/org/inbox.org")
+               "* %^{Note} \n:PROPERTIES:\n:CREATED: %T\n:END:\n%?")
+	          ("i" "interruption" entry (file "~/Dropbox/db/org/inbox.org")
+	           "* %^{Task} \n:PROPERTIES:\n:CREATED: %T\n:END:\n%?" :clock-in t :clock-resume t)
+              ("j" "journal" entry (file+datetree+prompt "~/Dropbox/db/org/kalender.org")
+               "* %?")
+              ("m" "mail todo" entry (file+headline "~/Dropbox/db/org/inbox.org" "Mail")
+               "* TODO %^{Task}\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %T\n:END:\n%a\n\n%i")
+              ("l" "literature" entry (file+headline "~/Dropbox/db/org/inbox.org" "Literatur")
+               "* TODO %^{Author}, %^{Title} :txt:\n:PROPERTIES:\n:CREATED: %T \n:BIBL: %^{Bib|x| }\n:STATUS: %^{Status}\n:FORM: %^{Form}\n:BIB1: %^{Bibliothek}\n:END:\n\n** data-\n#+begin_src csv-mode :tangle stat/ref-path.csv\n\n#+end_src")
+)))
+#+end_src
+
+** refile
+#+begin_src emacs-lisp
+;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
+(setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                 (org-agenda-files :maxlevel . 9))))
+
+(setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
+(setq org-refile-use-outline-path t)                  ; Show full paths for refiling
+
+; Allow refile to create parent tasks with confirmation
+(setq org-refile-allow-creating-parent-nodes (quote confirm))
+#+end_src
+
+** tags
+#+begin_src emacs-lisp
+; Tags with fast selection keys
+(setq org-tags-exclude-from-inheritance '("txt"))
+
+(setq org-tag-alist (quote ((:startgroup)
+                            ("@work" . ?W)
+                            ("@pers" . ?p)
+	       		        ("@wiss" . ?w)
+                            (:endgroup))))
+
+; Allow setting single tags without the menu
+(setq org-fast-tag-selection-single-key (quote expert))
+#+end_src
+** dependencies
+#+begin_src emacs-lisp
+(setq org-enforce-todo-dependencies t)
+(setq org-enforce-todo-checkbox-dependencies t)
+#+end_src
+** deadlines
+#+begin_src emacs-lisp
+(setq org-deadline-warning-days 14) ;; Default Spanne bei Deadlines
+#+end_src
+** drawers
+#+begin_src emacs-lisp
+(setq org-drawers (quote ("PROPERTIES" "LOGBOOK" "CLOCK")))
+(setq org-clock-into-drawer "CLOCK")
+(setq org-log-into-drawer "LOGBOOK")
+#+end_src
+*** global propertie values: effort, habit
+#+begin_src emacs-lisp
+; global Effort estimate values
+; global STYLE property values for completion
+(setq org-global-properties (quote (("Effort_ALL" . "0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 3:00 4:00 5:00 6:00 7:00 8:00")
+                                    ("STYLE_ALL" . "habit"))))
+#+end_src
+** clocking
+#+begin_src emacs-lisp
+(setq org-clock-history-length 42)
+(setq org-clock-out-when-done t)
+(setq org-clock-out-remove-zero-time-clocks t)
+
+;; Keep clock durations in hours
+(setq org-time-clocksum-format
+      (quote(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t)))
+
+;; Resume clocking tasks when emacs is restarted
+(org-clock-persistence-insinuate)
+
+;; Resume clocking task on clock-in if the clock is open
+(setq org-clock-in-resume t)
+;; Save the running clock and all clock history when exiting Emacs,
+;; load it on startup
+(setq org-clock-persist t)
+#+end_src
+** timer
+#+begin_src emacs-lisp
+(setq org-timer-default-timer 25)
+#+end_src
+** aufzählungszeichen
+#+begin_src emacs-lisp
+;; Aufzählungszeichen wechseln durch
+(setq org-list-demote-modify-bullet '(("-" . "+")
+                                            ("+" . "-")
+                                            ("1." . "A.")
+				  	        ("A." . "1.")
+                                            ("1)" . "-")
+                                            ("A)" . "-")
+                                            ("B)" . "-")
+                                            ("a)" . "-")
+                                            ("b)" . "-")
+                                            ("B." . "-")
+                                            ("a." . "-")
+                                            ("b." . "-")))
+#+end_src
+** columns
+#+begin_src emacs-lisp
+; Set default column view headings: Task Effort Clock_Summary
+(setq org-columns-default-format "%50ITEM(Task) %6Effort(Effort){:} %6CLOCKSUM_T(Today) %6CLOCKSUM(Sum)")
+#+end_src
+
+** sensitivemode
+#+begin_src emacs-lisp
+;; sensitive mode wird eingeschaltet, wenn gpg-files bearbeitet werden
+(setq auto-mode-alist
+ (append '(("\\.gpg$" . sensitive-mode))
+               auto-mode-alist))
+;; Disabling Backup and Auto-save in Emacs
+(define-minor-mode sensitive-mode
+  "For sensitive files like password lists.
+It disables backup creation and auto saving.
+
+With no argument, this command toggles the mode.
+Non-null prefix argument turns on the mode.
+Null prefix argument turns off the mode."
+  ;; The initial value.
+  nil
+  ;; The indicator for the mode line.
+  " Sensitive"
+  ;; The minor mode bindings.
+  nil
+  (if (symbol-value sensitive-mode)
+      (progn
+	;; disable backups
+	(set (make-local-variable 'backup-inhibited) t)
+	;; disable auto-save
+	(if auto-save-default
+	    (auto-save-mode -1)))
+    ;resort to default value of backup-inhibited
+    (kill-local-variable 'backup-inhibited)
+    ;resort to default auto save setting
+    (if auto-save-default
+	(auto-save-mode 1))))
+#+end_src
+** kalender.org
+#+begin_src emacs-lisp
+(use-package german-holidays
+:config
+(setq holiday-other-holidays holiday-german-holidays))
+#+end_src
+** export
+*** ox-pandoc
+#+begin_src emacs-lisp
+;;(use-package ox-pandoc
+;;  :defer t)
+#+end_src
+
+*** LaTeX-Export
+#+begin_src emacs-lisp
+(require 'ox-latex)
+(setq org-latex-listings t)
+(add-to-list 'org-latex-packages-alist '("" "booktabs" t))
+(add-to-list 'org-latex-packages-alist '("" "ellipsis" t))
+(add-to-list 'org-latex-packages-alist '("" "csquotes" t))
+(add-to-list 'org-latex-packages-alist '("" "lmodern" t))
+(add-to-list 'org-latex-packages-alist '("onehalfspacing" "setspace" t))
+(add-to-list 'org-latex-packages-alist '("" "microtype" t))
+(add-to-list 'org-latex-packages-alist '("english, ngerman" "babel" t))
+(add-to-list 'org-latex-packages-alist '("T1" "fontenc" t))
+(add-to-list 'org-latex-packages-alist '("utf8" "inputenc" t))
+
+
+(add-to-list 'org-latex-classes
+      '("scrartcl"
+         "\\RequirePackage[l2tabu, orthodox]{nag}
+          \\documentclass[DIV12, a4paper, 12pt]{scrartcl}
+         [NO-DEFAULT-PACKAGES]
+         [PACKAGES]
+         [EXTRA]"
+         ("\\section{%s}" . "\\section*{%s}")
+         ("\\subsection{%s}" . "\\subsection*{%s}")
+         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+(add-to-list 'org-latex-classes
+      '("scrbook"
+         "\\RequirePackage[l2tabu, orthodox]{nag}
+          \\documentclass[DIV12, a4paper, 12pt]{scrbook}
+         [NO-DEFAULT-PACKAGES]
+         [PACKAGES]
+         [EXTRA]"
+         ("\\chapter{%s}" . "\\chapter*{%s}")
+         ("\\section{%s}" . "\\section*{%s}")
+         ("\\subsection{%s}" . "\\subsection*{%s}")
+         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+         ("\\paragraph{%s}" . "\\paragraph*{%s}")))
+(add-to-list 'org-latex-classes
+      '("abrechnung"
+         "\\documentclass[DIV12, a4paper, 12pt]{scrartcl}
+          \\usepackage{marvosym}
+          \\usepackage{datetime}
+          \\newdateformat{mydate}{\\monthname[\\THEMONTH] \\THEYEAR}
+         [NO-DEFAULT-PACKAGES]
+         [PACKAGES]
+         [EXTRA]"
+         ("\\section{%s}" . "\\section*{%s}")
+         ("\\subsection{%s}" . "\\subsection*{%s}")
+         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+
+(setq org-latex-default-class "scrartcl")
+(setq org-export-with-author t)
+(setq org-export-with-date t)
+(setq org-export-with-toc t)
+(setq org-latex-hyperref-template nil)
+(setq org-latex-tables-booktabs t)
+(setq org-export-default-language "en")
+(setq org-export-with-smart-quotes t)
+(add-to-list 'org-export-smart-quotes-alist 
+             '("en"
+               (opening-double-quote :utf-8 "“" :html "&ldquo;" :latex "\\enquote{" :texinfo "``")
+               (closing-double-quote :utf-8 "”" :html "&rdquo;" :latex "}" :texinfo "''")
+               (opening-single-quote :utf-8 "‘" :html "&lsquo;" :latex "\\enquote*{" :texinfo "`")
+               (closing-single-quote :utf-8 "’" :html "&rsquo;" :latex "}" :texinfo "'")
+               (apostrophe :utf-8 "’" :html "&rsquo;")));; Export von "" und '' zu csquotes
+#+end_src
+
+** X org-drill
+#+begin_src emacs-lisp
+;;(use-package org-drill)
+#+end_src
+** org-ref
+#+begin_src emacs-lisp
+(use-package org-ref
+:init
+ (bind-key "C-c )" 'org-autocite-complete-link org-mode-map)
+:config
+ (progn
+   (require 'org-ref)
+   (setq org-ref-bibliography-notes "~/Dropbox/db/zk/"
+      org-ref-default-bibliography '("~/Dropbox/db/biblio.bib")
+      org-ref-pdf-directory "~/texte/")
+   (setq org-ref-default-citation-link "autocite")
+))
+
+#+end_src
+
+* LaTeX und BibTeX
+** auctex
+#+begin_src emacs-lisp
+(use-package tex-site
+  :defer t
+  :mode ("\\.tex\\'" . LaTeX-mode)
+  :config
+    (progn
+	(setq TeX-auto-save	t)
+	(setq TeX-parse-self	t)
+	(setq TeX-PDF-mode	t)
+      (setq LaTeX-csquotes-open-quote "\\enquote{")
+	(setq LaTeX-csquotes-close-quote "}")
+     
+      ;;SyncTeX
+      (setq TeX-source-correlate-mode 'synctex)
+
+	(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+	(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+	(add-hook 'LaTeX-mode-hook 'latex-extra-mode)
+
+      (add-hook 'LaTeX-mode-hook 
+          (lambda()
+             (add-to-list 'TeX-command-list '("Latexmk" "%`latexmk -pdf %t" TeX-run-TeX nil t))
+             (setq TeX-save-query nil)
+             (setq TeX-show-compilation t)))
+
+      (add-hook 'LaTeX-mode-hook 
+          (lambda()
+             (add-to-list 'TeX-command-list '("Latex -se" "%`pdflatex -shell-escape %t" TeX-run-TeX nil t))
+             (setq TeX-save-query nil)
+             (setq TeX-show-compilation t)))
+
+;;      (add-hook 'LaTeX-mode-hook (lambda ()
+;;          (push
+;;            '("Xindy" "texindy -g %s.idx" TeX-run-TeX nil t
+;;              :help "Run TeXindy on .idx")
+;;              TeX-command-list)))
+
+      (add-hook 'LaTeX-mode-hook 
+          (lambda()
+             (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+             (setq TeX-save-query nil)
+             (setq TeX-show-compilation t)))
+))
+
+(use-package latex-extra
+ :defer t
+ :diminish latex-extra-mode)
+#+end_src
+
+** reftex
+#+begin_src emacs-lisp
+(use-package reftex
+  :diminish reftex-mode
+  :config
+    (progn
+	(setq reftex-plug-into-AUCTeX t)
+	(setq bibtex-dialect "biblatex")
+	(setq reftex-sort-bibtex-matches "author")
+	(setq reftex-external-file-finders
+	      '(("tex" . "kpsewhich -format=.tex %f")
+        	("bib" . "kpsewhich -format=.bib %f")))
+	(setq reftex-default-bibliography
+		'("~/Dropbox/db/biblio.bib"))
+	(setq reftex-cite-format
+		'((?\C-m . "\\autocite[][]{%l}")
+		  (?c . "\\cite[][]{%l}")
+		  (?t . "\\textcite[][]{%l}")
+		  (?y . "\\autocite*[][]{%l}")
+		  (?n . "\\nocite{%l}")
+		  (?f . "\\footcite[][]{%l}")
+                (?T . "\\textcquote[][]{%l}[]{")
+                (?B . "\\blockcquote[][]{%l}[]{")))
+      (setq reftex-cite-prompt-optional-args t)
+
+	(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+	(add-hook 'latex-mode-hook 'turn-on-reftex)
+))
+#+end_src
+
+** bibtex-mode
+http://www.jonathanleroux.org/bibtex-mode.html
+#+begin_src emacs-lisp
+(setq bibtex-dialect 'biblatex)
+
+(setq bibtex-maintain-sorted-entries t)
+(setq bibtex-autokey-year-use-crossref-entry t) ;;Nutzt das Jahr des cross-ref entries für das Jahr im Autokey
+;;Generation der Bibkeys: http://www.jonathanleroux.org/bibtex-mode.html#0630
+(setq bibtex-autokey-year-length 4)
+(setq bibtex-autokey-year-title-separator "-")
+(setq bibtex-autokey-titleword-separator "-")
+#+end_src
+
+** gscholar-bibtex
+#+begin_src emacs-lisp
+(use-package gscholar-bibtex
+ :config
+ (setq gscholar-bibtex-database-file "~/Dropbox/db/import.bib")
+ (setq gscholar-bibtex-default-source "Google Scholar"))
+#+end_src
+
+** helm-bibtex
+#+begin_src emacs-lisp
+(use-package helm-bibtex
+;;  :ensure t
+  :bind ("<f5>" . helm-bibtex)
+        ("C-<f5>" . helm-resume)
+  :config
+   (setq helm-bibtex-bibliography '("~/Dropbox/db/biblio.bib"))
+   (setq helm-bibtex-library-path "~/texte")
+   (setq helm-bibtex-notes-path "~/Dropbox/db/zk")
+   (setq helm-bibtex-notes-extension ".txt")
+;;   (setq helm-bibtex-additional-search-fields '(keywords))
+   (setq helm-bibtex-pdf-open-function
+     (lambda (fpath)
+      (start-process "evince" "*helm-bibtex-evince*" "/usr/bin/evince" fpath)))
+   (setq helm-bibtex-format-citation-functions
+     '((org-mode      . helm-bibtex-format-citation-default)
+       (Latex-mode    . helm-bibtex-format-citation-cite)))
+
+   (setq helm-bibtex-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n* Keywords\ntags:\n* Summary\n\n* Bibliography\n\n* Links")
+
+(defun helm-bibtex-apa-format-reference (key)
+  "Returns a plain text reference in APA format for the
+publication specified by KEY."
+  (let*
+   ((entry (helm-bibtex-get-entry key))
+    (ref (pcase (downcase (helm-bibtex-get-value "=type=" entry))
+           ("article"
+            (s-format
+             "${author} ${date}: '${title}'. ${journaltitle} ${volume}.${number}, S. ${pages}."
+             'helm-bibtex-apa-get-value entry))
+           ("inproceedings"
+            (s-format
+             "${author} ${date}: '${title}'. In: ${editor}: ${booktitle}. ${location}: ${publisher}, S. ${pages}"
+             'helm-bibtex-apa-get-value entry))
+           ("book"
+            (s-format
+             "${author} ${date}: ${title}. ${location}: ${publisher}."
+             'helm-bibtex-apa-get-value entry))
+           ("phdthesis"
+            (s-format
+             "${author} ${date}. ${title} (Doctoral dissertation)."
+             'helm-bibtex-apa-get-value entry))
+           ("inbook"
+            (s-format
+             "${author} ${date}: '${title}'. In: ${editor} (Hg.): ${booktitle}. ${location}: ${publisher}, S. ${pages}."
+             'helm-bibtex-apa-get-value entry))
+           ("incollection"
+            (s-format
+             "${author} ${date}: '${title}'. In: ${editor} (Hg.): ${booktitle}. ${location}: ${publisher}, S. ${pages}."
+             'helm-bibtex-apa-get-value entry))
+           ("proceedings"
+            (s-format
+             "${editor} (Hg.). ${date}: ${booktitle}. ${location}: ${publisher}."
+             'helm-bibtex-apa-get-value entry))
+           ("unpublished"
+            (s-format
+             "${author} ${date}: ${title}. Unpublished manuscript."
+             'helm-bibtex-apa-get-value entry))
+           (_
+            (s-format
+             "${author} ${date}: ${title}."
+             'helm-bibtex-apa-get-value entry)))))
+    (replace-regexp-in-string "\\([.?!]\\)\\." "\\1" ref))) ; Avoid sequences of punctuation marks.
+
+
+
+
+)
+#+end_src
+
+* Schreiben und Stil
+** ispell
+#+begin_src emacs-lisp
+(use-package ispell
+  :bind ("C-c i d" . ispell-change-dictionary)
+  :config
+  (progn
+    (setq-default ispell-program-name "aspell")
+    (setq ispell-dictionary "german")
+    (setq ispell-personal-dictionary "~/.customdict-de")
+	(setq ispell-extra-args '("--sug-mode=ultra"))))
+#+end_src
+
+** flyspell
+#+begin_src emacs-lisp
+(use-package flyspell
+  :diminish flyspell-mode
+  :config
+   (dolist (hook '(org-mode-hook))
+     (add-hook hook (lambda() (flyspell-mode 1))))
+   (dolist (hook '(text-mode-hook))
+     (add-hook hook (lambda () (flyspell-mode 1))))
+   (dolist (hook '(change-log-mode-hook log-edit-mode-hook))
+     (add-hook hook (lambda () (flyspell-mode -1))))
+   (defun flyspell-check-next-highlighted-word ()
+      "Custom function to spell check next highlighted word"
+       (interactive)
+       (flyspell-goto-next-error)
+       (ispell-word))
+)
+
+;; http://www.emacswiki.org/emacs/FlySpell
+;;(bind-key "<f10>" 'ispell-word)
+;;(bind-key "C-c f p" 'flyspell-check-previous-highlighted-word)
+;;(bind-key "C-<f10>" 'flyspell-check-next-highlighted-word)
+;;(bind-key "C-c f m" 'flyspell-mode)
+;;(bind-key "C-c f b" 'flyspell-buffer)
+
+#+end_src
+
+** writegood
+#+begin_src emacs-lisp
+(use-package writegood-mode
+  :config
+   (progn
+    (setq writegood-weasel-words
+     '("wichtig" "wichtige" "vielleicht" "auch" "dabei" "sehr" "ziemlich" "sehr" "vielleicht" "möglicherweise" "wohl" "recht" "dann" "paar"))
+    (setq writegood-passive-voice-irregulars
+     '("gemacht"))))
+#+end_src
+
+** languagetool
+#+begin_src emacs-lisp
+(use-package langtool
+  :init
+   (setq langtool-language-tool-jar "~/programme/LanguageTool-3.1/languagetool-commandline.jar"))
+#+end_src
+
+** ispell-abbrev
+http://endlessparentheses.com/ispell-and-abbrev-the-perfect-auto-correct.html
+#+begin_src emacs-lisp
+(define-key ctl-x-map "\C-i"
+  #'endless/ispell-word-then-abbrev)
+
+(defun endless/ispell-word-then-abbrev (p)
+  "Call `ispell-word', then create an abbrev for it.
+With prefix P, create local abbrev. Otherwise it will
+be global.
+If there's nothing wrong with the word at point, keep
+looking for a typo until the beginning of buffer. You can
+skip typos you don't want to fix with `SPC', and you can
+abort completely with `C-g'."
+  (interactive "P")
+  (let (bef aft)
+    (save-excursion
+      (while (if (setq bef (thing-at-point 'word))
+                 ;; Word was corrected or used quit.
+                 (if (ispell-word nil 'quiet)
+                     nil ; End the loop.
+                   ;; Also end if we reach `bob'.
+                   (not (bobp)))
+               ;; If there's no word at point, keep looking
+               ;; until `bob'.
+               (not (bobp)))
+        (backward-word))
+      (setq aft (thing-at-point 'word)))
+    (if (and aft bef (not (equal aft bef)))
+        (let ((aft (downcase aft))
+              (bef (downcase bef)))
+          (define-abbrev
+            (if p local-abbrev-table global-abbrev-table)
+            bef aft)
+          (message "\"%s\" now expands to \"%s\" %sally"
+                   bef aft (if p "loc" "glob")))
+      (user-error "No typo at or before point"))))
+#+end_src
+
+* Versionskontrolle
+** undo-tree
+#+begin_src emacs-lisp
+(use-package undo-tree
+  :ensure t
+  :diminish undo-tree-mode
+  :bind ("C-x u" . undo-tree)
+  :config
+  (progn
+    (global-undo-tree-mode)
+    (setq undo-tree-visualizer-timestamps t)
+    (setq undo-tree-visualizer-diff t))
+)
+#+end_src
+
+** magit
+#+begin_src emacs-lisp
+(use-package magit
+ :config
+   (setq magit-last-seen-setup-instructions "1.4.0"))
+#+end_src
+
+** git-wip
+#+begin_src emacs-lisp
+(use-package git-wip-mode
+  :load-path "~/.emacs.d/non-elpa/git-wip/emacs/"
+  :diminish git-wip-mode
+  :commands git-wip-mode)
+#+end_src
+
+** git-messenger
+#+begin_src emacs-lisp
+(use-package git-messenger)
+#+end_src
+
+** git-timemachine
+#+begin_src emacs-lisp
+(use-package git-timemachine)
+#+end_src
+
+** git-wip-timemachine
+#+begin_src emacs-lisp
+(use-package git-wip-timemachine)
+#+end_src
+
+* Mail und Kontakte
+** offlineimap
+#+begin_src emacs-lisp
+  (require 'offlineimap)
+  (add-hook 'gnus-before-startup-hook 'offlineimap)
+  (setq offlineimap-mode-line-style 'symbol)
+#+end_src
+
+** BBDB
+#+begin_src emacs-lisp
+(use-package bbdb
+  :config
+    (progn
+     (bbdb-initialize 'gnus 'message)
+     (bbdb-mua-auto-update-init 'gnus)
+     (setq bbdb-file "~/Dropbox/db/bbdb")
+     (setq bbdb-north-american-phone-numbers-p nil)
+     (setq bbdb-default-country "Deutschland")
+     (setq bbdb-user-mail-names
+       (regexp-opt '("jobangen@gmail.com")))
+     (bbdb-insinuate-message)
+     (setq bbdb-complete-mail-allow-cycling t)
+     (setq bbdb-completion-display-record nil)
+     (setq bbdb-complete-name-full-completion t)
+     (setq bbdb-completion-type 'primary-or-name)
+     (setq bbdb-use-pop-up nil)
+     (setq bbdb-mua-pop-up t)
+     (setq bbdb-mua-update-interactive-p '(query . create))
+     (setq bbdb-message-all-addresses t)
+     (setq bbdb-layout 'multi-line)
+     (setq bbdb-pop-up-layout 'one-line)
+))
+#+end_src
+
+** gnus-dired
+#+begin_src emacs-lisp
+(use-package gnus-dired
+  :config
+   (progn
+     (defun gnus-dired-mail-buffers ()
+      "Return a list of active message buffers."
+       (let (buffers)
+        (save-current-buffer
+         (dolist (buffer (buffer-list t))
+	  (set-buffer buffer)
+	  (when (and (derived-mode-p 'message-mode)
+		(null message-sent-message-via))
+	     (push (buffer-name buffer) buffers))))
+        (nreverse buffers)))
+     (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
+))
+#+end_src
+
+* Major-modes
+** pdf-tools
+#+begin_src emacs-lisp
+(use-package pdf-tools
+    :ensure t
+    :config
+     (pdf-tools-install)
+     (eval-after-load 'org '(require 'org-pdfview))
+     (add-to-list 'org-file-apps '("\\.pdf\\'" . org-pdfview-open))
+     (add-to-list 'org-file-apps '("\\.pdf::\\([[:digit:]]+\\)\\'" . org-pdfview-open))
+     (setq-default pdf-view-display-size 'fit-width)
+     (bind-keys :map pdf-view-mode-map
+     ("ad" . pdf-annot-delete)
+     ("al" . pdf-annot-list-annotations)
+     ("am" . pdf-annot-add-markup-annotation)
+     ("ah" . pdf-annot-add-highlight-markup-annotation)
+     ("aq" . pdf-annot-add-squiggly-markup-annotation)
+     ("as" . pdf-annot-add-strikeout-markup-annotation)
+     ("at" . pdf-annot-add-text-annotation)
+     ("au" . pdf-annot-add-underline-markup-annotation)
+     ("j"  . pdf-view-goto-page)
+     ("s"  . pdf-occur))
+)
+#+end_src
+
+** ess
+#+begin_src emacs-lisp
+(use-package ess
+  :defer t
+  :commands (R))
+#+end_src
+
+** haskell-mode
+#+begin_src emacs-lisp
+(use-package haskell-mode
+  :defer t)
+#+end_src
+
+** csv-mode
+#+begin_src emacs-lisp
+(use-package csv-mode
+  :defer t)
+#+end_src
+
+** dired
+#+begin_src emacs-lisp
+(setq dired-recursive-deletes 'always)
+(setq dired-recursive-copies 'always)
+(setq dired-dwim-target t)
+(setq delete-by-moving-to-trash t
+     trash-directory "~/.local/share/Trash")
+(setq dired-listing-switches "--group-directories-first -alh")
+(put 'dired-find-alternate-file 'disabled nil)
+(add-hook 'dired-mode-hook 'dired-hide-details-mode)
+#+end_src
+
+*** dired-subtree
+#+begin_src emacs-lisp
+(bind-key "i" 'dired-subtree-insert dired-mode-map)
+(bind-key "I" 'dired-subtree-remove dired-mode-map)
+#+end_src
+
+*** dired-filter
+#+begin_src emacs-lisp
+(use-package dired-filter
+  :config
+  (add-hook 'dired-mode-hook 'dired-filter-group-mode t)
+  (setq dired-filter-group-saved-groups
+      '(("default"
+        ("DIR"
+         (directory))
+        ("PDF"
+         (extension . "pdf"))
+        ("LaTeX"
+         (extension "tex" "bib"))
+        ("Text & Data"
+         (extension "org" "txt" "doc" "docx" "csv"))
+        ("Media"
+         (extension "jpg" "png" "gif" "bmp"))
+        ("Archives"
+         (extension "zip" "rar" "gz" "bz2" "tar" "org_archive"))))))
+
+#+end_src
+
+*** peep-dired
+#+begin_src emacs-lisp
+;;preview files in dired
+(use-package peep-dired
+  :ensure t
+  :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
+  :bind (:map dired-mode-map
+              ("P" . peep-dired)))
+#+end_src
+
+* Minor-modes
+** abbrev-mode
+#+begin_src emacs-lisp
+(use-package abbrev
+ :diminish abbrev-mode
+ :config
+ (progn 
+  (setq save-abbrevs 'silently)
+  (setq save-abbrevs t)
+  (setq-default abbrev-mode t))
+)
+#+end_src
+
+** bookmarks+
+#+begin_src emacs-lisp
+(use-package bookmark+
+  :ensure t
+  :bind ("C-<menu>" . bookmark-jump)
+  :init
+   (setq bookmark-default-file "~/.emacs.d/bookmarks")
+   (setq bookmark-save-flag 1))
+#+end_src
+
+** engine-mode
+#+begin_src emacs-lisp
+(use-package engine-mode
+  :ensure t
+  :config
+  (engine-mode t)
+  (defengine google
+  "http://www.google.de/search?ie=utf-8&oe=utf-8&q=%s")
+  (defengine google-images
+  "http://www.google.de/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s")
+  (defengine duckduckgo
+  "https://duckduckgo.com/?q=%s")
+  (defengine fu-katalog
+  "http://aleph-www.ub.fu-berlin.de/F/?func=find-e&request=%s")
+  (defengine jstor
+  "http://www.jstor.org/action/doBasicSearch?acc=on&wc=on&fc=off&group=none&Query=%s")
+  (defengine sowiport
+  "http://sowiport.gesis.org/Search/Results?type=AllFields&lookfor=%s")
+  (defengine pons-de-en
+   "http://de.pons.com/übersetzung?l=deen&in=&lf=de&q=%s")
+  (defengine youtube
+   "http://www.youtube.com/results?aq=f&oq=&search_query=%s")
+  (defengine wikipedia
+   "http://www.wikipedia.org/search-redirect.php?language=de&go=Go&search=%s")
+)
+#+end_src
+
+** hippie-expand
+#+begin_src emacs-lisp
+(bind-key "C-S-A" 'hippie-expand)
+
+(setq hippie-expand-try-functions-list
+      '(yas/hippie-try-expand
+;;        try-expand-all-abbrevs
+;;        try-complete-file-name-partially
+;;        try-complete-file-name
+         try-expand-dabbrev
+;;        try-expand-dabbrev-from-kill
+         try-expand-dabbrev-all-buffers
+;;        try-expand-list
+;;        try-expand-line
+;;        try-complete-lisp-symbol-partially
+;;        try-complete-lisp-symbol
+))
+(setq hippie-expand-only-buffers '("keywords"))
+#+end_src
+** projectile
+#+begin_src emacs-lisp
+(use-package projectile
+   :ensure t
+   :diminish projectile-mode
+   :config
+    (progn
+      (projectile-global-mode)
+      (setq projectile-completion-system 'ivy)
+;;      (require 'helm-projectile)
+;;      (helm-projectile-on)
+      (setq projectile-enable-caching t)
+      (setq projectile-switch-project-action 'projectile-dired)))
+;;      (defun projectile-helm-ag ()
+;;         (interactive)
+;;         (helm-ag (projectile-project-root)))))
+#+end_src
+
+** smartparens 
+#+begin_src emacs-lisp
+(use-package smartparens
+  :ensure t
+  :diminish smartparens-mode
+  :config
+  (progn
+    (require 'smartparens-config)
+    (smartparens-global-mode t)
+    (show-smartparens-global-mode t)))
+(add-hook 'yas-before-expand-snippet-hook (lambda () (smartparens-mode -1)))
+(add-hook 'yas-after-exit-snippet-hook (lambda () (smartparens-mode 1)))
+
+(defvar sp-unicode-quotes-mode-map (make-keymap)
+"Use the \" key for “”.")
+
+(define-minor-mode sp-unicode-quotes-mode
+"A minor mode that remaps the quote key to sp-pair “”" nil " sp-quote" 'sp-unicode-quotes-mode-map
+
+(sp-pair "“" "”"))
+
+(define-key sp-unicode-quotes-mode-map (kbd "\"") (kbd "“"))
+
+(provide 'sp-unicode-quotes-mode)
+
+#+end_src
+
+** yasnippet
+#+begin_src emacs-lisp
+(use-package yasnippet
+  :ensure t
+  :defer t
+  :diminish yas-minor-mode
+  :commands yas-global-mode
+  :config
+  (progn
+    (add-hook 'hippie-expand-try-functions-list 'yas-hippie-try-expand)
+    (yas-global-mode 1)
+    (setq require-final-newline nil))
+    (bind-key "TAB" 'hippie-expand yas-minor-mode-map))
+#+end_src
+** epa-file
+#+begin_src emacs-lisp
+(use-package epa-file
+  :config
+    (epa-file-enable)
+    ;; Symmetric Encryption.
+    (setq epa-file-select-keys nil))
+#+end_src
+
+** keyfreq
+#+begin_src emacs-lisp
+(use-package keyfreq
+  :config
+  (setq keyfreq-excluded-commands
+      '(backward-char
+        delete-backward-char
+        forward-char
+        handle-switch-frame
+        left-char
+        left-word
+        mouse-drag-region
+        mouse-set-point
+        mwheel-scroll
+        next-line
+        previous-line
+        right-char
+        right-word
+        self-insert-command
+        ;;isearch
+        isearch-printing-char
+        ;;org
+        org-self-insert-command
+        org-delete-backward-char
+        org-return
+        org-agenda-next-line
+        org-agenda-previous-line
+        org-ref-next-key
+        ;;Ivy
+        ivy-done
+        ivy-next-line
+        ivy-previous-line))
+(keyfreq-mode 1)
+(keyfreq-autosave-mode 1))
+#+end_src
+
+** pomodoro
+#+begin_src emacs-lisp
+(use-package pomodoro
+  :load-path "~/.emacs.d/non-elpa/pomodoro")
+#+end_src
+
+** rainbow-delimiters
+#+begin_src emacs-lisp
+(use-package rainbow-delimiters
+  :disabled t)
+#+end_src
+
+* hydra
+** hydra-setup
+#+begin_src emacs-lisp
+(use-package hydra
+   :ensure t)
+#+end_src
+
+** hydra-search
+#+begin_src emacs-lisp
+;;(bind-key "C-S-s" 'hydra-search/body)
+(defhydra hydra-search (:hint nil
+                        :color blue)
+  "
+ ^Search^        ^Helm^          ^Helm-Swoop
+--------------╯╭---------------------------------
+ _s_: isearch    _p_: apropos    _w_: swoop
+ ^^              _o_: occur      _m_: multi-swoop
+ ^^^^                            _a_: multi-swoop-all
+"
+  ("a" helm-multi-swoop-all)
+  ("m" helm-multi-swoop)
+  ("o" helm-occur)
+  ("p" helm-apropos)
+  ("s" isearch-forward)
+  ("w" helm-swoop)
+)
+#+end_src
+
+** hydra-time
+#+begin_src emacs-lisp
+(bind-key "C-<f11>" 'hydra-time/body)
+
+(defhydra hydra-time (:hint nil)
+"
+^Clock^        ^ ^             ^Timer^                  ^Countdown^           ^Pomodoro
+^-^-------------^-^----------╯╭-^-^------------------╯╭^-^----------------╯╭-^-^--------
+_i_: in         _j_: goto       _ti_: in                _c_: countdown '25    _pi_: in
+_l_: in-last    _s_: select     _tp_: pause/continue    ^ ^                   _po_: out
+_o_: out        _d_: display    _ti_: insert            ^ ^                   _ps_: status
+_q_: cancel     ^ ^             _tI_: insert item       ^ ^                   _pn_: next
+" 
+ ("c" org-timer-set-timer)
+ ("d" org-clock-display)
+ ("i" org-clock-in)
+ ("j" org-clock-goto)
+ ("l" org-clock-in-last)
+ ("o" org-clock-out)
+ ("q" org-clock-cancel)
+ ("s" org-clock-select-task)
+ ("ti" org-timer-start)
+ ("to" org-timer-stop)
+ ("tp" org-timer-pause-or-continue)
+ ("ti" org-timer)
+ ("tI" org-timer-item)
+ ("pi" pomodoro)
+ ("pn" pomodoro-skip-forward)
+ ("po" pomodoro-stop)
+ ("ps" pomodoro-status)
+)
+#+end_src
+
+** hydra-modes
+#+begin_src emacs-lisp
+(bind-key "C-c m" 'hydra-modes/body)
+(defhydra hydra-modes (:color blue :columns 3)
+"Modes"
+("a" auto-fill-mode "auto-fill-mode")
+("b" bbdb "bbdb")
+("f" flyspell-mode "flyspell")
+("g" gnus "gnus")
+("p" pdf-tools-install "pdf-tools")
+("P" pandoc-mode "pandoc")
+("t" ansi-term "ansi-term")
+("v" visual-line-mode "visual-line")
+("w" writegood-mode "writegood"))
+#+end_src
+
+** hydra-projectile
+#+begin_src emacs-lisp
+(bind-key "C-c z" 'hydra-projectile/body)
+(defhydra hydra-projectile (:color teal
+                            :hint nil)
+  "
+  PROJECTILE: %(projectile-project-root)
+
+ ^Find File^            ^Search^            ^Buffers^                ^Cache
+------------------------------------------------------------------------------------------
+ _ff_: file             _a_: helm-ag        _i_: Ibuffer             _c_: cache clear
+ _fc_: file curr dir    _A_: ag             _b_: switch to buffer    _x_: remove known project
+ _fd_: file dwim        _g_: helm-grep      _k_: Kill all buffers    _X_: cleanup non-existing
+  _r_: recent file      _G_; grep                                  ^^_z_: cache current
+  _d_: dir              _o_: multi-occur
+
+"
+  ("a"   helm-projectile-ag)
+  ("A"   projectile-ag)
+  ("b"   projectile-switch-to-buffer)
+  ("c"   projectile-invalidate-cache)
+  ("d"   projectile-find-dir)
+  ("g"   helm-projectile-grep)
+  ("G"   projectile-grep)
+  ("ff"  projectile-find-file)
+  ("fc"  projectile-find-file-in-directory)
+  ("fd"  projectile-find-file-dwim)
+  ("i"   projectile-ibuffer)
+  ("k"   projectile-kill-buffers)
+  ("o"   projectile-multi-occur)
+  ("p"   projectile-switch-project "switch project")
+  ("r"   projectile-recentf)
+  ("x"   projectile-remove-known-project)
+  ("X"   projectile-cleanup-known-projects)
+  ("z"   projectile-cache-current-file)
+  ("q"   nil "cancel" :color blue)
+)
+#+end_src
+
+** hydra-window
+#+begin_src emacs-lisp
+(bind-key "C-c w" 'hydra-window/body)
+(defhydra hydra-window (:hint nil
+                        :color red)
+ "
+ Window-move
+----------------------------------------------------------------------------
+^      _<up>_           ^_x_: split-horz     _a_: ace-window    _G_: mode       _b_: balance
+_<left>_    _<right>_    _y_: split-vert     _s_: ace-swap      _g_: refresh    _+_: enlarge
+^     _<down>_          ^_d_: ace-delete                      ^^_t_: toggle     _-_: shrink
+                     ^^^^_o_: delete-other                    ^^_j_: adjust
+
+"
+  ("+" enlarge-window-horizontally)
+  ("-" shrink-window-horizontally)
+  ("<left>"  windmove-left)
+  ("<down>"  windmove-down)
+  ("<up>"    windmove-up)
+  ("<right>" windmove-right)
+  ("a" ace-window)
+  ("b" balance-windows)
+  ("d" ace-delete-window)
+  ("g" golden-ratio)
+  ("G" golden-ratio-mode)
+  ("j" golden-ratio-adjust)
+  ("o" delete-other-windows :exit t)
+  ("q" nil "cancel" :color blue)
+  ("s" ace-swap-window)
+  ("t" golden-ratio-toggle-widescreen)
+  ("x" (lambda ()
+               (interactive)
+               (split-window-right)
+               (windmove-right)))
+  ("y" (lambda ()
+               (interactive)
+               (split-window-below)
+               (windmove-down))))
+
+#+end_src
+
+** hydra-text
+#+begin_src emacs-lisp
+(bind-key "C-c t" 'hydra-text/body)
+(defhydra hydra-text (:hint nil
+                      :color red
+                      :columns 2)
+"Text"
+("c" count-words "count")
+("j" join-line "join-line")
+("k" my/keyword "keywords")
+("s" sort-lines "sort-lines")
+("u" my/uniquify-all-lines-region "uniquify")
+("q" nil "cancel" :exit t))
+#+end_src
+
+** hydra-git
+#+begin_src emacs-lisp
+(bind-key "C-c g" 'hydra-git/body)
+(defhydra hydra-git (:color blue)
+"
+Git
+"
+("g" magit-status "magit-status")
+("m" git-messenger:popup-message "messenger")
+("w" git-wip-mode "wip")
+("t" git-timemachine "timemachine")
+("T" git-wip-timemachine "wip-timemachine")
+)
+#+end_src
+
+** hydra-spellcheck
+#+begin_src emacs-lisp
+(bind-key "C-c s" 'hydra-spellcheck/body)
+(defhydra hydra-spellcheck (:color red :columns 3)
+"Flyspell"
+("b" flyspell-buffer "buffer")
+("c" ispell-word "ispell word")
+("d" ispell-change-dictionary "change dictionary")
+("i" ispell-buffer "ispell buffer")
+("m" flyspell-mode "mode")
+("n" flyspell-check-next-highlighted-word "next")
+("p" flyspell-check-previous-highlighted-word "previous")
+)
+#+end_src
+
+** hydra-engine
+#+begin_src emacs-lisp
+(bind-key "C-c e" 'hydra-engine/body)
+(defhydra hydra-engine (:color blue :columns 3)
+"Engine"
+("b" gscholar-bibtex "g-bibtex")
+("g" engine/search-google "google")
+("i" engine/search-google-images "google-images")
+("d" engine/search-duckduckgo "duckduckgo")
+("y" engine/search-youtube "youtube")
+("f" engine/search-fu-katalog "fu-katalog")
+("j" engine/search-jstor "jstor")
+("s" engine/search-sowiport "sowiport")
+("p" engine/search-pons-de-en "pons de-en")
+("w" engine/search-wikipedia "wikipedia")
+) 
+
+#+end_src
+
+* defun
+** my/insert-date
+#+begin_src emacs-lisp
+(defun my/insert-date (prefix)
+  "Insert the current date ISO-format; With prefix-argument: insert current date ISO-format with time. With two prefix arguments, insert date."
+    (interactive "P")
+    (let ((format (cond
+                   ((not prefix) "%Y-%m-%d")
+                   ((equal prefix '(4)) "%Y-%m-%d-%H%M")
+                   ((equal prefix '(16)) "%d.%m.%Y")
+;;                   ((equal prefix '(??)) "%A, %d. %B %Y")
+))
+          (system-time-locale "de_DE"))
+      (insert (format-time-string format))))
+(bind-key "C-c d" 'my/insert-date)
+#+end_src
+
+** smarter-move-beginning-of-line
+Funktioniert noch nicht richtig..oder?
+#+begin_src emacs-lisp
+;; from http://emacsredux.com/blog/2013/05/22/smarter-navigation-to-the-beginning-of-a-line/
+;; über Sacha Chua
+(defun smarter-move-beginning-of-line (arg)
+  "Move point back to indentation of beginning of line.
+
+Move point to the first non-whitespace character on this line.
+If point is already there, move to the beginning of the line.
+Effectively toggle between the first non-whitespace character and
+the beginning of the line.
+
+If ARG is not nil or 1, move forward ARG - 1 lines first.  If
+point reaches the beginning or end of the buffer, stop there."
+  (interactive "^p")
+  (setq arg (or arg 1))
+
+  ;; Move lines first
+  (when (/= arg 1)
+    (let ((line-move-visual nil))
+      (forward-line (1- arg))))
+
+  (let ((orig-point (point)))
+    (back-to-indentation)
+    (when (= orig-point (point))
+      (move-beginning-of-line 1))))
+
+;;(bind-key "C-a" 'smarter-move-beginning-of-line)
+;; remap C-a to `smarter-move-beginning-of-line'
+(global-set-key [remap move-beginning-of-line]
+                'smarter-move-beginning-of-line)
+#+end_src
+
+** my/html-to-german
+#+begin_src emacs-lisp
+(defun my/html-to-german ()
+"Replace HTML token with german umlauts in current buffer"
+   (interactive)
+      (save-excursion
+	(goto-char (point-min))
+	(perform-replace "&Auml;" "Ä" nil nil nil)
+	(goto-char (point-min))
+	(perform-replace "&auml;" "ä" nil nil nil)
+	(goto-char (point-min))
+	(perform-replace "&Ouml;" "Ö" nil nil nil)
+	(goto-char (point-min))
+	(perform-replace "&ouml;" "ö" nil nil nil)
+	(goto-char (point-min))
+	(perform-replace "&Uuml;" "Ü" nil nil nil)
+	(goto-char (point-min))
+	(perform-replace "&uuml;" "ü" nil nil nil)
+	(goto-char (point-min))
+	(perform-replace "&szlig;" "ß" nil nil nil)))
+#+end_src
+
+** my/uniquify-all-lines
+#+begin_src emacs-lisp
+(defun my/uniquify-all-lines-region (start end)
+  "Find duplicate lines in region START to END keeping first occurrence."
+  (interactive "*r")
+  (save-excursion
+    (let ((end (copy-marker end)))
+      (while
+          (progn
+            (goto-char start)
+            (re-search-forward "^\\(.*\\)\n\\(\\(.*\n\\)*\\)\\1\n" end t))
+        (replace-match "\\1\n\\2")))))
+
+(defun my/uniquify-all-lines-buffer ()
+  "Delete duplicate lines in buffer and keep first occurrence."
+  (interactive "*")
+  (my/uniquify-all-lines-region (point-min) (point-max)))
+#+end_src
+
+** my/vsplit & my/hsplit
+#+begin_src emacs-lisp
+(defun my/vsplit-last-buffer (prefix)
+  "Split the window vertically and display the previous buffer."
+  (interactive "p")
+  (split-window-vertically)
+  (other-window 1 nil)
+  (if (= prefix 1)
+    (switch-to-next-buffer)))
+(defun my/hsplit-last-buffer (prefix)
+  "Split the window horizontally and display the previous buffer."
+  (interactive "p")
+  (split-window-horizontally)
+  (other-window 1 nil)
+  (if (= prefix 1) (switch-to-next-buffer)))
+(bind-key "C-x 2" 'my/vsplit-last-buffer)
+(bind-key "C-x 3" 'my/hsplit-last-buffer)
+#+end_src
+
+** frequencies
+https://emacs.stackexchange.com/questions/13514/how-to-obtain-the-statistic-of-the-the-frequency-of-words-in-a-buffer
+#+begin_src emacs-lisp
+(defvar word-frequency-table (make-hash-table :test 'equal :size 128))
+
+(defvar word-frequency-buffer "*zk-tags*"
+  "Buffer where frequencies are displayed.")
+
+(defun word-frequency-incr (word)
+  (puthash word (1+ (gethash word word-frequency-table 0)) word-frequency-table))
+
+(defun word-frequency-list (&optional reverse limit)
+  "Returns a cons which car is sum of times any word was used
+and cdr is a list of (word . count) pairs.  If REVERSE is nil
+sorts it starting from the most used word; if it is 'no-sort
+the list is not sorted; if it is non-nil and not 'no-sort sorts
+it from the least used words.  If LIMIT is positive number
+only words which were used more then LIMIT times will be
+added.  If it is negative number only words which were used
+less then -LIMIT times will be added."
+  (let (l (sum 0))
+    (maphash
+     (cond
+      ((or (not (numberp limit)) (= limit 0))
+       (lambda (k v) (setq l (cons (cons k v) l) sum (+ sum v))))
+      ((= limit -1) (lambda (k v) (setq sum (+ sum v))))
+      ((< limit 0)
+       (setq limit (- limit))
+       (lambda (k v) (setq sum (+ sum v))
+         (if (< v limit) (setq l (cons (cons k v) l)))))
+      (t
+       (lambda (k v) (setq sum (+ sum v))
+         (if (> v limit) (setq l (cons (cons k v) l))))))
+     word-frequency-table)
+    (cons sum
+          (cond
+           ((equal reverse 'no-sort) l)
+           (reverse (sort l (lambda (a b) (< (cdr a) (cdr b)))))
+           (t       (sort l (lambda (a b) (> (cdr a) (cdr b)))))))))
+
+(defun word-frequency-string (&optional reverse limit func)
+  "Returns formatted string with word usage statistics.
+
+If FUNC is nil each line contains number of times word was
+called and the word; if it is t percentage usage is added in
+the middle; if it is 'raw each line will contain number an
+word separated by single line (with no formatting) otherwise
+FUNC must be a function returning a string which will be called
+for each entry with three arguments: number of times word was
+called, percentage usage and the word.
+
+See `word-frequency-list' for description of REVERSE and LIMIT
+arguments."
+  (let* ((list (word-frequency-list reverse)) (sum (car list)))
+    (mapconcat
+     (cond
+      ((not func) (lambda (e) (format "| %7d | %s |\n" (cdr e) (car e))))
+      ((equal func t)
+       (lambda (e) (format "| %7d | %6.2f%% | %03d | %s |\n"
+                           (cdr e) 
+               (/ (* 1e2 (cdr e)) sum) 
+               (length (car e))
+               (car e))))
+      ((equal func 'raw) (lambda (e) (format "%d %s\n" (cdr e) (car e))))
+      (t (lambda (e) (funcall func (cdr e) (/ (* 1e2 (cdr e)) sum) (car e)))))
+     (cdr list) "")))
+
+(defun word-frequency (&optional where reverse limit func)
+  "Formats word usage statistics using
+`word-frequency-string' function (see for description of
+REVERSE, LIMIT and FUNC arguments) and:
+- if WHERE is nil inserts it in th e
+  or displays it in echo area if possible; else
+- if WHERE is t inserts it in the current buffer; else
+- if WHERE is an empty string inserts it into
+  `word-frequency-buffer' buffer; else
+- inserts it into buffer WHERE.
+
+When called interactively behaves as if WHERE and LIMIT were nil,
+FUNC was t and:
+- with no prefix argument - REVERSE was nil;
+- with universal or positive prefix arument - REVERSE was t;
+- with negative prefix argument - REVERSE was 'no-sort."
+
+  (interactive (list nil
+                     (cond
+                      ((not current-prefix-arg) nil)
+                      ((> (prefix-numeric-value current-prefix-arg) 0))
+                      (t 'no-sort))
+                     nil t))
+  (clrhash word-frequency-table)
+  (word-frequency-process-buffer)
+  (cond
+   ((not where)
+    (display-message-or-buffer (word-frequency-string reverse limit func)
+                               word-frequency-buffer))
+   ((equal where t)
+    (insert (word-frequency-string reverse limit func)))
+   (t
+    (display-buffer
+     (if (and (stringp where) (string= where ""))
+         word-frequency-buffer where)
+     (word-frequency-string reverse limit func)))))
+
+(defun word-frequency-process-buffer ()
+  (interactive)
+  (let ((buffer (current-buffer))
+        bounds
+        beg
+        end
+        word)
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward "[§#][^;]*" nil t)
+;;    (while (forward-word 1)
+        (word-frequency-incr (downcase (match-string 0)))
+;;      (setq bounds (bounds-of-thing-at-point 'word))
+;;      (setq beg (car bounds))
+;;      (setq end (cdr bounds))
+;;      (setq word (downcase (buffer-substring-no-properties beg end)))
+;;      (word-frequency-incr word)
+        ))))
+#+end_src
+** my/unfill-paragraph
+http://mbork.pl/2015-11-14_A_simple_unfilling_function
+#+begin_src emacs-lisp
+(defun my/unfill-region (begin end)
+  "Change isolated newlines in region into spaces."
+  (interactive (if (use-region-p)
+		   (list (region-beginning)
+			 (region-end))
+		 (list nil nil)))
+  (save-restriction
+    (narrow-to-region (or begin (point-min))
+		      (or end (point-max)))
+    (goto-char (point-min))
+    (while (search-forward "\n" nil t)
+      (if (eq (char-after) ?\n)
+	  (skip-chars-forward "\n")
+	(delete-char -1)
+	(insert ?\s)))))
+#+end_src
+** my/random-todo
+https://gist.github.com/tonyday567/4343164
+#+begin_src emacs-lisp
+(defun my/org-random-entry (&optional arg)
+  "Select and goto a random todo item from the global agenda"
+  (interactive "P")
+  (if org-agenda-overriding-arguments
+      (setq arg org-agenda-overriding-arguments))
+  (if (and (stringp arg) (not (string-match "\\S-" arg))) (setq arg nil))
+  (let* ((today (org-today))
+         (date (calendar-gregorian-from-absolute today))
+         (kwds org-todo-keywords-for-agenda)
+         (lucky-entry nil)
+         (completion-ignore-case t)
+         (org-agenda-buffer (when (buffer-live-p org-agenda-buffer)
+                              org-agenda-buffer))
+         (org-select-this-todo-keyword
+          (if (stringp arg) arg
+            (and arg (integerp arg) (> arg 0)
+                 (nth (1- arg) kwds))))
+         rtn rtnall files file pos marker buffer)
+    (when (equal arg '(4))
+      (setq org-select-this-todo-keyword
+            (org-icompleting-read "Keyword (or KWD1|K2D2|...): "
+                                  (mapcar 'list kwds) nil nil)))
+    (and (equal 0 arg) (setq org-select-this-todo-keyword nil))
+    (catch 'exit
+      (org-compile-prefix-format 'todo)
+      (org-set-sorting-strategy 'todo)
+      (setq files (org-agenda-files nil 'ifmode)
+            rtnall nil)
+      (while (setq file (pop files))
+        (catch 'nextfile
+          (org-check-agenda-file file)
+          (setq rtn (org-agenda-get-day-entries file date :todo))
+          (setq rtnall (append rtnall rtn))))
+
+      (when rtnall
+        (setq lucky-entry
+              (nth (random
+                    (safe-length
+                     (setq entries rtnall)))
+                   entries))
+
+        (setq marker (or (get-text-property 0 'org-marker lucky-entry)
+                         (org-agenda-error)))
+        (setq buffer (marker-buffer marker))
+        (setq pos (marker-position marker))
+        (org-pop-to-buffer-same-window buffer)
+        (widen)
+        (goto-char pos)
+        (when (derived-mode-p 'org-mode)
+          (org-show-context 'agenda)
+          (save-excursion
+            (and (outline-next-heading)
+                 (org-flag-heading nil))) ; show the next heading
+          (when (outline-invisible-p)
+            (show-entry))                 ; display invisible text
+          (run-hooks 'org-agenda-after-show-hook))))))
+#+end_src
+
+** pdf-extract - x
+;; modified from https://github.com/politza/pdf-tools/pull/133 
+#+begin_src emacs-lisp
+(defun mwp/pdf-multi-extract (sources)
+  "Helper function to print highlighted text from a list of pdf's, with one org header per pdf, 
+and links back to page of highlight."
+  (let (
+        (output ""))
+    (dolist (thispdf sources)
+      (setq output (concat output (pdf-annot-markups-as-org-text thispdf nil level ))))
+    (princ output))
+  )
+
+;; this is stolen from https://github.com/pinguim06/pdf-tools/commit/22629c746878f4e554d4e530306f3433d594a654
+(defun pdf-annot-edges-to-region (edges)
+  "Attempt to get 4-entry region \(LEFT TOP RIGHT BOTTOM\) from several edges.
+We need this to import annotations and to get marked-up text, because annotations
+are referenced by its edges, but functions for these tasks need region."
+
+  (let ((left0 (nth 0 (car edges)))
+        (top0 (nth 1 (car edges)))
+        (bottom0 (nth 3 (car edges)))
+        (top1 (nth 1 (car (last edges))))
+        (right1 (nth 2 (car (last edges))))
+        (bottom1 (nth 3 (car (last edges))))
+        (n (safe-length edges)))
+    ;; we try to guess the line height to move
+    ;; the region away from the boundary and
+    ;; avoid double lines
+    (list left0
+          (+ top0 (/ (- bottom0 top0) 2))
+          right1
+          (- bottom1 (/ (- bottom1 top1) 2 )))))
+
+(defun pdf-annot-markups-as-org-text (pdfpath &optional title level)
+  "Acquire highligh annotations as text, and return as org-heading"
+
+  (interactive "fPath to PDF: ")  
+  (let* ((outputstring "") ;; the text to be returned
+         (title (or title (replace-regexp-in-string "-" " " (file-name-base pdfpath ))))
+         (level (or level (1+ (org-current-level)))) ;; I guess if we're not in an org-buffer this will fail
+         (levelstring (make-string level ?*)) ;; set headline to proper level
+         (annots (sort (pdf-info-getannots nil pdfpath)  ;; get and sort all annots
+                       'pdf-annot-compare-annotations))
+         )
+    ;; create the header
+    (setq outputstring (concat levelstring " Quotes From " title "\n\n")) ;; create heading
+
+    ;; extract text
+    (mapc
+     (lambda (annot) ;; traverse all annotations
+       (if (eq 'highlight (assoc-default 'type annot))
+           (let* ((page (assoc-default 'page annot))
+                  ;; use pdf-annot-edges-to-region to get correct boundaries of highlight
+                  (real-edges (pdf-annot-edges-to-region
+                               (pdf-annot-get annot 'markup-edges)))
+                  (text (or (assoc-default 'subject annot) (assoc-default 'content annot)
+                            (replace-regexp-in-string "\n" " " (pdf-info-gettext page real-edges nil pdfpath)
+                                                      ) ))
+
+                  (height (nth 1 real-edges)) ;; distance down the page
+                  ;; use pdfview link directly to page number
+                  (linktext (concat "[[pdfview:" pdfpath "::" (number-to-string page) 
+                                    "++" (number-to-string height) "][" title  "]]" ))
+                  )
+             (setq outputstring (concat outputstring text " ("
+                                        linktext ", " (number-to-string page) ")\n\n"))
+             )))
+     annots)
+    outputstring ;; return the header
+    )
+  )
+#+end_src
+
+** my/bibtex-to-biblatex
+#+begin_src emacs-lisp
+(defun my/bibtex-to-biblatex ()
+  (interactive)
+  (goto-char 1)
+     (while (search-forward-regexp "{[a-z1-9]*,$" nil t) 
+        (replace-match "{," t nil))
+     (while (search-forward-regexp "^  journal" nil t) 
+        (replace-match "  journaltitle" t nil))
+     (while (search-forward-regexp "^  year" nil t) 
+        (replace-match "  date" t nil))
+     (while (search-forward-regexp "^}$" nil t) 
+        (replace-match "  timestamp={},
+  keywords={},
+}" t nil))
+
+ )
+
+(bind-key "C-c b" 'my/bibtex-to-biblatex bibtex-mode-map)
+
+#+end_src
+
+** my/keywords
+#+begin_src emacs-lisp
+(defun my/keyword ()
+  (interactive)
+  (beginning-of-line)
+  (insert "§")
+  (join-line)
+  (insert ";")
+)
+#+end_src
+
+
