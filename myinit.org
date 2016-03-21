@@ -1988,4 +1988,13 @@ are referenced by its edges, but functions for these tasks need region."
 )
 #+end_src
 
+** my/find-file-as-sudo
+#+begin_src emacs-lisp
+(defun my/find-file-as-sudo ()
+  (interactive)
+  (let ((file-name (buffer-file-name)))
+    (when file-name
+      (find-alternate-file (concat "/sudo::" file-name)))))
+(bind-key "C-x C-v" 'my/find-file-as-sudo)
+#+end_src
 
