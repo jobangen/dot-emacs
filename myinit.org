@@ -710,33 +710,27 @@ Null prefix argument turns off the mode."
 	(setq TeX-auto-save	t)
 	(setq TeX-parse-self	t)
 	(setq TeX-PDF-mode	t)
-      (setq LaTeX-csquotes-open-quote "\\enquote{")
+    (setq LaTeX-csquotes-open-quote "\\enquote{")
 	(setq LaTeX-csquotes-close-quote "}")
-     
+   
       ;;SyncTeX
-      (setq TeX-source-correlate-mode 'synctex)
+    (setq TeX-source-correlate-mode 'synctex)
 
 	(add-hook 'LaTeX-mode-hook 'flyspell-mode)
 	(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 	(add-hook 'LaTeX-mode-hook 'latex-extra-mode)
 
-      (add-hook 'LaTeX-mode-hook 
-          (lambda()
-             (add-to-list 'TeX-command-list '("Latexmk" "%`latexmk -pdf %t" TeX-run-TeX nil t))
-             (setq TeX-save-query nil)
-             (setq TeX-show-compilation t)))
+    (add-hook 'LaTeX-mode-hook 
+         (lambda()
+            (add-to-list 'TeX-command-list '("Latexmk" "%`latexmk -pdf %t" TeX-run-TeX nil t))
+            (setq TeX-save-query nil)
+            (setq TeX-show-compilation t)))
 
-      (add-hook 'LaTeX-mode-hook 
-          (lambda()
-             (add-to-list 'TeX-command-list '("Latex -se" "%`pdflatex -shell-escape %t" TeX-run-TeX nil t))
-             (setq TeX-save-query nil)
-             (setq TeX-show-compilation t)))
-
-;;      (add-hook 'LaTeX-mode-hook (lambda ()
-;;          (push
-;;            '("Xindy" "texindy -g %s.idx" TeX-run-TeX nil t
-;;              :help "Run TeXindy on .idx")
-;;              TeX-command-list)))
+    (add-hook 'LaTeX-mode-hook 
+         (lambda()
+            (add-to-list 'TeX-command-list '("Latex -se" "%`pdflatex -shell-escape %t" TeX-run-TeX nil t))
+            (setq TeX-save-query nil)
+            (setq TeX-show-compilation t)))
 
       (add-hook 'LaTeX-mode-hook 
           (lambda()
