@@ -470,22 +470,24 @@ da-commands
               ("l" "literature" entry (file+headline "~/Dropbox/db/org/inbox.org" "Literatur")
                "* TODO %^{Author}, %^{Title} :txt:\n:PROPERTIES:\n:CREATED: %T \n:BIBL: %^{Bib|x| }\n:STATUS: %^{Status}\n:FORM: %^{Form}\n:BIB1: %^{Bibliothek}\n:END:\n\n** data-\n#+begin_src csv-mode :tangle stat/ref-path.csv\n\n#+end_src")
               ("g" "Geld - Ledger entries")
-              ("gb" "Bargeld" plain
-              (file "~/Dropbox/db/money.dat")
+              ("gb" "Bargeld" plain (file "~/Dropbox/db/money.dat")
               "%(org-read-date) * Kartenverfügung
     Expenses:Bargeld    %^{Amount}€
     Assets:Giro" :immediate-finish t)
-              ("gg" "Giro" plain
-              (file "~/Dropbox/db/money.dat")
+              ("gg" "Giro" plain (file "~/Dropbox/db/money.dat")
               "%(org-read-date) * %^{Payee| |Deutsche Bahn}
     Expenses:%^{Expenses|Kauf:|Geschenk:|Reisen:}%^{Expenses}    %^{Amount}€
     Assets:Giro" :immediate-finish t)
-              ("gk" "Krankenkasse" plain
-              (file "~/Dropbox/db/money.dat")
+              ("gk" "Krankenkasse" plain (file "~/Dropbox/db/money.dat")
               "%(org-read-date) * Techniker Krankenkasse
     Expenses:Versicherung:Krankenkasse     %^{Amount|237,60}€
     Assets:Giro" :immediate-finish t)
+              ("z" "Zettel" plain (file (capture-report-date-file  "~/Dropbox/db/zk/inbox/"))
+"#+TITLE: %^{Title}\n#+DATE: %U\n* Keywords\nTODO-tags:\n* Summary\n%?\n\n* Bibliography\n\n* Links")
 )))
+
+(defun capture-report-date-file (path)
+  (expand-file-name (concat path (format-time-string "%Y-%m-%d") ".txt")))
 #+end_src
 
 ** refile
