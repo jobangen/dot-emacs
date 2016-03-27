@@ -2010,3 +2010,38 @@ are referenced by its edges, but functions for these tasks need region."
 (bind-key "C-x C-v" 'my/find-file-as-sudo)
 #+end_src
 
+** my/ora-dired-rsync
+[[gnus:nntp+news.gwene.org:gwene.org.emacsen.planet#x1-TbJMrYXpc6how8ft1npn6gGsHDg@gwene.org][Email from post@gwene.org: (or emacs: Using rsync in dire]]
+#+begin_src emacs-lisp
+(defun my/ora-dired-rsync (dest)
+  (interactive
+   (list
+    (expand-file-name
+     (read-file-name
+      "Rsync to:"
+      (dired-dwim-target-directory)))))
+  ;; store all selected files into "files" list
+  (let ((files (dired-get-marked-files
+                nil current-prefix-arg))
+        ;; the rsync command
+        (tmtxt/rsync-command
+         "rsync -arvz --progress "))
+    ;; add all selected file names as arguments
+    ;; to the rsync command
+    (dolist (file files)
+      (setq tmtxt/rsync-command
+            (concat tmtxt/rsync-command
+                    (shell-quote-argument file)
+                    " ")))
+    ;; append the destination
+    (setq tmtxt/rsync-command
+          (concat tmtxt/rsync-command
+                  (shell-quote-argument dest)))
+    ;; run the async shell command
+    (async-shell-command tmtxt/rsync-command "*rsync*")
+    ;; finally, switch to that window
+    (other-window 1)))
+
+(define-key dired-mode-map "Y" 'my/ora-dired-rsync)
+
+#+end_src
