@@ -662,6 +662,7 @@ Null prefix argument turns off the mode."
          [NO-DEFAULT-PACKAGES]
          [PACKAGES]
          [EXTRA]"
+         ("\\part{%s}" . "\\part*{%s}")
          ("\\chapter{%s}" . "\\chapter*{%s}")
          ("\\section{%s}" . "\\section*{%s}")
          ("\\subsection{%s}" . "\\subsection*{%s}")
@@ -1978,7 +1979,7 @@ are referenced by its edges, but functions for these tasks need region."
   (defun my/bibtex-to-biblatex ()
     (interactive)
     (goto-char 1)
-       (while (search-forward-regexp "{[a-z1-9]*,$" nil t) 
+       (while (search-forward-regexp "{[a-z0-9]*,$" nil t) 
           (replace-match "{," t nil))
        (while (search-forward-regexp "^  journal" nil t) 
           (replace-match "  journaltitle" t nil))
@@ -1988,9 +1989,9 @@ are referenced by its edges, but functions for these tasks need region."
           (replace-match "  timestamp={},
     keywords={},
   }" t nil))
-       (while (search-forward-regexp "{\"a}" nil t) 
+       (while (search-forward-regexp "{\\\"a}" nil t) 
           (replace-match "ä" t nil))
-       (while (search-forward-regexp "{\"u}" nil t) 
+       (while (search-forward-regexp "{\\\"u}" nil t) 
           (replace-match "ü" t nil))
 
    )
