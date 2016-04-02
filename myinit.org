@@ -467,6 +467,8 @@ da-commands
                "* %?")
               ("m" "mail todo" entry (file+headline "~/Dropbox/db/org/inbox.org" "Mail")
                "* TODO %^{Task}\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %T\n:END:\n%a\n\n%i")
+              ("b" "biblatex" plain (file "~/Dropbox/db/biblio.bib")
+              "%?" :unnarrowed t)
               ("l" "literature" entry (file+headline "~/Dropbox/db/org/inbox.org" "Literatur")
                "* TODO %^{Author}, %^{Title} :txt:\n:PROPERTIES:\n:CREATED: %T \n:BIBL: %^{Bib|x| }\n:STATUS: %^{Status}\n:FORM: %^{Form}\n:BIB1: %^{Bibliothek}\n:END:\n\n** data-\n#+begin_src csv-mode :tangle stat/ref-path.csv\n\n#+end_src")
               ("g" "Geld - Ledger entries")
@@ -477,6 +479,10 @@ da-commands
               ("gg" "Giro" plain (file "~/Dropbox/db/money.dat")
               "%(org-read-date) * %^{Payee| |Deutsche Bahn}
     Expenses:%^{Expenses|Kauf:|Geschenk:|Reisen:}%^{Expenses}    %^{Amount}€
+    Assets:Giro" :immediate-finish t)
+              ("gi" "Internet+Telefon" plain (file "~/Dropbox/db/money.dat")
+              "%(org-read-date) * Kabel Deutschland
+    Expenses:Wohnung:Internet+Telefon     %^{Amount|19,90}€
     Assets:Giro" :immediate-finish t)
               ("gk" "Krankenkasse" plain (file "~/Dropbox/db/money.dat")
               "%(org-read-date) * Techniker Krankenkasse
