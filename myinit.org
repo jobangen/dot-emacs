@@ -460,19 +460,19 @@ da-commands
       (quote (("a" "appt" entry (file+datetree+prompt "~/Dropbox/db/org/kalender.org")
                "* APPT %^{Appt}\n%T\n%?")
               ("t" "todo" entry (file "~/Dropbox/db/org/inbox.org")
-               "* TODO %^{Task}\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %T\n:END:\n%?")
+               "* TODO %^{Task}\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n%?")
               ("n" "note" entry (file "~/Dropbox/db/org/inbox.org")
-               "* %^{Note} \n:PROPERTIES:\n:CREATED: %T\n:END:\n%?")
+               "* %^{Note} \n:PROPERTIES:\n:CREATED: %U\n:END:\n%?")
 	          ("i" "interruption" entry (file "~/Dropbox/db/org/inbox.org")
-	           "* %^{Task} \n:PROPERTIES:\n:CREATED: %T\n:END:\n%?" :clock-in t :clock-resume t)
+	           "* %^{Task} \n:PROPERTIES:\n:CREATED: %U\n:END:\n%?" :clock-in t :clock-resume t)
               ("j" "journal" entry (file+datetree+prompt "~/Dropbox/db/org/kalender.org")
                "* %?")
               ("m" "mail todo" entry (file+headline "~/Dropbox/db/org/inbox.org" "Mail")
-               "* TODO %^{Task}\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %T\n:END:\n%a\n\n%i")
+               "* TODO %^{Task}\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n\n%i")
               ("b" "biblatex" plain (file "~/Dropbox/db/biblio.bib")
               "%?" :unnarrowed t)
               ("l" "literature" entry (file+headline "~/Dropbox/db/org/inbox.org" "Literatur")
-               "* TODO %^{Author}, %^{Title} :txt:\n:PROPERTIES:\n:CREATED: %T \n:BIBL: %^{Bib|x| }\n:STATUS: %^{Status}\n:FORM: %^{Form}\n:BIB1: %^{Bibliothek}\n:END:\n\n** data-\n#+begin_src csv-mode :tangle stat/ref-path.csv\n\n#+end_src")
+               "* TODO %^{Author}, %^{Title} :txt:\n:PROPERTIES:\n:CREATED: %U \n:BIBL: %^{Bib|x| }\n:STATUS: %^{Status}\n:FORM: %^{Form}\n:BIB1: %^{Bibliothek}\n:END:\n\n** data-\n#+begin_src csv-mode :tangle stat/ref-path.csv\n\n#+end_src")
               ("g" "Geld - Ledger entries")
               ("gb" "Bargeld" plain (file "~/Dropbox/db/money.dat")
               "%(org-read-date) * Kartenverfügung
@@ -1095,6 +1095,14 @@ abort completely with `C-g'."
 #+end_src
 
 * Major-modes
+** calendar
+*** calfw
+#+begin_src emacs-lisp
+(use-package calfw
+  :config
+  (require 'calfw-org))
+#+end_src
+
 ** pdf-tools
 #+begin_src emacs-lisp
 (use-package pdf-tools
