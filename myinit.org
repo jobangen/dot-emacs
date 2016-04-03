@@ -378,7 +378,9 @@ da-commands
 ** behaviour
 #+begin_src emacs-lisp
 ;; shift-select
-(setq org-support-shift-select t)
+(setq org-support-shift-select 'always)
+;;keine automatischen Leerzeilen vor Entries
+(setq org-blank-before-new-entry nil) 
 ;; autolist
 (use-package org-autolist
   :commands org-autolist-mode
