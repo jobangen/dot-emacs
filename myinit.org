@@ -414,7 +414,7 @@ da-commands
 (setq org-directory "~/Dropbox/db/org")
 (setq org-default-notes-file "~/Dropbox/db/org/inbox.org")
 ;;(setq org-agenda-files '("~/Dropbox/db/org"))
-(setq org-agenda-diary-file "~/Dropbox/db/org/kalender.org")
+(setq org-agenda-diary-file "~/Dropbox/db/org/calender.org_archive")
 (setq org-agenda-include-diary nil)
 #+end_src
 
@@ -457,8 +457,8 @@ da-commands
 ** capture
 #+begin_src emacs-lisp
 (setq org-capture-templates
-      (quote (("a" "appt" entry (file+datetree+prompt "~/Dropbox/db/org/kalender.org")
-               "* APPT %^{Appt}\n%T\n%?")
+      (quote (("a" "cal" entry (file "~/Dropbox/db/org/calender.org")
+               "* %^{Description}\n<%(org-read-date)%?>\n")
               ("t" "todo" entry (file "~/Dropbox/db/org/inbox.org")
                "* TODO %^{Task}\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n%?")
               ("n" "note" entry (file "~/Dropbox/db/org/inbox.org")
@@ -625,7 +625,7 @@ Null prefix argument turns off the mode."
     (if auto-save-default
 	(auto-save-mode 1))))
 #+end_src
-** kalender.org
+** calender
 #+begin_src emacs-lisp
 (use-package german-holidays
 :config
@@ -1100,8 +1100,33 @@ abort completely with `C-g'."
 #+begin_src emacs-lisp
 (use-package calfw
   :config
-  (require 'calfw-org))
+   (require 'calfw-org)
+   (setq cfw:org-overwrite-default-keybinding t)
+   (setq calendar-week-start-day 1);; 0:Sunday, 1:Monday
+   (setq cfw:render-line-breaker 'cfw:render-line-breaker-none)
+)
 #+end_src
+
+*** org-gcal
+#+begin_src emacs-lisp
+(use-package org-gcal
+  :config
+  (setq org-gcal-auto-archive t)
+  (setq org-gcal-down-days 365)
+  (setq org-gcal-client-id "553301842275-clecdgmr7i8741e3ck5iltlgfk3qf79r.apps.googleusercontent.com"
+      org-gcal-client-secret "4zyEbm_F_BMuJsA7rZZmgFBm"
+      org-gcal-file-alist '(("jobangen@googlemail.com" . "~/Dropbox/db/org/calender.org"))))
+
+#+end_src
+client-ID:
+553301842275-clecdgmr7i8741e3ck5iltlgfk3qf79r.apps.googleusercontent.com 
+
+secret/schlüssel
+4zyEbm_F_BMuJsA7rZZmgFBm 
+
+
+Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
+
 
 ** pdf-tools
 #+begin_src emacs-lisp
