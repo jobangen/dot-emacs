@@ -75,6 +75,7 @@
     ("interessanz" "interessant" nil 0)
     ("kommentaren" "kommentaren" nil 2)
     ("nud" "und" nil 3)
+    ("ornientiere" "orientiere" nil 0)
     ("rcht" "recht" nil 0)
     ("verstädnis" "verständnis" nil 0)
     ("überscheiden" "überschneiden" nil 0)
@@ -107,6 +108,8 @@
 (define-abbrev-table 'helm-moccur-mode-abbrev-table '())
 
 (define-abbrev-table 'help-mode-abbrev-table '())
+
+(define-abbrev-table 'html-mode-abbrev-table '())
 
 (define-abbrev-table 'ibuffer-mode-abbrev-table '())
 
@@ -197,7 +200,13 @@
 
 (define-abbrev-table 'prog-mode-abbrev-table '())
 
+(define-abbrev-table 'reftex-index-mode-abbrev-table '())
+
+(define-abbrev-table 'reftex-index-phrases-mode-abbrev-table '())
+
 (define-abbrev-table 'select-tags-table-mode-abbrev-table '())
+
+(define-abbrev-table 'sgml-mode-abbrev-table '())
 
 (define-abbrev-table 'sh-mode-abbrev-table '())
 
