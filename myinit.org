@@ -467,7 +467,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
               ("j" "journal" entry (file+datetree+prompt "~/Dropbox/db/org/kalender.org")
                "* %?")
               ("m" "mail todo" entry (file+headline "~/Dropbox/db/org/inbox.org" "Mail")
-               "* TODO %^{Task}\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n\n%i")
+               "* TODO %^{Task}\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%:fromname wrote on %:date-timestamp-inactive:\n[[%l][%:subject]]\n%i")
               ("b" "bibtex" plain (file "~/Dropbox/db/biblio.bib")
               "%?" :jump-to-captured t :empty-lines 1)
               ("l" "literature" entry (file+headline "~/Dropbox/db/org/inbox.org" "Literatur")
