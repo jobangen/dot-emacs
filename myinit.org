@@ -154,7 +154,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ** ace-window
 #+begin_src emacs-lisp
 (use-package ace-window
-; :bind ("M-" . ace-window)
+ :bind ("C-c k" . ace-delete-window)
  :config
   (progn
    (setq aw-scope 'frame)
@@ -278,8 +278,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
            '("+TODO={PROJ}" ("NEXT") ("longterm")))
 #+end_src
 
-*** agen
-da-commands
+*** agenda-commands
 #+begin_src emacs-lisp
 ;; Custom agenda command definitions
 (setq org-agenda-custom-commands
