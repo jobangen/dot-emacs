@@ -1135,7 +1135,6 @@ secret/schlüssel
 
 Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
 
-
 ** pdf-tools
 #+begin_src emacs-lisp
 (use-package pdf-tools
@@ -1412,6 +1411,18 @@ Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
 #+begin_src emacs-lisp
 (use-package rainbow-delimiters
   :disabled t)
+#+end_src
+
+** howm
+#+begin_src emacs-lisp
+(use-package howm
+  :config
+   (setq howm-directory "~/Dropbox/db/zk")
+
+   (defun turn-on-howm-mode-hook ()
+     (cond ((string-match "^/home/job/Dropbox/db/zk/" buffer-file-name)
+         (howm-mode 1))))
+   (add-hook 'text-mode-hook 'turn-on-howm-mode-hook))
 #+end_src
 
 * hydra
