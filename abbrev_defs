@@ -74,10 +74,12 @@
     ("geschriebem" "geschrieben" nil 0)
     ("interessanz" "interessant" nil 0)
     ("kommentaren" "kommentaren" nil 2)
+    ("letze" "letzte" nil 0)
     ("nud" "und" nil 3)
     ("ornientiere" "orientiere" nil 0)
     ("rcht" "recht" nil 0)
     ("verstädnis" "verständnis" nil 0)
+    ("überblich" "überblick" nil 0)
     ("überscheiden" "überschneiden" nil 0)
    ))
 
@@ -96,6 +98,8 @@
 (define-abbrev-table 'gnus-sticky-article-mode-abbrev-table '())
 
 (define-abbrev-table 'gnus-tree-mode-abbrev-table '())
+
+(define-abbrev-table 'google-maps-static-mode-abbrev-table '())
 
 (define-abbrev-table 'grep-mode-abbrev-table '())
 
@@ -141,6 +145,8 @@
 (define-abbrev-table 'lisp-mode-abbrev-table '())
 
 (define-abbrev-table 'log-edit-mode-abbrev-table '())
+
+(define-abbrev-table 'log4e-mode-abbrev-table '())
 
 (define-abbrev-table 'magit-cherry-mode-abbrev-table '())
 
