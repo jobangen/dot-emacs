@@ -11,6 +11,8 @@
 
 (define-abbrev-table 'bbdb-mode-abbrev-table '())
 
+(define-abbrev-table 'biblio-selection-mode-abbrev-table '())
+
 (define-abbrev-table 'bibtex-mode-abbrev-table '())
 
 (define-abbrev-table 'bmkp-edit-bookmark-record-mode-abbrev-table '())
@@ -68,6 +70,7 @@
 (define-abbrev-table 'global-abbrev-table
   '(
     ("alllgemeine" "allgemeine" nil 0)
+    ("anscheined" "anscheinend" nil 0)
     ("aös" "als" nil 0)
     ("entwiklung" "entwicklung" nil 0)
     ("gepsrächen" "gesprächen" nil 0)
@@ -78,7 +81,10 @@
     ("nud" "und" nil 3)
     ("ornientiere" "orientiere" nil 0)
     ("rcht" "recht" nil 0)
+    ("umghend" "umgehend" nil 0)
+    ("veransteltet" "veranstaltet" nil 0)
     ("verstädnis" "verständnis" nil 0)
+    ("vorraussichtlich" "voraussichtlich" nil 0)
     ("überblich" "überblick" nil 0)
     ("überscheiden" "überschneiden" nil 0)
    ))
