@@ -569,6 +569,9 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ; global STYLE property values for completion
 (setq org-global-properties (quote (("Effort_ALL" . "0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 3:00 4:00 5:00 6:00 7:00 8:00")
                                     ("STYLE_ALL" . "habit"))))
+
+;; propertie inheritance
+(setq org-use-property-inheritance (quote ("QUANTIFIED")))
 #+end_src
 ** clocking
 #+begin_src emacs-lisp
