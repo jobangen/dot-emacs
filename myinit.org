@@ -256,6 +256,14 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 )
 #+END_SRC
 
+** which-key
+#+begin_src emacs-lisp
+(use-package which-key
+  :diminish which-key-mode
+  :config
+   (which-key-mode))
+#+end_src
+
 * org-mode
 ** allgemein
 #+begin_src emacs-lisp
