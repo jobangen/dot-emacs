@@ -501,6 +501,10 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
               "%(org-read-date) * %^{Payee| |Deutsche Bahn}
     Expenses:%^{Expenses|Kauf:|Geschenk:|Reisen:}%^{Expenses}    %^{Amount}€
     Assets:Giro" :immediate-finish t)
+              ("gh" "Handy" plain (file "~/Dropbox/db/money.dat")
+              "%(org-read-date) * Telekom
+    Expenses:Handy                          %^{Amount|29,89}€
+    Assets:Giro" :immediate-finish t)
               ("gi" "Internet+Telefon" plain (file "~/Dropbox/db/money.dat")
               "%(org-read-date) * Kabel Deutschland
     Expenses:Wohnung:Internet+Telefon     %^{Amount|19,90}€
@@ -521,6 +525,10 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
               "%(org-read-date) * Stadtwerke
     Expenses:Wohnung:Strom     %^{Amount|53,00}€
     Assets:Giro" :immediate-finish t)
+              ("gt" "Topoi Stipendium" plain (file "~/Dropbox/db/money.dat")
+              "%(org-read-date) * Stipendium Topoi
+    Assets:Giro                          %^{Amount|1350,00}€
+    Income:Stipendium:Topoi" :immediate-finish t)
               ("z" "Zettel" plain (file (capture-report-date-file  "~/Dropbox/db/zk/inbox/"))
 "#+TITLE: %^{Title}\n#+DATE: %U\n* Keywords\nTODO-tags:\n* Summary\n%?\n\n* Bibliography\n\n* Links")
 )))
