@@ -965,6 +965,32 @@ publication specified by KEY."
 )
 #+end_src
 
+** texcount
+#+begin_src emacs-lisp
+(defun my-latex-setup ()
+  (defun latex-word-count ()
+    (interactive)
+    (let* ((this-file (buffer-file-name))
+           (word-count
+            (with-output-to-string
+              (with-current-buffer standard-output
+                (call-process "texcount" nil t nil "-sum" "-inc" "-sub=none" this-file)))))
+      (string-match "\n$" word-count)
+      (message (replace-match "" nil nil word-count))))
+    (define-key LaTeX-mode-map "\C-cw" 'latex-word-count)
+  (defun latex-word-count-details ()
+    (interactive)
+    (let* ((this-file (buffer-file-name))
+           (word-count
+            (with-output-to-string
+              (with-current-buffer standard-output
+                (call-process "texcount" nil t nil "-sum" "-inc" "-sub=section" this-file)))))
+      (string-match "\n$" word-count)
+      (message (replace-match "" nil nil word-count))))
+    (define-key LaTeX-mode-map "\C-cW" 'latex-word-count-details))
+(add-hook 'LaTeX-mode-hook 'my-latex-setup t)
+#+end_src
+
 * Schreiben und Stil
 ** ispell
 #+begin_src emacs-lisp
