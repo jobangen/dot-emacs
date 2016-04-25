@@ -78,13 +78,18 @@
     ("interessanz" "interessant" nil 0)
     ("kommentaren" "kommentaren" nil 2)
     ("letze" "letzte" nil 0)
+    ("nochmal" "noch einmal" 0 2)
     ("nud" "und" nil 3)
     ("ornientiere" "orientiere" nil 0)
     ("rcht" "recht" nil 0)
+    ("ud" "du" nil 0)
     ("umghend" "umgehend" nil 0)
     ("veransteltet" "veranstaltet" nil 0)
     ("verstädnis" "verständnis" nil 0)
     ("vorraussichtlich" "voraussichtlich" nil 0)
+    ("werdeb" "werden" nil 0)
+    ("wiederspruch" "widerspruch" nil 0)
+    ("zugesendet" "zugesandt" nil 1)
     ("überblich" "überblick" nil 0)
     ("überscheiden" "überschneiden" nil 0)
    ))
@@ -215,6 +220,8 @@
 (define-abbrev-table 'reftex-index-mode-abbrev-table '())
 
 (define-abbrev-table 'reftex-index-phrases-mode-abbrev-table '())
+
+(define-abbrev-table 'riffle-mode-abbrev-table '())
 
 (define-abbrev-table 'select-tags-table-mode-abbrev-table '())
 
