@@ -44,6 +44,17 @@
                          ("org"       . "http://orgmode.org/elpa/")))
 #+end_src
 
+** server
+#+begin_src emacs-lisp
+;; define function to shutdown emacs server instance
+(defun server-shutdown ()
+  "Save buffers, Quit, and Shutdown (kill) server"
+  (interactive)
+  (save-some-buffers)
+  (kill-emacs)
+  )
+#+end_src
+
 * use-package, bind-key
 #+begin_src emacs-lisp
 (require 'use-package)
@@ -57,11 +68,12 @@ menu-bar-mode
 müssen manuell deaktiviert werden
 ** bar-modes
 #+begin_src emacs-lisp
-(when window-system
-  (tooltip-mode -1)
-  (tool-bar-mode -1)
-  (menu-bar-mode -1)
-  (scroll-bar-mode -1))
+(if (window-system)
+      (tooltip-mode -1)
+      (tool-bar-mode -1)
+      (menu-bar-mode -1)
+      (scroll-bar-mode -1)
+      (set-fringe-mode '(1 . 1)))
 #+end_src
 
 ** Font
