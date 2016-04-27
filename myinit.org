@@ -546,7 +546,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 )))
 
 (defun capture-report-date-file (path)
-  (expand-file-name (concat path (format-time-string "%Y-%m-%d") ".txt")))
+  (expand-file-name (concat path (format-time-string "%Y-%m-%d-%H%M") ".txt")))
 #+end_src
 
 ** refile
