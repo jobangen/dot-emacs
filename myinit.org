@@ -227,19 +227,25 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (bind-key "C-z"  'helm-select-action helm-map) ; list actions using C-z
 #+end_src
 
-** swiper/ivy
-#+BEGIN_SRC emacs-lisp
-(use-package swiper
-    :ensure t
-    :diminish ivy-mode
-    :bind (("C-S-s" . swiper)
-          ("C-r" . swiper)
-          ("C-c C-r" . ivy-resume))
-    :init
+** ivy
+#+begin_src emacs-lisp
+(use-package ivy
+  :ensure t
+  :diminish ivy-mode
+  :bind (("C-c C-r" . ivy-resume))
+  :init
      (ivy-mode 1)
      (setq ivy-use-virtual-buffers t)
-    :config
+  :config
      (setq ivy-display-style 'fancy)
+
+)
+#+end_src
+
+** swiper
+#+BEGIN_SRC emacs-lisp
+(use-package swiper
+  :ensure t
 )
 #+END_SRC
 
@@ -247,11 +253,13 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 (use-package counsel
   :ensure t
-  :bind (("C-c u" . counsel-linux-app)
+  :bind (("C-s" . counsel-grep-or-swiper)
+         ("C-c u" . counsel-linux-app)
          ("C-M-s" . counsel-ag)
-;;         ("C-S-s" . counsel-imenu)
+         ("C-S-s" . counsel-imenu)
          ("C-x l". counsel-locate)
-         ("M-y" . counsel-yank-pop)))
+         ("M-y" . counsel-yank-pop))
+)
 #+end_src
 
 ** smex
