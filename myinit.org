@@ -1028,6 +1028,8 @@ publication specified by KEY."
 #+begin_src emacs-lisp
 (use-package flyspell
   :diminish flyspell-mode
+  :bind (("<f12>" . flyspell-check-previous-highlighted-word)
+         ("C-<f12>" . flyspell-check-next-highlighted-word))
   :config
    (dolist (hook '(org-mode-hook))
      (add-hook hook (lambda() (flyspell-mode 1))))
@@ -1384,7 +1386,7 @@ Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
 
 ** hippie-expand
 #+begin_src emacs-lisp
-(bind-key "C-S-A" 'hippie-expand)
+(bind-key "TAB" 'hippie-expand)
 
 (setq hippie-expand-try-functions-list
       '(yas/hippie-try-expand
