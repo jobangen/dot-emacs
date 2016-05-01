@@ -1460,8 +1460,8 @@ Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
   (progn
     (add-hook 'hippie-expand-try-functions-list 'yas-hippie-try-expand)
     (yas-global-mode 1)
-    (setq require-final-newline nil))
-    (bind-key "TAB" 'hippie-expand yas-minor-mode-map))
+    (setq require-final-newline nil)
+    (bind-key "TAB" 'hippie-expand yas-minor-mode-map)))
 #+end_src
 ** epa-file
 #+begin_src emacs-lisp
