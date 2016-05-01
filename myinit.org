@@ -730,14 +730,15 @@ Null prefix argument turns off the mode."
          "\\RequirePackage[l2tabu, orthodox]{nag}
           \\documentclass[DIV12, a4paper, 12pt]{scrbook}
          [NO-DEFAULT-PACKAGES]
-         [PACKAGES]
+         [NO-PACKAGES]
          [EXTRA]"
          ("\\part{%s}" . "\\part*{%s}")
          ("\\chapter{%s}" . "\\chapter*{%s}")
          ("\\section{%s}" . "\\section*{%s}")
          ("\\subsection{%s}" . "\\subsection*{%s}")
          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-         ("\\paragraph{%s}" . "\\paragraph*{%s}")))
+         ("\\paragraph{%s}" . "\\paragraph*{%s}")
+         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 (add-to-list 'org-latex-classes
       '("abrechnung"
          "\\documentclass[DIV12, a4paper, 12pt]{scrartcl}
