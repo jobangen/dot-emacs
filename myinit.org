@@ -120,7 +120,7 @@ müssen manuell deaktiviert werden
 ** volatile-highlights
 #+begin_src emacs-lisp
 (use-package volatile-highlights
-  :diminish volatile-highlights
+  :diminish volatile-highlights-mode
   :config
    (volatile-highlights-mode t))
 #+end_src
@@ -1582,6 +1582,7 @@ Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
 ** howm
 #+begin_src emacs-lisp
 (use-package howm
+  :diminish howm-mode
   :config
    (setq howm-directory "~/Dropbox/db/zk")
 
