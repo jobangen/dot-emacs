@@ -55,6 +55,15 @@
   )
 #+end_src
 
+** dir-setup
+#+begin_src emacs-lisp
+(defun dbdir-expand (name)
+  (expand-file-name name "~/Dropbox/db"))
+
+(defun orgdir-expand (name)
+  (expand-file-name name "~/Dropbox/db/org"))
+#+end_src
+
 * use-package, bind-key
 #+begin_src emacs-lisp
 (require 'use-package)
@@ -106,6 +115,14 @@ müssen manuell deaktiviert werden
    (add-to-list 'sml/replacer-regexp-list '("^~/archiv/" ":arch:") t)
    (add-to-list 'sml/replacer-regexp-list '("^~/Downloads/" ":DL:") t)
    (add-to-list 'sml/replacer-regexp-list '("^~/texte/" ":TXT:") t))
+#+end_src
+
+** volatile-highlights
+#+begin_src emacs-lisp
+(use-package volatile-highlights
+  :diminish volatile-highlights
+  :config
+   (volatile-highlights-mode t))
 #+end_src
 
 * Bedienung & Interface
@@ -496,62 +513,62 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ** capture
 #+begin_src emacs-lisp
 (setq org-capture-templates
-      (quote (("a" "cal" entry (file "~/Dropbox/db/org/calender.org")
+            '(("a" "cal" entry (file (orgdir-expand "calender.org"))
                "* %^{Description}\n<%(org-read-date)%?>\n")
-              ("t" "todo" entry (file "~/Dropbox/db/org/inbox.org")
+              ("t" "todo" entry (file (orgdir-expand "inbox.org"))
                "* TODO %^{Task}\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n%?")
-              ("n" "note" entry (file "~/Dropbox/db/org/inbox.org")
+              ("n" "note" entry (file (orgdir-expand "inbox.org"))
                "* %^{Note} \n:PROPERTIES:\n:CREATED: %U\n:END:\n%?")
-	          ("i" "interruption" entry (file "~/Dropbox/db/org/inbox.org")
+	          ("i" "interruption" entry (file (orgdir-expand "inbox.org"))
 	           "* %^{Task} \n:PROPERTIES:\n:CREATED: %U\n:END:\n%?" :clock-in t :clock-resume t)
-              ("j" "journal" entry (file+datetree+prompt "~/Dropbox/db/org/kalender.org")
+              ("j" "journal" entry (file+datetree+prompt (orgdir-expand "kalender.org"))
                "* %?")
-              ("m" "mail todo" entry (file+headline "~/Dropbox/db/org/inbox.org" "Mail")
+              ("m" "mail todo" entry (file+headline (orgdir-expand "inbox.org") "Mail")
                "* TODO %^{Task}\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n%:fromname wrote on %:date-timestamp-inactive:\nSubject: [[%l][%:subject]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE")
-              ("b" "bibtex" plain (file "~/Dropbox/db/biblio.bib")
+              ("b" "bibtex" plain (file (dbdir-expand "biblio.bib"))
               "%?" :jump-to-captured t :empty-lines 1)
-              ("l" "literature" entry (file+headline "~/Dropbox/db/org/inbox.org" "Literatur")
+              ("l" "literature" entry (file+headline (orgdir-expand "inbox.org") "Literatur")
                "* TODO %^{Author}, %^{Title} :txt:\n:PROPERTIES:\n:CREATED:  %U\n:END:\n%^{BIBL}p%^{STATUS}p%^{FORM}p%^{BIB1}p\n** data-%?\n#+begin_src csv-mode :tangle stat/ref-path.csv\n\n#+end_src")
               ("g" "Geld - Ledger entries")
-              ("gb" "Bargeld" plain (file "~/Dropbox/db/money.dat")
+              ("gb" "Bargeld" plain (file (dbdir-expand "money.dat"))
               "%(org-read-date) * Kartenverfügung
     Expenses:Bargeld    %^{Amount}€
     Assets:Giro" :immediate-finish t)
-              ("gg" "Giro" plain (file "~/Dropbox/db/money.dat")
+              ("gg" "Giro" plain (file (dbdir-expand "money.dat"))
               "%(org-read-date) * %^{Payee| |Deutsche Bahn}
     Expenses:%^{Expenses|Kauf:|Geschenk:|Reisen:}%^{Expenses}    %^{Amount}€
     Assets:Giro" :immediate-finish t)
-              ("gh" "Handy" plain (file "~/Dropbox/db/money.dat")
+              ("gh" "Handy" plain (file (dbdir-expand "money.dat"))
               "%(org-read-date) * Telekom
     Expenses:Handy                          %^{Amount|29,89}€
     Assets:Giro" :immediate-finish t)
-              ("gi" "Internet+Telefon" plain (file "~/Dropbox/db/money.dat")
+              ("gi" "Internet+Telefon" plain (file (dbdir-expand "money.dat"))
               "%(org-read-date) * Kabel Deutschland
     Expenses:Wohnung:Internet+Telefon     %^{Amount|19,90}€
     Assets:Giro" :immediate-finish t)
-              ("gk" "Krankenkasse" plain (file "~/Dropbox/db/money.dat")
+              ("gk" "Krankenkasse" plain (file (dbdir-expand "money.dat"))
               "%(org-read-date) * Techniker Krankenkasse
     Expenses:Versicherung:Krankenkasse     %^{Amount|237,60}€
     Assets:Giro" :immediate-finish t)
-              ("gm" "Miete" plain (file "~/Dropbox/db/money.dat")
+              ("gm" "Miete" plain (file (dbdir-expand "money.dat"))
               "%(org-read-date) * Unter den Eichen
     Expenses:Wohnung:Miete     %^{Amount|588,25}€
     Assets:Giro" :immediate-finish t)
-              ("gu" "Untermiete" plain (file "~/Dropbox/db/money.dat")
+              ("gu" "Untermiete" plain (file (dbdir-expand "money.dat"))
               "%(org-read-date) * Kevin Schürer (%^{Monat})
     Assets:Giro     %^{Amount|330,00}€
     Income:Wohnung" :immediate-finish t)
-              ("gs" "Strom" plain (file "~/Dropbox/db/money.dat")
+              ("gs" "Strom" plain (file (dbdir-expand "money.dat"))
               "%(org-read-date) * Stadtwerke
     Expenses:Wohnung:Strom     %^{Amount|53,00}€
     Assets:Giro" :immediate-finish t)
-              ("gt" "Topoi Stipendium" plain (file "~/Dropbox/db/money.dat")
+              ("gt" "Topoi Stipendium" plain (file (dbdir-expand "money.dat"))
               "%(org-read-date) * Stipendium Topoi
     Assets:Giro                          %^{Amount|1350,00}€
     Income:Stipendium:Topoi" :immediate-finish t)
               ("z" "Zettel" plain (file (capture-report-date-file  "~/Dropbox/db/zk/inbox/"))
 "#+TITLE: %^{Title}\n#+DATE: %U\n* Keywords\nTODO-tags:\n* Summary\n%?\n\n* Bibliography\n\n* Links")
-)))
+))
 
 (defun capture-report-date-file (path)
   (expand-file-name (concat path (format-time-string "%Y-%m-%d-%H%M") ".txt")))
