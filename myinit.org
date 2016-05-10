@@ -1058,6 +1058,8 @@ publication specified by KEY."
    (dolist (hook '(change-log-mode-hook log-edit-mode-hook))
      (add-hook hook (lambda () (flyspell-mode -1))))
 
+(setq flyspell-tex-command-regexp "\\(\\(begin\\|end\\)[ \t]*{\\|\\(cite[.*]*\\|autocite[.*]*\\|label\\|ref\\|eqref\\|usepackage\\|documentclass\\|addbibresource\\|pagestyle\\|KOMAoptions\\|newclassic\\|printbibliography\\)[ \t]*\\(\\[[^]]*\\]\\)?{[^{}]*\\)")
+
 (defun my/flyspell-check-previous-highlighted-word (&optional arg)
   "Correct the closer misspelled word.
 This function scans a mis-spelled word before the cursor. If it finds one
