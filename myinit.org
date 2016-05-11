@@ -301,6 +301,13 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
    (which-key-mode))
 #+end_src
 
+** avy
+#+begin_src emacs-lisp
+(use-package avy
+  :ensure t
+  :bind (("M-s" . avy-goto-word-or-subword-1)))
+#+end_src
+
 * org-mode
 ** allgemein
 #+begin_src emacs-lisp
@@ -1170,6 +1177,22 @@ abort completely with `C-g'."
           (message "\"%s\" now expands to \"%s\" %sally"
                    bef aft (if p "loc" "glob")))
       (user-error "No typo at or before point"))))
+#+end_src
+
+** google-translate
+#+begin_src emacs-lisp
+(use-package google-translate
+  :bind (("C-c Ü" . google-translate-smooth-translate))
+  :init
+   (require 'google-translate-smooth-ui)
+   ;;(require 'google-translate-default-ui)
+)
+#+end_src
+
+** dictcc
+#+begin_src emacs-lisp
+(use-package dictcc
+  :bind (("C-c ü" . dictcc)))
 #+end_src
 
 * Versionskontrolle
