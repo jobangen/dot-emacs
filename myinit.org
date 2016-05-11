@@ -1128,7 +1128,7 @@ misspelled words backwards."
   :config
    (progn
     (setq writegood-weasel-words
-     '("wichtig" "wichtige" "vielleicht" "auch" "dabei" "sehr" "ziemlich" "sehr" "vielleicht" "möglicherweise" "wohl" "recht" "dann" "paar"))
+     '("wichtig" "wichtige" "vielleicht" "auch" "dabei" "sehr" "ziemlich" "möglicherweise" "wohl" "recht" "dann" "paar" "bisschen"))
     (setq writegood-passive-voice-irregulars
      '("gemacht"))))
 #+end_src
