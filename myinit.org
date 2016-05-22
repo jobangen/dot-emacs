@@ -10,6 +10,7 @@
 (transient-mark-mode nil) ;; No region when it is not highlighted
 (global-font-lock-mode 1) ;;syntax highlighting everywhere
 (global-visual-line-mode 1) ;;Add proper word wrapping
+(add-hook 'visual-line-mode-hook 'visual-fill-column-mode)
 (global-auto-revert-mode t) ;;aktualisiert buffer automatisch, wenn auf Platte geändert.
 (set-language-environment "UTF-8")
 (set-terminal-coding-system 'utf-8) ;;UTF 8 by default
@@ -857,6 +858,14 @@ Null prefix argument turns off the mode."
              (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
              (setq TeX-save-query nil)
              (setq TeX-show-compilation t)))
+
+;;http://emacs.stackexchange.com/questions/443/editing-files-with-one-sentence-per-line
+(defun my-electric-dot ()
+  (interactive)
+  (insert ".\n"))
+(defun my-tex-hook ()
+  (local-set-key (kbd ".") 'my-electric-dot))
+(add-hook 'TeX-mode-hook 'my-tex-hook)
 ))
 
 (use-package latex-extra
