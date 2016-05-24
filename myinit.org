@@ -19,7 +19,7 @@
 	        indicate-buffer-boundaries 'left	;; Graphical gimmick
 	        indicate-empty-lines t	;; Graphical gimmick
 )
-
+(delete-selection-mode t) ;; overwrite selected text
 
 ;; (add-hook 'text-mode-hook (lambda () (variable-pitch-mode t)))
 (dolist (hook '(LaTeX-mode-hook
