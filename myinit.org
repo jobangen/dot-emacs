@@ -10,7 +10,6 @@
 (transient-mark-mode nil) ;; No region when it is not highlighted
 (global-font-lock-mode 1) ;;syntax highlighting everywhere
 (global-visual-line-mode 1) ;;Add proper word wrapping
-(add-hook 'visual-line-mode-hook 'visual-fill-column-mode)
 (global-auto-revert-mode t) ;;aktualisiert buffer automatisch, wenn auf Platte geändert.
 (set-language-environment "UTF-8")
 (set-terminal-coding-system 'utf-8) ;;UTF 8 by default
@@ -124,6 +123,11 @@ müssen manuell deaktiviert werden
   :diminish volatile-highlights-mode
   :config
    (volatile-highlights-mode t))
+#+end_src
+
+** hl-sentence
+#+begin_src emacs-lisp
+(use-package hl-sentence-mode)
 #+end_src
 
 * Bedienung & Interface
@@ -840,6 +844,10 @@ Null prefix argument turns off the mode."
 	(add-hook 'LaTeX-mode-hook 'flyspell-mode)
 	(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 	(add-hook 'LaTeX-mode-hook 'latex-extra-mode)
+	(add-hook 'LaTeX-mode-hook 'hl-sentence-mode)
+    (add-hook 'LaTeX-mode-hook 'visual-fill-column-mode)
+
+
 
     (add-hook 'LaTeX-mode-hook 
          (lambda()
