@@ -532,7 +532,9 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
             '(("a" "cal" entry (file (orgdir-expand "calender.org"))
                "* %^{Description}\n<%(org-read-date)%?>\n")
               ("t" "todo" entry (file (orgdir-expand "inbox.org"))
-               "* TODO %^{Task}\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:\n%?")
+               "* TODO %^{Task}\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}\n:END:\n%?")
+              ("T" "todo at point" entry (clock)
+               "* TODO %^{Task}\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}\n:END:\n%?\n")
               ("n" "note" entry (file (orgdir-expand "inbox.org"))
                "* %^{Note} \n:PROPERTIES:\n:CREATED: %U\n:END:\n%?")
 	          ("i" "interruption" entry (file (orgdir-expand "inbox.org"))
@@ -639,7 +641,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (setq org-global-properties (quote (("Effort_ALL" . "0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 3:00 4:00 5:00 6:00 7:00 8:00")
                                     ("STYLE_ALL" . "habit"))))
 
-;; propertie inheritance
+;; property inheritance
 (setq org-use-property-inheritance (quote ("QUANTIFIED")))
 #+end_src
 ** clocking
@@ -1422,7 +1424,7 @@ Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
         ("LaTeX"
          (extension "tex" "bib"))
         ("Text & Data"
-         (extension "org" "txt" "doc" "docx" "csv"))
+         (extension "org" "txt" "doc" "docx" "csv" "odt"))
         ("Media"
          (extension "jpg" "png" "gif" "bmp"))
         ("Archives"
