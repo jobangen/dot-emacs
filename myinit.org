@@ -2383,3 +2383,16 @@ The file is taken from a start directory set by `my/move-file-here-start-dir' an
   (rename-file start-file-full end-file)
   (message "moved %s to %s" start-file-full end-file)))
 #+end_src
+** my/just-one-space-in-region
+#+begin_src emacs-lisp
+(defun my/just-one-space-in-region (beg end)
+  "replace all whitespace in the region with single spaces"
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region beg end)
+      (goto-char (point-min))
+      (while (re-search-forward "\\s-+" nil t)
+        (replace-match " ")))))
+#+end_src
+
