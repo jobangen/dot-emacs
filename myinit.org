@@ -11,6 +11,7 @@
 (global-font-lock-mode 1) ;;syntax highlighting everywhere
 (global-visual-line-mode 1) ;;Add proper word wrapping
 (global-auto-revert-mode t) ;;aktualisiert buffer automatisch, wenn auf Platte geändert.
+(setq auto-revert-interval 2)
 (set-language-environment "UTF-8")
 (set-terminal-coding-system 'utf-8) ;;UTF 8 by default
 (set-keyboard-coding-system 'utf-8)
