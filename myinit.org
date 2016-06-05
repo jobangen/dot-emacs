@@ -587,6 +587,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
     Income:Stipendium:Topoi" :immediate-finish t)
               ("z" "Zettel" plain (file (capture-report-date-file  "~/Dropbox/db/zk/inbox/"))
 "#+TITLE: %^{Title}\n#+DATE: %U\n* Keywords\nTODO-tags:\n* Summary\n%?\n\n* Bibliography\n\n* Links")
+              ("Z" "Zettel TODO" entry (file+headline "~/Dropbox/db/zk/TODO.txt" "Summary")
+"* TODO %^{Task}\n:PROPERTIES:\n:CREATED: %U\n:END:\n[[%l][%f]]\n%?")
 ))
 
 (defun capture-report-date-file (path)
