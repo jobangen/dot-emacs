@@ -1071,7 +1071,7 @@ publication specified by KEY."
   (progn
     (setq-default ispell-program-name "aspell")
     (setq ispell-dictionary "german")
-    (setq ispell-personal-dictionary "~/.customdict-de")
+    (setq ispell-personal-dictionary "~/.emacs.d/.customdict-de")
 ;;	(setq ispell-extra-args '("--dont-tex-check-comments"))
 ;;  (setq ispell-parser 'tex)
 ))
