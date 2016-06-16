@@ -997,7 +997,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
      '((org-mode      . helm-bibtex-format-citation-default)
        (Latex-mode    . helm-bibtex-format-citation-cite)))
 
-   (setq helm-bibtex-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n* Keywords\ntags:\n* Summary\n\n* Bibliography\n\n* Links")
+   (setq helm-bibtex-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n* Schlagwörter\ntags:\n* Inhalt\n\n* Literatur\n\n* Links")
 
 (defun helm-bibtex-apa-format-reference (key)
   "Returns a plain text reference in APA format for the
