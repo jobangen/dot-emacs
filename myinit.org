@@ -550,6 +550,21 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                 (format "[%s %s] =>\n" date time-end)
                 (format ":END:")
 ))))
+
+(defun org-capture-wiss ()
+  "Capture a class template for org-capture."
+    (let ((date        (org-read-date))
+          (name        (completing-read "Veranstaltung: "
+                         '(("Knoblauch: Forschungswerkstatt" 1) ("Kogge: Wissenschaftstheorie" 2) ("Topoi: Lesezirkel" 3))  nil t ""))
+          (time-begin  (read-string "Begin: " nil nil '(nil)))
+          (time-end    (read-string "End: " nil nil '(nil))))
+      (when (and date)
+        (concat (format "* %s %s\n" date name)
+                (format ":CLOCK:\n")
+                (format "CLOCK: [%s %s]--" date time-begin)
+                (format "[%s %s] => %%?\n" date time-end)
+                (format ":END:")
+))))
 #+end_src
 
 ** capture
@@ -613,6 +628,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
               ("q" "Quantified")
               ("qa" "BerlinAntiquariat" entry (file+headline (orgdir-expand "antiq.org") "Termine")
               #'org-capture-berlinantiquariat :jump-to-captured t)
+              ("qw" "Wissenschaft" entry (file+headline (orgdir-expand "wiss.org") "Quantified")
+              #'org-capture-wiss :jump-to-captured t)
               ("z" "Zettel" plain (file (capture-report-date-file  "~/Dropbox/db/zk/inbox/"))
 "#+TITLE: %^{Title}\n#+DATE: %U\n* Keywords\nTODO-tags:\n* Summary\n%?\n\n* Bibliography\n\n* Links")
               ("Z" "Zettel TODO" entry (file+headline "~/Dropbox/db/zk/zk-todo.txt" "Summary")
