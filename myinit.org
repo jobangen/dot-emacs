@@ -1216,6 +1216,9 @@ misspelled words backwards."
   :ensure t
   :config
    (setq flyspell-correct-interface 'flyspell-correct-ivy))
+
+(use-package flyspell-correct-ivy
+  :ensure t)
 #+end_src
 ** writegood
 #+begin_src emacs-lisp
