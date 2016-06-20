@@ -487,7 +487,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (setq org-directory "~/Dropbox/db/org")
 (setq org-default-notes-file "~/Dropbox/db/org/inbox.org")
 ;;(setq org-agenda-files '("~/Dropbox/db/org"))
-(setq org-agenda-diary-file "~/Dropbox/db/org/calender.org_archive")
+(setq org-agenda-diary-file "~/Dropbox/db/org/journal.org")
 (setq org-agenda-include-diary nil)
 #+end_src
 
@@ -559,7 +559,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
           (time-begin  (read-string "Begin: " nil nil '(nil)))
           (time-end    (read-string "End: " nil nil '(nil))))
       (when (and date)
-        (concat (format "* %s %s\n" date name)
+        (concat (format "* %s %s      :wiss:\n" date name)
                 (format ":CLOCK:\n")
                 (format "CLOCK: [%s %s]--" date time-begin)
                 (format "[%s %s] => %%?\n" date time-end)
@@ -626,9 +626,9 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
     Assets:Giro                          %^{Amount|1350,00}€
     Income:Stipendium:Topoi" :immediate-finish t)
               ("q" "Quantified")
-              ("qa" "BerlinAntiquariat" entry (file+headline (orgdir-expand "antiq.org") "Termine")
+              ("qa" "BerlinAntiquariat" entry (file+datetree (orgdir-expand "journal.org"))
               #'org-capture-berlinantiquariat :jump-to-captured t)
-              ("qw" "Wissenschaft" entry (file+headline (orgdir-expand "wiss.org") "Quantified")
+              ("qw" "Wissenschaft" entry (file+datetree (orgdir-expand "journal.org"))
               #'org-capture-wiss :jump-to-captured t)
               ("z" "Zettel" plain (file (capture-report-date-file  "~/Dropbox/db/zk/inbox/"))
 "#+TITLE: %^{Title}\n#+DATE: %U\n* Keywords\nTODO-tags:\n* Summary\n%?\n\n* Bibliography\n\n* Links")
@@ -834,11 +834,26 @@ Null prefix argument turns off the mode."
          ("\\section{%s}" . "\\section*{%s}")
          ("\\subsection{%s}" . "\\subsection*{%s}")
          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+(add-to-list 'org-latex-classes
+      '("zettel"
+         "\\documentclass[DIV12, a4paper, 12pt, headings=normal]{scrartcl}
+          \\usepackage{enumitem}
+         \\makeatletter
+         \\def\maketitle{{\centering%
+         \\par{\large\bfseries\@title\par\bigskip}%
+         \\noindent}}
+         \\makeatother
+         [NO-DEFAULT-PACKAGES]
+         [PACKAGES]
+         [EXTRA]"
+         ("\\section{%s}" . "\\section*{%s}")
+         ("\\subsection*{%s}" . "\\subsection*{%s}")
+         ("\\subsubsection*{%s}" . "\\subsubsection*{%s}")))
 
-(setq org-latex-default-class "scrartcl")
+(setq org-latex-default-class "zettel")
 (setq org-export-with-author t)
 (setq org-export-with-date t)
-(setq org-export-with-toc t)
+(setq org-export-with-toc nil)
 (setq org-latex-hyperref-template nil)
 (setq org-latex-tables-booktabs t)
 (setq org-export-default-language "en")
