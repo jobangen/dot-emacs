@@ -388,6 +388,16 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
             (todo "HOLD"
 			((org-agenda-overriding-header "Postponed Tasks:")
 			 (org-agenda-remove-tags t)))))
+  ("t" "Today" 
+           ((agenda ""
+                 ((org-agenda-span 1)
+        	        (org-agenda-remove-tags t)
+                  (org-agenda-skip-function
+                   '(org-agenda-skip-entry-if 'notregexp ":today:"))))
+            (tags-todo "today"
+                 ((org-agenda-overriding-header "Tasks:")
+                  (org-agenda-skip-function
+                   '(org-agenda-skip-entry-if 'deadline 'scheduled))))))
   ("d" "Dissertation"
            ((tags-todo "diss"
 			((org-agenda-overriding-header "Dissertation")
@@ -395,7 +405,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 			 (org-tags-match-list-sublevels 'indented)
 			 (org-agenda-sorting-strategy
                              '(category-up))))))
-  ("t" "Texte"
+  ("l" "Literatur"
            ((tags-todo "literature"
 			((org-agenda-overriding-header "Texts & Tasks")
 			 (org-agenda-remove-tags t)
@@ -632,7 +642,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
               #'org-capture-wiss :jump-to-captured t)
               ("z" "Zettel" plain (file (capture-report-date-file  "~/Dropbox/db/zk/inbox/"))
 "#+TITLE: %^{Title}\n#+DATE: %U\n* Keywords\nTODO-tags:\n* Summary\n%?\n\n* Bibliography\n\n* Links")
-              ("Z" "Zettel TODO" entry (file+headline "~/Dropbox/db/zk/zk-todo.txt" "Summary")
+              ("Z" "Zettel TODO" entry (file+headline "~/Dropbox/db/zk/zk-todo.txt" "Inhalt")
 "* TODO %^{Task}\n:PROPERTIES:\n:CREATED: %U\n:END:\n[[%l][%f]]\n%?")
 ))
 
