@@ -315,7 +315,10 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 (use-package avy
   :ensure t
-  :bind (("M-s" . avy-goto-word-or-subword-1)))
+  :bind (("M-s" . avy-goto-word-or-subword-1))
+  :config
+   (progn
+    (setq avy-all-windows t)))
 #+end_src
 
 * org-mode
