@@ -95,20 +95,24 @@
   (lambda () (interactive)
         (gnus-summary-move-article nil "nnimap+gmail:arch" nil)))
 
-(define-key gnus-summary-mode-map "vv" 
+
+(define-key gnus-summary-mode-map "v4" 
   (lambda () (interactive)
         (gnus-summary-move-article nil "nnimap+zedat:2014" nil)))
 
-
-(define-key gnus-summary-mode-map "vf" 
+(define-key gnus-summary-mode-map "v5" 
   (lambda () (interactive)
         (gnus-summary-move-article nil "nnimap+zedat:2015" nil)))
 
+(define-key gnus-summary-mode-map "v6" 
+  (lambda () (interactive)
+        (gnus-summary-move-article nil "nnimap+zedat:2016" nil)))
+
 (define-key gnus-summary-mode-map "vi" 
   (lambda () (interactive)
-        (gnus-summary-move-article nil "nnimap+zedat:2014/2014-irw" nil)))
+        (gnus-summary-move-article nil "nnimap+zedat:2016/2016-irw" nil)))
 
-(define-key gnus-summary-mode-map "vs" 
+(define-key gnus-summary-mode-map "vv" 
   (lambda () (interactive)
         (gnus-summary-move-article nil "nnimap+zedat:2016" nil)))
 
