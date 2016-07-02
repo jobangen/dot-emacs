@@ -624,6 +624,29 @@ SCHEDULED: %t
 :END:
 %?" :clock-in t :clock-resume t)
 
+("j" "Journal")
+("jj" "Journal" entry (file+datetree+prompt (orgdir-expand "journal.org"))
+ "* %^{Headline}  :journal:
+:PROPERTIES:
+:CREATED: %U
+:END:
+%?")
+
+("jt" "Journal todo" entry (file+datetree+prompt (orgdir-expand "journal.org"))
+"* TODO %^{Task}
+SCHEDULED: %t
+:PROPERTIES:
+:CREATED: %U
+:EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
+:END:
+%?" )
+
+("ja" "BerlinAntiquariat" entry (file+datetree+prompt (orgdir-expand "journal.org"))
+ #'org-capture-berlinantiquariat :jump-to-captured t)
+
+("jw" "Wissenschaft" entry (file+datetree+prompt (orgdir-expand "journal.org"))
+ #'org-capture-wiss :jump-to-captured t)
+
 ("m" "mail todo" entry (file+headline (orgdir-expand "inbox.org") "Mail")
  "* TODO %^{Task}
 SCHEDULED: %t
@@ -700,14 +723,7 @@ Subject: [[%l][%:subject]]
     Assets:Giro                          %^{Amount|1350,00}€
     Income:Stipendium:Topoi" 
     :immediate-finish t)
-    
-("q" "Quantified")
-("qa" "BerlinAntiquariat" entry (file+datetree+prompt (orgdir-expand "journal.org"))
- #'org-capture-berlinantiquariat :jump-to-captured t)
- 
-("qw" "Wissenschaft" entry (file+datetree+prompt (orgdir-expand "journal.org"))
- #'org-capture-wiss :jump-to-captured t)
- 
+     
 ("z" "Zettel" plain (file (capture-report-date-file  "~/Dropbox/db/zk/inbox/"))
  "#+TITLE: %^{Title}\n
 #+DATE: %U\n* Schlagwörter
