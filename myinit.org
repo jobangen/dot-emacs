@@ -824,6 +824,9 @@ tags:\n* Inhalt
 ;; Save the running clock and all clock history when exiting Emacs,
 ;; load it on startup
 (setq org-clock-persist t)
+
+;; When non-nil, ask before resuming any stored clock during load.
+(setq org-clock-persist-query-resume nil)
 #+end_src
 ** timer
 #+begin_src emacs-lisp
