@@ -283,7 +283,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   :bind (("C-s" . counsel-grep-or-swiper)
          ("C-c u" . counsel-linux-app)
          ("C-M-s" . counsel-ag)
-         ("C-S-s" . counsel-imenu)
          ("C-x l". counsel-locate)
          ("M-y" . counsel-yank-pop))
 )
@@ -319,6 +318,14 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   :config
    (progn
     (setq avy-all-windows t)))
+#+end_src
+
+** imenu
+#+begin_src emacs-lisp
+(setq org-imenu-depth 9)
+
+(use-package imenu-anywhere
+  :bind ("C-S-s" . ivy-imenu-anywhere))
 #+end_src
 
 * org-mode
