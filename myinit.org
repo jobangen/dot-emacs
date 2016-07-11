@@ -1872,7 +1872,7 @@ Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
 _i_: in         _j_: goto       _ti_: in                _c_: countdown '25    _pi_: in
 _l_: in-last    _s_: select     _tp_: pause/continue    ^ ^                   _po_: out
 _o_: out        _d_: display    _ti_: insert            ^ ^                   _ps_: status
-_q_: cancel     ^ ^             _tI_: insert item       ^ ^                   _pn_: next
+_q_: cancel     _r_: resolve    _tI_: insert item       ^ ^                   _pn_: next
 " 
  ("c" org-timer-set-timer)
  ("d" org-clock-display)
@@ -1881,6 +1881,7 @@ _q_: cancel     ^ ^             _tI_: insert item       ^ ^                   _p
  ("l" org-clock-in-last)
  ("o" org-clock-out)
  ("q" org-clock-cancel)
+ ("r" org-resolve-clocks)
  ("s" org-clock-select-task)
  ("ti" org-timer-start)
  ("to" org-timer-stop)
