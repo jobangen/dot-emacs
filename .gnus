@@ -259,7 +259,9 @@
 (defun notmuch-file-to-group (file)
   "Calculate the Gnus group name from the given file name."
   (let ((group (file-name-directory (directory-file-name (file-name-directory file)))))
-    (setq group (replace-regexp-in-string ".*/Maildir/" "nnimap+local:" group))
+    (setq group (replace-regexp-in-string ".*/Mail/" "nnimap+" group))
+    (setq group (replace-regexp-in-string "zedat/" "zedat:" group))
+    (setq group (replace-regexp-in-string "gmail/" "gmail:" group))
     (setq group (replace-regexp-in-string "/$" "" group))
     (if (string-match ":$" group)
         (concat group "INBOX")
