@@ -955,9 +955,10 @@ Null prefix argument turns off the mode."
       '("zettel"
          "\\documentclass[DIV12, a4paper, 12pt, headings=normal]{scrartcl}
           \\usepackage{enumitem}
+          \\setlist[itemize]{itemsep=-0.5ex}
          \\makeatletter
-         \\def\maketitle{{\centering%
-         \\par{\large\bfseries\@title\par\bigskip}%
+         \\def\\maketitle{{\\centering%
+         \\par{\\large\\bfseries\\@title\\par\\bigskip}%
          \\noindent}}
          \\makeatother
          [NO-DEFAULT-PACKAGES]
