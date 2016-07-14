@@ -666,9 +666,9 @@ Subject: [[%l][%:subject]]
 
 ("l" "literature" entry (file+headline (orgdir-expand "inbox.org") "Literatur")
  "* TODO %^{Author}, %^{Title} :txt:\n
-:PROPERTIES:\n
-:CREATED:  %U\n
-:END:\n
+:PROPERTIES:
+:CREATED:  %U
+:END:
 %^{BIBL}p%^{STATUS}p%^{FORM}p%^{BIB1}p\n** data-%?
 #+BEGIN_SRC csv-mode :tangle stat/ref-path.csv\n\n#+END_SRC")
 
@@ -752,7 +752,7 @@ tags:\n* Inhalt
 (setq org-refile-targets (quote (("pers.org" :maxlevel . 3)
                                  ("wiss.org" :maxlevel . 3)
                                  ("irw.org" :maxlevel . 3)
-                                 ("diss.org" :maxlevel . 2)
+                                 ("~/Dropbox/diss/diss.org" :maxlevel . 2)
                                  ("antiq.org" :maxlevel . 1))))
 
 (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
