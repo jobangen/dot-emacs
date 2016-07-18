@@ -1430,7 +1430,8 @@ abort completely with `C-g'."
 #+begin_src emacs-lisp
 (use-package magit
  :config
-   (setq magit-last-seen-setup-instructions "1.4.0"))
+   (setq magit-last-seen-setup-instructions "1.4.0")
+   (setq magit-diff-refine-hunk 'all))
 #+end_src
 
 ** git-wip
