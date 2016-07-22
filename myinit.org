@@ -212,6 +212,11 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 )
 #+end_src
 
+** window
+#+begin_src emacs-lisp
+(bind-key "M-o" 'other-window)
+#+end_src
+
 ** helm 
 #+begin_src emacs-lisp
 (use-package helm
