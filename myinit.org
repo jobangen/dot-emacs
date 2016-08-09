@@ -398,16 +398,21 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
             (todo "HOLD"
 			((org-agenda-overriding-header "Postponed Tasks:")
 			 (org-agenda-remove-tags t)))))
-  ("t" "Today" 
+  ("t" "Today"
            ((agenda ""
                  ((org-agenda-span 1)
         	        (org-agenda-remove-tags t)
                   (org-agenda-skip-function
                    '(org-agenda-skip-entry-if 'notregexp ":today:"))))
             (tags-todo "today"
-                 ((org-agenda-overriding-header "Tasks:")
+                 ((org-agenda-overriding-header "Today's Tasks:")
                   (org-agenda-skip-function
-                   '(org-agenda-skip-entry-if 'deadline 'scheduled))))))
+                   '(org-agenda-skip-entry-if 'deadline 'scheduled))))
+            (todo "STARTED"
+                  ((org-agenda-overriding-header "Started:")
+         	         (org-agenda-remove-tags t)
+                   (org-agenda-skip-function
+                    '(org-agenda-skip-entry-if 'deadline 'scheduled))))))
   ("d" "Dissertation"
            ((tags-todo "diss"
 			((org-agenda-overriding-header "Dissertation")
@@ -776,6 +781,8 @@ tags:\n* Inhalt
                             ("@work" . ?W)
                             ("@pers" . ?p)
 	       		        ("@wiss" . ?w)
+                            ("today" . ?t)
+                            ("someday" . ?s)
                             (:endgroup))))
 
 ; Allow setting single tags without the menu
