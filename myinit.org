@@ -605,7 +605,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 \n")
 
 ("t" "todo" entry (file (orgdir-expand "inbox.org"))
- "* TODO %^{Task}
+ "* TODO %^{Task} %^G
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
