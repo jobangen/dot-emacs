@@ -1918,6 +1918,7 @@ _q_: cancel     _r_: resolve    _tI_: insert item       ^ ^                   _p
 ("b" bbdb "bbdb")
 ("f" flyspell-mode "flyspell")
 ("g" gnus "gnus")
+("i" interleave "interleave")
 ("p" pdf-tools-install "pdf-tools")
 ("P" pandoc-mode "pandoc")
 ("t" ansi-term "ansi-term")
