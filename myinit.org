@@ -1847,6 +1847,13 @@ Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
 )
 #+end_src
 
+** google-this
+#+begin_src emacs-lisp
+(use-package google-this
+  :config
+  (google-this-mode 1))
+#+end_src
+
 * hydra
 ** hydra-setup
 #+begin_src emacs-lisp
