@@ -762,7 +762,7 @@ tags:\n* Inhalt
 (setq org-refile-targets (quote (("pers.org" :maxlevel . 3)
                                  ("wiss.org" :maxlevel . 3)
                                  ("irw.org" :maxlevel . 3)
-                                 ("~/Dropbox/diss/diss.org" :maxlevel . 2)
+                                 ("~/Dropbox/diss/diss.org" :maxlevel . 3)
                                  ("antiq.org" :maxlevel . 1))))
 
 (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
