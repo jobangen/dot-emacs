@@ -410,9 +410,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                    '(org-agenda-skip-entry-if 'deadline 'scheduled))))
             (todo "STARTED"
                   ((org-agenda-overriding-header "Started:")
-         	         (org-agenda-remove-tags t)
-                   (org-agenda-skip-function
-                    '(org-agenda-skip-entry-if 'deadline 'scheduled))))))
+         	         (org-agenda-remove-tags t)))))
   ("d" "Dissertation"
            ((tags-todo "diss"
 			((org-agenda-overriding-header "Dissertation")
@@ -1410,10 +1408,11 @@ abort completely with `C-g'."
 ** google-translate
 #+begin_src emacs-lisp
 (use-package google-translate
-  :bind (("C-c Ü" . google-translate-smooth-translate))
   :init
    (require 'google-translate-smooth-ui)
-   ;;(require 'google-translate-default-ui)
+   (setq google-translate-translation-directions-alist
+         '(("de" . "en") ("en" . "de") ("de" . "fr") ("fr" . "de")))
+   (setq google-translate-output-destination nil)
 )
 #+end_src
 
@@ -1421,6 +1420,15 @@ abort completely with `C-g'."
 #+begin_src emacs-lisp
 (use-package dictcc
   :bind (("C-c ü" . dictcc)))
+#+end_src
+
+** www-synonyms
+#+begin_src emacs-lisp
+(use-package www-synonyms
+  :config
+  (require 'www-synonyms)
+  (setq www-synonyms-key "gaGF6dLppnG6whJVPKFg")
+  (setq www-synonyms-change-lang "de_DE"))
 #+end_src
 
 * Versionskontrolle
@@ -1681,6 +1689,8 @@ Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
   "http://www.google.de/search?ie=utf-8&oe=utf-8&q=%s")
   (defengine google-images
   "http://www.google.de/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s")
+  (defengine google-scholar
+  "https://scholar.google.de/scholar?hl=de&q=%s")
   (defengine duckduckgo
   "https://duckduckgo.com/?q=%s")
   (defengine fu-katalog
@@ -1845,13 +1855,6 @@ Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
   ;;       (howm-mode 1))))
   ;; (add-hook 'text-mode-hook 'turn-on-howm-mode-hook)
 )
-#+end_src
-
-** google-this
-#+begin_src emacs-lisp
-(use-package google-this
-  :config
-  (google-this-mode 1))
 #+end_src
 
 * hydra
@@ -2058,23 +2061,34 @@ Git
 )
 #+end_src
 
-** hydra-engine
+** hydra-engine+
 #+begin_src emacs-lisp
-(bind-key "C-c e" 'hydra-engine/body)
-(defhydra hydra-engine (:color blue :columns 3)
-"Engine"
-("b" gscholar-bibtex "g-bibtex")
-("g" engine/search-google "google")
-("i" engine/search-google-images "google-images")
-("d" engine/search-duckduckgo "duckduckgo")
-("y" engine/search-youtube "youtube")
-("f" engine/search-fu-katalog "fu-katalog")
-("j" engine/search-jstor "jstor")
-("s" engine/search-sowiport "sowiport")
-("p" engine/search-pons-de-en "pons de-en")
-("w" engine/search-wikipedia "wikipedia")
+(bind-key "C-c e" 'hydra-engine+/body)
+(defhydra hydra-engine+ (:color blue)
+"
+^Search^          ^Biblio^           ^Lang^
+^-^---------------^-^----------------^-^-----------------
+_g_: google       _bS_: scholar      _t_: translate
+_i_: images       _bf_: fu-katalog   _s_: synonyms
+_d_: duckduckgo   _bj_: jstor        _c_: - change lang
+_w_: wikipedia    _bs_: sowiport
+_y_: youtube      _bb_: bibtex
+"
+("bb" gscholar-bibtex)
+("bf" engine/search-fu-katalog)
+("bj" engine/search-jstor)
+("bs" engine/search-sowiport)
+("bS" engine/search-google-scholar)
+("c" www-synonyms-change-lang)
+("g" engine/search-google)
+("i" engine/search-google-images)
+("d" engine/search-duckduckgo)
+("y" engine/search-youtube)
+("p" engine/search-pons-de-en)
+("s" www-synonyms-insert-synonym)
+("t" google-translate-smooth-translate)
+("w" engine/search-wikipedia)
 ) 
-
 #+end_src
 
 * defun
