@@ -1416,12 +1416,6 @@ abort completely with `C-g'."
 )
 #+end_src
 
-** dictcc
-#+begin_src emacs-lisp
-(use-package dictcc
-  :bind (("C-c ü" . dictcc)))
-#+end_src
-
 ** www-synonyms
 #+begin_src emacs-lisp
 (use-package www-synonyms
