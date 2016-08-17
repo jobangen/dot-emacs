@@ -406,6 +406,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                    '(org-agenda-skip-entry-if 'notregexp ":today:"))))
             (tags-todo "today"
                  ((org-agenda-overriding-header "Today's Tasks:")
+                  (org-agenda-remove-tags t)
                   (org-agenda-skip-function
                    '(org-agenda-skip-entry-if 'deadline 'scheduled))))
             (todo "STARTED"
