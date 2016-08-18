@@ -1771,9 +1771,7 @@ Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
 #+begin_src emacs-lisp
 (use-package yasnippet
   :ensure t
-  :defer t
   :diminish yas-minor-mode
-  :commands yas-global-mode
   :config
   (progn
     (add-hook 'hippie-expand-try-functions-list 'yas-hippie-try-expand)
