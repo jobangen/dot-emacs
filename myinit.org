@@ -2251,9 +2251,9 @@ arguments."
   (let* ((list (word-frequency-list reverse)) (sum (car list)))
     (mapconcat
      (cond
-      ((not func) (lambda (e) (format "| %7d | %s |\n" (cdr e) (car e))))
+      ((not func) (lambda (e) (format "%7d, %s\n" (cdr e) (car e))))
       ((equal func t)
-       (lambda (e) (format "| %7d | %6.2f%% | %03d | %s |\n"
+       (lambda (e) (format "%7d, %6.2f%%, %03d, %s\n"
                            (cdr e) 
                (/ (* 1e2 (cdr e)) sum) 
                (length (car e))
