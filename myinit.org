@@ -2057,7 +2057,8 @@ Git
 ** hydra-engine+
 #+begin_src emacs-lisp
 (bind-key "C-c e" 'hydra-engine+/body)
-(defhydra hydra-engine+ (:color blue)
+(defhydra hydra-engine+ (:hint nil
+                         :color blue)
 "
 ^Search^          ^Biblio^           ^Lang^
 ^-^---------------^-^----------------^-^-----------------
