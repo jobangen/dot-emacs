@@ -1044,7 +1044,33 @@ Null prefix argument turns off the mode."
 
     (setq LaTeX-csquotes-open-quote "\\enquote{")
 	(setq LaTeX-csquotes-close-quote "}")
-   
+
+    (setq LaTeX-babel-hyphen nil); Disable language-specific hyphen insertion.
+
+    ;; TeX-fold-mode
+    (add-hook 'TeX-mode-hook
+         (lambda () (TeX-fold-mode 1))); Automatically activate TeX-fold-mode.
+
+    (custom-set-variables
+      '(TeX-fold-macro-spec-list
+        '(("[f]"     ("sidenote"))
+          ("[f]"     ("footnote" "marginpar"))
+          ("[ac]"    ("autocite")) ;; new
+          ("[c]"     ("cite"))
+          ("[l]"     ("label"))
+          ("[r]"     ("ref" "pageref" "eqref"))
+          ("[i]"     ("index" "glossary"))
+          ("[1]:||"  ("item"))
+          ("…"       ("dots"))
+          ("(C)"     ("copyright"))
+          ("(R)"     ("textregistered"))
+          ("TM"      ("texttrademark"))
+          (1         ("part" "chapter" "section" "subsection" "subsubsection"
+                      "paragraph" "subparagraph" "part*" "chapter*" "section*"
+                      "subsection*" "subsubsection*" "paragraph*" "subparagraph*"
+                      "emph" "textit" "textsl" "textmd" "textrm" "textsf"
+                      "texttt" "textbf" "textsc" "textup")))))
+
     ;;SyncTeX
     (setq TeX-source-correlate-mode 'synctex)
 
