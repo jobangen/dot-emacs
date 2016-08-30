@@ -1165,6 +1165,91 @@ http://www.jonathanleroux.org/bibtex-mode.html
  (setq gscholar-bibtex-default-source "Google Scholar"))
 #+end_src
 
+** bibtex-completion
+#+begin_src emacs-lisp
+
+(setq bibtex-completion-cite-default-command "autocite")
+
+(setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n${=key=}\n* Schlagwörter\ntags: #${=key=}; #txt;\n* Inhalt\n\n* Literatur\n\n* Links")
+
+
+(defun bibtex-completion-apa-format-reference (key)
+  "Returns a plain text reference in APA format for the
+publication specified by KEY."
+  (let*
+   ((key (bibtex-completion-normalize-candidate key))
+    (entry (bibtex-completion-get-entry
+            (bibtex-completion-normalize-candidate key)))
+    (ref (pcase (downcase (bibtex-completion-get-value "=type=" entry))
+           ("article"
+            (s-format
+             "${author} ${date}: ${title}. In: ${journaltitle}, ${volume}(${number}), ${pages}."
+             'bibtex-completion-apa-get-value entry))
+           ("inproceedings"
+            (s-format
+             "${author} ${date}. ${title}. In ${editor}, ${booktitle} (pp. ${pages}). ${location}: ${publisher}."
+             'bibtex-completion-apa-get-value entry))
+           ("book"
+            (s-format
+             "${author} ${date}: ${title}. ${location}: ${publisher}."
+             'bibtex-completion-apa-get-value entry))
+           ("collection"
+            (s-format
+             "${editor} (Hg.) ${date}: ${title}. ${location}: ${publisher}."
+             'bibtex-completion-apa-get-value entry))
+           ("phdthesis"
+            (s-format
+             "${author} ${year}: ${title} (Doctoral dissertation). ${school}, ${location}."
+             'bibtex-completion-apa-get-value entry))
+           ("inbook"
+            (s-format
+             "${author} ${date}: ${title}. In: [${crossref}] ${location}: ${publisher}, ${pages}"
+             'bibtex-completion-apa-get-value entry))
+           ("incollection"
+            (s-format
+             "${author} ${date}: ${title}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}."
+             'bibtex-completion-apa-get-value entry))
+           ("proceedings"
+            (s-format
+             "${editor} (Hg.) ${date}: ${booktitle}. ${location}: ${publisher}."
+             'bibtex-completion-apa-get-value entry))
+           ("unpublished"
+            (s-format
+             "${author} ${date}: ${title}. Unpublished manuscript."
+             'bibtex-completion-apa-get-value entry))
+           ("online"
+            (s-format
+             "${author} ${date}: ${title}, ${url}."))
+           (_
+            (s-format
+             "${author} (${date}). ${title}."
+             'bibtex-completion-apa-get-value entry)))))
+   (replace-regexp-in-string "\\([.?!]\\)\\." "\\1" ref))) ; Avoid sequences of punctuation marks.
+
+
+(defun bibtex-completion-candidates-formatter (candidates width)
+  "Formats BibTeX entries for display in results list."
+  (cl-loop
+   for entry in candidates
+   for entry = (cdr entry)
+   for entry-key = (bibtex-completion-get-value "=key=" entry)
+   if (assoc-string "author" entry 'case-fold)
+     for fields = '("author" "title" "date" "=has-pdf=" "=has-note=" "=type=")
+   else
+     for fields = '("editor" "title" "date" "=has-pdf=" "=has-note=" "=type=")
+   for fields = (-map (lambda (it)
+                        (bibtex-completion-clean-string
+                          (bibtex-completion-get-value it entry " ")))
+                      fields)
+   for fields = (-update-at 0 'bibtex-completion-shorten-authors fields)
+   collect
+   (cons (s-format "$0 $1 $2 $3$4 $5" 'elt
+                   (-zip-with (lambda (f w) (truncate-string-to-width f w 0 ?\s))
+                              fields (list 36 (- width 53) 4 1 1 7)))
+         entry-key)))
+
+#+end_src
+
 ** helm-bibtex
 #+begin_src emacs-lisp
 (use-package helm-bibtex
@@ -1180,58 +1265,6 @@ http://www.jonathanleroux.org/bibtex-mode.html
    (setq helm-bibtex-pdf-open-function
      (lambda (fpath)
       (start-process "evince" "*helm-bibtex-evince*" "/usr/bin/evince" fpath)))
-   (setq helm-bibtex-format-citation-functions
-     '((org-mode      . helm-bibtex-format-citation-default)
-       (Latex-mode    . helm-bibtex-format-citation-cite)))
-
-   (setq helm-bibtex-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n${=key=}\n* Schlagwörter\ntags: #${=key=}; #txt;\n* Inhalt\n\n* Literatur\n\n* Links")
-
-(defun helm-bibtex-apa-format-reference (key)
-  "Returns a plain text reference in APA format for the
-publication specified by KEY."
-  (let*
-   ((entry (helm-bibtex-get-entry key))
-    (ref (pcase (downcase (helm-bibtex-get-value "=type=" entry))
-           ("article"
-            (s-format
-             "${author} ${date}: '${title}'. ${journaltitle} ${volume}.${number}, S. ${pages}."
-             'helm-bibtex-apa-get-value entry))
-           ("inproceedings"
-            (s-format
-             "${author} ${date}: '${title}'. In: ${editor}: ${booktitle}. ${location}: ${publisher}, S. ${pages}"
-             'helm-bibtex-apa-get-value entry))
-           ("book"
-            (s-format
-             "${author} ${date}: ${title}. ${location}: ${publisher}."
-             'helm-bibtex-apa-get-value entry))
-           ("phdthesis"
-            (s-format
-             "${author} ${date}. ${title} (Doctoral dissertation)."
-             'helm-bibtex-apa-get-value entry))
-           ("inbook"
-            (s-format
-             "${author} ${date}: '${title}'. In: ${editor} (Hg.): ${booktitle}. ${location}: ${publisher}, S. ${pages}."
-             'helm-bibtex-apa-get-value entry))
-           ("incollection"
-            (s-format
-             "${author} ${date}: '${title}'. In: ${editor} (Hg.): ${booktitle}. ${location}: ${publisher}, S. ${pages}."
-             'helm-bibtex-apa-get-value entry))
-           ("proceedings"
-            (s-format
-             "${editor} (Hg.). ${date}: ${booktitle}. ${location}: ${publisher}."
-             'helm-bibtex-apa-get-value entry))
-           ("unpublished"
-            (s-format
-             "${author} ${date}: ${title}. Unpublished manuscript."
-             'helm-bibtex-apa-get-value entry))
-           (_
-            (s-format
-             "${author} ${date}: ${title}."
-             'helm-bibtex-apa-get-value entry)))))
-    (replace-regexp-in-string "\\([.?!]\\)\\." "\\1" ref))) ; Avoid sequences of punctuation marks.
-
-
-
 
 )
 #+end_src
