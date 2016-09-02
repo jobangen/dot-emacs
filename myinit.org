@@ -553,6 +553,10 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 
 ** capture-functions
 #+begin_src emacs-lisp
+(defun capture-report-date-file (path)
+  (let ((name (read-string "Name: ")))
+    (expand-file-name (concat path name ".txt"))))
+
 ;;http://stackoverflow.com/questions/24967910/org-mode-capture
 (defun org-capture-berlinantiquariat ()
   "Capture a class template for org-capture."
@@ -735,12 +739,13 @@ Subject: [[%l][%:subject]]
     Income:Stipendium:Topoi" 
     :immediate-finish t)
      
-("z" "Zettel" plain (file (capture-report-date-file  "~/Dropbox/db/zk/inbox/"))
- "#+TITLE: %^{Title}\n
+("z" "Zettel" plain (file (capture-report-date-file  "~/Dropbox/db/zk/"))
+ "#+TITLE: %^{Title}
 #+DATE: %U\n* Schlagwörter
 tags:\n* Inhalt
 %?\n* Literatur\n
-\n* Links")
+\n* Links"
+:immediate-finish t :jump-to-captured t)
 
 ("Z" "Zettel TODO" entry (file+headline "~/Dropbox/db/zk/zk-todo.txt" "Inhalt")
  "* TODO %^{Task}
@@ -750,9 +755,6 @@ tags:\n* Inhalt
 [[%l][%f]]
 %?")
 ))
-
-(defun capture-report-date-file (path)
-  (expand-file-name (concat path (format-time-string "%Y-%m-%d-%H%M") ".txt")))
 #+end_src
 
 ** refile
