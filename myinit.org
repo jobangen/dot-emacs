@@ -554,8 +554,10 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ** capture-functions
 #+begin_src emacs-lisp
 (defun capture-report-date-file (path)
-  (let ((name (read-string "Name: ")))
-    (expand-file-name (concat path name ".txt"))))
+  (let
+   ((id      (read-string "ID: "))
+    (name    (read-string "Name: ")))
+   (expand-file-name (concat path id "~" name ".txt"))))
 
 ;;http://stackoverflow.com/questions/24967910/org-mode-capture
 (defun org-capture-berlinantiquariat ()
