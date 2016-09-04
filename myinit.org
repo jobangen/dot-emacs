@@ -1187,31 +1187,31 @@ publication specified by KEY."
     (ref (pcase (downcase (bibtex-completion-get-value "=type=" entry))
            ("article"
             (s-format
-             "${author} ${date}: ${title}. In: ${journaltitle}, ${volume}(${number}), ${pages}."
+             "${author} ${date}: ${title}. ${subtitle}. In: ${journaltitle}, ${volume}(${number}), ${pages}."
              'bibtex-completion-apa-get-value entry))
            ("inproceedings"
             (s-format
-             "${author} ${date}. ${title}. In ${editor}, ${booktitle} (pp. ${pages}). ${location}: ${publisher}."
+             "${author} ${date}. ${title}. ${subtitle}. In: ${editor}, ${booktitle} (pp. ${pages}). ${location}: ${publisher}."
              'bibtex-completion-apa-get-value entry))
            ("book"
             (s-format
-             "${author} ${date}: ${title}. ${location}: ${publisher}."
+             "${author} ${date}: ${title}. ${subtitle}. ${location}: ${publisher}."
              'bibtex-completion-apa-get-value entry))
            ("collection"
             (s-format
-             "${editor} (Hg.) ${date}: ${title}. ${location}: ${publisher}."
+             "${editor} (Hg.) ${date}: ${title}. ${subtitle}. ${location}: ${publisher}."
              'bibtex-completion-apa-get-value entry))
            ("phdthesis"
             (s-format
-             "${author} ${year}: ${title} (Doctoral dissertation). ${school}, ${location}."
+             "${author} ${year}: ${title}. ${subtitle}. (Doctoral dissertation). ${school}, ${location}."
              'bibtex-completion-apa-get-value entry))
            ("inbook"
             (s-format
-             "${author} ${date}: ${title}. In: [${crossref}] ${location}: ${publisher}, ${pages}"
+             "${author} ${date}: ${title}. ${subtitle}. In: [${crossref}] ${location}: ${publisher}, ${pages}"
              'bibtex-completion-apa-get-value entry))
            ("incollection"
             (s-format
-             "${author} ${date}: ${title}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}."
+             "${author} ${date}: ${title}. ${subtitle}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}."
              'bibtex-completion-apa-get-value entry))
            ("proceedings"
             (s-format
@@ -1219,15 +1219,15 @@ publication specified by KEY."
              'bibtex-completion-apa-get-value entry))
            ("unpublished"
             (s-format
-             "${author} ${date}: ${title}. Unpublished manuscript."
+             "${author} ${date}: ${title}. ${subtitle}. Unpublished manuscript."
              'bibtex-completion-apa-get-value entry))
            ("online"
             (s-format
-             "${author} ${date}: ${title}, ${url}."
+             "${author} ${date}: ${title}. ${subtitle}. , ${url}."
              'bibtex-completion-apa-get-value entry))
            (_
             (s-format
-             "${author} ${date}: ${title}."
+             "${author} ${date}: ${title}. ${subtitle}."
              'bibtex-completion-apa-get-value entry)))))
    (replace-regexp-in-string "\\([.?!]\\)\\." "\\1" ref))) ; Avoid sequences of punctuation marks.
 
