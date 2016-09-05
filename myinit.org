@@ -1094,13 +1094,13 @@ Null prefix argument turns off the mode."
 
     (add-hook 'LaTeX-mode-hook 
          (lambda()
-            (add-to-list 'TeX-command-list '("Latex -se" "%`pdflatex -shell-escape %t" TeX-run-TeX nil t))
+            (add-to-list 'TeX-command-list '("Latex -se" "%`pdflatex --synctex=1 -shell-escape %t" TeX-run-TeX nil t))
             (setq TeX-save-query nil)
             (setq TeX-show-compilation t)))
 
       (add-hook 'LaTeX-mode-hook 
           (lambda()
-             (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+             (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex --synctex=1 %(mode)%' %t" TeX-run-TeX nil t))
              (setq TeX-save-query nil)
              (setq TeX-show-compilation t)))
 
