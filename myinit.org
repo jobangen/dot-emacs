@@ -569,6 +569,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
       (when (and date)
         (concat (format "* BerlinAntiquariat   :work:\n")
                 (format ":PROPERTIES:\n")
+                (format ":CATEGORY: work\n")
                 (format ":TYPE:     work\n")
                 (format ":WORK:     berlinantiquariat\n")
                 (format ":DATE:     [%s]\n" date)
@@ -593,6 +594,9 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
           (time-end    (read-string "End: " nil nil '(nil))))
       (when (and date)
         (concat (format "* %s      :wiss:\n" name)
+                (format ":PROPERTIES:\n")
+                (format ":CATEGORY: wiss\n")
+                (format ":END:\n")
                 (format ":CLOCK:\n")
                 (format "CLOCK: [%s %s]--" date time-begin)
                 (format "[%s %s] => %%?\n" date time-end)
@@ -613,7 +617,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
  "* TODO %^{Task} %^G
 SCHEDULED: %t
 :PROPERTIES:
-:CREATED: %U
+:CREATED:   %U
+:CATEGORY:  %^{Category|wiss|work|pers}
 :EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
 :END:
 %?")
@@ -623,6 +628,7 @@ SCHEDULED: %t
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
+:CATEGORY:  %^{Category|wiss|work|pers}
 :EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
 :END:
 %?\n")
@@ -638,6 +644,7 @@ SCHEDULED: %t
  "%^{Task}
 :PROPERTIES:
 :CREATED: %U
+:CATEGORY:  %^{Category|wiss|work|pers}
 :END:
 %?" :clock-in t :clock-resume t)
 
@@ -646,6 +653,7 @@ SCHEDULED: %t
  "* %^{Headline}  :journal:
 :PROPERTIES:
 :CREATED: %U
+:CATEGORY:  %^{Category|wiss|work|pers}
 :END:
 %?")
 
@@ -654,6 +662,7 @@ SCHEDULED: %t
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
+:CATEGORY:  %^{Category|wiss|work|pers}
 :EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
 :END:
 %?" )
@@ -669,6 +678,7 @@ SCHEDULED: %t
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
+:CATEGORY:  %^{Category|wiss|work|pers}
 :END:
 %:fromname wrote on %:date-timestamp-inactive:
 Subject: [[%l][%:subject]]
@@ -680,11 +690,14 @@ Subject: [[%l][%:subject]]
 "%?" :jump-to-captured t :empty-lines 1)
 
 ("l" "literature" entry (file+headline (orgdir-expand "inbox.org") "Literatur")
- "* TODO %^{Author}, %^{Title} :txt:\n
+ "* TODO %^{Author}, %^{Title} :txt:
 :PROPERTIES:
-:CREATED:  %U
-:END:
-%^{BIBL}p%^{STATUS}p%^{FORM}p%^{BIB1}p\n** data-%?
+:CREATED:   %U
+:CATEGORY:  wiss
+:BIBL:      %^{Bibl|x| }
+:FORM:      %^{Form|b|c|f| }
+:BIB1:      %^{Bibliothek}
+:END:\n** data-%?
 #+BEGIN_SRC csv-mode :tangle stat/ref-path.csv\n\n#+END_SRC")
 
 ("g" "Geld - Ledger entries")
@@ -753,6 +766,7 @@ tags:\n* Inhalt
  "* TODO %^{Task}
 :PROPERTIES:
 :CREATED: %U
+:CATEGORY: wiss
 :END:
 [[%l][%f]]
 %?")
