@@ -289,7 +289,9 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          ("C-c u" . counsel-linux-app)
          ("C-M-s" . counsel-ag)
          ("C-x l". counsel-locate)
-         ("M-y" . counsel-yank-pop))
+         ("M-y" . counsel-yank-pop)
+         :map ivy-minibuffer-map
+         ("M-y" . ivy-next-line))
 )
 #+end_src
 
