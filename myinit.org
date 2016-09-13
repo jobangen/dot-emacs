@@ -1041,6 +1041,88 @@ Null prefix argument turns off the mode."
 (use-package org-search-goto-ml
   :load-path "~/.emacs.d/non-elpa/org-search-goto-ml")
 #+end_src
+** org-clock-csv
+#+begin_src emacs-lisp
+
+(setq org-clock-csv-header "task;category;date;start;end;effort;tags")
+
+(setq org-clock-csv-row-fmt 'org-clock-csv-job-row-fmt)
+
+(defun org-clock-csv-job-row-fmt (plist)
+  "Default row formatting function."
+  (mapconcat #'identity
+	     (list (plist-get plist ':task)
+		   (plist-get plist ':category)
+		   (plist-get plist ':date)
+		   (plist-get plist ':start)
+		   (plist-get plist ':end)
+		   (plist-get plist ':effort)
+;;		   (plist-get plist ':ishabit)
+		   (plist-get plist ':tags))
+	     ";"))
+
+
+(defun org-clock-csv--parse-element (element)
+  "Ingest clock ELEMENT and produces a plist of its relevant
+properties."
+  (when (and (equal (org-element-type element) 'clock)
+	     ;; Only ingest closed, inactive clock elements.
+	     (equal (org-element-property :status element) 'closed)
+	     (equal (org-element-property
+		     :type (org-element-property :value element))
+		    'inactive-range))
+    (let* ((timestamp (org-element-property :value element))
+	   ;; Find the first headline that contains this clock element.
+	   (parent-headline (org-element-lineage element '(headline)))
+	   (task (org-element-property :raw-value parent-headline))
+	   (effort (org-element-property :EFFORT parent-headline))
+	   ;; TODO: Handle tag inheritance, respecting the value of
+	   ;; `org-tags-exclude-from-inheritance'.
+	   (tags (mapconcat #'identity
+			    (org-element-property :tags parent-headline) ":"))
+	   (ishabit (when (equal "habit" (org-element-property
+					  :STYLE parent-headline))
+		      "t"))
+	   (category (org-clock-csv--find-category parent-headline))
+       (date (format "%d-%s-%s"
+			  (org-element-property :year-start timestamp)
+			  (org-clock-csv--pad
+			   (org-element-property :month-start timestamp))
+			  (org-clock-csv--pad
+			   (org-element-property :day-start timestamp))))
+	   (start (format "%d-%s-%s %s:%s"
+			  (org-element-property :year-start timestamp)
+			  (org-clock-csv--pad
+			   (org-element-property :month-start timestamp))
+			  (org-clock-csv--pad
+			   (org-element-property :day-start timestamp))
+			  (org-clock-csv--pad
+			   (org-element-property :hour-start timestamp))
+			  (org-clock-csv--pad
+			   (org-element-property :minute-start timestamp))))
+	   (end (format "%d-%s-%s %s:%s"
+			  (org-element-property :year-end timestamp)
+			  (org-clock-csv--pad
+			   (org-element-property :month-end timestamp))
+			  (org-clock-csv--pad
+			   (org-element-property :day-end timestamp))
+			  (org-clock-csv--pad
+			   (org-element-property :hour-end timestamp))
+			  (org-clock-csv--pad
+			   (org-element-property :minute-end timestamp))))
+      (duration (org-element-property :duration element)))
+      (list :task task
+	    :category category
+        :date date
+	    :start start
+	    :end end
+        :duration duration
+	    :effort effort
+	    :ishabit ishabit
+	    :tags tags))))
+
+
+#+end_src
 
 * LaTeX und BibTeX
 ** auctex
