@@ -659,6 +659,12 @@ SCHEDULED: %t
 :END:
 %?")
 
+("jl" "Literaturbearbeitung" entry (file+datetree (orgdir-expand "journal.org"))
+ "* Literaturbearbeitung
+:PROPERTIES:
+:CATEGORY: wiss
+:END:" :jump-to-captured t :immediate-finish t)
+
 ("jt" "Journal todo" entry (file+datetree+prompt (orgdir-expand "journal.org"))
 "* TODO %^{Task}
 SCHEDULED: %t
@@ -1044,7 +1050,7 @@ Null prefix argument turns off the mode."
 ** org-clock-csv
 #+begin_src emacs-lisp
 
-(setq org-clock-csv-header "task;category;date;start;end;effort;tags")
+(setq org-clock-csv-header "task;category;date;start;end;duration;effort;tags")
 
 (setq org-clock-csv-row-fmt 'org-clock-csv-job-row-fmt)
 
@@ -1056,6 +1062,7 @@ Null prefix argument turns off the mode."
 		   (plist-get plist ':date)
 		   (plist-get plist ':start)
 		   (plist-get plist ':end)
+               (plist-get plist ':duration)
 		   (plist-get plist ':effort)
 ;;		   (plist-get plist ':ishabit)
 		   (plist-get plist ':tags))
@@ -2178,6 +2185,8 @@ _<left>_    _<right>_    _y_: split-vert     _s_: ace-swap      _g_: refresh    
                       :color red
                       :columns 2)
 "Text"
+("p" previous-line "previous-line")
+("n" next-line "next-line")
 ("c" count-words "count")
 ("j" join-line "join-line")
 ("k" my/keyword "keywords")
