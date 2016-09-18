@@ -1049,7 +1049,6 @@ Null prefix argument turns off the mode."
 #+end_src
 ** org-clock-csv
 #+begin_src emacs-lisp
-
 (setq org-clock-csv-header "task;category;date;start;end;duration;effort;tags")
 
 (setq org-clock-csv-row-fmt 'org-clock-csv-job-row-fmt)
@@ -1129,6 +1128,10 @@ properties."
 	    :tags tags))))
 
 
+(defun my/org-clock-csv-calc ()
+ "Ruft script auf und verarbeitet die "
+  (interactive)
+  (shell-command "source ~/script/clock-entries.sh"))
 #+end_src
 
 * LaTeX und BibTeX
