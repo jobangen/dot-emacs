@@ -2812,3 +2812,11 @@ https://www.emacswiki.org/emacs/SortWords
     (interactive "*P\nr")
     (sort-regexp-fields reverse "\\w+" "\\&" beg end))
 #+end_src
+** sort-symbols
+#+begin_src emacs-lisp
+(defun sort-symbols (reverse beg end)
+  "Sort symbols in region alphabetically, in REVERSE if negative.
+See `sort-words'."
+  (interactive "*P\nr")
+  (sort-regexp-fields reverse "\\(\\sw\\|\\s_\\)+" "\\&" beg end))
+#+end_src
