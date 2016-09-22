@@ -1269,6 +1269,11 @@ http://www.jonathanleroux.org/bibtex-mode.html
 (setq bibtex-autokey-titleword-separator "-")
 #+end_src
 
+** bibtex-utils
+#+begin_src emacs-lisp
+(use-package bibtex-utils)
+#+end_src
+
 ** gscholar-bibtex
 #+begin_src emacs-lisp
 (use-package gscholar-bibtex
