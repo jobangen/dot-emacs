@@ -2820,3 +2820,63 @@ See `sort-words'."
   (interactive "*P\nr")
   (sort-regexp-fields reverse "\\(\\sw\\|\\s_\\)+" "\\&" beg end))
 #+end_src
+** zettelkasten
+#+begin_src emacs-lisp
+(defvar zettelkasten-tags-values)
+
+
+(defun zettelkasten-parse-tags-values ()
+  (interactive)
+  (setq zettelkasten-tags-values (zettelkasten-collect-tags-values)))
+
+;;(add-hook 'text-mode-hook 'zettelkasten-parse-tags-values)
+
+(defun zettelkasten-collect-tags-values (&optional regexp)
+  "Collect values in keywords fields of all BibTeX entries.
+Maybe restrict the values to those matching REGEXP. Keywords may be phrases
+separated by commas. Multiple spaces or newlines within a keyword will be
+removed before collection."
+  (save-excursion
+    (goto-char (point-min))
+    (let (tags kstring)
+      (while (re-search-forward "^tags:\\s-*\\(.*\\);$" nil t)
+        ;; TWS - remove newlines/multiple spaces:
+    (setq kstring (replace-regexp-in-string "[ \t\n]+" " "
+          (match-string-no-properties 1)))
+	(mapc
+	 (lambda (v)
+	   (if regexp (if (string-match regexp v)
+			  (add-to-list 'tags v t))
+	     (add-to-list 'tags v t)))
+          (split-string kstring ";[ \n]*\\|{\\|}" t)))
+      tags)))
+
+
+(defun zettelkasten-insert-tags (&optional arg)
+  "Make a keywords field.
+If ARG is nil, ask for each keyword and offer completion over
+keywords that are already available in the buffer.  Inserting
+the empty string will quit the prompt. If the keyword is not already
+present in the buffer, it will be added to the local variable
+bu-keywords-values. Note that if you use ido-ubiquitous, the value of
+  `ido-ubiquitous-enable-old-style-default' is temporarily set to t within
+the body of this command."
+  (interactive "P")
+  (let ((elist (save-excursion))
+        append)
+    (if (assoc "tags" elist)
+	 (progn (setq append t)))
+    (unless arg
+      (let ((cnt 0)
+            k)
+	(while (and (setq k (completing-read
+                             "Tags (RET to quit): " zettelkasten-tags-values nil))
+		    (not (equal k "")))
+	  (when append (insert "; ")
+                (setq append nil))
+	  (setq cnt (1+ cnt))
+	  (insert (format "%s%s" (if (> cnt 1) "; " "") k))
+          (add-to-list 'zettelkasten-tags-values k))))))
+
+#+end_src
+
