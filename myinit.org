@@ -1060,7 +1060,7 @@ Null prefix argument turns off the mode."
   (defun my/org-clock-csv-write-calc ()
     (interactive)
     (org-clock-csv)
-    (my/org-clock-csv-calc))
+    (my/org-clock-csv-calc)))
 
 
 #+end_src
@@ -2755,7 +2755,6 @@ See `sort-words'."
 #+begin_src emacs-lisp
 (defvar zettelkasten-tags-values)
 
-
 (defun zettelkasten-parse-tags-values ()
   (interactive)
   (setq zettelkasten-tags-values (zettelkasten-collect-tags-values)))
@@ -2782,6 +2781,11 @@ removed before collection."
           (split-string kstring ";[ \n]*\\|{\\|}" t)))
       tags)))
 
+(defun zettelkasten-combined-parse-values ()
+  (interactive)
+  (shell-command "cat ~/Dropbox/db/zk/*.txt > ~/Dropbox/db/zk/stats/zettel-combined.txt")
+  (find-file "~/Dropbox/db/zk/stats/zettel-combined.txt")
+  (zettelkasten-parse-tags-values))
 
 (defun zettelkasten-insert-tags (&optional arg)
   "Make a keywords field.
