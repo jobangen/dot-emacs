@@ -271,14 +271,19 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   :config
      (setq ivy-display-style 'fancy)
 
-)
+(setq ivy-views
+      '(("zettelkasten {}"
+         (horz
+          (buffer "zk")
+          (buffer "zk"))))))
 #+end_src
 
 ** swiper
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
   :ensure t
-)
+  :bind (:map ivy-minibuffer-map
+         ("C-c #" . zettelkasten-insert-regex)))
 #+END_SRC
 
 ** counsel
@@ -2768,7 +2773,7 @@ separated by commas. Multiple spaces or newlines within a keyword will be
 removed before collection."
   (save-excursion
     (goto-char (point-min))
-    (let (tags kstring)
+    (let (zk-tags kstring)
       (while (re-search-forward "^tags:\\s-*\\(.*\\);$" nil t)
         ;; TWS - remove newlines/multiple spaces:
     (setq kstring (replace-regexp-in-string "[ \t\n]+" " "
@@ -2776,16 +2781,18 @@ removed before collection."
 	(mapc
 	 (lambda (v)
 	   (if regexp (if (string-match regexp v)
-			  (add-to-list 'tags v t))
-	     (add-to-list 'tags v t)))
+			  (add-to-list 'zk-tags v t))
+	     (add-to-list 'zk-tags v t)))
           (split-string kstring ";[ \n]*\\|{\\|}" t)))
-      tags)))
+      zk-tags)))
 
-(defun zettelkasten-combined-parse-values ()
+(defun zettelkasten-combine-parse-values ()
   (interactive)
   (shell-command "cat ~/Dropbox/db/zk/*.txt > ~/Dropbox/db/zk/stats/zettel-combined.txt")
   (find-file "~/Dropbox/db/zk/stats/zettel-combined.txt")
   (zettelkasten-parse-tags-values))
+
+(add-hook 'after-init-hook 'zettelkasten-combine-parse-values)
 
 (defun zettelkasten-insert-tags (&optional arg)
   "Make a keywords field.
@@ -2799,7 +2806,7 @@ the body of this command."
   (interactive "P")
   (let ((elist (save-excursion))
         append)
-    (if (assoc "tags" elist)
+    (if (assoc "zk-tags" elist)
 	 (progn (setq append t)))
     (unless arg
       (let ((cnt 0)
@@ -2813,5 +2820,8 @@ the body of this command."
 	  (insert (format "%s%s" (if (> cnt 1) "; " "") k))
           (add-to-list 'zettelkasten-tags-values k))))))
 
+(defun zettelkasten-insert-regex ()
+  (interactive)
+  (insert "[a-z1-9]"))
 #+end_src
 
