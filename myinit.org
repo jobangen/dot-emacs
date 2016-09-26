@@ -57,11 +57,20 @@
 
 ** dir-setup
 #+begin_src emacs-lisp
-(defun dbdir-expand (name)
+(defun expand-dir-dropbox (name)
+  (expand-file-name name "~/Dropbox"))
+
+(defun expand-dir-db (name)
   (expand-file-name name "~/Dropbox/db"))
 
-(defun orgdir-expand (name)
+(defun expand-dir-org (name)
   (expand-file-name name "~/Dropbox/db/org"))
+
+(defun expand-dir-zk (name)
+  (expand-file-name name "~/Dropbox/db/zk"))
+
+(defun expand-dir-texte (name)
+  (expand-file-name name "~/texte"))
 #+end_src
 
 * use-package, bind-key
@@ -515,10 +524,10 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 
 ** Pfade
 #+begin_src emacs-lisp
-(setq org-directory "~/Dropbox/db/org")
-(setq org-default-notes-file "~/Dropbox/db/org/inbox.org")
-;;(setq org-agenda-files '("~/Dropbox/db/org"))
-(setq org-agenda-diary-file "~/Dropbox/db/org/journal.org")
+(setq org-directory (expand-file-name (expand-dir-org "")))
+(setq org-default-notes-file (expand-dir-org "inbox.org"))
+;;(setq org-agenda-files '((expand-dir-org "")))
+(setq org-agenda-diary-file (expand-dir-org "journal.org"))
 (setq org-agenda-include-diary nil)
 #+end_src
 
@@ -615,12 +624,12 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 (setq org-capture-templates '(
 
-("a" "Appointment" entry (file (orgdir-expand "calender.org"))
+("a" "Appointment" entry (file (expand-dir-org "calender.org"))
  "* %^{Description}
 <%(org-read-date)%?>
 \n")
 
-("t" "todo" entry (file (orgdir-expand "inbox.org"))
+("t" "todo" entry (file (expand-dir-org "inbox.org"))
  "* TODO %^{Task} %^G
 SCHEDULED: %t
 :PROPERTIES:
@@ -640,14 +649,14 @@ SCHEDULED: %t
 :END:
 %?\n")
 
-("n" "note" entry (file (orgdir-expand "inbox.org"))
+("n" "note" entry (file (expand-dir-org "inbox.org"))
  "* %^{Note}
 :PROPERTIES:
 :CREATED: %U
 :END:
  %?")
 
-("i" "interruption" entry (file (orgdir-expand "inbox.org"))
+("i" "interruption" entry (file (expand-dir-org "inbox.org"))
  "%^{Task}
 :PROPERTIES:
 :CREATED: %U
@@ -656,7 +665,7 @@ SCHEDULED: %t
 %?" :clock-in t :clock-resume t)
 
 ("j" "Journal")
-("jj" "Journal" entry (file+datetree+prompt (orgdir-expand "journal.org"))
+("jj" "Journal" entry (file+datetree+prompt (expand-dir-org "journal.org"))
  "* %^{Headline}  :journal:
 :PROPERTIES:
 :CREATED: %U
@@ -664,13 +673,13 @@ SCHEDULED: %t
 :END:
 %?")
 
-("jl" "Literaturbearbeitung" entry (file+datetree (orgdir-expand "journal.org"))
+("jl" "Literaturbearbeitung" entry (file+datetree (expand-dir-org "journal.org"))
  "* Literaturbearbeitung
 :PROPERTIES:
 :CATEGORY: wiss
 :END:" :jump-to-captured t :immediate-finish t)
 
-("jt" "Journal todo" entry (file+datetree+prompt (orgdir-expand "journal.org"))
+("jt" "Journal todo" entry (file+datetree+prompt (expand-dir-org "journal.org"))
 "* TODO %^{Task}
 SCHEDULED: %t
 :PROPERTIES:
@@ -680,13 +689,13 @@ SCHEDULED: %t
 :END:
 %?" )
 
-("ja" "BerlinAntiquariat" entry (file+datetree+prompt (orgdir-expand "journal.org"))
+("ja" "BerlinAntiquariat" entry (file+datetree+prompt (expand-dir-org "journal.org"))
  #'org-capture-berlinantiquariat :jump-to-captured t)
 
-("jw" "Wissenschaft" entry (file+datetree+prompt (orgdir-expand "journal.org"))
+("jw" "Wissenschaft" entry (file+datetree+prompt (expand-dir-org "journal.org"))
  #'org-capture-wiss :jump-to-captured t)
 
-("m" "mail todo" entry (file+headline (orgdir-expand "inbox.org") "Mail")
+("m" "mail todo" entry (file+headline (expand-dir-org "inbox.org") "Mail")
  "* TODO %^{Task}
 SCHEDULED: %t
 :PROPERTIES:
@@ -699,10 +708,10 @@ Subject: [[%l][%:subject]]
 %i
 #+END_QUOTE")
 
-("b" "bibtex" plain (file (dbdir-expand "biblio.bib"))
+("b" "bibtex" plain (file (expand-dir-db "biblio.bib"))
 "%?" :jump-to-captured t :empty-lines 1)
 
-("l" "literature" entry (file+headline (orgdir-expand "inbox.org") "Literatur")
+("l" "literature" entry (file+headline (expand-dir-org "inbox.org") "Literatur")
  "* TODO %^{Author}, %^{Title} :txt:
 :PROPERTIES:
 :CREATED:   %U
@@ -714,60 +723,60 @@ Subject: [[%l][%:subject]]
 #+BEGIN_SRC csv-mode :tangle stat/ref-path.csv\n\n#+END_SRC")
 
 ("g" "Geld - Ledger entries")
-("gb" "Bargeld" plain (file (dbdir-expand "money.dat"))
+("gb" "Bargeld" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Kartenverfügung
     Expenses:Bargeld    %^{Amount}€
     Assets:Giro"
     :immediate-finish t)
     
-("gg" "Giro" plain (file (dbdir-expand "money.dat"))
+("gg" "Giro" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * %^{Payee| |Deutsche Bahn}
     Expenses:%^{Expenses|Kauf:|Geschenk:|Reisen:}%^{Expenses}    %^{Amount}€
     Assets:Giro"
     :immediate-finish t)
 
-("gh" "Handy" plain (file (dbdir-expand "money.dat"))
+("gh" "Handy" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Telekom
     Expenses:Handy                          %^{Amount|29,89}€
     Assets:Giro"
     :immediate-finish t)
 
-("gi" "Internet+Telefon" plain (file (dbdir-expand "money.dat"))
+("gi" "Internet+Telefon" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Kabel Deutschland
     Expenses:Wohnung:Internet+Telefon     %^{Amount|19,90}€
     Assets:Giro" 
     :immediate-finish t)
-("gk" "Krankenkasse" plain (file (dbdir-expand "money.dat"))
+("gk" "Krankenkasse" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Techniker Krankenkasse
     Expenses:Versicherung:Krankenkasse     %^{Amount|237,60}€
     Assets:Giro"
     :immediate-finish t)
     
-("gm" "Miete" plain (file (dbdir-expand "money.dat"))
+("gm" "Miete" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Unter den Eichen
     Expenses:Wohnung:Miete     %^{Amount|588,25}€
     Assets:Giro" 
     :immediate-finish t)
 
-("gu" "Untermiete" plain (file (dbdir-expand "money.dat"))
+("gu" "Untermiete" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Kevin Schürer (%^{Monat})
     Assets:Giro     %^{Amount|330,00}€
     Income:Wohnung" 
     :immediate-finish t)
     
-("gs" "Strom" plain (file (dbdir-expand "money.dat"))
+("gs" "Strom" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Stadtwerke
     Expenses:Wohnung:Strom     %^{Amount|53,00}€
     Assets:Giro" 
     :immediate-finish t)
     
-("gt" "Topoi Stipendium" plain (file (dbdir-expand "money.dat"))
+("gt" "Topoi Stipendium" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Stipendium Topoi
     Assets:Giro                          %^{Amount|1350,00}€
     Income:Stipendium:Topoi" 
     :immediate-finish t)
      
-("z" "Zettel" plain (file (capture-report-date-file  "~/Dropbox/db/zk/"))
+("z" "Zettel" plain (file (capture-report-date-file  (expand-dir-zk "")))
  "#+TITLE: %^{Title}
 #+DATE: %U\n* Schlagwörter
 tags:\n* Inhalt
@@ -775,7 +784,7 @@ tags:\n* Inhalt
 \n* Links"
 :immediate-finish t :jump-to-captured t)
 
-("Z" "Zettel TODO" entry (file+headline "~/Dropbox/db/zk/zk-todo.txt" "Inhalt")
+("Z" "Zettel TODO" entry (file+headline (expand-dir-zk "zk-todo.txt") "Inhalt")
  "* TODO %^{Task}
 :PROPERTIES:
 :CREATED: %U
@@ -789,11 +798,11 @@ tags:\n* Inhalt
 ** refile
 #+begin_src emacs-lisp
 ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
-(setq org-refile-targets (quote (("pers.org" :maxlevel . 3)
-                                 ("wiss.org" :maxlevel . 3)
-                                 ("irw.org" :maxlevel . 3)
-                                 ("~/Dropbox/diss/diss.org" :maxlevel . 3)
-                                 ("antiq.org" :maxlevel . 1))))
+(setq org-refile-targets (quote (((expand-dir-org "pers.org") :maxlevel . 3)
+                                 ((expand-dir-org "wiss.org") :maxlevel . 3)
+                                 ((expand-dir-org "irw.org") :maxlevel . 3)
+                                 ((expand-dir-dropbox "diss.org") :maxlevel . 3)
+                                 ((expand-dir-org "antiq.org") :maxlevel . 1))))
 
 (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
 (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
@@ -1039,9 +1048,9 @@ Null prefix argument turns off the mode."
 :config
  (progn
    (require 'org-ref)
-   (setq org-ref-bibliography-notes "~/Dropbox/db/zk/"
-      org-ref-default-bibliography '("~/Dropbox/db/biblio.bib")
-      org-ref-pdf-directory "~/texte/")
+   (setq org-ref-bibliography-notes (expand-dir-zk "")
+      org-ref-default-bibliography '((expand-dir-db "biblio.bib"))
+      org-ref-pdf-directory (expand-dir-texte ""))
    (setq org-ref-default-citation-link "autocite")
 ))
 
@@ -1175,7 +1184,7 @@ Null prefix argument turns off the mode."
 	      '(("tex" . "kpsewhich -format=.tex %f")
         	("bib" . "kpsewhich -format=.bib %f")))
 	(setq reftex-default-bibliography
-		'("~/Dropbox/db/biblio.bib"))
+		'((expand-dir-db "biblio.bib")))
 	(setq reftex-cite-format
 		'((?\C-m . "\\autocite[][]{%l}")
 		  (?c . "\\cite[][]{%l}")
@@ -1214,7 +1223,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
 #+begin_src emacs-lisp
 (use-package gscholar-bibtex
  :config
- (setq gscholar-bibtex-database-file "~/Dropbox/db/import.bib")
+ (setq gscholar-bibtex-database-file (expand-dir-db "import.bib"))
  (setq gscholar-bibtex-default-source "Google Scholar"))
 #+end_src
 
@@ -1311,9 +1320,9 @@ publication specified by KEY."
   :bind ("<f5>" . helm-bibtex)
         ("C-<f5>" . helm-resume)
   :config
-   (setq helm-bibtex-bibliography '("~/Dropbox/db/biblio.bib"))
-   (setq helm-bibtex-library-path "~/texte")
-   (setq helm-bibtex-notes-path "~/Dropbox/db/zk")
+   (setq helm-bibtex-bibliography '((expand-dir-db "biblio.bib")))
+   (setq helm-bibtex-library-path (expand-dir-texte ""))
+   (setq helm-bibtex-notes-path (expand-dir-zk ""))
    (setq helm-bibtex-notes-extension ".txt")
 ;;   (setq helm-bibtex-additional-search-fields '(keywords))
    (setq helm-bibtex-pdf-open-function
@@ -1327,7 +1336,7 @@ publication specified by KEY."
 #+begin_src emacs-lisp
 (use-package ivy-bibtex
  :config
-  (setq bibtex-completion-bibliography '("~/Dropbox/db/biblio.bib"))
+  (setq bibtex-completion-bibliography '((expand-dir-db "biblio.bib")))
 
 
   (defun ivy-bibtex (&optional arg)
@@ -1600,7 +1609,7 @@ abort completely with `C-g'."
     (progn
      (bbdb-initialize 'gnus 'message)
      (bbdb-mua-auto-update-init 'gnus)
-     (setq bbdb-file "~/Dropbox/db/bbdb")
+     (setq bbdb-file (expand-dir-db "bbdb"))
      (setq bbdb-north-american-phone-numbers-p nil)
      (setq bbdb-default-country "Deutschland")
      (setq bbdb-user-mail-names
@@ -1659,7 +1668,7 @@ abort completely with `C-g'."
   (setq org-gcal-down-days 365)
   (setq org-gcal-client-id "553301842275-clecdgmr7i8741e3ck5iltlgfk3qf79r.apps.googleusercontent.com"
       org-gcal-client-secret "4zyEbm_F_BMuJsA7rZZmgFBm"
-      org-gcal-file-alist '(("jobangen@googlemail.com" . "~/Dropbox/db/org/calender.org"))))
+      org-gcal-file-alist '(("jobangen@googlemail.com" . (expand-dir-org "calender.org")))))
 
 #+end_src
 client-ID:
@@ -1954,7 +1963,7 @@ Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
 (use-package howm
   :diminish howm-mode
   :config
-   (setq howm-directory "~/Dropbox/db/zk")
+   (setq howm-directory (expand-dir-zk ""))
 
   ;; (defun turn-on-howm-mode-hook ()
   ;;   (cond ((string-match "^/home/job/Dropbox/db/zk/" buffer-file-name)
@@ -2788,8 +2797,8 @@ removed before collection."
 
 (defun zettelkasten-combine-parse-values ()
   (interactive)
-  (shell-command "cat ~/Dropbox/db/zk/*.txt > ~/Dropbox/db/zk/stats/zettel-combined.txt")
-  (find-file "~/Dropbox/db/zk/stats/zettel-combined.txt")
+  (shell-command "cat ~/Dropbox/db/zk/*.txt > ~/Dropbox/db/stats/zettel-combined.txt")
+  (find-file (expand-dir-db "stats/zettel-combined.txt"))
   (zettelkasten-parse-tags-values))
 
 (add-hook 'after-init-hook 'zettelkasten-combine-parse-values)
