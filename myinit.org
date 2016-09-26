@@ -1229,115 +1229,105 @@ http://www.jonathanleroux.org/bibtex-mode.html
 
 ** bibtex-completion
 #+begin_src emacs-lisp
-
-(setq bibtex-completion-cite-default-command "autocite")
-
-(setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n${=key=}\n* Schlagwörter\ntags: #${=key=}; #txt;\n* Inhalt\n\n* Literatur\n\n* Links")
-
-
-(defun bibtex-completion-apa-format-reference (key)
-  "Returns a plain text reference in APA format for the
-publication specified by KEY."
-  (let*
-   ((key (bibtex-completion-normalize-candidate key))
-    (entry (bibtex-completion-get-entry
-            (bibtex-completion-normalize-candidate key)))
-    (ref (pcase (downcase (bibtex-completion-get-value "=type=" entry))
-           ("article"
-            (s-format
-             "${author} ${date}: ${title}. ${subtitle}. In: ${journaltitle}, ${volume}(${number}), ${pages}."
-             'bibtex-completion-apa-get-value entry))
-           ("inproceedings"
-            (s-format
-             "${author} ${date}. ${title}. ${subtitle}. In: ${editor}, ${booktitle} (pp. ${pages}). ${location}: ${publisher}."
-             'bibtex-completion-apa-get-value entry))
-           ("book"
-            (s-format
-             "${author} ${date}: ${title}. ${subtitle}. ${location}: ${publisher}."
-             'bibtex-completion-apa-get-value entry))
-           ("collection"
-            (s-format
-             "${editor} (Hg.) ${date}: ${title}. ${subtitle}. ${location}: ${publisher}."
-             'bibtex-completion-apa-get-value entry))
-           ("phdthesis"
-            (s-format
-             "${author} ${year}: ${title}. ${subtitle}. (Doctoral dissertation). ${school}, ${location}."
-             'bibtex-completion-apa-get-value entry))
-           ("inbook"
-            (s-format
-             "${author} ${date}: ${title}. ${subtitle}. In: [${crossref}] ${location}: ${publisher}, ${pages}"
-             'bibtex-completion-apa-get-value entry))
-           ("incollection"
-            (s-format
-             "${author} ${date}: ${title}. ${subtitle}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}."
-             'bibtex-completion-apa-get-value entry))
-           ("proceedings"
-            (s-format
-             "${editor} (Hg.) ${date}: ${booktitle}. ${location}: ${publisher}."
-             'bibtex-completion-apa-get-value entry))
-           ("unpublished"
-            (s-format
-             "${author} ${date}: ${title}. ${subtitle}. Unpublished manuscript."
-             'bibtex-completion-apa-get-value entry))
-           ("online"
-            (s-format
-             "${author} ${date}: ${title}. ${subtitle}. , ${url}."
-             'bibtex-completion-apa-get-value entry))
-           (_
-            (s-format
-             "${author} ${date}: ${title}. ${subtitle}."
-             'bibtex-completion-apa-get-value entry)))))
-   (replace-regexp-in-string "\\([.?!]\\)\\." "\\1" ref))) ; Avoid sequences of punctuation marks.
-
-
-(defun bibtex-completion-candidates-formatter (candidates width)
-  "Formats BibTeX entries for display in results list."
-  (cl-loop
-   for entry in candidates
-   for entry = (cdr entry)
-   for entry-key = (bibtex-completion-get-value "=key=" entry)
-   if (assoc-string "author" entry 'case-fold)
-     for fields = '("author" "title" "date" "=has-pdf=" "=has-note=" "=type=")
-   else
-     for fields = '("editor" "title" "date" "=has-pdf=" "=has-note=" "=type=")
-   for fields = (-map (lambda (it)
-                        (bibtex-completion-clean-string
-                          (bibtex-completion-get-value it entry " ")))
-                      fields)
-   for fields = (-update-at 0 'bibtex-completion-shorten-authors fields)
-   collect
-   (cons (s-format "$0 $1 $2 $3$4 $5" 'elt
-                   (-zip-with (lambda (f w) (truncate-string-to-width f w 0 ?\s))
-                              fields (list 36 (- width 53) 4 1 1 7)))
-         entry-key)))
-
-#+end_src
-
-** helm-bibtex
-#+begin_src emacs-lisp
-(use-package helm-bibtex
-;;  :ensure t
-  :bind ("<f5>" . helm-bibtex)
-        ("C-<f5>" . helm-resume)
+(use-package bibtex-completion
   :config
-   (setq helm-bibtex-bibliography '((expand-dir-db "biblio.bib")))
-   (setq helm-bibtex-library-path (expand-dir-texte ""))
-   (setq helm-bibtex-notes-path (expand-dir-zk ""))
-   (setq helm-bibtex-notes-extension ".txt")
-;;   (setq helm-bibtex-additional-search-fields '(keywords))
+   (setq bibtex-completion-bibliography (expand-dir-db "biblio.bib"))
+   (setq bibtex-completion-library-path (expand-dir-texte ""))
+   (setq bibtex-completion-notes-path (expand-dir-zk ""))
+   (setq bibtex-completion-notes-extension ".txt")
+   (setq bibtex-completion-additional-search-fields '(keywords))
+   (setq bibtex-completion-cite-default-command "autocite")
    (setq helm-bibtex-pdf-open-function
      (lambda (fpath)
-      (start-process "evince" "*helm-bibtex-evince*" "/usr/bin/evince" fpath)))
+      (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))
 
+
+   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n${=key=}\n* Schlagwörter\ntags: #${=key=}; #txt;\n* Inhalt\n\n* Literatur\n\n* Links")
+
+   (defun bibtex-completion-apa-format-reference (key)
+     "Returns a plain text reference in APA format for the
+   publication specified by KEY."
+     (let*
+      ((key (bibtex-completion-normalize-candidate key))
+       (entry (bibtex-completion-get-entry
+               (bibtex-completion-normalize-candidate key)))
+       (ref (pcase (downcase (bibtex-completion-get-value "=type=" entry))
+              ("article"
+               (s-format
+                "${author} ${date}: ${title}. ${subtitle}. In: ${journaltitle}, ${volume}(${number}), ${pages}."
+                'bibtex-completion-apa-get-value entry))
+              ("inproceedings"
+               (s-format
+                "${author} ${date}. ${title}. ${subtitle}. In: ${editor}, ${booktitle} (pp. ${pages}). ${location}: ${publisher}."
+                'bibtex-completion-apa-get-value entry))
+              ("book"
+               (s-format
+                "${author} ${date}: ${title}. ${subtitle}. ${location}: ${publisher}."
+                'bibtex-completion-apa-get-value entry))
+              ("collection"
+               (s-format
+                "${editor} (Hg.) ${date}: ${title}. ${subtitle}. ${location}: ${publisher}."
+                'bibtex-completion-apa-get-value entry))
+              ("phdthesis"
+               (s-format
+                "${author} ${year}: ${title}. ${subtitle}. (Doctoral dissertation). ${school}, ${location}."
+                'bibtex-completion-apa-get-value entry))
+              ("inbook"
+               (s-format
+                "${author} ${date}: ${title}. ${subtitle}. In: [${crossref}] ${location}: ${publisher}, ${pages}"
+                'bibtex-completion-apa-get-value entry))
+              ("incollection"
+               (s-format
+                "${author} ${date}: ${title}. ${subtitle}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}."
+                'bibtex-completion-apa-get-value entry))
+              ("proceedings"
+               (s-format
+                "${editor} (Hg.) ${date}: ${booktitle}. ${location}: ${publisher}."
+                'bibtex-completion-apa-get-value entry))
+              ("unpublished"
+               (s-format
+                "${author} ${date}: ${title}. ${subtitle}. Unpublished manuscript."
+                'bibtex-completion-apa-get-value entry))
+              ("online"
+               (s-format
+                "${author} ${date}: ${title}. ${subtitle}. , ${url}."
+                'bibtex-completion-apa-get-value entry))
+              (_
+               (s-format
+                "${author} ${date}: ${title}. ${subtitle}."
+                'bibtex-completion-apa-get-value entry)))))
+      (replace-regexp-in-string "\\([.?!]\\)\\." "\\1" ref))) ; Avoid sequences of punctuation marks.
+
+   (defun bibtex-completion-candidates-formatter (candidates width)
+     "Formats BibTeX entries for display in results list."
+     (cl-loop
+      for entry in candidates
+      for entry = (cdr entry)
+      for entry-key = (bibtex-completion-get-value "=key=" entry)
+      if (assoc-string "author" entry 'case-fold)
+        for fields = '("author" "title" "date" "=has-pdf=" "=has-note=" "=type=")
+      else
+        for fields = '("editor" "title" "date" "=has-pdf=" "=has-note=" "=type=")
+      for fields = (-map (lambda (it)
+                           (bibtex-completion-clean-string
+                             (bibtex-completion-get-value it entry " ")))
+                         fields)
+      for fields = (-update-at 0 'bibtex-completion-shorten-authors fields)
+      collect
+      (cons (s-format "$0 $1 $2 $3$4 $5" 'elt
+                      (-zip-with (lambda (f w) (truncate-string-to-width f w 0 ?\s))
+                                 fields (list 36 (- width 53) 4 1 1 7)))
+            entry-key)))
 )
 #+end_src
 
 ** ivy-bibtex
 #+begin_src emacs-lisp
 (use-package ivy-bibtex
+ :bind ("<f5>" . ivy-bibtex)
+       ("C-<f5>" . ivy-resume)
  :config
-  (setq bibtex-completion-bibliography '((expand-dir-db "biblio.bib")))
-
+  (setq ivy-bibtex-default-action 'bibtex-completion-insert-key) ;; funktioniert nicht
 
   (defun ivy-bibtex (&optional arg)
     "Search BibTeX entries using ivy.
