@@ -226,48 +226,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (bind-key "M-o" 'other-window)
 #+end_src
 
-** helm 
-#+begin_src emacs-lisp
-(use-package helm
-  :ensure t
-  :diminish helm-mode
-  :init
-   (progn
-	 (require 'helm-config)
- 	 (helm-mode -1)
-      (helm-autoresize-mode 1)
-      (setq helm-autoresize-max-height 66)
-      (setq helm-autoresize-min-height 25)
-      (setq helm-display-header-line nil) ;; t by default
-      (set-face-attribute 'helm-source-header nil :height 0.1)
-
-   	 ;; From https://gist.github.com/antifuchs/9238468
-    	(setq helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
-            helm-input-idle-delay 0.01  ; this actually updates things reeeelatively quickly.
-            helm-quick-update t
-            helm-M-x-requires-pattern nil
-            helm-ff-skip-boring-files t)
-	(setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-	      helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-            helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-            helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-            helm-ff-file-name-history-use-recentf t)
-	(setq helm-buffers-fuzzy-matching           t
-            helm-recentf-fuzzy-match              t
-            helm-locate-fuzzy-match	            t
-            helm-M-x-fuzzy-match                  t))
-   :bind (;;("C-x b"   . helm-mini)
-  ;;       ("C-x C-b" . helm-for-files)
-  ;;	     ("C-x C-f" . helm-find-files)
-  ;;       ("C-x C-m" . helm-M-x)
-  ;;       ("M-y"     . helm-show-kill-ring)
-  ;;       ("C-x c SPC" . helm-all-mark-rings)
-))
-
-(bind-key "<tab>" 'helm-execute-persistent-action helm-map) ; rebind tab to run persistent action
-(bind-key "C-z"  'helm-select-action helm-map) ; list actions using C-z
-#+end_src
-
 ** ivy
 #+begin_src emacs-lisp
 (use-package ivy
