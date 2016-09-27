@@ -2366,7 +2366,7 @@ FUNC was t and:
         word)
     (save-excursion
       (goto-char (point-min))
-      (while (re-search-forward "[§#][^;]*" nil t)
+      (while (re-search-forward "[§#][^,]*" nil t)
 ;;    (while (forward-word 1)
         (word-frequency-incr (downcase (match-string 0)))
 ;;      (setq bounds (bounds-of-thing-at-point 'word))
@@ -2716,7 +2716,7 @@ removed before collection."
   (save-excursion
     (goto-char (point-min))
     (let (zk-tags kstring)
-      (while (re-search-forward "^tags:\\s-*\\(.*\\);$" nil t)
+      (while (re-search-forward "^tags:\\s-*\\(.*\\),$" nil t)
         ;; TWS - remove newlines/multiple spaces:
     (setq kstring (replace-regexp-in-string "[ \t\n]+" " "
           (match-string-no-properties 1)))
@@ -2725,7 +2725,7 @@ removed before collection."
 	   (if regexp (if (string-match regexp v)
 			  (add-to-list 'zk-tags v t))
 	     (add-to-list 'zk-tags v t)))
-          (split-string kstring ";[ \n]*\\|{\\|}" t)))
+          (split-string kstring ",[ \n]*\\|{\\|}" t)))
       zk-tags)))
 
 (defun zettelkasten-combine-parse-values ()
@@ -2756,10 +2756,10 @@ the body of this command."
 	(while (and (setq k (completing-read
                              "Tags (RET to quit): " zettelkasten-tags-values nil))
 		    (not (equal k "")))
-	  (when append (insert "; ")
+	  (when append (insert ", ")
                 (setq append nil))
 	  (setq cnt (1+ cnt))
-	  (insert (format "%s%s" (if (> cnt 1) "; " "") k))
+	  (insert (format "%s%s" (if (> cnt 1) ", " "") k))
           (add-to-list 'zettelkasten-tags-values k))))))
 
 (defun zettelkasten-insert-regex ()
