@@ -31,7 +31,7 @@
 #+begin_src emacs-lisp
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 (setq delete-old-versions -1)
-(setq version-control t)1
+(setq version-control t)
 (setq vc-make-backup-files t)
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 #+end_src
@@ -235,11 +235,15 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   :config
      (ivy-mode 1)
      (setq ivy-height 13)
+     (setq ivy-fixed-height-minibuffer t)
      (setq ivy-count-format "(%d/%d) ")
      (setq ivy-initial-inputs-alist nil)
      (setq ivy-wrap t)
      (setq ivy-use-virtual-buffers t)
      (setq ivy-display-style 'fancy)
+;;     (setq ivy-re-builders-alist
+;;               '((counsel-ag . ivy--regex-ignore-order)
+;;                 (t . ivy--regex-plus)))
 
      (setq ivy-views
            '(("zettelkasten {}"
@@ -1012,12 +1016,14 @@ Null prefix argument turns off the mode."
 (use-package org-ref
 :init
  (bind-key "C-c )" 'org-autocite-complete-link org-mode-map)
+ (setq org-ref-completion-library 'org-ref-ivy-cite)
+
 :config
  (progn
    (require 'org-ref)
-   (setq org-ref-bibliography-notes (expand-dir-zk "")
-      org-ref-default-bibliography '((expand-dir-db "biblio.bib"))
-      org-ref-pdf-directory (expand-dir-texte ""))
+   (setq org-ref-notes-directory (expand-dir-zk ""))
+   (setq org-ref-default-bibliography '("~/Dropbox/db/biblio.bib"))
+   (setq org-ref-pdf-directory (expand-dir-texte ""))
    (setq org-ref-default-citation-link "autocite")
 ))
 
