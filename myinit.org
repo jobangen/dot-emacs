@@ -1204,7 +1204,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
    (setq bibtex-completion-notes-extension ".txt")
    (setq bibtex-completion-additional-search-fields '(keywords))
    (setq bibtex-completion-cite-default-command "autocite")
-   (setq helm-bibtex-pdf-open-function
+   (setq bibtex-completion-pdf-open-function
      (lambda (fpath)
       (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))
 
@@ -1812,13 +1812,8 @@ Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
     (progn
       (projectile-global-mode)
       (setq projectile-completion-system 'ivy)
-;;      (require 'helm-projectile)
-;;      (helm-projectile-on)
       (setq projectile-enable-caching t)
       (setq projectile-switch-project-action 'projectile-dired)))
-;;      (defun projectile-helm-ag ()
-;;         (interactive)
-;;         (helm-ag (projectile-project-root)))))
 #+end_src
 
 ** smartparens 
@@ -1938,27 +1933,6 @@ Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
    :ensure t)
 #+end_src
 
-** hydra-search
-#+begin_src emacs-lisp
-;;(bind-key "C-S-s" 'hydra-search/body)
-(defhydra hydra-search (:hint nil
-                        :color blue)
-  "
- ^Search^        ^Helm^          ^Helm-Swoop
---------------╯╭---------------------------------
- _s_: isearch    _p_: apropos    _w_: swoop
- ^^              _o_: occur      _m_: multi-swoop
- ^^^^                            _a_: multi-swoop-all
-"
-  ("a" helm-multi-swoop-all)
-  ("m" helm-multi-swoop)
-  ("o" helm-occur)
-  ("p" helm-apropos)
-  ("s" isearch-forward)
-  ("w" helm-swoop)
-)
-#+end_src
-
 ** hydra-time
 #+begin_src emacs-lisp
 (bind-key "C-<f11>" 'hydra-time/body)
@@ -2020,19 +1994,19 @@ _q_: cancel     _r_: resolve    _tI_: insert item       ^ ^                   _p
 
  ^Find File^            ^Search^            ^Buffers^                ^Cache
 ------------------------------------------------------------------------------------------
- _ff_: file             _a_: helm-ag        _i_: Ibuffer             _c_: cache clear
- _fc_: file curr dir    _A_: ag             _b_: switch to buffer    _x_: remove known project
- _fd_: file dwim        _g_: helm-grep      _k_: Kill all buffers    _X_: cleanup non-existing
-  _r_: recent file      _G_; grep                                  ^^_z_: cache current
+ _ff_: file             _a_: counsel-ag        _i_: Ibuffer             _c_: cache clear
+ _fc_: file curr dir    _A_: ag                _b_: switch to buffer    _x_: remove known project
+ _fd_: file dwim        _g_: counsel-grep      _k_: Kill all buffers    _X_: cleanup non-existing
+  _r_: recent file      _G_: grep                                     ^^_z_: cache current
   _d_: dir              _o_: multi-occur
 
 "
-  ("a"   helm-projectile-ag)
+  ("a"   counsel-ag)
   ("A"   projectile-ag)
   ("b"   projectile-switch-to-buffer)
   ("c"   projectile-invalidate-cache)
   ("d"   projectile-find-dir)
-  ("g"   helm-projectile-grep)
+  ("g"   counsel-grep)
   ("G"   projectile-grep)
   ("ff"  projectile-find-file)
   ("fc"  projectile-find-file-in-directory)
