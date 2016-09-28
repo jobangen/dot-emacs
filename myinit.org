@@ -235,7 +235,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   :config
      (ivy-mode 1)
      (setq ivy-height 13)
-     (setq ivy-fixed-height-minibuffer t)
+;;     (setq ivy-fixed-height-minibuffer t)
      (setq ivy-count-format "(%d/%d) ")
      (setq ivy-initial-inputs-alist nil)
      (setq ivy-wrap t)
@@ -769,11 +769,11 @@ tags:\n* Inhalt
 ** refile
 #+begin_src emacs-lisp
 ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
-(setq org-refile-targets (quote (((expand-dir-org "pers.org") :maxlevel . 3)
-                                 ((expand-dir-org "wiss.org") :maxlevel . 3)
-                                 ((expand-dir-org "irw.org") :maxlevel . 3)
-                                 ((expand-dir-dropbox "diss.org") :maxlevel . 3)
-                                 ((expand-dir-org "antiq.org") :maxlevel . 1))))
+(setq org-refile-targets (quote ((("pers.org") :maxlevel . 3)
+                                 (("wiss.org") :maxlevel . 3)
+                                 (("irw.org") :maxlevel . 3)
+                                 (("diss.org") :maxlevel . 3)
+                                 (("antiq.org") :maxlevel . 1))))
 
 (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
 (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
@@ -1215,7 +1215,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
       (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))
 
 
-   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n${=key=}\n* Schlagwörter\ntags: #${=key=}; #txt;\n* Inhalt\n\n* Literatur\n\n* Links")
+   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n${=key=}\n* Schlagwörter\ntags: #${=key=}, #txt, ${keywords},\n* Inhalt\n\n* Literatur\n\n* Links")
 
    (defun bibtex-completion-apa-format-reference (key)
      "Returns a plain text reference in APA format for the
@@ -2086,7 +2086,6 @@ _<left>_    _<right>_    _y_: split-vert     _s_: ace-swap      _g_: refresh    
 ("u" my/uniquify-all-lines-region "uniquify")
 ("q" nil "cancel" :exit t))
 #+end_src
-
 ** hydra-git
 #+begin_src emacs-lisp
 (bind-key "C-c g" 'hydra-git/body)
@@ -2146,6 +2145,20 @@ _y_: youtube      _bb_: bibtex
 ("t" google-translate-smooth-translate)
 ("w" engine/search-wikipedia)
 ) 
+#+end_src
+
+** hydra-regex
+#+begin_src emacs-lisp
+(defhydra hydra-regex (:hint t
+                       :color pink
+                       :columns 2)
+"Navigation"
+("a" beginning-of-line "<--")
+("e" end-of-line "-->")
+("s" backward-char "<-")
+("d" forward-char "->")
+("q" nil "quit" :exit t))
+(define-key ivy-minibuffer-map (kbd "C-#") 'hydra-regex/body)
 #+end_src
 
 * defun
@@ -2768,8 +2781,13 @@ the body of this command."
 	  (insert (format "%s%s" (if (> cnt 1) ", " "") k))
           (add-to-list 'zettelkasten-tags-values k))))))
 
+(defun zettelkasten-insert-regex-first-lvl ()
+  (interactive)
+  (insert "\s-[a-z1-9]~"))
+
 (defun zettelkasten-insert-regex ()
   (interactive)
   (insert "[a-z1-9]"))
-#+end_src
 
+
+#+end_src
