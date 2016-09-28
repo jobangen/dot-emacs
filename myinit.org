@@ -1189,7 +1189,8 @@ http://www.jonathanleroux.org/bibtex-mode.html
 
 ** bibtex-utils
 #+begin_src emacs-lisp
-(use-package bibtex-utils)
+(use-package bibtex-utils
+ :ensure t)
 #+end_src
 
 ** gscholar-bibtex
