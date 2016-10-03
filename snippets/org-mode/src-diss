@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: src
+# key: srcd
+# --
+#+begin_src csv-mode :tangle stat/${1:file}
+$0
+#+end_src

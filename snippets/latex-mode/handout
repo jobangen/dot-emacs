@@ -1,0 +1,55 @@
+# -*- mode: snippet -*-
+# name: handout
+# key: handout
+# --
+\documentclass[DIV12,12pt,headings=normal]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[babel, german=guillemets]{csquotes}
+\usepackage[english,ngerman]{babel}
+
+\usepackage{cochineal}
+\usepackage{microtype}
+\usepackage{ellipsis}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{lastpage}
+
+\usepackage[headsepline]{scrlayer-scrpage}
+\pagestyle{scrheadings}
+
+\renewcommand{\headfont}{\small\scshape}
+\KOMAoptions{onpsinit=\linespread{1}\selectfont}
+\deffootnote{1em}{1em}{\textsuperscript{\thefootnotemark\ }}
+
+\ihead{}
+\chead{}
+\ohead{}
+\ifoot{}
+\cfoot{\thepage}
+\ofoot{}
+
+
+\usepackage[backend=biber,
+autocite=inline,
+style=authoryear,
+citestyle=authoryear-comp,
+mincrossrefs=100,
+maxcitenames=2,
+maxbibnames=2,
+% backref=true
+]{biblatex}
+\addbibresource{~/Dropbox/db/biblio.bib}
+\setlength\bibitemsep{\medskipamount}
+
+\usepackage{my-authoryear}
+\usepackage{my-abbrev}
+
+
+\setkomafont{sectioning}{\normalcolor\bfseries}
+
+\begin{document}
+
+
+\printbibliography
+\end{document}

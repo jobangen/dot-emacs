@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# name: koma-article
+# key: koma-art
+# --
+\RequirePackage[l2tabu, orthodox]{nag}
+\documentclass[DIV12, a4paper, 12pt, bibliography=totoc,
+% index=totoc, %macht Probleme mit fixme
+% draft
+]{scrartcl}
+
+$0
+
+\title{} \subtitle{} \author{Jan Ole Bangen} \date{\today}
+
+\begin{document}
+\pagenumbering{roman}
+\maketitle\thispagestyle{empty}
+\clearpage
+\tableofcontents\thispagestyle{empty}
+\clearpage
+
+\pagenumbering{arabic}
+
+
+
+
+\end{document}

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: grafik-pakete
+# key: grafik
+# --
+\usepackage{graphicx} %Grafiken einbinden. Befehl: \includegraphics[key1= ..., key2 = ..., etc.]{filename}
+\usepackage{xcolor}   %Für farbige Gestaltung notwendig

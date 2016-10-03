@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# name: beamer
+# key: beamer
+# --
+\documentclass{beamer}
+
+\usepackage[ngerman]{babel}
+\usepackage{microtype}
+\usepackage[german=guillemets]{csquotes}
+\usepackage{multicol}
+\setlength{\columnseprule}{0.8pt}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{xcolor}
+
+\usetheme{hellight}
+
+\title{$1}
+\subtitle{$2}
+\date[$3]{$4}
+\author[J.\,O. Bangen]{Jan Ole Bangen}
+
+
+\begin{document}
+\begin{frame}
+  \maketitle
+\end{frame}
+
+$0
+
+\end{document}

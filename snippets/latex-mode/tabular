@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: tabular
+# key: tab
+# --
+\begin{tabular}{$1}
+\toprule
+$2\\
+\midrule
+$0\\
+\bottomrule
+\end{tabular}

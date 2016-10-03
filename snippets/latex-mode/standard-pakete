@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: standard-pakete
+# key: standard
+# --
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[babel]{csquotes}
+\usepackage[english,ngerman]{babel}
+
+

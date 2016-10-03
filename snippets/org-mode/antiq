@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: antiq
+# key: a
+# --
+$1$2, $1$2$3, $1
+a$0

@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: phdthesis
+# key: phd
+# --
+@Phdthesis{,
+  author = 	 {$1},
+  title = 	 {$2},
+  subtitle=      {$3},
+  ALTyear = 	 {$4},
+  ALTdate = 	 {},
+  OPTinstitution={},
+  OPTpublisher = {$5},
+  OPTlocation =  {$6},
+  OPTedition = 	 {$7},
+  OPTseries = 	 {$8},
+  OPTnumber = 	 {$9},
+  timestamp =	 {`(format-time-string "%Y-%m-%d")`},
+  keywords =     {$0},
+  OPTcrossref=	 {},
+  OPTtype=       {},
+}

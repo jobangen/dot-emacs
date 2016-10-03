@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# name: book
+# key: book
+# --
+@Book{,
+  author = 	 {$1},
+  title = 	 {$2},
+  subtitle=      {$3},
+  ALTdate = 	 {$4},
+  publisher =    {$5},
+  location =     {$6},
+  OPTedition = 	 {$7},
+  OPTseries = 	 {$8},
+  OPTnumber = 	 {$9},
+  timestamp =	 {`(format-time-string "%Y-%m-%d")`},
+  keywords =     {$0},
+  crossref=	 {},
+  OPTeditor = 	 {},
+  OPTtranslator = {},
+  OPTannotator = {},
+  OPTcommentator = {},
+  OPTintroduction = {},
+  OPTforeword =  {},
+  OPTafterword = {},
+  OPToriglanguage = {},
+  OPTvolume = 	 {},
+  OPTpart = 	 {},
+  OPTvolumes = 	 {},
+}

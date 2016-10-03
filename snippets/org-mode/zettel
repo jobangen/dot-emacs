@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Link to Zettel
+# key: zet
+# --
+[[file:$1.txt][Zettel]$0
