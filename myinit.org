@@ -2777,5 +2777,14 @@ the body of this command."
 ;  (interactive)
 ;  (insert "[a-z1-9]"))
 
+(defface zettelkasten-id-face `((t (:background "#e0e0e0")))  "Zettelkasten Ids")
+(defface zettelkasten-lvl1-face `((t (:background "#819FF7")))  "Zettelkasten Level 1")
+(defface zettelkasten-lvl2-face `((t (:background "#A9BCF5")))  "Zettelkasten Level 2")
 
+(defun zettelkasten-markup ()
+   (highlight-regexp "\\s-[1-9]*~" 'zettelkasten-lvl1-face)
+   (highlight-regexp "[1-9]*-[1-9]*~" 'zettelkasten-lvl2-face)
+   (highlight-regexp "\[1-9a-z\\-\]*~" 'zettelkasten-id-face))
+
+(add-hook 'dired-mode-hook 'zettelkasten-markup)
 #+end_src
