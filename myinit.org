@@ -320,6 +320,13 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   :bind ("C-S-s" . ivy-imenu-anywhere))
 #+end_src
 
+** move-text
+#+begin_src emacs-lisp
+(use-package move-text
+  :config
+ (move-text-default-bindings))
+#+end_src
+
 * org-mode
 ** allgemein
 #+begin_src emacs-lisp
@@ -646,6 +653,12 @@ SCHEDULED: %t
 
 ("jl" "Literaturbearbeitung" entry (file+datetree (expand-dir-org "journal.org"))
  "* Literaturbearbeitung
+:PROPERTIES:
+:CATEGORY: wiss
+:END:" :jump-to-captured t :immediate-finish t)
+
+("jm" "Mailbearbeitung" entry (file+datetree (expand-dir-org "journal.org"))
+ "* Mailbearbeitung
 :PROPERTIES:
 :CATEGORY: wiss
 :END:" :jump-to-captured t :immediate-finish t)
