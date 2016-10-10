@@ -6,6 +6,7 @@
 (setq inhibit-splash-screen t) ;;Remove splash screen
 (desktop-save-mode 1) ;; Erinnert die zuletzt geöffneten Dateien
 (fset 'yes-or-no-p 'y-or-n-p)
+(setq large-file-warning-threshold nil)
 
 (transient-mark-mode nil) ;; No region when it is not highlighted
 (global-font-lock-mode 1) ;;syntax highlighting everywhere
