@@ -2802,3 +2802,16 @@ the body of this command."
 
 (add-hook 'dired-mode-hook 'zettelkasten-markup)
 #+end_src
+** gnuplot-defun
+#+begin_src emacs-lisp
+(defun my/gnuplot-electricity ()
+  (interactive)
+  (shell-command "source ~/script/electricity-calc.sh")
+  (shell-command "gnuplot -persist ~/Dropbox/db/plot/electricity.plot"))
+
+(defun my/gnuplot-org-entries ()
+  (interactive)
+  (my/org-clock-csv-write-calc)
+  (shell-command "gnuplot -persist ~/Dropbox/db/stats/org-entries.plot"))
+#+end_src
+
