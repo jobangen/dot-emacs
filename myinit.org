@@ -1223,22 +1223,34 @@ http://www.jonathanleroux.org/bibtex-mode.html
    (setq bibtex-completion-library-path (expand-dir-texte ""))
    (setq bibtex-completion-notes-path (expand-dir-zk ""))
    (setq bibtex-completion-notes-extension ".txt")
-   (setq bibtex-completion-additional-search-fields '(keywords))
+   (setq bibtex-completion-additional-search-fields '("subtitle"
+                                                      "date"
+                                                      "keywords"))
    (setq bibtex-completion-cite-default-command "autocite")
    (setq bibtex-completion-pdf-open-function
      (lambda (fpath)
       (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))
 
-
    (setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n${=key=}\n* Schlagwörter\ntags: #${=key=}, #txt, ${keywords},\n* Inhalt\n\n* Literatur\n\n* Links")
+
+   (defun bibtex-completion-format-entry (entry width)
+     "Formats a BibTeX entry for display in results list."
+     (let* ((fields (list (if (assoc-string "author" entry 'case-fold) "author" "editor")
+                          "title" "date" "=has-pdf=" "=has-note=" "=type="))
+            (fields (-map (lambda (it)
+                            (bibtex-completion-clean-string
+                             (bibtex-completion-get-value it entry " ")))
+                          fields))
+            (fields (-update-at 0 'bibtex-completion-shorten-authors fields)))
+       (s-format "$0 $1 $2 $3$4 $5" 'elt
+                 (-zip-with (lambda (f w) (truncate-string-to-width f w 0 ?\s))
+                            fields (list 36 (- width 53) 4 1 1 7)))))
 
    (defun bibtex-completion-apa-format-reference (key)
      "Returns a plain text reference in APA format for the
    publication specified by KEY."
      (let*
-      ((key (bibtex-completion-normalize-candidate key))
-       (entry (bibtex-completion-get-entry
-               (bibtex-completion-normalize-candidate key)))
+      ((entry (bibtex-completion-get-entry key))
        (ref (pcase (downcase (bibtex-completion-get-value "=type=" entry))
               ("article"
                (s-format
@@ -1285,27 +1297,6 @@ http://www.jonathanleroux.org/bibtex-mode.html
                 "${author} ${date}: ${title}. ${subtitle}."
                 'bibtex-completion-apa-get-value entry)))))
       (replace-regexp-in-string "\\([.?!]\\)\\." "\\1" ref))) ; Avoid sequences of punctuation marks.
-
-   (defun bibtex-completion-candidates-formatter (candidates width)
-     "Formats BibTeX entries for display in results list."
-     (cl-loop
-      for entry in candidates
-      for entry = (cdr entry)
-      for entry-key = (bibtex-completion-get-value "=key=" entry)
-      if (assoc-string "author" entry 'case-fold)
-        for fields = '("author" "title" "date" "=has-pdf=" "=has-note=" "=type=")
-      else
-        for fields = '("editor" "title" "date" "=has-pdf=" "=has-note=" "=type=")
-      for fields = (-map (lambda (it)
-                           (bibtex-completion-clean-string
-                             (bibtex-completion-get-value it entry " ")))
-                         fields)
-      for fields = (-update-at 0 'bibtex-completion-shorten-authors fields)
-      collect
-      (cons (s-format "$0 $1 $2 $3$4 $5" 'elt
-                      (-zip-with (lambda (f w) (truncate-string-to-width f w 0 ?\s))
-                                 fields (list 36 (- width 53) 4 1 1 7)))
-            entry-key)))
 )
 #+end_src
 
