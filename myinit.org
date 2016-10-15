@@ -652,6 +652,16 @@ SCHEDULED: %t
 :END:
 %?")
 
+("jt" "Journal todo" entry (file+datetree+prompt (expand-dir-org "journal.org"))
+"* TODO %^{Task}
+SCHEDULED: %t
+:PROPERTIES:
+:CREATED: %U
+:CATEGORY:  %^{Category|wiss|work|pers}
+:EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
+:END:
+%?" )
+
 ("jl" "Literaturbearbeitung" entry (file+datetree (expand-dir-org "journal.org"))
  "* Literaturbearbeitung
 :PROPERTIES:
@@ -664,18 +674,11 @@ SCHEDULED: %t
 :CATEGORY: wiss
 :END:" :jump-to-captured t :immediate-finish t)
 
-("jt" "Journal todo" entry (file+datetree+prompt (expand-dir-org "journal.org"))
-"* TODO %^{Task}
-SCHEDULED: %t
-:PROPERTIES:
-:CREATED: %U
-:CATEGORY:  %^{Category|wiss|work|pers}
-:EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
-:END:
-%?" )
-
-("ja" "BerlinAntiquariat" entry (file+datetree+prompt (expand-dir-org "journal.org"))
+("jb" "BerlinAntiquariat" entry (file+datetree+prompt (expand-dir-org "journal.org"))
  #'org-capture-berlinantiquariat :jump-to-captured t)
+
+("je" "Electricity" plain (file "~/Dropbox/db/plot/electricity.csv")
+"%(org-read-date); %?")
 
 ("jw" "Wissenschaft" entry (file+datetree+prompt (expand-dir-org "journal.org"))
  #'org-capture-wiss :jump-to-captured t)
@@ -1233,6 +1236,20 @@ http://www.jonathanleroux.org/bibtex-mode.html
 
    (setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n${=key=}\n* Schlagwörter\ntags: #${=key=}, #txt, ${keywords},\n* Inhalt\n\n* Literatur\n\n* Links")
 
+   (setq bibtex-completion-format-citation-functions
+     '((org-mode      . bibtex-completion-format-citation-org-ref-autocite)
+       (latex-mode    . bibtex-completion-format-citation-cite)
+       (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+       (default       . bibtex-completion-format-citation-default)))
+
+   (defun bibtex-completion-format-citation-org-ref-autocite (keys)
+     "Formatter for org-ref references."
+     (let* ((prenote  (if bibtex-completion-cite-prompt-for-optional-arguments (read-from-minibuffer "Prenote: ") ""))
+            (postnote (if bibtex-completion-cite-prompt-for-optional-arguments (read-from-minibuffer "Postnote: ") ""))
+            (prenote  (if (string= "" prenote)  "" (concat prenote  "::")))
+            (notes (if (string= "" postnote) "" (concat "[" prenote postnote "]"))))
+      (format "[[%s]%s]" (s-join ", " keys) notes)))
+
    (defun bibtex-completion-format-entry (entry width)
      "Formats a BibTeX entry for display in results list."
      (let* ((fields (list (if (assoc-string "author" entry 'case-fold) "author" "editor")
@@ -1306,22 +1323,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
  :bind ("<f5>" . ivy-bibtex)
        ("C-<f5>" . ivy-resume)
  :config
-  (setq ivy-bibtex-default-action 'bibtex-completion-insert-key) ;;funktioniert nicht
-
-  (defun ivy-bibtex (&optional arg)
-    "Search BibTeX entries using ivy.
-
-    With a prefix ARG the cache is invalidated and the bibliography
-    reread."
-   (interactive "P")
-   (when arg
-     (setq bibtex-completion-bibliography-hash ""))
-   (bibtex-completion-init)
-   (ivy-read "BibTeX Items: "
-             (bibtex-completion-candidates 'ivy-bibtex-candidates-formatter)
-             :caller 'ivy-bibtex
-             :action 'bibtex-completion-insert-key))
-
+  (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 
 )
 #+end_src
