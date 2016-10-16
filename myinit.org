@@ -582,9 +582,11 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
     (let ((date        (org-read-date))
           (name        (completing-read "Veranstaltung: "
                          '(("Knoblauch: Forschungswerkstatt" 1)
-                           ("Kogge: Wissenschaftstheorie" 2)
-                           ("Topoi: Lesezirkel" 3)
-                           ("Colloquium" 4))  nil t ""))
+                           ("Kogge: Wissenschaftstheorie"    2)
+                           ("Topoi: Lesezirkel"              3)
+                           ("Colloquium"                     4)
+                           ("Autorität"                      5)
+                          )  nil t ""))
           (time-begin  (read-string "Begin: " nil nil '(nil)))
           (time-end    (read-string "End: " nil nil '(nil))))
       (when (and date)
@@ -742,7 +744,7 @@ Subject: [[%l][%:subject]]
     
 ("gm" "Miete" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Unter den Eichen
-    Expenses:Wohnung:Miete     %^{Amount|588,25}€
+    Expenses:Wohnung:Miete     %^{Amount|595,25}€
     Assets:Giro" 
     :immediate-finish t)
 
