@@ -189,7 +189,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
  :ensure t
 ;;  :bind ("H-s" . char-menu)
  :config 
-  (setq char-menu '("–" "—" "‘’" "“”" "»«" "…"
+  (setq char-menu '("–" "—" "„“" "‘’" "“”" "»«" "…"
                             ("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
                             ("Math"       "≈" "≡" "≠" "∞" "×" "±" "∓" "÷" "√")
                             ("Arrows"     "←" "→" "↑" "↓" "⇐" "⇒" "⇑" "⇓")
@@ -1250,7 +1250,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
             (postnote (if bibtex-completion-cite-prompt-for-optional-arguments (read-from-minibuffer "Postnote: ") ""))
             (prenote  (if (string= "" prenote)  "" (concat prenote  "::")))
             (notes (if (string= "" postnote) "" (concat "[" prenote postnote "]"))))
-      (format "[[%s]%s]" (s-join ", " keys) notes)))
+      (format "[[autocite:%s]%s]" (s-join ", " keys) notes)))
 
    (defun bibtex-completion-format-entry (entry width)
      "Formats a BibTeX entry for display in results list."
