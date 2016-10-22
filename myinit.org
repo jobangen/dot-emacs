@@ -581,11 +581,12 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   "Capture a class template for org-capture."
     (let ((date        (org-read-date))
           (name        (completing-read "Veranstaltung: "
-                         '(("Knoblauch: Forschungswerkstatt" 1)
-                           ("Kogge: Wissenschaftstheorie"    2)
-                           ("Topoi: Lesezirkel"              3)
-                           ("Colloquium"                     4)
-                           ("Autorität"                      5)
+                         '((""                                1)
+                            ("Knoblauch: Forschungswerkstatt" 2)
+                           ("Kogge: Wissenschaftstheorie II"  3)
+                           ("Topoi: Lesezirkel"               4)
+                           ("Colloquium"                      5)
+                           ("Autorität"                       6)
                           )  nil t ""))
           (time-begin  (read-string "Begin: " nil nil '(nil)))
           (time-end    (read-string "End: " nil nil '(nil))))
@@ -715,7 +716,7 @@ Subject: [[%l][%:subject]]
 ("g" "Geld - Ledger entries")
 ("gb" "Bargeld" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Kartenverfügung
-    Expenses:Bargeld    %^{Amount}€
+    Expenses:Bargeld                           %^{Amount}€
     Assets:Giro"
     :immediate-finish t)
     
@@ -727,42 +728,51 @@ Subject: [[%l][%:subject]]
 
 ("gh" "Handy" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Telekom
-    Expenses:Handy                          %^{Amount|29,89}€
+    Expenses:Handy                             %^{Amount|29,89}€
     Assets:Giro"
     :immediate-finish t)
 
 ("gi" "Internet+Telefon" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Kabel Deutschland
-    Expenses:Wohnung:Internet+Telefon     %^{Amount|19,90}€
+    Expenses:Wohnung:Internet+Telefon          %^{Amount|19,90}€
     Assets:Giro" 
     :immediate-finish t)
 ("gk" "Krankenkasse" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Techniker Krankenkasse
-    Expenses:Versicherung:Krankenkasse     %^{Amount|237,60}€
+    Expenses:Versicherung:Krankenkasse        237,60€
     Assets:Giro"
     :immediate-finish t)
     
 ("gm" "Miete" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Unter den Eichen
-    Expenses:Wohnung:Miete     %^{Amount|595,25}€
+    Expenses:Wohnung:Grundmiete               401,25€
+    Expenses:Heizkosten                        91,00€
+    Expenses:Betriebskosten                   103,00€
     Assets:Giro" 
+    :immediate-finish t)
+
+("gn" "Netflix" plain (file (expand-dir-db "money.dat"))
+ "%(org-read-date) * Netflix ;;geht beides an Samuel
+    Expenses:Unterhaltung:Netflix               3,00€
+    Liabilities:Ha-Sa:Netflix                   3,00€
+    Assets:Giro"
     :immediate-finish t)
 
 ("gu" "Untermiete" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Kevin Schürer (%^{Monat})
-    Assets:Giro     %^{Amount|330,00}€
+    Assets:Giro                               %^{Amount|330,00}€
     Income:Wohnung" 
     :immediate-finish t)
     
 ("gs" "Strom" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Stadtwerke
-    Expenses:Wohnung:Strom     %^{Amount|53,00}€
+    Expenses:Wohnung:Strom                     %^{Amount|59,00}€
     Assets:Giro" 
     :immediate-finish t)
     
 ("gt" "Topoi Stipendium" plain (file (expand-dir-db "money.dat"))
  "%(org-read-date) * Stipendium Topoi
-    Assets:Giro                          %^{Amount|1350,00}€
+    Assets:Giro                              %^{Amount|1350,00}€
     Income:Stipendium:Topoi" 
     :immediate-finish t)
      
