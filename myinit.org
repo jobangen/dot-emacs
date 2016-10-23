@@ -135,16 +135,6 @@ müssen manuell deaktiviert werden
    (volatile-highlights-mode t))
 #+end_src
 
-** hl-sentence
-#+begin_src emacs-lisp
-(use-package hl-sentence
-  :config
-   (setq sentence-end-double-space nil)
-   ;;(setq sentence-end "[.?!][]\"')]\\($\\|\t\\| \\)[ \t\n]")
-   (setq sentence-end "[^.].[.?!]+\\([]\"')}%]*\\|<[^>]+>\\)\\($\\| $\\|\t\\| \\)[ \t\n]*")
-)
-#+end_src
-
 * Bedienung & Interface
 ** cursor
 #+begin_src emacs-lisp
@@ -1136,7 +1126,6 @@ Null prefix argument turns off the mode."
 	(add-hook 'LaTeX-mode-hook 'flyspell-mode)
 	(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 	(add-hook 'LaTeX-mode-hook 'latex-extra-mode)
-	(add-hook 'LaTeX-mode-hook 'hl-sentence-mode)
     (add-hook 'LaTeX-mode-hook 'visual-fill-column-mode)
 
 
