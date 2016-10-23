@@ -1,5 +1,14 @@
 # -*- mode: snippet -*-
 # name: Link to Zettel
-# key: zet
+# key: zettel
 # --
-[[file:$1.txt][Zettel]$0
+#+TITLE: $1
+#+DATE: $2
+* Schlagwörter
+tags: $0
+
+* Inhalt
+
+* Literatur
+
+* Links
