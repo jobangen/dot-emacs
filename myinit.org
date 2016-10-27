@@ -97,7 +97,7 @@ müssen manuell deaktiviert werden
 
 ** Font
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "Inconsolata"))
+(add-to-list 'default-frame-alist '(font . "Inconsolata-12"))
 #+end_src
 
 ** Themes
@@ -1276,9 +1276,9 @@ http://www.jonathanleroux.org/bibtex-mode.html
                 'bibtex-completion-apa-get-value entry))
               ("inproceedings"
                (s-format
-                "${author} ${date}. ${title}. ${subtitle}. In: ${editor}, ${booktitle} (pp. ${pages}). ${location}: ${publisher}."
+                "${author} ${date}: ${title}. ${subtitle}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}."
                 'bibtex-completion-apa-get-value entry))
-              ("book"
+              ("book"1
                (s-format
                 "${author} ${date}: ${title}. ${subtitle}. ${location}: ${publisher}."
                 'bibtex-completion-apa-get-value entry))
