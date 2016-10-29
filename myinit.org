@@ -1169,7 +1169,6 @@ Null prefix argument turns off the mode."
   :config
     (progn
 	(setq reftex-plug-into-AUCTeX t)
-	(setq bibtex-dialect "biblatex")
 	(setq reftex-sort-bibtex-matches "author")
 	(setq reftex-external-file-finders
 	      '(("tex" . "kpsewhich -format=.tex %f")
