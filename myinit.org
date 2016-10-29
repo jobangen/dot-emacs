@@ -135,6 +135,15 @@ müssen manuell deaktiviert werden
    (volatile-highlights-mode t))
 #+end_src
 
+** visual-fill-column
+#+begin_src emacs-lisp
+(use-package visual-fill-column
+  :ensure t
+  :defer t
+  :config (setq-default visual-fill-column-center-text t
+                        visual-fill-column-fringes-outside-margins t))
+#+end_src
+
 * Bedienung & Interface
 ** cursor
 #+begin_src emacs-lisp
@@ -1069,6 +1078,27 @@ Null prefix argument turns off the mode."
     (my/org-clock-csv-calc)))
 
 
+#+end_src
+
+** org-present
+#+begin_src emacs-lisp
+(eval-after-load "org-present"
+  '(progn
+     (add-hook 'org-present-mode-hook
+               (lambda ()
+                 (org-present-big)
+                 (org-display-inline-images)
+                 (flyspell-mode -1)
+                 (variable-pitch-mode t)
+                 (visual-fill-column-mode t)))
+     (add-hook 'org-present-mode-quit-hook
+               (lambda ()
+                 (org-present-small)
+                 (org-remove-inline-images)
+                 (flyspell-mode 1)
+                 (variable-pitch-mode 0)
+                 (visual-fill-column-mode 0)
+                 ))))
 #+end_src
 
 * LaTeX und BibTeX
