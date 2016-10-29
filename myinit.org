@@ -1196,13 +1196,17 @@ Null prefix argument turns off the mode."
 http://www.jonathanleroux.org/bibtex-mode.html
 #+begin_src emacs-lisp
 (setq bibtex-dialect 'biblatex)
-
 (setq bibtex-maintain-sorted-entries t)
-(setq bibtex-autokey-year-use-crossref-entry t) ;;Nutzt das Jahr des cross-ref entries für das Jahr im Autokey
-;;Generation der Bibkeys: http://www.jonathanleroux.org/bibtex-mode.html#0630
-(setq bibtex-autokey-year-length 4)
-(setq bibtex-autokey-year-title-separator "-")
-(setq bibtex-autokey-titleword-separator "-")
+(setq bibtex-autokey-year-use-crossref-entry t
+      bibtex-autokey-year-length 4
+      bibtex-autokey-year-title-separator "-"
+      bibtex-autokey-titleword-separator "-")
+
+(defun bibtex-autokey-get-year ()
+  "Return year field contents as a string obeying `bibtex-autokey-year-length'."
+  (let ((yearfield (bibtex-autokey-get-field "date")))
+    (substring yearfield (max 0 (- (length yearfield)
+                                   bibtex-autokey-year-length)))))
 #+end_src
 
 ** bibtex-utils
