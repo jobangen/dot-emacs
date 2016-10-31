@@ -1123,6 +1123,7 @@ Null prefix argument turns off the mode."
 
     (setq LaTeX-csquotes-open-quote "\\enquote{")
 	(setq LaTeX-csquotes-close-quote "}")
+    (setq LaTeX-paragraph-commands '("…")) ;; Befehle, bei 'fill' eigene paragraphen bilden
 
     (setq LaTeX-babel-hyphen nil); Disable language-specific hyphen insertion.
 
