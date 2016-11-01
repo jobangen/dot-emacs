@@ -783,7 +783,7 @@ tags:\n* Inhalt
 \n* Links"
 :immediate-finish t :jump-to-captured t)
 
-("Z" "Zettel TODO" entry (file+headline (expand-dir-zk "zk-todo.txt") "Inhalt")
+("Z" "Zettel TODO" entry (file+headline (expand-dir-zk "0-0a~zettelkasten-todo.txt") "Inhalt")
  "* TODO %^{Task}
 :PROPERTIES:
 :CREATED: %U
