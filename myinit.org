@@ -58,6 +58,7 @@
 
 ** dir-setup
 #+begin_src emacs-lisp
+
 (defun expand-dir-dropbox (name)
   (expand-file-name name "~/Dropbox/"))
 
@@ -285,7 +286,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (use-package smex
     :load-path "~/.emacs.d/non-elpa/smex-abo-abo"
     :init
-	 (require 'smex)
+     (require 'smex)
      (setq smex-completion-method 'ivy)
      (smex-initialize)
      (bind-key "M-x" 'smex)
