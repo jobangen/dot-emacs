@@ -58,18 +58,14 @@
 
 ** dir-setup
 #+begin_src emacs-lisp
-
-(defun expand-dir-dropbox (name)
-  (expand-file-name name "~/Dropbox/"))
-
 (defun expand-dir-db (name)
   (expand-file-name name "~/Dropbox/db/"))
 
 (defun expand-dir-org (name)
-  (expand-file-name name "~/Dropbox/db/org/"))
+  (expand-file-name name (expand-dir-db "org/")))
 
 (defun expand-dir-zk (name)
-  (expand-file-name name "~/Dropbox/db/zk/"))
+  (expand-file-name name (expand-dir-db "zk/")))
 
 (defun expand-dir-texte (name)
   (expand-file-name name "~/texte/"))
