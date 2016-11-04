@@ -6,3 +6,4 @@
 
 (org-babel-load-file "~/.emacs.d/myinit.org")
 
+(put 'narrow-to-region 'disabled nil)
