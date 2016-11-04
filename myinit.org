@@ -333,7 +333,30 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          ("C-c a" . org-agenda)
          ("C-c b" . org-iswitchb)
          ("C-c c" . org-capture)
-         ("<f11>" . org-clock-in)))
+         ("<f11>" . org-clock-in))
+  :config
+   (progn
+     ;;Pfade
+     (setq org-directory (expand-file-name (expand-dir-org ""))
+           org-default-notes-file (expand-dir-org "inbox.org")
+           org-agenda-diary-file (expand-dir-org "journal.org")
+           org-agenda-include-diary nil)
+
+     ;; shift-select
+     (setq org-support-shift-select 'always)
+     ;;keine automatischen Leerzeilen vor Entries
+     (setq org-blank-before-new-entry nil) 
+     ;; follow links by pressing ENTER on them
+     (setq org-return-follows-link t)
+     ;; syntax highlight code in source blocks
+     (setq org-src-fontify-natively t)
+
+
+     ;; 
+
+   )
+)
+   
 
 (use-package org-plus-contrib
   :ensure t :defer t)
@@ -468,17 +491,14 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 
 ** behaviour
 #+begin_src emacs-lisp
-;; shift-select
-(setq org-support-shift-select 'always)
-;;keine automatischen Leerzeilen vor Entries
-(setq org-blank-before-new-entry nil) 
 ;; autolist
 (use-package org-autolist
   :commands org-autolist-mode
   :diminish org-autolist-mode
   :init
   (progn
-    (add-hook 'org-mode-hook 'org-autolist-mode)))
+    (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
+  ))
 #+end_src
 
 ** speedkeys
@@ -486,15 +506,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (setq org-use-speed-commands t)
 (setq org-speed-commands-user
 '(("S" . (widen))))
-#+end_src
-
-** Pfade
-#+begin_src emacs-lisp
-(setq org-directory (expand-file-name (expand-dir-org "")))
-(setq org-default-notes-file (expand-dir-org "inbox.org"))
-;;(setq org-agenda-files '((expand-dir-org "")))
-(setq org-agenda-diary-file (expand-dir-org "journal.org"))
-(setq org-agenda-include-diary nil)
 #+end_src
 
 ** habits
@@ -1045,11 +1056,6 @@ Null prefix argument turns off the mode."
 
 #+end_src
 
-** org-search-goto
-#+begin_src emacs-lisp
-(use-package org-search-goto-ml
-  :load-path "~/.emacs.d/non-elpa/org-search-goto-ml")
-#+end_src
 ** org-clock-csv
 #+begin_src emacs-lisp
 (use-package org-clock-csv
