@@ -1306,7 +1306,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
                (s-format
                 "${author} ${date}: ${title}. ${subtitle}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}."
                 'bibtex-completion-apa-get-value entry))
-              ("book"1
+              ("book"
                (s-format
                 "${author} ${date}: ${title}. ${subtitle}. ${location}: ${publisher}."
                 'bibtex-completion-apa-get-value entry))
@@ -1328,7 +1328,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
                 'bibtex-completion-apa-get-value entry))
               ("proceedings"
                (s-format
-                "${editor} (Hg.) ${date}: ${booktitle}. ${location}: ${publisher}."
+                "${editor} (Hg.) ${date}: ${title}. ${location}: ${publisher}."
                 'bibtex-completion-apa-get-value entry))
               ("unpublished"
                (s-format
@@ -2560,7 +2560,7 @@ are referenced by its edges, but functions for these tasks need region."
 
 ** my/bibtex-to-biblatex
 #+begin_src emacs-lisp
-  (defun my/bibtex-to-biblatex ()
+(defun my/bibtex-to-biblatex ()
     (interactive)
     (goto-char 1)
        (while (search-forward-regexp "{[a-z0-9]*,$" nil t) 
@@ -2580,7 +2580,7 @@ are referenced by its edges, but functions for these tasks need region."
 
    )
 
-  (bind-key "C-c b" 'my/bibtex-to-biblatex bibtex-mode-map)
+(bind-key "C-c b" 'my/bibtex-to-biblatex bibtex-mode-map)
 
 #+end_src
 
@@ -2859,3 +2859,24 @@ http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
                 nil)))
 #+end_src
 
+** my/berlinantiquariat-bill-format
+#+begin_src emacs-lisp
+(defun my/berlinantiquariat-bill-format ()
+   (interactive)
+   (goto-char 1)
+      (while (search-forward-regexp "\\\\textit" nil t)
+         (replace-match "" t nil))
+   (goto-char 1)
+      (while (search-forward-regexp "\\[" nil t)
+         (replace-match "" t nil))
+   (goto-char 1)
+      (while (search-forward-regexp "\\]" nil t)
+         (replace-match "" t nil))
+   (goto-char 1)
+      (while (search-forward-regexp "\"" nil t)
+         (replace-match "" t nil))
+   (goto-char 1)
+      (while (search-forward-regexp "€" nil t)
+         (replace-match "\\\\EURdig" t nil))
+)
+#+end_src
