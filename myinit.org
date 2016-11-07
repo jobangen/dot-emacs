@@ -58,16 +58,16 @@
 
 ** dir-setup
 #+begin_src emacs-lisp
-  (defun expand-dir-db (name)
-    (expand-file-name name "~/Dropbox/db/"))
+(defun expand-dir-db (name)
+   (expand-file-name name "~/Dropbox/db/"))
 
- (setq org-directory "~/Dropbox/db/org/")
+(setq org-directory "~/Dropbox/db/org/")
 
-  (defun expand-dir-zk (name)
-    (expand-file-name name (expand-dir-db "zk/")))
+(defun expand-dir-zk (name)
+   (expand-file-name name (expand-dir-db "zk/")))
 
-  (defun expand-dir-texte (name)
-    (expand-file-name name "~/texte/"))
+(defun expand-dir-texte (name)
+   (expand-file-name name "~/texte/"))
 #+end_src
 
 * use-package, bind-key
@@ -676,7 +676,7 @@ SCHEDULED: %t
 ("jb" "BerlinAntiquariat" entry (file+datetree+prompt "journal.org")
  #'org-capture-berlinantiquariat :jump-to-captured t)
 
-("je" "Electricity" plain (file "~/Dropbox/db/plot/electricity.csv")
+("je" "Electricity" plain (file (lambda () (expand-dir-db "/plot/electricity.csv")))
 "%(org-read-date); %?")
 
 ("jw" "Wissenschaft" entry (file+datetree+prompt "journal.org")
@@ -695,7 +695,7 @@ Subject: [[%l][%:subject]]
 %i
 #+END_QUOTE")
 
-("b" "bibtex" plain (file (expand-dir-db "biblio.bib"))
+("b" "bibtex" plain (file (lambda () (expand-dir-db "biblio.bib")))
 "%?" :jump-to-captured t :empty-lines 1)
 
 ("l" "literature" entry (file+headline "inbox.org" "Literatur")
@@ -710,36 +710,36 @@ Subject: [[%l][%:subject]]
 #+BEGIN_SRC csv-mode :tangle stat/ref-path.csv\n\n#+END_SRC")
 
 ("g" "Geld - Ledger entries")
-("gb" "Bargeld" plain (file (expand-dir-db "money.dat"))
+("gb" "Bargeld" plain (file (lambda () (expand-dir-db "money.dat")))
  "%(org-read-date) * Kartenverfügung
     Expenses:Bargeld                           %^{Amount}€
     Assets:Giro"
     :immediate-finish t)
     
-("gg" "Giro" plain (file (expand-dir-db "money.dat"))
+("gg" "Giro" plain (file (lambda () (expand-dir-db "money.dat")))
  "%(org-read-date) * %^{Payee| |Deutsche Bahn}
     Expenses:%^{Expenses|Kauf:|Geschenk:|Reisen:}%^{Expenses}    %^{Amount}€
     Assets:Giro"
     :immediate-finish t)
 
-("gh" "Handy" plain (file (expand-dir-db "money.dat"))
+("gh" "Handy" plain (file (lambda () (expand-dir-db "money.dat")))
  "%(org-read-date) * Telekom
     Expenses:Handy                             %^{Amount|29,89}€
     Assets:Giro"
     :immediate-finish t)
 
-("gi" "Internet+Telefon" plain (file (expand-dir-db "money.dat"))
+("gi" "Internet+Telefon" plain (file (lambda () (expand-dir-db "money.dat")))
  "%(org-read-date) * Kabel Deutschland
     Expenses:Wohnung:Internet+Telefon          %^{Amount|19,90}€
     Assets:Giro" 
     :immediate-finish t)
-("gk" "Krankenkasse" plain (file (expand-dir-db "money.dat"))
+("gk" "Krankenkasse" plain (file (lambda () (expand-dir-db "money.dat")))
  "%(org-read-date) * Techniker Krankenkasse
     Expenses:Versicherung:Krankenkasse        237,60€
     Assets:Giro"
     :immediate-finish t)
     
-("gm" "Miete" plain (file (expand-dir-db "money.dat"))
+("gm" "Miete" plain (file (lambda () (expand-dir-db "money.dat")))
  "%(org-read-date) * Unter den Eichen
     Expenses:Wohnung:Grundmiete               401,25€
     Expenses:Wohnung:Heizkosten                91,00€
@@ -747,32 +747,32 @@ Subject: [[%l][%:subject]]
     Assets:Giro" 
     :immediate-finish t)
 
-("gn" "Netflix" plain (file (expand-dir-db "money.dat"))
+("gn" "Netflix" plain (file (lambda () (expand-dir-db "money.dat")))
  "%(org-read-date) * Netflix ;;geht beides an Samuel
     Expenses:Unterhaltung:Netflix               3,00€
     Liabilities:Ha-Sa:Netflix                   3,00€
     Assets:Giro"
     :immediate-finish t)
 
-("gu" "Untermiete" plain (file (expand-dir-db "money.dat"))
+("gu" "Untermiete" plain (lambda () (file (expand-dir-db "money.dat")))
  "%(org-read-date) * Kevin Schürer (%^{Monat})
     Assets:Giro                               %^{Amount|330,00}€
     Income:Wohnung" 
     :immediate-finish t)
     
-("gs" "Strom" plain (file (expand-dir-db "money.dat"))
+("gs" "Strom" plain (file (lambda () (expand-dir-db "money.dat")))
  "%(org-read-date) * Stadtwerke
     Expenses:Wohnung:Strom                     %^{Amount|59,00}€
     Assets:Giro" 
     :immediate-finish t)
     
-("gt" "Topoi Stipendium" plain (file (expand-dir-db "money.dat"))
+("gt" "Topoi Stipendium" plain (file (lambda () (expand-dir-db "money.dat")))
  "%(org-read-date) * Stipendium Topoi
     Assets:Giro                              %^{Amount|1350,00}€
     Income:Stipendium:Topoi" 
     :immediate-finish t)
      
-("z" "Zettel" plain (file (capture-report-date-file  (expand-dir-db "zk/")))
+("z" "Zettel" plain (file (lambda () (capture-report-date-file (expand-dir-db "zk/"))))
  "#+TITLE: %^{Title}
 #+DATE: %U\n* Schlagwörter
 tags:\n* Inhalt
@@ -780,7 +780,7 @@ tags:\n* Inhalt
 \n* Links"
 :immediate-finish t :jump-to-captured t)
 
-("Z" "Zettel TODO" entry (file+headline (expand-dir-zk "0-0a~zettelkasten-todo.txt") "Inhalt")
+("Z" "Zettel TODO" entry (file+headline (lambda () (expand-dir-zk "0-0a~zettelkasten-todo.txt") "Inhalt"))
  "* TODO %^{Task}
 :PROPERTIES:
 :CREATED: %U
