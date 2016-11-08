@@ -22,6 +22,11 @@
 	        indicate-empty-lines t	;; Graphical gimmick
 )
 
+;; Save whatever’s in the current (system) clipboard before
+;; replacing it with the Emacs’ text.
+;; https://github.com/dakrone/eos/blob/master/eos.org
+(setq save-interprogram-paste-before-kill t)
+
 ;; (add-hook 'text-mode-hook (lambda () (variable-pitch-mode t)))
 (dolist (hook '(LaTeX-mode-hook
                 ))
