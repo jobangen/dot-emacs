@@ -1262,15 +1262,12 @@ http://www.jonathanleroux.org/bibtex-mode.html
    (setq bibtex-completion-pdf-open-function
      (lambda (fpath)
       (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))
-
-   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n${=key=}\n* Schlagwörter\ntags: #${=key=}, #txt, ${keywords},\n* Inhalt\n\n* Literatur\n\n* Links")
-
+   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n* Schlagwörter\ntags: #${=key=}, #txt, ${keywords},\n* Inhalt\n\n* Literatur\n\n* Links\n\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv\n, ${=key=}\n#+end_src")
    (setq bibtex-completion-format-citation-functions
      '((org-mode      . bibtex-completion-format-citation-org-ref-autocite)
        (latex-mode    . bibtex-completion-format-citation-cite)
        (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
        (default       . bibtex-completion-format-citation-default)))
-
    (defun bibtex-completion-format-citation-org-ref-autocite (keys)
      "Formatter for org-ref references."
      (let* ((prenote  (if bibtex-completion-cite-prompt-for-optional-arguments (read-from-minibuffer "Prenote: ") ""))
@@ -1278,7 +1275,6 @@ http://www.jonathanleroux.org/bibtex-mode.html
             (prenote  (if (string= "" prenote)  "" (concat prenote  "::")))
             (notes (if (string= "" postnote) "" (concat "[" prenote postnote "]"))))
       (format "[[autocite:%s]%s]" (s-join ", " keys) notes)))
-
    (defun bibtex-completion-format-entry (entry width)
      "Formats a BibTeX entry for display in results list."
      (let* ((fields (list (if (assoc-string "author" entry 'case-fold) "author" "editor")
@@ -1291,10 +1287,8 @@ http://www.jonathanleroux.org/bibtex-mode.html
        (s-format "$0 $1 $2 $3$4 $5" 'elt
                  (-zip-with (lambda (f w) (truncate-string-to-width f w 0 ?\s))
                             fields (list 36 (- width 53) 4 1 1 7)))))
-
    (defun bibtex-completion-apa-format-reference (key)
-     "Returns a plain text reference in APA format for the
-   publication specified by KEY."
+     "Returns a plain text reference in APA format for the publication specified by KEY."
      (let*
       ((entry (bibtex-completion-get-entry key))
        (ref (pcase (downcase (bibtex-completion-get-value "=type=" entry))
