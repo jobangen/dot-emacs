@@ -2089,19 +2089,20 @@ _<left>_    _<right>_    _y_: split-vert     _s_: ace-swap      _g_: refresh    
 
 ** hydra-text
 #+begin_src emacs-lisp
-(bind-key "C-c t" 'hydra-text/body)
-(defhydra hydra-text (:hint nil
-                      :color red
-                      :columns 2)
-"Text"
-("p" previous-line "previous-line")
-("n" next-line "next-line")
-("c" count-words "count")
-("j" join-line "join-line")
-("k" my/keyword "keywords")
-("s" sort-lines "sort-lines")
-("u" my/uniquify-all-lines-region "uniquify")
-("q" nil "cancel" :exit t))
+  (bind-key "C-c t" 'hydra-text/body)
+  (defhydra hydra-text (:hint nil
+                        :color red
+                        :columns 2)
+  "Text"
+  ("p" previous-line "previous-line")
+  ("n" next-line "next-line")
+  ("c" count-words "count")
+  ("j" join-line "join-line")
+  ("m" char-menu "char-menu")
+  ("s" sort-lines "sort-lines")
+  ("t" zettelkasten-insert-tags "Tags")
+  ("u" my/uniquify-all-lines-region "uniquify")
+  ("q" nil "cancel" :exit t))
 #+end_src
 ** hydra-git
 #+begin_src emacs-lisp
