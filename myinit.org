@@ -2787,8 +2787,8 @@ the body of this command."
 
 (defun zettelkasten-insert-regex ()
   (interactive)
-  (insert "\\s-[0-9a-z]*~")
-  (search-backward-regexp "\\["))
+  (insert "\\s-\\([a-z]*\\|[0-9]*\\)~")
+  (goto-char 22))
 (define-key ivy-minibuffer-map (kbd "C-#") 'zettelkasten-insert-regex)
 ;(defun zettelkasten-insert-regex ()
 ;  (interactive)
