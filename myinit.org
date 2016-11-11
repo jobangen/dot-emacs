@@ -155,9 +155,10 @@ müssen manuell deaktiviert werden
 (use-package multiple-cursors
   :ensure t
   :diminish multiple-cursors
-  :bind ("C-S-c C-S-c" . mc/edit-lines)
-        ("C-<" . mc/mark-next-like-this)
-        ("C-c C-<" . mc/mark-all-like-this))
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C-S-ä C-S-ä" . mc/edit-lines)
+         ("C-<" . mc/mark-next-like-this)
+         ("C-c C-<" . mc/mark-all-like-this)))
 #+end_src
 
 ** scrollen
@@ -182,9 +183,12 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (setq echo-keystrokes 0.1)
 #+end_src
 
-** menu-key
+** menu-key & neo
 #+begin_src emacs-lisp
 (bind-key "<menu>" 'switch-to-buffer)
+
+(global-set-key (kbd "C-ö") ctl-x-map)
+(define-key key-translation-map (kbd "C-ä") (kbd "C-c"))
 #+end_src
 
 ** char-menu
@@ -263,7 +267,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (use-package swiper
   :ensure t
   :bind (:map ivy-minibuffer-map
-         ("C-c #" . zettelkasten-insert-regex)))
+         ("C-#" . zettelkasten-insert-regex)))
 #+END_SRC
 
 ** counsel
@@ -272,11 +276,15 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   :ensure t
   :bind (("C-s" . counsel-grep-or-swiper)
          ("C-c u" . counsel-linux-app)
+         ("C-ä u" . counsel-linux-app)
          ("C-M-s" . my/counsel-ag-project-at-point)
-         ("C-x l". counsel-locate)
+         ("C-x l" . counsel-locate)
+         ("C-ö l" . counsel-locate)
          ("M-y" . counsel-yank-pop)
+         ("M-ü" . counsel-yank-pop)
          :map ivy-minibuffer-map
-         ("M-y" . ivy-next-line))
+          ("M-y" . ivy-next-line)
+          ("M-ü" . ivy-next-line))
   :config
     (defun my/counsel-ag-project-at-point () ;;http://pastebin.com/Gtx9a1N0
       "use counsel ag to search for the word at point in the project"
@@ -289,13 +297,15 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+BEGIN_SRC emacs-lisp
 (use-package smex
     :load-path "~/.emacs.d/non-elpa/smex-abo-abo"
+    :bind (("M-x" . smex)
+           ("M-ö" . smex)
+           ("M-X" . smex-major-mode-commands)
+           ("M-Ö" . smex-major-mode-commands)
+           ("C-c C-c M-x" . execute-extended-command))
     :init
      (require 'smex)
      (setq smex-completion-method 'ivy)
      (smex-initialize)
-     (bind-key "M-x" 'smex)
-     (bind-key "M-X" 'smex-major-mode-commands)
-     (bind-key "C-c C-c M-x" 'execute-extended-command)
 )
 #+END_SRC
 
@@ -334,6 +344,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          ("C-c a" . org-agenda)
          ("C-c b" . org-iswitchb)
          ("C-c c" . org-capture)
+         ("C-c ä" . org-capture)
          ("<f11>" . org-clock-in))
   :config
    (progn
@@ -678,7 +689,7 @@ SCHEDULED: %t
 ("jb" "BerlinAntiquariat" entry (file+datetree+prompt "journal.org")
  #'org-capture-berlinantiquariat :jump-to-captured t)
 
-("je" "Electricity" plain (file (lambda () (expand-dir-db "/plot/electricity.csv")))
+("je" "Electricity" plain (file (lambda () (expand-dir-db "plot/electricity.csv")))
 "%(org-read-date); %?")
 
 ("jw" "Wissenschaft" entry (file+datetree+prompt "journal.org")
@@ -1263,11 +1274,13 @@ http://www.jonathanleroux.org/bibtex-mode.html
      (lambda (fpath)
       (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))
    (setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n* Schlagwörter\ntags: #${=key=}, #txt, ${keywords},\n* Inhalt\n\n* Literatur\n\n* Links\n\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv\n, ${=key=}\n#+end_src")
+
    (setq bibtex-completion-format-citation-functions
      '((org-mode      . bibtex-completion-format-citation-org-ref-autocite)
        (latex-mode    . bibtex-completion-format-citation-cite)
        (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
        (default       . bibtex-completion-format-citation-default)))
+
    (defun bibtex-completion-format-citation-org-ref-autocite (keys)
      "Formatter for org-ref references."
      (let* ((prenote  (if bibtex-completion-cite-prompt-for-optional-arguments (read-from-minibuffer "Prenote: ") ""))
@@ -1275,6 +1288,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
             (prenote  (if (string= "" prenote)  "" (concat prenote  "::")))
             (notes (if (string= "" postnote) "" (concat "[" prenote postnote "]"))))
       (format "[[autocite:%s]%s]" (s-join ", " keys) notes)))
+
    (defun bibtex-completion-format-entry (entry width)
      "Formats a BibTeX entry for display in results list."
      (let* ((fields (list (if (assoc-string "author" entry 'case-fold) "author" "editor")
@@ -1287,6 +1301,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
        (s-format "$0 $1 $2 $3$4 $5" 'elt
                  (-zip-with (lambda (f w) (truncate-string-to-width f w 0 ?\s))
                             fields (list 36 (- width 53) 4 1 1 7)))))
+
    (defun bibtex-completion-apa-format-reference (key)
      "Returns a plain text reference in APA format for the publication specified by KEY."
      (let*
@@ -1622,7 +1637,6 @@ abort completely with `C-g'."
      (setq bbdb-pop-up-layout 'one-line)
 ))
 #+end_src
-
 ** gnus-dired
 #+begin_src emacs-lisp
 (use-package gnus-dired
@@ -2010,6 +2024,7 @@ _q_: cancel     _r_: resolve    _tI_: insert item       ^ ^                   _p
 ** hydra-projectile
 #+begin_src emacs-lisp
 (bind-key "C-c z" 'hydra-projectile/body)
+(bind-key "C-ä z" 'hydra-projectile/body)
 (defhydra hydra-projectile (:color teal
                             :hint nil)
   "
@@ -2090,6 +2105,7 @@ _<left>_    _<right>_    _y_: split-vert     _s_: ace-swap      _g_: refresh    
 ** hydra-text
 #+begin_src emacs-lisp
   (bind-key "C-c t" 'hydra-text/body)
+  (bind-key "C-ä t" 'hydra-text/body)
   (defhydra hydra-text (:hint nil
                         :color red
                         :columns 2)
@@ -2122,6 +2138,7 @@ Git
 ** hydra-spellcheck
 #+begin_src emacs-lisp
 (bind-key "C-c s" 'hydra-spellcheck/body)
+(bind-key "C-ä s" 'hydra-spellcheck/body)
 (defhydra hydra-spellcheck (:color red :columns 3)
 "Flyspell"
 ("b" flyspell-buffer "buffer")
@@ -2572,10 +2589,8 @@ are referenced by its edges, but functions for these tasks need region."
           (replace-match "ä" t nil))
        (while (search-forward-regexp "{\\\"u}" nil t) 
           (replace-match "ü" t nil))
-
    )
 
-(bind-key "C-c b" 'my/bibtex-to-biblatex bibtex-mode-map)
 
 #+end_src
 
@@ -2789,10 +2804,6 @@ the body of this command."
   (interactive)
   (insert "\\s-\\([a-z]*\\|[0-9]*\\)~")
   (goto-char 22))
-(define-key ivy-minibuffer-map (kbd "C-#") 'zettelkasten-insert-regex)
-;(defun zettelkasten-insert-regex ()
-;  (interactive)
-;  (insert "[a-z1-9]"))
 
 (defface zettelkasten-id-face `((t (:background "#e0e0e0")))  "Zettelkasten Ids")
 (defface zettelkasten-lvl1-face `((t (:background "#819FF7")))  "Zettelkasten Level 1")
