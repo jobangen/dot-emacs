@@ -175,7 +175,7 @@
 
 
 (setq gnus-group-line-format "%P%3y:%c%B\n")
-(setq gnus-topic-line-format "%i%4{%n - %A%}%v\n")
+(setq gnus-topic-line-format "%i%2{%n - %A%}%v\n")
 
 
 (setq gnus-use-trees t
