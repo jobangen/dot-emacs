@@ -1637,6 +1637,12 @@ abort completely with `C-g'."
      (setq bbdb-pop-up-layout 'one-line)
 ))
 #+end_src
+** counsel-bbdb
+#+begin_src emacs-lisp
+(use-package counsel-bbdb
+  :ensure t)
+#+end_src
+
 ** gnus-dired
 #+begin_src emacs-lisp
 (use-package gnus-dired
