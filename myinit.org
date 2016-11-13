@@ -2,24 +2,24 @@
 * Grundeinstellungen
 ** Einst
 #+BEGIN_SRC emacs-lisp
-(setq split-width-threshold 120)
+(setq split-width-threshold 9999)
 (setq inhibit-splash-screen t) ;;Remove splash screen
 (desktop-save-mode 1) ;; Erinnert die zuletzt geöffneten Dateien
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq large-file-warning-threshold nil)
+(setq sentence-end-double-space nil)
 
 (transient-mark-mode nil) ;; No region when it is not highlighted
 (global-font-lock-mode 1) ;;syntax highlighting everywhere
 (global-visual-line-mode 1) ;;Add proper word wrapping
-(global-auto-revert-mode t) ;;aktualisiert buffer automatisch, wenn auf Platte geändert.
-(setq auto-revert-interval 2)
+(global-auto-revert-mode t) ;;aktualisiert buffer automatisch
+(setq auto-revert-interval 2) ;; Prüfinterval in Sek.
 (set-language-environment "UTF-8")
 (set-terminal-coding-system 'utf-8) ;;UTF 8 by default
-(set-keyboard-coding-system 'utf-8)
-;;(prefer-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8) ;;(prefer-coding-system 'utf-8)
 (setq-default indent-tabs-mode nil ;; Insert tabs as spaces (not tabs)
-	        indicate-buffer-boundaries 'left	;; Graphical gimmick
-	        indicate-empty-lines t	;; Graphical gimmick
+	          indicate-buffer-boundaries 'left	;; Graphical gimmick
+	          indicate-empty-lines t	;; Graphical gimmick
 )
 
 ;; Save whatever’s in the current (system) clipboard before
