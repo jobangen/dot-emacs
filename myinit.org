@@ -2,7 +2,7 @@
 * Grundeinstellungen
 ** Einst
 #+BEGIN_SRC emacs-lisp
-(setq split-width-threshold 9999)
+(setq split-width-threshold 110)
 (setq inhibit-splash-screen t) ;;Remove splash screen
 (desktop-save-mode 1) ;; Erinnert die zuletzt geöffneten Dateien
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -1273,7 +1273,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
    (setq bibtex-completion-pdf-open-function
      (lambda (fpath)
       (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))
-   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n* Schlagwörter\ntags: #${=key=}, #txt, ${keywords},\n* Inhalt\n\n* Literatur\n\n* Links\n\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv\n, ${=key=}\n#+end_src")
+   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n* Schlagwörter\ntags: #${=key=}, #txt, ${keywords},\n* Inhalt\n\n* Literatur\n\n* Links\n\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv\n, , ${=key=}\n#+end_src")
 
    (setq bibtex-completion-format-citation-functions
      '((org-mode      . bibtex-completion-format-citation-org-ref-autocite)
