@@ -170,7 +170,7 @@
  '(article
    (vertical 1.0
              (horizontal 1.0 (summary 1.0 point) ("*BBDB*" 0.18))
-             (horizontal 75 (article 1.0)))))
+             (horizontal 0.75 (article 1.0)))))
 
 
 
