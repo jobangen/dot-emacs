@@ -2893,3 +2893,25 @@ http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
          (replace-match "\\\\EURdig" t nil))
 )
 #+end_src
+** my/pdfgrep
+#+begin_src emacs-lisp
+(defun pdfgrep-default-command ()
+ "pdfgrep -i -H -n TERM  ~/texte/*.pdf")
+
+(defun my/pdfgrep (command-args)
+  ""
+  (interactive
+   (progn
+     (let ((default (pdfgrep-default-command)))
+       (list (read-shell-command "Run grep (like this): "
+                                 (if current-prefix-arg "pdfgrep -i -H -n")
+                                 'grep-history
+                                 (if current-prefix-arg default))))))
+
+  ;; Setting process-setup-function makes exit-message-function work
+  ;; even when async processes aren't supported.
+  (compilation-start (if (and grep-use-null-device null-device)
+			 (concat command-args " " null-device)
+		       command-args)
+		     'grep-mode))
+#+end_src
