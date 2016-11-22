@@ -2823,8 +2823,8 @@ removed before collection."
 
 (defun zettelkasten-combine-parse-values ()
   (interactive)
-  (shell-command "cat ~/Dropbox/db/zk/*.txt > ~/Dropbox/db/stats/zettel-combined.txt")
-  (find-file (expand-dir-db "stats/zettel-combined.txt"))
+  (shell-command "cat ~/Dropbox/db/zk/*.txt > ~/Dropbox/db/stats/zettelkasten/zettel-combined.txt")
+  (find-file (expand-dir-db "stats/zettelkasten/zettel-combined.txt"))
   (zettelkasten-parse-tags-values))
 
 (add-hook 'after-init-hook 'zettelkasten-combine-parse-values)
