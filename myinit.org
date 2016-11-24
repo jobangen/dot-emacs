@@ -150,6 +150,13 @@ müssen manuell deaktiviert werden
 #+end_src
 
 * Bedienung & Interface
+** kbd
+#+begin_src emacs-lisp
+(bind-key "C-w" 'backward-kill-word)
+(bind-key "C-S-w" 'kill-region)
+(bind-key "C-x C-k" 'kill-region)
+#+end_src
+
 ** cursor
 #+begin_src emacs-lisp
 (use-package multiple-cursors
@@ -230,11 +237,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 )
 #+end_src
 
-** window
-#+begin_src emacs-lisp
-(bind-key "M-o" 'other-window)
-#+end_src
-
 ** ivy
 #+begin_src emacs-lisp
 (use-package ivy
@@ -274,7 +276,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 (use-package counsel
   :ensure t
-  :bind (("C-s" . counsel-grep-or-swiper)
+  :bind (("C-S-s" . counsel-grep-or-swiper)
          ("C-c u" . counsel-linux-app)
          ("C-ä u" . counsel-linux-app)
          ("C-M-s" . my/counsel-ag-project-at-point)
@@ -298,6 +300,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (use-package smex
     :load-path "~/.emacs.d/non-elpa/smex-abo-abo"
     :bind (("M-x" . smex)
+           ("C-x C-m" . smex)
            ("M-ö" . smex)
            ("M-X" . smex-major-mode-commands)
            ("M-Ö" . smex-major-mode-commands)
@@ -321,7 +324,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 (use-package avy
   :ensure t
-  :bind (("M-s" . avy-goto-word-or-subword-1))
+  :bind (("M-s" . avy-goto-word-or-subword-1)
+         ("C-s" . avy-goto-char-timer))
   :config
    (progn
     (setq avy-all-windows t)
@@ -333,7 +337,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (setq org-imenu-depth 9)
 
 (use-package imenu-anywhere
-  :bind ("C-S-s" . ivy-imenu-anywhere))
+;;  :bind ("C-S-s" . ivy-imenu-anywhere)
+)
 #+end_src
 
 * org-mode
@@ -948,11 +953,17 @@ Null prefix argument turns off the mode."
     (if auto-save-default
 	(auto-save-mode 1))))
 #+end_src
-** calender
+** calendar
 #+begin_src emacs-lisp
 (use-package german-holidays
-:config
-(setq holiday-other-holidays holiday-german-holidays))
+  :config
+   (setq holiday-other-holidays holiday-german-holidays))
+
+(setq calendar-latitude 52.450894)
+(setq calendar-longitude 13.308570)
+(setq calendar-location-name "Berlin")
+
+(setq calendar-time-display-form '(24-hours ":" minutes))
 #+end_src
 ** export
 *** ox-pandoc
