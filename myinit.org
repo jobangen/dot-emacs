@@ -21,6 +21,7 @@
 	          indicate-buffer-boundaries 'left	;; Graphical gimmick
 	          indicate-empty-lines t	;; Graphical gimmick
 )
+(setq next-line-add-newlines t) ;; C-n erzeugt Absatz am Ender der Zeile
 
 ;; Save whatever’s in the current (system) clipboard before
 ;; replacing it with the Emacs’ text.
@@ -1125,7 +1126,7 @@ Null prefix argument turns off the mode."
   :defer t
   :mode ("\\.tex\\'" . LaTeX-mode)
   :config
-    (progn
+   (progn
 	(setq TeX-auto-save	t)
 	(setq TeX-parse-self	t)
 	(setq TeX-PDF-mode	t)
@@ -1195,14 +1196,6 @@ Null prefix argument turns off the mode."
              (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex --synctex=1 %(mode)%' %t" TeX-run-TeX nil t))
              (setq TeX-save-query nil)
              (setq TeX-show-compilation t)))
-
-;;http://emacs.stackexchange.com/questions/443/editing-files-with-one-sentence-per-line
-(defun my-electric-dot ()
-  (interactive)
-  (insert ".\n"))
-(defun my-tex-hook ()
-  (local-set-key (kbd ".") 'my-electric-dot))
-(add-hook 'TeX-mode-hook 'my-tex-hook)
 ))
 
 (use-package latex-extra
@@ -1676,17 +1669,6 @@ abort completely with `C-g'."
 
 * Major-modes
 ** calendar
-*** calfw
-#+begin_src emacs-lisp
-(use-package calfw
-  :config
-   (require 'calfw-org)
-   (setq cfw:org-overwrite-default-keybinding t)
-   (setq calendar-week-start-day 1);; 0:Sunday, 1:Monday
-   (setq cfw:render-line-breaker 'cfw:render-line-breaker-none)
-)
-#+end_src
-
 *** org-gcal
 #+begin_src emacs-lisp
 (use-package org-gcal
