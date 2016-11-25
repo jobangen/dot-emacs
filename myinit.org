@@ -2786,13 +2786,15 @@ See `sort-words'."
 #+end_src
 ** zettelkasten
 #+begin_src emacs-lisp
+(defun zettelkasten-combine-zettel ()
+  (shell-command "cat ~/Dropbox/db/zk/*.txt > ~/Dropbox/db/stats/zettelkasten/zettel-combined.txt"))
+
+
 (defvar zettelkasten-tags-values)
 
 (defun zettelkasten-parse-tags-values ()
   (interactive)
   (setq zettelkasten-tags-values (zettelkasten-collect-tags-values)))
-
-;;(add-hook 'text-mode-hook 'zettelkasten-parse-tags-values)
 
 (defun zettelkasten-collect-tags-values (&optional regexp)
   "Collect values in keywords fields of all BibTeX entries.
@@ -2814,13 +2816,28 @@ removed before collection."
           (split-string kstring ",[ \n]*\\|{\\|}" t)))
       zk-tags)))
 
-(defun zettelkasten-combine-parse-values ()
+(defun zettelkasten-parse-values-combined ()
   (interactive)
-  (shell-command "cat ~/Dropbox/db/zk/*.txt > ~/Dropbox/db/stats/zettelkasten/zettel-combined.txt")
-  (find-file (expand-dir-db "stats/zettelkasten/zettel-combined.txt"))
+  (zettelkasten-combine-zettel)
   (zettelkasten-parse-tags-values))
 
-(add-hook 'after-init-hook 'zettelkasten-combine-parse-values)
+(defun zettelkasten-tangle-combined ()
+  (org-babel-tangle-file "~/Dropbox/db/stats/zettelkasten/zettel-combined.txt"))
+
+(defun zettelkasten-combine-tangle-combined ()
+  (interactive)
+  (zettelkasten-combine-zettel)
+  (zettelkasten-tangle))
+
+
+(defun zettelkasten-update-tags-tangle ()
+    (interactive)
+    (zettelkasten-combine-zettel)
+    (zettelkasten-parse-values-combined)
+    (zettelkasten-tangle-combined))
+
+(add-hook 'after-init-hook 'zettelkasten-update-tags-tangle)
+
 
 (defun zettelkasten-insert-tags (&optional arg)
   "Make a keywords field.
@@ -2847,6 +2864,7 @@ the body of this command."
 	  (setq cnt (1+ cnt))
 	  (insert (format "%s%s" (if (> cnt 1) ", " "") k))
           (add-to-list 'zettelkasten-tags-values k))))))
+
 
 (defun zettelkasten-insert-regex ()
   (interactive)
