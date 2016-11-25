@@ -727,7 +727,7 @@ Subject: [[%l][%:subject]]
 :FORM:      %^{Form|b|c|f| }
 :BIB1:      %^{Bibliothek}
 :END:\n** data-%?
-#+BEGIN_SRC csv-mode :tangle stat/ref-path.csv\n\n#+END_SRC")
+#+BEGIN_SRC csv-mode :tangle stat/ref-path.csv :padline no\n\n#+END_SRC")
 
 ("g" "Geld - Ledger entries")
 ("gb" "Bargeld" plain (file (lambda () (expand-dir-db "money.dat")))
@@ -1760,6 +1760,9 @@ rotate entire document."
   (pdf-view--rotate :counterclockwise (not arg)))
 
 )
+
+
+(add-to-list 'org-file-apps '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open link))))
 #+end_src
 
 ** ess
@@ -2827,7 +2830,7 @@ removed before collection."
 (defun zettelkasten-combine-tangle-combined ()
   (interactive)
   (zettelkasten-combine-zettel)
-  (zettelkasten-tangle))
+  (zettelkasten-tangle-combined))
 
 
 (defun zettelkasten-update-tags-tangle ()
