@@ -156,6 +156,8 @@ müssen manuell deaktiviert werden
 (bind-key "C-w" 'backward-kill-word)
 (bind-key "C-S-w" 'kill-region)
 (bind-key "C-x C-k" 'kill-region)
+(bind-key "C-r" 'previous-line)
+(bind-key "C-ö ö" 'save-some-buffers)
 #+end_src
 
 ** cursor
@@ -278,6 +280,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (use-package counsel
   :ensure t
   :bind (("C-S-s" . counsel-grep-or-swiper)
+         ("C-S-i" . counsel-grep-or-swiper)
          ("C-c u" . counsel-linux-app)
          ("C-ä u" . counsel-linux-app)
          ("C-M-s" . my/counsel-ag-project-at-point)
@@ -326,11 +329,14 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (use-package avy
   :ensure t
   :bind (("M-s" . avy-goto-word-or-subword-1)
-         ("C-s" . avy-goto-char-timer))
+         ("C-s" . avy-goto-char-timer)
+         ("H-i" . avy-goto-char-timer))
   :config
    (progn
     (setq avy-all-windows t)
-    (setq avy-keys '(?u ?i ?a ?e ?o ?s ?n ?r ?t ?d ?y))))
+    (setq avy-keys '(?u ?i ?a ?e ?o ?s ?n ?r ?t ?d ?y))
+
+    (define-key input-decode-map (kbd "C-i") (kbd "H-i"))))
 #+end_src
 
 ** imenu
@@ -1278,7 +1284,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
    (setq bibtex-completion-pdf-open-function
      (lambda (fpath)
       (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))
-   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n* Schlagwörter\ntags: #${=key=}, #txt, ${keywords},\n* Inhalt\n\n* Literatur\n\n* Links\n\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv\n, , ${=key=}\n#+end_src")
+   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE:\n* Schlagwörter\ntags: #${=key=}, #txt, ${keywords},\n* Inhalt\n\n* Literatur\n\n* Links\n\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv :padline no\n, , ${=key=}\n#+end_src")
 
    (setq bibtex-completion-format-citation-functions
      '((org-mode      . bibtex-completion-format-citation-org-ref-autocite)
