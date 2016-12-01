@@ -156,7 +156,7 @@ müssen manuell deaktiviert werden
 (bind-key "C-w" 'backward-kill-word)
 (bind-key "C-S-w" 'kill-region)
 (bind-key "C-x C-k" 'kill-region)
-(bind-key "C-r" 'previous-line)
+;;(bind-key "C-r" 'previous-line)
 (bind-key "C-ö ö" 'save-some-buffers)
 #+end_src
 
@@ -238,6 +238,16 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
    (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
    (setq aw-dispatch-always nil))
 )
+#+end_src
+
+** ace-isearch
+#+begin_src emacs-lisp
+(use-package ace-isearch
+ :ensure t
+ :config
+  (global-ace-isearch-mode +1)
+  (setq ace-isearch-function 'avy-goto-subword-1)
+  (setq ace-isearch-use-function-from-isearch nil))
 #+end_src
 
 ** ivy
@@ -328,8 +338,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 (use-package avy
   :ensure t
-  :bind (("M-s" . avy-goto-word-or-subword-1)
-         ("C-s" . avy-goto-char-timer)
+  :bind (("M-s" . avy-goto-char-timer)
          ("H-i" . avy-goto-char-timer))
   :config
    (progn
