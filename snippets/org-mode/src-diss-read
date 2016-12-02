@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: src-diss-soziol-in
+# key: diss-read
+# --
+#+begin_src csv :tangle diss/diss-reading.csv :padline no
+${1:bibkey}, ${2:title}, diss, ${4:1-9}, ${5:status}, ${6:effort}, ${7:tags}, ${8:comment}
+#+end_src

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: src-diss-soziol-in
+# key: diss-soz
+# --
+#+begin_src csv :tangle diss/diss-soziol-in-altertumswiss-autoritaetsfor.csv :padline no
+ , , 
+#+end_src
