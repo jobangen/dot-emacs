@@ -249,7 +249,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 (use-package ace-isearch
  :ensure t
- :diminish t
+ :diminish ace-isearch-mode
  :config
   (global-ace-isearch-mode +1)
   (setq ace-isearch-function 'avy-goto-subword-1)
