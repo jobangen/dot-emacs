@@ -240,14 +240,21 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 )
 #+end_src
 
+** isearch
+#+begin_src emacs-lisp
+(bind-key  "M-i" 'swiper-from-isearch isearch-mode-map)
+#+end_src
+
 ** ace-isearch
 #+begin_src emacs-lisp
 (use-package ace-isearch
  :ensure t
+ :diminish t
  :config
   (global-ace-isearch-mode +1)
   (setq ace-isearch-function 'avy-goto-subword-1)
-  (setq ace-isearch-use-function-from-isearch nil))
+  (setq ace-isearch-function-from-isearch 'swiper-from-isearch)
+  (setq ace-isearch-input-length 5))
 #+end_src
 
 ** ivy
