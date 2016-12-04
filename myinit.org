@@ -2849,6 +2849,7 @@ removed before collection."
 (defun zettelkasten-parse-values-combined ()
   (interactive)
   (zettelkasten-combine-zettel)
+  (find-file (expand-dir-db "stats/zettelkasten/zettel-combined.txt"))
   (zettelkasten-parse-tags-values))
 
 (defun zettelkasten-tangle-combined ()
