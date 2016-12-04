@@ -1291,6 +1291,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
   :config
    (setq bibtex-completion-bibliography (expand-dir-db "biblio.bib"))
    (setq bibtex-completion-library-path (expand-dir-texte ""))
+   (setq bibtex-completion-pdf-field "Files")
    (setq bibtex-completion-notes-path (expand-dir-zk ""))
    (setq bibtex-completion-notes-extension ".txt")
    (setq bibtex-completion-additional-search-fields '("subtitle"
