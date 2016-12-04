@@ -371,7 +371,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   :ensure t
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
-         ("C-c b" . org-iswitchb)
          ("C-c c" . org-capture)
          ("C-c ä" . org-capture)
          ("<f11>" . org-clock-in))
@@ -1386,11 +1385,10 @@ http://www.jonathanleroux.org/bibtex-mode.html
 ** ivy-bibtex
 #+begin_src emacs-lisp
 (use-package ivy-bibtex
- :bind ("<f5>" . ivy-bibtex)
-       ("C-<f5>" . ivy-resume)
+ :bind (("C-c b" . ivy-bibtex)
+        ("C-<f5>" . ivy-resume))
  :config
   (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
-
 )
 #+end_src
 
