@@ -1804,7 +1804,11 @@ rotate entire document."
 ** csv-mode
 #+begin_src emacs-lisp
 (use-package csv-mode
-  :defer t)
+  :defer t
+  :config
+   (add-hook 'csv-mode-hook
+          '(lambda () (csv-align-fields nil (buffer-end -1) (buffer-end +1))))
+)
 #+end_src
 
 ** dired
