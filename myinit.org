@@ -3003,3 +3003,24 @@ http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
 		       command-args)
 		     'grep-mode))
 #+end_src
+** my/move-file
+http://zck.me/emacs-move-file
+#+begin_src emacs-lisp
+(defun my/move-file (new-location)
+  "Write this file to NEW-LOCATION, and delete the old one."
+  (interactive (list (if buffer-file-name
+                         (read-file-name "Move file to: ")
+                       (read-file-name "Move file to: "
+                                       default-directory
+                                       (expand-file-name (file-name-nondirectory (buffer-name))
+                                                         default-directory)))))
+  (when (file-exists-p new-location)
+    (delete-file new-location))
+  (let ((old-location (buffer-file-name)))
+    (write-file new-location t)
+    (when (and old-location
+               (file-exists-p new-location))
+      (delete-file old-location))))
+
+(bind-key "C-x m" #'move-file)
+#+end_src
