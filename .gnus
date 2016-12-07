@@ -11,6 +11,9 @@
           (nnimap "zedat"
 		(nnimap-stream shell)
 		(nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/Mail/zedat:LAYOUT=fs"))
+          (nnimap "zedatma"
+		(nnimap-stream shell)
+		(nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/Mail/zedatma:LAYOUT=fs"))
           (nntp "news.gwene.org")))
 
 (setq nnmail-split-methods
@@ -31,7 +34,11 @@
       '(("gmail" (address "jobangen@gmail.com")
          ("X-Message-SMTP-Method" "smtp smtp.gmail.com 587"))
         ("zedat" (address "jobangen@zedat.fu-berlin.de")
-         ("X-Message-SMTP-Method" "smtp mail.zedat.fu-berlin.de 587"))))
+         ("X-Message-SMTP-Method" "smtp mail.zedat.fu-berlin.de 587"))
+        ("zedatma" (address "job@zedat.fu-berlin.de")
+         ("X-Message-SMTP-Method" "smtp mail.zedat.fu-berlin.de 587"))
+        )
+      )
 
 (setq send-mail-function 'smtpmail-send-it
       message-send-mail-function 'smtpmail-send-it)
@@ -40,7 +47,10 @@
 (setq gnus-update-message-archive-method  t)
 (setq gnus-message-archive-group
       '(("gmail" nil)
-        ("zedat" "nnimap+zedat:sent")))
+        ("zedat" "nnimap+zedat:sent")
+        ("zedatma" "nnimap+zedatma:sent")
+        )
+)
 
 ;;Mails, die über GCC in den sent ordner wandern, werden als gelesen markiert
 (setq gnus-gcc-mark-as-read t)
@@ -123,7 +133,7 @@
 
 ;; In Group sent wird der Empfänger angezeigt und nicht ich als Absender
 (setq gnus-ignored-from-addresses
-      "jobangen@googlemail.com\\|jobangen@zedat.fu-berlin.de\\|j.o.bangen@web.de")
+      "jobangen@googlemail.com\\|jobangen@zedat.fu-berlin.de\\|j.o.bangen@web.de\\|job@zedat.fu-berlin.de")
 
 (setq gnus-summary-sort-functions '(gnus-summary-sort-by-most-recent-date))
 (setq gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date))
@@ -261,6 +271,7 @@
   (let ((group (file-name-directory (directory-file-name (file-name-directory file)))))
     (setq group (replace-regexp-in-string ".*/Mail/" "nnimap+" group))
     (setq group (replace-regexp-in-string "zedat/" "zedat:" group))
+    (setq group (replace-regexp-in-string "zedatma/" "zedatma:" group))
     (setq group (replace-regexp-in-string "gmail/" "gmail:" group))
     (setq group (replace-regexp-in-string "/$" "" group))
     (if (string-match ":$" group)
