@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name: src-diss-soziol-in
+# name: diss-reading
 # key: diss-read
 # --
 #+begin_src csv :tangle diss/diss-reading.csv :padline no
