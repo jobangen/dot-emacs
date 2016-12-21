@@ -807,7 +807,7 @@ Subject: [[%l][%:subject]]
     Assets:Giro"
     :immediate-finish t)
 
-("gu" "Untermiete" plain (lambda () (file (expand-dir-db "money.dat")))
+("gu" "Untermiete" plain (file (lambda () (expand-dir-db "money.dat")))
  "%(org-read-date) * Kevin Schürer (%^{Monat})
     Assets:Giro                               %^{Amount|330,00}€
     Income:Wohnung" 
