@@ -154,10 +154,11 @@ müssen manuell deaktiviert werden
 ** kbd
 #+begin_src emacs-lisp
 (bind-key "C-w" 'backward-kill-word)
-(bind-key "C-S-w" 'kill-region)
+(bind-key "C-h" 'backward-delete-char)
 (bind-key "C-x C-k" 'kill-region)
 ;;(bind-key "C-r" 'previous-line)
 (bind-key "C-ö ö" 'save-some-buffers)
+(bind-key "C-?" 'help-command)
 #+end_src
 
 ** cursor
