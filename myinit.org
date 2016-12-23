@@ -346,7 +346,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 (use-package avy
   :ensure t
-  :bind (("M-s" . avy-goto-char-timer)
+  :bind (("C-r" . avy-goto-char-timer)
          ("H-i" . avy-goto-char-timer))
   :config
    (progn
