@@ -390,9 +390,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
      (setq org-return-follows-link t)
      ;; syntax highlight code in source blocks
      (setq org-src-fontify-natively t)
-
-
-     ;; 
+     ;; Don't allow editing of folded regions
+     (setq org-catch-invisible-edits 'error)
 
    )
 )
