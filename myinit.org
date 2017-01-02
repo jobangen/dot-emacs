@@ -648,6 +648,13 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 <%(org-read-date)%?>
 \n")
 
+("c" "Contact" entry (file (lambda () (expand-dir-db "contacts.org")))
+ "* %(org-contacts-template-name)
+:PROPERTIES:
+:EMAIL: %(org-contacts-template-email)
+:END:"
+)
+
 ("t" "todo" entry (file "inbox.org")
  "* TODO %^{Task} %^G
 SCHEDULED: %t
@@ -836,10 +843,12 @@ tags:\n* Inhalt
 #+begin_src emacs-lisp
 ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
 (setq org-refile-targets (quote ((("pers.org") :maxlevel . 3)
-                                 (("wiss.org") :maxlevel . 3)
-                                 (("irw.org") :maxlevel . 3)
-                                 (("~/Dropbox/diss/diss.org") :maxlevel . 3)
-                                 (("antiq.org") :maxlevel . 1))))
+                                 (("wiss.org") :maxlevel . 4)
+                                 (("irw.org") :maxlevel . 4)
+                                 (("~/Dropbox/diss/diss.org") :maxlevel . 4)
+                                 (("antiq.org") :maxlevel . 2)
+                                 (("~/Dropbox/db/contacts.org") :maxlevel . 2))
+))
 
 (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
 (setq org-refile-use-outline-path t)                  ; Show full paths for refiling
@@ -1138,6 +1147,14 @@ Null prefix argument turns off the mode."
                  (variable-pitch-mode 0)
                  (visual-fill-column-mode 0)
                  ))))
+#+end_src
+
+** org-contacts
+#+begin_src emacs-lisp
+(use-package org-contacts
+ :init
+(setq org-contacts-files '("~/Dropbox/db/contacts.org"))
+)
 #+end_src
 
 * LaTeX und BibTeX
