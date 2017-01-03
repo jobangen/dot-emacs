@@ -159,6 +159,9 @@ müssen manuell deaktiviert werden
 ;;(bind-key "C-r" 'previous-line)
 (bind-key "C-ö ö" 'save-some-buffers)
 (bind-key "C-?" 'help-command)
+
+(global-set-key (kbd "<return>") 'ignore)
+(global-set-key (kbd "<backspace>") 'ignore)
 #+end_src
 
 ** cursor
