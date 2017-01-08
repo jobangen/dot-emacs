@@ -304,7 +304,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          ("C-S-i" . counsel-grep-or-swiper)
          ("C-c u" . counsel-linux-app)
          ("C-ä u" . counsel-linux-app)
-         ("C-M-s" . my/counsel-ag-project-at-point)
+         ("C-M-s" . counsel-ag)
          ("C-x l" . counsel-locate)
          ("C-ö l" . counsel-locate)
          ("M-y" . counsel-yank-pop)
@@ -312,12 +312,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          :map ivy-minibuffer-map
           ("M-y" . ivy-next-line)
           ("M-ü" . ivy-next-line))
-  :config
-    (defun my/counsel-ag-project-at-point () ;;http://pastebin.com/Gtx9a1N0
-      "use counsel ag to search for the word at point in the project"
-      (interactive)
-      (counsel-ag (thing-at-point 'symbol) (projectile-project-root)))
-)
+  )
 #+end_src
 
 ** smex
