@@ -120,11 +120,11 @@
 
 (define-key gnus-summary-mode-map "vi" 
   (lambda () (interactive)
-        (gnus-summary-move-article nil "nnimap+zedat:2016/2016-irw" nil)))
+        (gnus-summary-move-article nil "nnimap+zedat:2017/17-irw" nil)))
 
 (define-key gnus-summary-mode-map "vv" 
   (lambda () (interactive)
-        (gnus-summary-move-article nil "nnimap+zedat:2016" nil)))
+        (gnus-summary-move-article nil "nnimap+zedat:2017" nil)))
 
 
 
