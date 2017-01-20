@@ -413,9 +413,15 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ;; Aktuelle Zeile in der Agenda hervorheben
 (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1 ))) ;; lieber ins theme?
 
-(setq org-agenda-dim-blocked-tasks t)
+;;(setq org-agenda-dim-blocked-tasks t)
+(setq org-agenda-dim-blocked-tasks nil) ;; soll schneller sein
 (setq org-agenda-skip-scheduled-if-deadline-is-shown 'not-today)
 (setq org-agenda-start-on-weekday nil)
+
+(setq org-agenda-inhibit-startup t)
+(setq org-agenda-use-tag-inheritance nil)
+
+(setq org-agenda-ignore-drawer-properties '(category))
 
 (setq org-stuck-projects
            '("+TODO={PROJ}" ("NEXT") ("longterm")))
@@ -691,6 +697,7 @@ SCHEDULED: %t
 ("j" "Journal")
 ("jj" "Journal" entry (file+datetree+prompt "journal.org")
  "* %^{Headline}  :journal:
+%t
 :PROPERTIES:
 :CREATED: %U
 :CATEGORY:  %^{Category|wiss|work|pers}
