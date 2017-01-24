@@ -697,9 +697,9 @@ SCHEDULED: %t
 ("j" "Journal")
 ("jj" "Journal" entry (file+datetree+prompt "journal.org")
  "* %^{Headline}  :journal:
-%t
+%T
 :PROPERTIES:
-:CREATED: %U
+:CREATED: [%<%Y-%m-%d %a %H:%M>]
 :CATEGORY:  %^{Category|wiss|work|pers}
 :END:
 %?")
