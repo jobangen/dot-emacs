@@ -1318,7 +1318,9 @@ http://www.jonathanleroux.org/bibtex-mode.html
    (setq bibtex-completion-additional-search-fields '("subtitle"
                                                       "date"
                                                       "keywords"))
+
    (setq bibtex-completion-cite-default-command "autocite")
+
    (setq bibtex-completion-pdf-open-function
      (lambda (fpath)
       (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))
