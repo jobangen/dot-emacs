@@ -2148,7 +2148,6 @@ _q_: cancel     _r_: resolve    _tI_: insert item       ^ ^                   _p
 ("i" interleave "interleave")
 ("p" pdf-tools-install "pdf-tools")
 ("P" pandoc-mode "pandoc")
-("t" ansi-term "ansi-term")
 ("v" visual-line-mode "visual-line")
 ("w" writegood-mode "writegood"))
 #+end_src
