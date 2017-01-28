@@ -363,6 +363,14 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 )
 #+end_src
 
+** eshell
+#+begin_src emacs-lisp
+(bind-key "C-c j" 'eshell)
+
+(setq eshell-visual-commands
+'("less" "tmux" "htop" "top" "bash" "zsh" "fish" "watch"))
+#+end_src
+
 * org-mode
 ** allgemein
 #+begin_src emacs-lisp
