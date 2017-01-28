@@ -3,5 +3,5 @@
 # key: diss-soz
 # --
 #+begin_src csv :tangle diss/diss-soziol-in-altertumswiss-autoritaetsfor.csv :padline no
- , , 
+$1, $2, $0
 #+end_src
