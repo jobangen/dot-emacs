@@ -159,6 +159,7 @@ müssen manuell deaktiviert werden
 ;;(bind-key "C-r" 'previous-line)
 (bind-key "C-ö ö" 'save-some-buffers)
 (bind-key "C-?" 'help-command)
+(bind-key "C-x C-b" 'ibuffer)
 
 (global-set-key (kbd "<return>") 'ignore)
 (global-set-key (kbd "<backspace>") 'ignore)
