@@ -57,8 +57,13 @@
 
 
 
-;; Gnus-delay
+;; Gnus-delay - send delayed mail with C-c C-j
 (gnus-delay-initialize)
+
+;;
+(gnus-demon-add-handler 'gnus-group-get-new-news 5 nil)
+(gnus-demon-init)
+
 
 
 ;; Header, reply
