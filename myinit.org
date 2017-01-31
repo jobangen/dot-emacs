@@ -759,16 +759,15 @@ Subject: [[%l][%:subject]]
 ("b" "bibtex" plain (file (lambda () (expand-dir-db "biblio.bib")))
 "%?" :jump-to-captured t :empty-lines 1)
 
-("l" "literature" entry (file+headline "inbox.org" "Literatur")
- "* TODO %^{Author}, %^{Title} :txt:
+("l" "Literatur" entry (file+headline "inbox.org" "Literatur")
+ "* TODO %^{Author & Titel} :txt:
 :PROPERTIES:
 :CREATED:   %U
 :CATEGORY:  wiss
-:BIBL:      %^{Bibl|x| }
-:FORM:      %^{Form|b|c|f| }
-:BIB1:      %^{Bibliothek}
-:END:\n** data-%?
-#+BEGIN_SRC csv-mode :tangle stat/ref-path.csv :padline no\n\n#+END_SRC")
+:BIBL:      %^{Bibl|ub|sozbib|cba|cbn|fmi}
+:SIGNATURE: %^{Signatur}
+:SOURCE:    %?
+:END:")
 
 ("g" "Geld - Ledger entries")
 ("gb" "Bargeld" plain (file (lambda () (expand-dir-db "money.dat")))
@@ -794,6 +793,7 @@ Subject: [[%l][%:subject]]
     Expenses:Wohnung:Internet+Telefon          %^{Amount|19,90}€
     Assets:Giro" 
     :immediate-finish t)
+
 ("gk" "Krankenkasse" plain (file (lambda () (expand-dir-db "money.dat")))
  "%(org-read-date) * Techniker Krankenkasse
     Expenses:Versicherung:Krankenkasse        237,60€
