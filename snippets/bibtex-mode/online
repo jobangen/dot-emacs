@@ -10,8 +10,9 @@
   year =         {$4},
   url =          {$5},
   urldate =      {$6},
-  timestamp =    {`(format-time-string "%Y-%m-%d")`},
-  keywords =     {$8}
+  timestamp =    {`(format-time-string "%Y-%m-%d %a %H:%M")`},
+  source =       {$7, $8},
+  keywords =     {$0}
 }
 
 

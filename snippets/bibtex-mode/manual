@@ -10,7 +10,7 @@
   ALTyear = 	 {$7},
   ALTdate = 	 {$8},
   OPTversion = 	 {$2},
-  timestamp =	 {`(format-time-string "%Y-%m-%d")`},
+  timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
   keywords =     {$0},
   OPTtitleaddon = {},
   OPTkey = 	 {},

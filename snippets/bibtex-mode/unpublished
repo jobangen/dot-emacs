@@ -12,7 +12,7 @@
   year = 	 {$7},
   month =        {$8},
   day =          {$9},
-  timestamp =	 {`(format-time-string "%Y-%m-%d")`},
-  comment =      {$11},
+  timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
+  source =       {$11, $12},
   keywords=      {$0},
 }

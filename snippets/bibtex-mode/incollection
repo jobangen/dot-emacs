@@ -9,7 +9,9 @@
   ALTdate = 	 {$5},
   pages = 	 {$6},
   OPTcrossref =  {$7},
-  timestamp =	 {`(format-time-string "%Y-%m-%d")`},
+  timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
+  crossref =     {$8},
   keywords=      {$9},
+  source =       {$10, $11},
   OPToriglanguage = {$0},
 }

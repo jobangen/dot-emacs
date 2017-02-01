@@ -10,7 +10,8 @@
   ALTdate = 	 {$5},
   OPTorigdate =  {},
   pages = 	 {$6},
-  timestamp =	 {`(format-time-string "%Y-%m-%d")`},
+  timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
   OPTcrossref =  {$8},
+  source =       {$9, $10},
   keywords=      {$0},
 }
