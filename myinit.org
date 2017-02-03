@@ -1204,7 +1204,7 @@ Null prefix argument turns off the mode."
     (custom-set-variables
       '(TeX-fold-macro-spec-list
         '(("[f]"     ("sidenote"))
-          ("[f]"     ("footnote" "marginpar"))
+          ("[fn]"    ("footnote" "marginpar"))
           ("[ac]"    ("autocite")) ;; new
           ("[c]"     ("cite"))
           ("[l]"     ("label"))
