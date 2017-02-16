@@ -2330,6 +2330,105 @@ _y_: youtube      _bb_: bibtex
 ) 
 #+end_src
 
+* zettelkasten
+#+begin_src emacs-lisp
+(defun zettelkasten-combine-zettel ()
+  (shell-command "cat ~/Dropbox/db/zk/*.txt > ~/Dropbox/db/stats/zettelkasten/zettel-combined.txt"))
+
+
+(defvar zettelkasten-tags-values)
+
+(defun zettelkasten-parse-tags-values ()
+  (interactive)
+  (setq zettelkasten-tags-values (zettelkasten-collect-tags-values)))
+
+(defun zettelkasten-collect-tags-values (&optional regexp)
+  "Collect values in keywords fields of all BibTeX entries.
+Maybe restrict the values to those matching REGEXP. Keywords may be phrases
+separated by commas. Multiple spaces or newlines within a keyword will be
+removed before collection."
+  (save-excursion
+    (goto-char (point-min))
+    (let (zk-tags kstring)
+      (while (re-search-forward "^tags:\\s-*\\(.*\\),$" nil t)
+        ;; TWS - remove newlines/multiple spaces:
+    (setq kstring (replace-regexp-in-string "[ \t\n]+" " "
+          (match-string-no-properties 1)))
+	(mapc
+	 (lambda (v)
+	   (if regexp (if (string-match regexp v)
+			  (add-to-list 'zk-tags v t))
+	     (add-to-list 'zk-tags v t)))
+          (split-string kstring ",[ \n]*\\|{\\|}" t)))
+      zk-tags)))
+
+(defun zettelkasten-parse-values-combined ()
+  (interactive)
+  (zettelkasten-combine-zettel)
+  (find-file (expand-dir-db "stats/zettelkasten/zettel-combined.txt"))
+  (zettelkasten-parse-tags-values))
+
+(defun zettelkasten-tangle-combined ()
+  (org-babel-tangle-file "~/Dropbox/db/stats/zettelkasten/zettel-combined.txt"))
+
+(defun zettelkasten-combine-tangle-combined ()
+  (interactive)
+  (zettelkasten-combine-zettel)
+  (zettelkasten-tangle-combined))
+
+
+(defun zettelkasten-update-tags-tangle ()
+    (interactive)
+    (zettelkasten-combine-zettel)
+    (zettelkasten-parse-values-combined)
+    (zettelkasten-tangle-combined))
+
+(add-hook 'after-init-hook 'zettelkasten-update-tags-tangle)
+
+
+(defun zettelkasten-insert-tags (&optional arg)
+  "Make a keywords field.
+If ARG is nil, ask for each keyword and offer completion over
+keywords that are already available in the buffer.  Inserting
+the empty string will quit the prompt. If the keyword is not already
+present in the buffer, it will be added to the local variable
+bu-keywords-values. Note that if you use ido-ubiquitous, the value of
+  `ido-ubiquitous-enable-old-style-default' is temporarily set to t within
+the body of this command."
+  (interactive "P")
+  (let ((elist (save-excursion))
+        append)
+    (if (assoc "zk-tags" elist)
+	 (progn (setq append t)))
+    (unless arg
+      (let ((cnt 0)
+            k)
+	(while (and (setq k (completing-read
+                             "Tags (RET to quit): " zettelkasten-tags-values nil))
+		    (not (equal k "")))
+	  (when append (insert ", ")
+                (setq append nil))
+	  (setq cnt (1+ cnt))
+	  (insert (format "%s%s" (if (> cnt 1) ", " "") k))
+          (add-to-list 'zettelkasten-tags-values k))))))
+
+
+(defun zettelkasten-insert-regex ()
+  (interactive)
+  (insert "\\s-\\([a-z]*\\|[0-9]*\\)~")
+  (goto-char 22))
+
+(defface zettelkasten-id-face `((t (:background "#e0e0e0")))  "Zettelkasten Ids")
+(defface zettelkasten-lvl1-face `((t (:background "#819FF7")))  "Zettelkasten Level 1")
+(defface zettelkasten-lvl2-face `((t (:background "#A9BCF5")))  "Zettelkasten Level 2")
+
+(defun zettelkasten-markup ()
+   (highlight-regexp "\\s-[0-9]*~" 'zettelkasten-lvl1-face)
+   (highlight-regexp "[0-9]*-[0-9]*~" 'zettelkasten-lvl2-face)
+   (highlight-regexp "\[0-9a-z\\-\]*~" 'zettelkasten-id-face))
+
+(add-hook 'dired-mode-hook 'zettelkasten-markup)
+#+end_src
 * defun
 ** my/insert-date
 #+begin_src emacs-lisp
@@ -2883,105 +2982,6 @@ https://www.emacswiki.org/emacs/SortWords
 See `sort-words'."
   (interactive "*P\nr")
   (sort-regexp-fields reverse "\\(\\sw\\|\\s_\\)+" "\\&" beg end))
-#+end_src
-** zettelkasten
-#+begin_src emacs-lisp
-(defun zettelkasten-combine-zettel ()
-  (shell-command "cat ~/Dropbox/db/zk/*.txt > ~/Dropbox/db/stats/zettelkasten/zettel-combined.txt"))
-
-
-(defvar zettelkasten-tags-values)
-
-(defun zettelkasten-parse-tags-values ()
-  (interactive)
-  (setq zettelkasten-tags-values (zettelkasten-collect-tags-values)))
-
-(defun zettelkasten-collect-tags-values (&optional regexp)
-  "Collect values in keywords fields of all BibTeX entries.
-Maybe restrict the values to those matching REGEXP. Keywords may be phrases
-separated by commas. Multiple spaces or newlines within a keyword will be
-removed before collection."
-  (save-excursion
-    (goto-char (point-min))
-    (let (zk-tags kstring)
-      (while (re-search-forward "^tags:\\s-*\\(.*\\),$" nil t)
-        ;; TWS - remove newlines/multiple spaces:
-    (setq kstring (replace-regexp-in-string "[ \t\n]+" " "
-          (match-string-no-properties 1)))
-	(mapc
-	 (lambda (v)
-	   (if regexp (if (string-match regexp v)
-			  (add-to-list 'zk-tags v t))
-	     (add-to-list 'zk-tags v t)))
-          (split-string kstring ",[ \n]*\\|{\\|}" t)))
-      zk-tags)))
-
-(defun zettelkasten-parse-values-combined ()
-  (interactive)
-  (zettelkasten-combine-zettel)
-  (find-file (expand-dir-db "stats/zettelkasten/zettel-combined.txt"))
-  (zettelkasten-parse-tags-values))
-
-(defun zettelkasten-tangle-combined ()
-  (org-babel-tangle-file "~/Dropbox/db/stats/zettelkasten/zettel-combined.txt"))
-
-(defun zettelkasten-combine-tangle-combined ()
-  (interactive)
-  (zettelkasten-combine-zettel)
-  (zettelkasten-tangle-combined))
-
-
-(defun zettelkasten-update-tags-tangle ()
-    (interactive)
-    (zettelkasten-combine-zettel)
-    (zettelkasten-parse-values-combined)
-    (zettelkasten-tangle-combined))
-
-(add-hook 'after-init-hook 'zettelkasten-update-tags-tangle)
-
-
-(defun zettelkasten-insert-tags (&optional arg)
-  "Make a keywords field.
-If ARG is nil, ask for each keyword and offer completion over
-keywords that are already available in the buffer.  Inserting
-the empty string will quit the prompt. If the keyword is not already
-present in the buffer, it will be added to the local variable
-bu-keywords-values. Note that if you use ido-ubiquitous, the value of
-  `ido-ubiquitous-enable-old-style-default' is temporarily set to t within
-the body of this command."
-  (interactive "P")
-  (let ((elist (save-excursion))
-        append)
-    (if (assoc "zk-tags" elist)
-	 (progn (setq append t)))
-    (unless arg
-      (let ((cnt 0)
-            k)
-	(while (and (setq k (completing-read
-                             "Tags (RET to quit): " zettelkasten-tags-values nil))
-		    (not (equal k "")))
-	  (when append (insert ", ")
-                (setq append nil))
-	  (setq cnt (1+ cnt))
-	  (insert (format "%s%s" (if (> cnt 1) ", " "") k))
-          (add-to-list 'zettelkasten-tags-values k))))))
-
-
-(defun zettelkasten-insert-regex ()
-  (interactive)
-  (insert "\\s-\\([a-z]*\\|[0-9]*\\)~")
-  (goto-char 22))
-
-(defface zettelkasten-id-face `((t (:background "#e0e0e0")))  "Zettelkasten Ids")
-(defface zettelkasten-lvl1-face `((t (:background "#819FF7")))  "Zettelkasten Level 1")
-(defface zettelkasten-lvl2-face `((t (:background "#A9BCF5")))  "Zettelkasten Level 2")
-
-(defun zettelkasten-markup ()
-   (highlight-regexp "\\s-[0-9]*~" 'zettelkasten-lvl1-face)
-   (highlight-regexp "[0-9]*-[0-9]*~" 'zettelkasten-lvl2-face)
-   (highlight-regexp "\[0-9a-z\\-\]*~" 'zettelkasten-id-face))
-
-(add-hook 'dired-mode-hook 'zettelkasten-markup)
 #+end_src
 ** gnuplot-defun
 #+begin_src emacs-lisp
