@@ -2331,6 +2331,7 @@ _y_: youtube      _bb_: bibtex
 #+end_src
 
 * zettelkasten
+** zettelkasten defun
 #+begin_src emacs-lisp
 (defun zettelkasten-combine-zettel ()
   (shell-command "cat ~/Dropbox/db/zk/*.txt > ~/Dropbox/db/stats/zettelkasten/zettel-combined.txt"))
@@ -2429,6 +2430,13 @@ the body of this command."
 
 (add-hook 'dired-mode-hook 'zettelkasten-markup)
 #+end_src
+** deft
+#+begin_src emacs-lisp
+(use-package deft
+  :config
+  (setq deft-directory "~/Dropbox/db/zk"))
+#+end_src
+
 * defun
 ** my/insert-date
 #+begin_src emacs-lisp
