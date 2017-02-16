@@ -2434,7 +2434,11 @@ the body of this command."
 #+begin_src emacs-lisp
 (use-package deft
   :config
-  (setq deft-directory "~/Dropbox/db/zk"))
+  (setq deft-directory "~/Dropbox/db/zk")
+
+  (bind-key "C-h" 'deft-filter-decrement deft-mode-map)
+  (bind-key "C-w" 'deft-filter-decrement-word deft-mode-map)
+)
 #+end_src
 
 * defun
