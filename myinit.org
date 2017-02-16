@@ -1757,7 +1757,7 @@ abort completely with `C-g'."
 #+begin_src emacs-lisp
 (use-package paperless
   :config
-   (setq paperless-capture-directory "~/capture")
+   (setq paperless-capture-directory "~/texte/texteingang")
    (setq paperless-root-directory "~/"))
 #+end_src
 
