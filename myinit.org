@@ -727,7 +727,7 @@ SCHEDULED: %t
  "* Literaturbearbeitung
 :PROPERTIES:
 :CATEGORY: wiss
-:END:" :jump-to-captured t :immediate-finish t)
+:END:" :immediate-finish t :clock-in t :jump-to-captured t)
 
 ("jm" "Mailbearbeitung" entry (file+datetree "journal.org")
  "* Mailbearbeitung
