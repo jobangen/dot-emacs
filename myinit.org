@@ -1334,7 +1334,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
      (lambda (fpath)
       (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))
 
-   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE: [${timestamp}]\n* Schlagwörter\ntags: #${=key=}, #txt, ${keywords},\n* Inhalt\n\n* Literatur\n\n* Links\n- [[file:~/Dropbox/db/stats/zettelkasten/zettel-similarities/sim-${=key=}.txt][Similarities]]\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv :padline no\n${source}, ${=key=}\n#+end_src")
+   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: Notes on: ${author} (${date}): ${title}\n#+DATE: [${timestamp}]\n* Schlagwörter\ntags: §${=key=}, §txt, ${keywords},\n* Inhalt\n\n* Literatur\n\n* Links\n- [[file:~/Dropbox/db/stats/zettelkasten/zettel-similarities/sim-${=key=}.txt][Similarities]]\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv :padline no\n${source}, ${=key=}\n#+end_src")
 
   (setq bibtex-completion-format-citation-functions
      '((org-mode      . bibtex-completion-format-citation-org-ref-autocite)
