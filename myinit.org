@@ -1924,10 +1924,9 @@ rotate entire document."
         ("Text & Data"
          (extension "org" "txt" "doc" "docx" "csv" "odt"))
         ("Media"
-         (extension "jpg" "png" "gif" "bmp"))
+         (extension "JPG" "jpg" "PNG" "png" "gif" "bmp"))
         ("Archives"
          (extension "zip" "rar" "gz" "bz2" "tar" "org_archive"))))))
-
 #+end_src
 
 *** peep-dired
