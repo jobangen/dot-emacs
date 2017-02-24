@@ -1754,6 +1754,12 @@ abort completely with `C-g'."
 ))
 #+end_src
 
+** messages-are-flowing
+#+begin_src emacs-lisp
+(with-eval-after-load "message"
+  (add-hook 'message-mode-hook 'messages-are-flowing-use-and-mark-hard-newlines))
+#+end_src
+
 * Major-modes
 ** paperless
 #+begin_src emacs-lisp
