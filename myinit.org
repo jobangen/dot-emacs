@@ -126,11 +126,13 @@ müssen manuell deaktiviert werden
    (setq sml/mode-width 'full)
    (add-to-list 'sml/replacer-regexp-list '("^:DB:diss/" ":ds:") t)
    (add-to-list 'sml/replacer-regexp-list '("^:ds:tex/" ":ds:tx:") t)
-   (add-to-list 'sml/replacer-regexp-list '("^:ds:tx:part/" ":ds:tx:p:") t)
+   (add-to-list 'sml/replacer-regexp-list '("^:ds:tx:parts/" ":ds:tx:p:") t)
+   (add-to-list 'sml/replacer-regexp-list '("^:ds:tx:p:part1/" ":ds:") t)
    (add-to-list 'sml/replacer-regexp-list '("^~/Dokumente/" ":Dok:") t)
    (add-to-list 'sml/replacer-regexp-list '("^~/archiv/" ":arch:") t)
    (add-to-list 'sml/replacer-regexp-list '("^~/Downloads/" ":DL:") t)
-   (add-to-list 'sml/replacer-regexp-list '("^~/texte/" ":TXT:") t))
+   (add-to-list 'sml/replacer-regexp-list '("^~/texte/" ":TXT:") t)
+)
 #+end_src
 
 ** volatile-highlights
