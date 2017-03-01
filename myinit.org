@@ -155,6 +155,7 @@ müssen manuell deaktiviert werden
 * Bedienung & Interface
 ** kbd
 #+begin_src emacs-lisp
+(bind-key "<menu>" 'switch-to-buffer)
 (bind-key "C-w" 'backward-kill-word)
 (bind-key "C-h" 'backward-delete-char)
 (bind-key "C-x C-k" 'kill-region)
@@ -165,6 +166,8 @@ müssen manuell deaktiviert werden
 
 (global-set-key (kbd "<return>") 'ignore)
 (global-set-key (kbd "<backspace>") 'ignore)
+(global-set-key (kbd "C-ö") ctl-x-map)
+(define-key key-translation-map (kbd "C-ä") (kbd "C-c"))
 #+end_src
 
 ** cursor
@@ -198,14 +201,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 ;; Show unfinished keystrokes early.
 (setq echo-keystrokes 0.1)
-#+end_src
-
-** menu-key & neo
-#+begin_src emacs-lisp
-(bind-key "<menu>" 'switch-to-buffer)
-
-(global-set-key (kbd "C-ö") ctl-x-map)
-(define-key key-translation-map (kbd "C-ä") (kbd "C-c"))
 #+end_src
 
 ** char-menu
