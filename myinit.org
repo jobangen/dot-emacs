@@ -2162,9 +2162,11 @@ _q_: cancel     _r_: resolve    _tI_: insert item       ^ ^                   _p
 "Modes"
 ("a" auto-fill-mode "auto-fill-mode")
 ("b" bbdb "bbdb")
+("d" deft "deft")
 ("f" flyspell-mode "flyspell")
 ("g" gnus "gnus")
 ("i" interleave "interleave")
+("l" paperless "paperless")
 ("p" pdf-tools-install "pdf-tools")
 ("P" pandoc-mode "pandoc")
 ("v" visual-line-mode "visual-line")
