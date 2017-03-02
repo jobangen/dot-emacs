@@ -108,7 +108,19 @@
 ;;Gmail, Move to archive 
 (define-key gnus-summary-mode-map "va" 
   (lambda () (interactive)
-        (gnus-summary-move-article nil "nnimap+gmail:arch" nil)))
+    (gnus-summary-put-mark-as-unread nil)
+    (gnus-summary-move-article nil "nnimap+gmail:arch" nil)
+    (gnus-summary-next-unread-article)))
+
+(define-key gnus-summary-mode-map "vd"
+  (lambda () (interactive)
+    (gnus-summary-delete-article)
+    (gnus-summary-next-article)))
+
+(define-key gnus-summary-mode-map "vg"
+  (lambda () (interactive)
+    (gnus-summary-move-article nil "nnimap+zedat:geschkult" nil)
+    (gnus-summary-next-unread-article)))
 
 
 (define-key gnus-summary-mode-map "v4" 
@@ -125,11 +137,15 @@
 
 (define-key gnus-summary-mode-map "vi" 
   (lambda () (interactive)
-        (gnus-summary-move-article nil "nnimap+zedat:2017/17-irw" nil)))
+    (gnus-summary-put-mark-as-unread nil)
+    (gnus-summary-move-article nil "nnimap+zedat:2017/17-irw" nil)
+    (gnus-summary-next-unread-article)))
 
 (define-key gnus-summary-mode-map "vv" 
   (lambda () (interactive)
-        (gnus-summary-move-article nil "nnimap+zedat:2017" nil)))
+    (gnus-summary-put-mark-as-unread nil)
+    (gnus-summary-move-article nil "nnimap+zedat:2017" nil)
+    (gnus-summary-next-unread-article)))
 
 
 
