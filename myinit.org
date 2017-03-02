@@ -2539,21 +2539,36 @@ point reaches the beginning or end of the buffer, stop there."
 
 ** my/vsplit & my/hsplit
 #+begin_src emacs-lisp
-(defun my/vsplit-last-buffer (prefix)
-  "Split the window vertically and display the previous buffer."
-  (interactive "p")
-  (split-window-vertically)
-  (other-window 1 nil)
-  (if (= prefix 1)
-    (switch-to-next-buffer)))
-(defun my/hsplit-last-buffer (prefix)
-  "Split the window horizontally and display the previous buffer."
-  (interactive "p")
-  (split-window-horizontally)
-  (other-window 1 nil)
-  (if (= prefix 1) (switch-to-next-buffer)))
-(bind-key "C-x 2" 'my/vsplit-last-buffer)
-(bind-key "C-x 3" 'my/hsplit-last-buffer)
+  (defun my/vsplit-last-buffer (prefix)
+    "Split the window vertically and display the previous buffer."
+    (interactive "p")
+    (split-window-vertically)
+    (other-window 1 nil)
+    (if (= prefix 1)
+      (switch-to-next-buffer)))
+
+  (defun my/hsplit-last-buffer (prefix)
+    "Split the window horizontally and display the previous buffer."
+    (interactive "p")
+    (split-window-horizontally)
+    (other-window 1 nil)
+    (if (= prefix 1) (switch-to-next-buffer)))
+
+  (bind-key "C-x 2" 'my/vsplit-last-buffer)
+  (bind-key "C-x 3" 'my/hsplit-last-buffer)
+#+end_src
+
+http://mbork.pl/2017-02-26_other-window-or-switch-buffer
+#+begin_src emacs-lisp
+  (defun job/other-window-or-my/hsplit-last-buffer (prefix)
+    "Call `other-window' if more than one window is visible, create
+  and swith otherwise"
+    (interactive "p")
+    (if (one-window-p)
+	    (my/hsplit-last-buffer prefix)
+	  (other-window 1)))
+
+  (bind-key "C-z" 'job/other-window-or-my/hsplit-last-buffer)
 #+end_src
 
 ** frequencies
