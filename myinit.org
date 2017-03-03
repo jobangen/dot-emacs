@@ -1760,7 +1760,7 @@ misspelled words backwards."
     (setq writegood-weasel-words
      '("wichtig" "wichtige" "vielleicht" "auch" "dabei" "sehr" "ziemlich" "möglicherweise" "wohl" "recht" "dann" "paar" "bisschen"))
     (setq writegood-passive-voice-irregulars
-     '("gemacht"))))
+     '("gemacht" "geworden" "vorgenommen" "durchgeführt"))))
 #+end_src
 
 ** languagetool
