@@ -264,7 +264,10 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (use-package ivy
   :ensure t
   :diminish ivy-mode
-  :bind (("C-c C-r" . ivy-resume))
+  :bind (("C-c C-r" . ivy-resume)
+         :map ivy-mode-map
+           ("C-h" . backward-delete-char)
+        )
   :config
      (ivy-mode 1)
      (setq ivy-height 13)
