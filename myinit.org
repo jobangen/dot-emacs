@@ -381,7 +381,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (bind-key "C-c j" 'eshell)
 
 (setq eshell-visual-commands
-'("less" "tmux" "htop" "top" "bash" "zsh" "fish" "watch" "time"))
+'("less" "tmux" "htop" "top" "bash" "zsh" "fish" "watch" "time" "sudo"))
 #+end_src
 
 * org-mode
