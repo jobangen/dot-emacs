@@ -1826,7 +1826,8 @@ abort completely with `C-g'."
   :config
   (require 'www-synonyms)
   (setq www-synonyms-key "gaGF6dLppnG6whJVPKFg")
-  (setq www-synonyms-change-lang "de_DE"))
+  (setq www-synonyms-change-lang "de") ;; funktioniert nicht
+)
 #+end_src
 
 * Versionskontrolle
