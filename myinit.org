@@ -154,20 +154,32 @@ müssen manuell deaktiviert werden
 
 * Bedienung & Interface
 ** kbd
+[[http://pragmaticemacs.com/emacs/use-your-digits-and-a-personal-key-map-for-super-shortcuts/][Use your digits and a personal key map for super shortcuts]]
 #+begin_src emacs-lisp
-(bind-key "<menu>" 'switch-to-buffer)
-(bind-key "C-w" 'backward-kill-word)
-(bind-key "C-h" 'backward-delete-char)
-(bind-key "C-x C-k" 'kill-region)
-;;(bind-key "C-r" 'previous-line)
-(bind-key "C-ö ö" 'save-some-buffers)
-(bind-key "C-?" 'help-command)
-(bind-key "C-x C-b" 'ibuffer)
+  ;; unset C- and M- digit keys
+  (dotimes (n 10)
+    (global-unset-key (kbd (format "C-%d" n)))
+    (global-unset-key (kbd (format "M-%d" n))))
 
-(global-set-key (kbd "<return>") 'ignore)
-(global-set-key (kbd "<backspace>") 'ignore)
-(global-set-key (kbd "C-ö") ctl-x-map)
-(define-key key-translation-map (kbd "C-ä") (kbd "C-c"))
+  (define-prefix-command 'job-map)
+  (global-set-key (kbd "C-1") 'job-map)
+#+end_src
+
+#+begin_src emacs-lisp
+  (bind-key "<menu>" 'switch-to-buffer)
+  (bind-key "C-w" 'backward-kill-word)
+  (bind-key "C-h" 'backward-delete-char)
+  (bind-key "C-x C-k" 'kill-region)
+  ;;(bind-key "C-r" 'previous-line)
+  (bind-key "C-ö ö" 'save-some-buffers)
+  (bind-key "C-?" 'help-command)
+  (bind-key "C-x C-b" 'ibuffer)
+  (bind-key "M-SPC" 'cycle-spacing)
+
+  (global-set-key (kbd "<return>") 'ignore)
+  (global-set-key (kbd "<backspace>") 'ignore)
+  (global-set-key (kbd "C-ö") ctl-x-map)
+  (define-key key-translation-map (kbd "C-ä") (kbd "C-c"))
 #+end_src
 
 ** cursor
