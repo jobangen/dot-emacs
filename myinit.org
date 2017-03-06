@@ -384,6 +384,13 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 '("less" "tmux" "htop" "top" "bash" "zsh" "fish" "watch" "time" "sudo"))
 #+end_src
 
+** winner-mode
+#+begin_src emacs-lisp
+  (use-package winner
+    :init
+     (winner-mode))
+#+end_src
+
 * org-mode
 ** allgemein
 #+begin_src emacs-lisp
