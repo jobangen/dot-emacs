@@ -390,6 +390,25 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
      (winner-mode))
 #+end_src
 
+** viking-mode
+#+begin_src emacs-lisp
+(use-package viking-mode
+  :diminish viking-mode
+;;  :bind ("C-k" . viking-kill-thing-at-point)
+  :config
+  (viking-global-mode)
+  (setq viking-greedy-kill nil)
+  (setq viking-enable-region-kill t)
+  (setq viking-enable-blinking nil)
+  (setq viking-kill-functions (list 'viking-kill-line-from-point
+                                    'viking-kill-line
+                                    'viking-kill-paragraph
+                                    'viking-kill-buffer))
+ (bind-key "C-k" 'viking-kill-thing-at-point viking-mode-map)
+ (bind-key "C-d" 'delete-char viking-mode-map)
+)
+#+end_src
+
 * org-mode
 ** allgemein
 #+begin_src emacs-lisp
