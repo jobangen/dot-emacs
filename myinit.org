@@ -777,12 +777,12 @@ SCHEDULED: %t
 ("j" "Journal")
 ("jj" "Journal" entry (file+datetree+prompt "journal.org")
  "* %^{Headline}  :journal:
-%T
+%T%?
 :PROPERTIES:
 :CREATED: [%<%Y-%m-%d %a %H:%M>]
 :CATEGORY:  %^{Category|wiss|work|pers}
 :END:
-%?")
+")
 
 ("jt" "Journal todo" entry (file+datetree+prompt "journal.org")
 "* TODO %^{Task}
