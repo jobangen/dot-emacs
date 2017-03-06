@@ -167,7 +167,6 @@ müssen manuell deaktiviert werden
 
 #+begin_src emacs-lisp
   (bind-key "<menu>" 'switch-to-buffer)
-  (bind-key "C-w" 'backward-kill-word)
   (bind-key "C-h" 'backward-delete-char)
   (bind-key "C-x C-k" 'kill-region)
   ;;(bind-key "C-r" 'previous-line)
@@ -3345,4 +3344,18 @@ http://mbork.pl/2015-10-31_Smart_comma_and_other_punctuation
 
 (eval-after-load 'tex '(define-key TeX-mode-map ","
                          'smart-self-insert-punctuation))
+#+end_src
+** job/kill-word-or-region
+http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-line-if-no-active-region/29927
+#+begin_src emacs-lisp
+(defun job/kill-word-or-region (&optional arg)
+  "Kill active region or one word backward."
+  (interactive "p")
+  (if (use-region-p)
+      (sp-kill-region (region-beginning) (region-end))
+    (if smartparens-strict-mode
+        (sp-backward-kill-word arg)
+      (backward-kill-word arg))))
+
+  (bind-key "C-w" 'job/kill-word-or-region)
 #+end_src
