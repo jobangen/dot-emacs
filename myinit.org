@@ -264,8 +264,9 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   :ensure t
   :diminish ivy-mode
   :bind (("C-c C-r" . ivy-resume)
-         :map ivy-mode-map
+         :map ivy-minibuffer-map
            ("C-h" . backward-delete-char)
+           ("C-w" . backward-kill-word)
         )
   :config
      (ivy-mode 1)
