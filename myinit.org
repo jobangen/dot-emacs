@@ -1106,6 +1106,13 @@ http://doc.norang.ca/org-mode.org
       (org-clock-out))
     (org-agenda-remove-restriction-lock))
 
+;;https://github.com/mattfidler/my-emacs-startup/blob/master/startup-org.org
+  (defun job/punch-in-or-out (arg)
+    (interactive "p")
+    (if bh/keep-clock-running
+        (bh/punch-out)
+      (bh/punch-in arg)))
+
   (defun bh/clock-in-default-task ()
     (save-excursion
       (org-with-point-at org-clock-default-task
@@ -1142,6 +1149,8 @@ http://doc.norang.ca/org-mode.org
       (bh/clock-in-parent-task)))
 
   (add-hook 'org-clock-out-hook 'bh/clock-out-maybe 'append)
+
+  (bind-key "C-c <f11>" 'job/punch-in-or-out)
 #+end_src
 
 
