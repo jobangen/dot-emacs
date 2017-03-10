@@ -486,7 +486,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (setq org-agenda-ignore-drawer-properties '(category))
 
 (setq org-stuck-projects
-           '("+TODO={PROJ}" ("NEXT") ("longterm")))
+           '("+TODO={PROJ}" ("NEXT" "STARTED") ("longterm")))
 #+end_src
 
 *** agenda-commands
@@ -635,37 +635,38 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   ;; Ein "!" bedeutet Zeitstempel
   ;; Ein "@" bedeutet Notiz
   (setq org-todo-keywords
-        (quote ((sequence "TODO(t)" "NEXT(n!)" "|" "DONE(d)")
+        (quote ((sequence "TODO(t)" "NEXT(n!)" "STARTED(s!)" "|" "DONE(d)")
                 (sequence "APPT(a)" "PROJ(p)" "WAITING(w@/!)" "HOLD(h@/!)" "|"  "DELEGATED(D@/!)" "CANCELLED(c@/!)")
                 (sequence "|" "IDEE(i)" "ENTWURF(e)"))))
 
   (setq org-clock-in-switch-to-state 'bh/clock-in-to-next)
 
   (defun bh/clock-in-to-next (kw)
-    "Switch a task from TODO to NEXT when clocking in.
+    "Switch a task from TODO to STARTED when clocking in.
   Skips capture tasks, projects, and subprojects.
-  Switch projects and subprojects from NEXT back to TODO"
+  Switch projects and subprojects from STARTED back to TODO"
     (when (not (and (boundp 'org-capture-mode) org-capture-mode))
       (cond
        ((and (member (org-get-todo-state) (list "TODO"  "DONE" "WAITING" "HOLD" "DELEGATED" "CANCELLED"))
              (bh/is-task-p))
-        "NEXT")
-       ((and (member (org-get-todo-state) (list "NEXT"))
+        "STARTED")
+       ((and (member (org-get-todo-state) (list "STARTED"))
              (bh/is-project-p))
         "TODO"))))
 
-  (defun job/clock-in-switch-state (state)
-    "Switch a task to NEXT when clocking in. Skips capture tasks,
-    projects, ideas and appointments."
-     (when (not (and (boundp 'org-capture-mode) org-capture-mode))
-        (cond
-         ((and (member (org-get-todo-state) (list "TODO" "DONE" "WAITING" "HOLD" "DELEGATED" "CANCELLED")))
-          "NEXT"))))
+;;  (defun job/clock-in-switch-state (state)
+;;    "Switch a task to NEXT when clocking in. Skips capture tasks,
+;;    projects, ideas and appointments."
+;;     (when (not (and (boundp 'org-capture-mode) org-capture-mode))
+;;        (cond
+;;         ((and (member (org-get-todo-state) (list "TODO" "DONE" "WAITING" "HOLD" "DELEGATED" "CANCELLED")))
+;;          "NEXT"))))
 
   ;; Formatierung für TODO-tags
   (setq org-todo-keyword-faces ;; in theme!
         (quote (("PROJ" :foreground "dark red" :weight semi-bold)
                 ("NEXT" :foreground "blue" :weight semi-bold)
+                ("STARTED" :foreground "blue" :weight semi-bold)
                 ("WAITING" :foreground "orange" :weight semi-bold)
                 ("HOLD" :foreground "magenta" :weight semi-bold))))
 #+end_src
