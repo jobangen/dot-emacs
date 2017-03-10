@@ -419,7 +419,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          ("C-c a" . org-agenda)
          ("C-c c" . org-capture)
          ("C-c ä" . org-capture)
-         ("<f11>" . org-clock-in))
+         ("<f11>" . job/org-clock-in-everywhere))
   :config
    (progn
      ;;Pfade
@@ -1013,6 +1013,13 @@ tags:\n* Inhalt
 
   ;; When non-nil, ask before resuming any stored clock during load.
   (setq org-clock-persist-query-resume nil)
+
+  (defun job/org-clock-in-everywhere (arg)
+    (interactive "p")
+    (if (equal major-mode 'org-agenda-mode)
+      (org-agenda-clock-in arg))
+    (if (equal major-mode 'org-mode)
+      (org-clock-in arg)))
 #+end_src
 
 http://doc.norang.ca/org-mode.org
