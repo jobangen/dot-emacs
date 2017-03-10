@@ -1061,19 +1061,6 @@ http://doc.norang.ca/org-mode.org
               (setq has-subtask t))))
       (and is-a-task has-subtask))))
 
-  (defun bh/clock-in-to-next (kw)
-    "Switch a task from TODO to NEXT when clocking in.
-  Skips capture tasks, projects, and subprojects.
-  Switch projects and subprojects from NEXT back to TODO"
-    (when (not (and (boundp 'org-capture-mode) org-capture-mode))
-      (cond
-       ((and (member (org-get-todo-state) (list "TODO"))
-             (bh/is-task-p))
-        "NEXT")
-       ((and (member (org-get-todo-state) (list "NEXT"))
-             (bh/is-project-p))
-        "TODO"))))
-
   (defun bh/find-project-task ()
     "Move point to the parent (project) task if any"
     (save-restriction
@@ -1091,6 +1078,7 @@ http://doc.norang.ca/org-mode.org
   as the default task."
     (interactive "p")
     (setq bh/keep-clock-running t)
+    (pomodoro)
     (if (equal major-mode 'org-agenda-mode)
         ;;
         ;; We're in the agenda
@@ -1113,6 +1101,7 @@ http://doc.norang.ca/org-mode.org
   (defun bh/punch-out ()
     (interactive)
     (setq bh/keep-clock-running nil)
+    (pomodoro-stop)
     (when (org-clock-is-active)
       (org-clock-out))
     (org-agenda-remove-restriction-lock))
