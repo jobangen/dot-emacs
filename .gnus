@@ -203,6 +203,17 @@
              (horizontal 1.0 (summary 1.0 point) ("*BBDB*" 0.18))
              (horizontal 0.75 (article 1.0)))))
 
+(gnus-add-configuration  ; reply-yank view
+ '(reply
+   (vertical 1.0
+             (horizontal 1.0 (summary 1.0 point) ("*BBDB*" 0.18))
+             (horizontal 0.75 (article 1.0) (reply-yank 0.5)))))
+
+(gnus-add-configuration  ; reply-yank view
+ '(reply-yank
+   (vertical 1.0
+             (horizontal 1.0 (summary 1.0 point) ("*BBDB*" 0.18))
+             (horizontal 0.75 (article 1.0) (reply-yank 0.5)))))
 
 
 (setq gnus-group-line-format "%P%3y:%c%B\n")
