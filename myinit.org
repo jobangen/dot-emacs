@@ -1386,6 +1386,13 @@ Null prefix argument turns off the mode."
 )
 #+end_src
 
+** org-attach
+#+begin_src emacs-lisp
+(setq org-attach-directory "~/Dropbox/db/data/")
+(setq org-attach-expert t)
+(setq org-attach-method 'lns)
+#+end_src
+
 * LaTeX und BibTeX
 ** auctex
 #+begin_src emacs-lisp
