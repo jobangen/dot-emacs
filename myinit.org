@@ -658,13 +658,12 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
              (bh/is-project-p))
         "TODO"))))
 
-;;  (defun job/clock-in-switch-state (state)
-;;    "Switch a task to NEXT when clocking in. Skips capture tasks,
-;;    projects, ideas and appointments."
-;;     (when (not (and (boundp 'org-capture-mode) org-capture-mode))
-;;        (cond
-;;         ((and (member (org-get-todo-state) (list "TODO" "DONE" "WAITING" "HOLD" "DELEGATED" "CANCELLED")))
-;;          "NEXT"))))
+  (setq org-todo-state-tags-triggers
+        (quote ((done ("today"))
+                ("WAITING" ("today"))
+                ("HOLD" ("today"))
+                ("TODO" ("today")))))
+
 
   ;; Formatierung für TODO-tags
   (setq org-todo-keyword-faces ;; in theme!
