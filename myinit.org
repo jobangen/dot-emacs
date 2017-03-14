@@ -445,7 +445,11 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
    
 
 (use-package org-plus-contrib
-  :ensure t :defer t)
+  :ensure t
+  :defer t)
+
+(require 'ox-extra)
+(ox-extras-activate '(ignore-headlines))
 
 ;; 18.23 Highlight clock when running overtime ;; in theme!!!
 (custom-set-faces
