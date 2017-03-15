@@ -405,11 +405,17 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   (setq viking-enable-blinking nil)
   (setq viking-kill-functions (list 'viking-kill-line-from-point
                                     'viking-kill-line
-                                    'viking-kill-paragraph
-                                    'viking-kill-buffer))
+;;                                    'viking-kill-paragraph
+))
  (bind-key "C-k" 'viking-kill-thing-at-point viking-mode-map)
  (bind-key "C-d" 'delete-char viking-mode-map)
 )
+#+end_src
+
+** expand-region
+#+begin_src emacs-lisp
+(use-package expand-region
+  :bind (("C-c m" . er/expand-region)))
 #+end_src
 
 * org-mode
