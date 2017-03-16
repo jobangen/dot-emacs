@@ -2671,12 +2671,14 @@ the body of this command."
   (goto-char 22))
 
 (defface zettelkasten-id-face `((t (:background "#e0e0e0")))  "Zettelkasten Ids")
-(defface zettelkasten-lvl1-face `((t (:background "#819FF7")))  "Zettelkasten Level 1")
-(defface zettelkasten-lvl2-face `((t (:background "#A9BCF5")))  "Zettelkasten Level 2")
+(defface zettelkasten-lvl1-face `((t (:background "#6880c7")))  "Zettelkasten Level 1")
+(defface zettelkasten-lvl2-face `((t (:background "#778ccc")))  "Zettelkasten Level 2")
+(defface zettelkasten-lvl3-face `((t (:background "#8699d2")))  "Zettelkasten Level 3")
 
 (defun zettelkasten-markup ()
    (highlight-regexp "\\s-[0-9]*~" 'zettelkasten-lvl1-face)
    (highlight-regexp "[0-9]*-[0-9]*~" 'zettelkasten-lvl2-face)
+   (highlight-regexp "[0-9]*-[0-9]*[a-z]*~" 'zettelkasten-lvl3-face)
    (highlight-regexp "\[0-9a-z\\-\]*~" 'zettelkasten-id-face))
 
 (add-hook 'dired-mode-hook 'zettelkasten-markup)
