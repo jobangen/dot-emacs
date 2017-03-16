@@ -2404,7 +2404,7 @@ _q_: cancel     _r_: resolve    _tI_: insert item       ^ ^                   _p
 
 ** hydra-modes
 #+begin_src emacs-lisp
-(bind-key "C-c m" 'hydra-modes/body)
+(bind-key "C-c n" 'hydra-modes/body)
 (defhydra hydra-modes (:color blue :columns 3)
 "Modes"
 ("a" auto-fill-mode "auto-fill-mode")
