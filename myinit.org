@@ -797,15 +797,15 @@ SCHEDULED: %t
 :END:
 ")
 
-("jt" "Journal todo" entry (file+datetree+prompt "journal.org")
+("jt" "Journal todo" entry (file+datetree "journal.org")
 "* TODO %^{Task}
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
-:CATEGORY:  %^{Category|wiss|work|pers}
+:CATEGORY:  pers
 :EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
 :END:
-%?" )
+%?")
 
 ("jl" "Literaturbearbeitung" entry (file+datetree "journal.org")
  "* Literaturbearbeitung
