@@ -919,7 +919,7 @@ Subject: [[%l][%:subject]]
 #+DATE: %U\n* Schlagwörter
 tags:\n* Inhalt
 %?\n* Literatur\n
-\n* Links"
+\n* Links & Files"
 :immediate-finish t :jump-to-captured t)
 
 ("Z" "Zettel TODO" entry (file+headline (lambda () (expand-dir-zk "0-0a~zettelkasten-todo.txt") "Inhalt"))
