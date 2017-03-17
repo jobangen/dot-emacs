@@ -877,7 +877,7 @@ Subject: [[%l][%:subject]]
 
 ("gk" "Krankenkasse" plain (file (lambda () (expand-dir-db "money.dat")))
  "%(org-read-date) * Techniker Krankenkasse
-    Expenses:Versicherung:Krankenkasse        237,60€
+    Expenses:Versicherung:Krankenkasse        240,30€
     Assets:Giro"
     :immediate-finish t)
     
