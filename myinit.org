@@ -2690,6 +2690,28 @@ the body of this command."
 )
 #+end_src
 
+** Remembrance Agent
+#+begin_src emacs-lisp
+(use-package remem
+  :load-path "~/.emacs.d/non-elpa/remembrance-agent"
+  :config
+   (setq remem-database-dir "~/.custom-temp/ra-index")
+   (setq remem-scopes-list '(("zettelkasten" 5 1 500)
+                             ("texte" 5 5 500)))
+   (setq remem-print-exact-relevance-p t)
+   (setq remem-load-original-suggestion t)
+   (setq remem-log-p t)
+   (setq remem-logfile (expand-file-name "~/.custom-temp/.remem-log-file"))
+
+   (setq remem-format-default
+     '((0 2 (field 0 mouse-face remem-hilite2) nil)                   ; Number
+       (1 2 (face remem-even field 1) nil)                            ; sim
+       (9 3 (face remem-odd field 9 mouse-face remem-hilite) nil)     ; person
+       (8 25 (face remem-even field 8 mouse-face remem-hilite) nil)   ; subject
+       (28 50 (face remem-odd field 28 mouse-face remem-hilite) nil))); keywords
+)
+#+end_src
+
 * defun
 ** my/insert-date
 #+begin_src emacs-lisp
