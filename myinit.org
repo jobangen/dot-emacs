@@ -798,7 +798,7 @@ SCHEDULED: %t
 ")
 
 ("jt" "Journal todo" entry (file+datetree "journal.org")
-"* TODO %^{Task}
+"* TODO %^{Task} :today:
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
