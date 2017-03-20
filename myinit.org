@@ -2704,8 +2704,8 @@ the body of this command."
   :load-path "~/.emacs.d/non-elpa/remembrance-agent"
   :config
    (setq remem-database-dir "~/.custom-temp/ra-index")
-   (setq remem-scopes-list '(("zettelkasten" 5 1 500)
-                             ("texte" 5 5 500)))
+   (setq remem-scopes-list '(("zettelkasten" 5 2 500)
+                             ("texte" 5 2 500)))
    (setq remem-print-exact-relevance-p t)
    (setq remem-load-original-suggestion t)
    (setq remem-log-p t)
