@@ -964,9 +964,13 @@ tags:\n* Inhalt
                             ("@work" . ?W)
                             ("@pers" . ?p)
 	       		        ("@wiss" . ?w)
+                            (:endgroup)
+                            (:startgroup)
                             ("today" . ?t)
                             ("someday" . ?s)
-                            (:endgroup))))
+                            (:endgroup)
+                            ("household" . ?h)
+)))
 
 ; Allow setting single tags without the menu
 (setq org-fast-tag-selection-single-key (quote expert))
