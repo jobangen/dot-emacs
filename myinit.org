@@ -284,14 +284,18 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ;;                 (t . ivy--regex-plus)))
 
      (setq ivy-views
-           '(("zettelkasten ,"
-              (horz
-               (buffer "zk")
-               (buffer "zk")))
-             ("todo ,"
+           '(("todo ,"
               (horz
                 (buffer "*pomidor*")
-                (buffer "*Org Agenda*")))))
+                (buffer "*Org Agenda*")))
+             ("mail ,"
+              (horz
+                (buffer "*Group*")
+                (buffer "*OfflineIMAP*")))
+             ("zettelkasten ,"
+              (horz
+               (buffer "zk")
+               (buffer "zk")))))
 )
 #+end_src
 
