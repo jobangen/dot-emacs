@@ -961,15 +961,12 @@ tags:\n* Inhalt
 (setq org-tags-exclude-from-inheritance '("txt"))
 
 (setq org-tag-alist (quote ((:startgroup)
-                            ("@work" . ?W)
-                            ("@pers" . ?p)
-	       		        ("@wiss" . ?w)
+                            ("@home" . ?h)
                             (:endgroup)
                             (:startgroup)
                             ("today" . ?t)
                             ("someday" . ?s)
                             (:endgroup)
-                            ("household" . ?h)
 )))
 
 ; Allow setting single tags without the menu
