@@ -2720,6 +2720,16 @@ the body of this command."
 )
 #+end_src
 
+** org-brain
+#+begin_src emacs-lisp
+(use-package org-brain
+  :load-path "~/.emacs.d/non-elpa/org-brain"
+  :config
+    (require 'org-brain)
+    (setq org-brain-path "~/Dropbox/db/zk")
+    (setq org-brain-children-headline-default-name "Links & Files"))
+#+end_src
+
 * defun
 ** my/insert-date
 #+begin_src emacs-lisp
