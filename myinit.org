@@ -1010,6 +1010,7 @@ tags:\n* Inhalt
 (setq org-use-property-inheritance (quote ("QUANTIFIED")))
 #+end_src
 ** clocking
+*** config
 #+begin_src emacs-lisp
   (setq org-clock-history-length 42)
   (setq org-clock-out-when-done t)
@@ -1170,6 +1171,16 @@ http://doc.norang.ca/org-mode.org
   (bind-key "C-c <f11>" 'job/punch-in-or-out)
 #+end_src
 
+*** org-clock-convenience
+#+begin_src emacs-lisp
+(use-package org-clock-convenience
+  :ensure t
+  :bind (:map org-agenda-mode-map
+   	   ("<C-S-up>" . org-clock-convenience-timestamp-up)
+   	   ("<C-S-down>" . org-clock-convenience-timestamp-down)
+   	   ("ö" . org-clock-convenience-fill-gap)
+   	   ("ä" . org-clock-convenience-fill-gap-both)))
+#+end_src
 
 ** timer
 #+begin_src emacs-lisp
