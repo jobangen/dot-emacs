@@ -1638,47 +1638,47 @@ http://www.jonathanleroux.org/bibtex-mode.html
        (ref (pcase (downcase (bibtex-completion-get-value "=type=" entry))
               ("article"
                (s-format
-                "${author} ${date}: ${title}. ${subtitle}. In: ${journaltitle}, ${volume}(${number}), ${pages}."
+                "${author} ${date}: ${title}. ${subtitle}. In: ${journaltitle}, ${volume}(${number}), ${pages}. ([[file:${=key=}.txt][Zettel]])"
                 'bibtex-completion-apa-get-value entry))
               ("inproceedings"
                (s-format
-                "${author} ${date}: ${title}. ${subtitle}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}."
+                "${author} ${date}: ${title}. ${subtitle}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}. ([[file:${=key=}.txt][Zettel]])"
                 'bibtex-completion-apa-get-value entry))
               ("book"
                (s-format
-                "${author} ${date}: ${title}. ${subtitle}. ${location}: ${publisher}."
+                "${author} ${date}: ${title}. ${subtitle}. ${location}: ${publisher}. ([[file:${=key=}.txt][Zettel]])"
                 'bibtex-completion-apa-get-value entry))
               ("collection"
                (s-format
-                "${editor} (Hg.) ${date}: ${title}. ${subtitle}. ${location}: ${publisher}."
+                "${editor} (Hg.) ${date}: ${title}. ${subtitle}. ${location}: ${publisher}. ([[file:${=key=}.txt][Zettel]])"
                 'bibtex-completion-apa-get-value entry))
               ("phdthesis"
                (s-format
-                "${author} ${year}: ${title}. ${subtitle}. (Doctoral dissertation). ${school}, ${location}."
+                "${author} ${year}: ${title}. ${subtitle}. (Doctoral dissertation). ${school}, ${location}. ([[file:${=key=}.txt][Zettel]])"
                 'bibtex-completion-apa-get-value entry))
               ("inbook"
                (s-format
-                "${author} ${date}: ${title}. ${subtitle}. In: [${crossref}] ${location}: ${publisher}, ${pages}"
+                "${author} ${date}: ${title}. ${subtitle}. In: [${crossref}] ${location}: ${publisher}, ${pages}. ([[file:${=key=}.txt][Zettel]])"
                 'bibtex-completion-apa-get-value entry))
               ("incollection"
                (s-format
-                "${author} ${date}: ${title}. ${subtitle}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}."
+                "${author} ${date}: ${title}. ${subtitle}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}. ([[file:${=key=}.txt][Zettel]])"
                 'bibtex-completion-apa-get-value entry))
               ("proceedings"
                (s-format
-                "${editor} (Hg.) ${date}: ${title}. ${location}: ${publisher}."
+                "${editor} (Hg.) ${date}: ${title}. ${location}: ${publisher}. ([[file:${=key=}.txt][Zettel]])"
                 'bibtex-completion-apa-get-value entry))
               ("unpublished"
                (s-format
-                "${author} ${date}: ${title}. ${subtitle}. Unpublished manuscript."
+                "${author} ${date}: ${title}. ${subtitle}. Unpublished manuscript. ([[file:${=key=}.txt][Zettel]])"
                 'bibtex-completion-apa-get-value entry))
               ("online"
                (s-format
-                "${author} ${date}: ${title}. ${subtitle}. , ${url}."
+                "${author} ${date}: ${title}. ${subtitle}. , ${url}. ([[file:${=key=}.txt][Zettel]])"
                 'bibtex-completion-apa-get-value entry))
               (_
                (s-format
-                "${author} ${date}: ${title}. ${subtitle}."
+                "${author} ${date}: ${title}. ${subtitle}. ([[file:${=key=}.txt][Zettel]])"
                 'bibtex-completion-apa-get-value entry)))))
       (replace-regexp-in-string "\\([ .?!]\\)\\." "\\1" ref))) ; Avoid sequences of punctuation marks.
 )
