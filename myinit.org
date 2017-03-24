@@ -436,8 +436,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          ("C-c c" . org-capture)
          ("C-c ä" . org-capture)
          ("<f11>" . org-clock-in)
-         :map org-agenda-mode-map
-           ("<f11>" . org-agenda-clock-in))
+)
   :config
    (progn
      ;;Pfade
@@ -456,6 +455,9 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
      ;; Don't allow editing of folded regions
      (setq org-catch-invisible-edits 'error)
 
+     (add-hook 'org-agenda-mode-hook
+       (lambda ()
+         (bind-key "<f11>" 'org-agenda-clock-in org-agenda-mode-map)))
    )
 )
    
