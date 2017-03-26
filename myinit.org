@@ -3449,12 +3449,12 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
   "Kill active region or one word backward."
   (interactive "p")
   (if (use-region-p)
-      (sp-kill-region (region-beginning) (region-end))
+      (kill-region (region-beginning) (region-end))
     (if smartparens-strict-mode
         (sp-backward-kill-word arg)
       (backward-kill-word arg))))
 
-  (bind-key "C-w" 'job/kill-word-or-region)
+(bind-key "C-w" 'job/kill-word-or-region)
 #+end_src
 
 ** job/insert-enquote
