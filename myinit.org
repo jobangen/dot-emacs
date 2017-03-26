@@ -2265,14 +2265,20 @@ rotate entire document."
 ** projectile
 #+begin_src emacs-lisp
 (use-package projectile
-   :ensure t
-   :diminish projectile-mode
-   :config
-    (progn
-      (projectile-global-mode)
-      (setq projectile-completion-system 'ivy)
-      (setq projectile-enable-caching t)
-      (setq projectile-switch-project-action 'projectile-dired)))
+  :ensure t
+  :diminish projectile-mode
+  :config
+   (progn
+     (projectile-global-mode)
+     (setq projectile-completion-system 'ivy)
+     (setq projectile-enable-caching t)
+     (setq projectile-switch-project-action 'projectile-dired)))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package counsel-projectile
+  :config
+    (counsel-projectile-on))
 #+end_src
 
 ** smartparens 
