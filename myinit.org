@@ -2875,7 +2875,7 @@ http://mbork.pl/2017-02-26_other-window-or-switch-buffer
 	    (my/hsplit-last-buffer prefix)
 	  (other-window 1)))
 
-  (bind-key "C-z" 'job/other-window-or-my/hsplit-last-buffer)
+  (bind-key "C-t" 'job/other-window-or-my/hsplit-last-buffer)
 #+end_src
 
 ** frequencies
