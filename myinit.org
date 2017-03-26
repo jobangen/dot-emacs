@@ -409,25 +409,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
      (winner-mode))
 #+end_src
 
-** viking-mode
-#+begin_src emacs-lisp
-(use-package viking-mode
-  :diminish viking-mode
-;;  :bind ("C-k" . viking-kill-thing-at-point)
-  :config
-  (viking-global-mode)
-  (setq viking-greedy-kill nil)
-  (setq viking-enable-region-kill t)
-  (setq viking-enable-blinking nil)
-  (setq viking-kill-functions (list 'viking-kill-line-from-point
-                                    'viking-kill-line
-;;                                    'viking-kill-paragraph
-))
- (bind-key "C-k" 'viking-kill-thing-at-point viking-mode-map)
- (bind-key "C-d" 'delete-char viking-mode-map)
-)
-#+end_src
-
 ** expand-region
 #+begin_src emacs-lisp
 (use-package expand-region
@@ -3497,5 +3478,16 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
     (backward-char 2))
 
   (eval-after-load 'tex '(define-key TeX-mode-map "\"" 'job/insert-enquote))
+#+end_src
+
+** job/kill-line
+#+begin_src emacs-lisp
+(defun job/kill-line ()
+  (interactive)
+  (if (equal (point) (line-end-position))
+      (kill-whole-line)
+    (call-interactively 'kill-line)))
+
+(bind-key "C-k" 'job/kill-line)
 #+end_src
 
