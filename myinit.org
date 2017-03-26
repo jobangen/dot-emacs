@@ -372,9 +372,17 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   :config
    (progn
     (setq avy-all-windows t)
-    (setq avy-keys '(?u ?i ?a ?e ?o ?s ?n ?r ?t ?d ?y))
+    (setq avy-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?ö))
 
     (define-key input-decode-map (kbd "C-i") (kbd "H-i"))))
+#+end_src
+
+** zzz-to-char
+#+begin_src emacs-lisp
+(use-package zzz-to-char
+  :bind ("C-z" . zzz-to-char)
+  :config
+    (setq zzz-to-char-reach 6))
 #+end_src
 
 ** imenu
