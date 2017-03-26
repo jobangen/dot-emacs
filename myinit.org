@@ -2341,7 +2341,9 @@ rotate entire document."
         ;;Ivy
         ivy-done
         ivy-next-line
-        ivy-previous-line))
+        ivy-previous-line
+        magit-invoke-popup-action
+))
 (keyfreq-mode 1)
 (keyfreq-autosave-mode 1))
 #+end_src
