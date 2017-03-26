@@ -940,7 +940,7 @@ Subject: [[%l][%:subject]]
 ("z" "Zettel" plain (file (lambda () (capture-report-date-file (expand-dir-db "zk/"))))
  "#+TITLE: %^{Title}
 #+DATE: %U\n* Schlagwörter
-tags:\n* Inhalt
+tags: §content, \n* Inhalt
 %?\n* Literatur\n
 \n* Links & Files"
 :immediate-finish t :jump-to-captured t)
