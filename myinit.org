@@ -3479,7 +3479,7 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
       (call-interactively 'job/insert-enquote*))
     (backward-char 2))
 
-  (eval-after-load 'tex '(define-key TeX-mode-map "\"" 'job/insert-enquote))
+  (eval-after-load 'tex '(define-key TeX-mode-map "\"" 'job/enquote-wrapper))
 #+end_src
 
 ** job/kill-line
