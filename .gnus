@@ -18,7 +18,8 @@
 
 (setq nnmail-split-methods
       '(("yggdrasill" "^[TC][oc]:.*yggdrasill@lists.Uni-Marburg.DE")
-        ("fsi-religionsw" "^To:.*fsi-religionswissenschaft@lists.fu-berlin.de")
+        ("fsi-religionsw" "^[TC][oc]:.*fsi-religionswissenschaft@lists.fu-berlin.de")
+        ("hsozkult" "^From:.*hsk.mail@geschichte.hu-berlin.de")
         ("INBOX" "")))
 
 
