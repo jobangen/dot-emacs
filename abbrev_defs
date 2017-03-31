@@ -85,6 +85,8 @@
 
 (define-abbrev-table 'edit-abbrevs-mode-abbrev-table '())
 
+(define-abbrev-table 'elisp-byte-code-mode-abbrev-table '())
+
 (define-abbrev-table 'emacs-lisp-byte-code-mode-abbrev-table '())
 
 (define-abbrev-table 'emacs-lisp-mode-abbrev-table '())
@@ -106,6 +108,7 @@
     ("alllgemeine" "allgemeine" nil 0)
     ("anscheined" "anscheinend" nil 0)
     ("aös" "als" nil 0)
+    ("entwiklcung" "entwicklung" nil 0)
     ("entwiklung" "entwicklung" nil 0)
     ("gepsrächen" "gesprächen" nil 0)
     ("geschriebem" "geschrieben" nil 0)
@@ -153,6 +156,8 @@
 (define-abbrev-table 'haskell-cabal-mode-abbrev-table '())
 
 (define-abbrev-table 'haskell-mode-abbrev-table '())
+
+(define-abbrev-table 'haskell-yesod-parse-routes-mode-abbrev-table '())
 
 (define-abbrev-table 'helm-grep-mode-abbrev-table '())
 
@@ -231,11 +236,15 @@
 
 (define-abbrev-table 'messages-buffer-mode-abbrev-table '())
 
+(define-abbrev-table 'notmuch-message-mode-abbrev-table '())
+
 (define-abbrev-table 'occur-edit-mode-abbrev-table '())
 
 (define-abbrev-table 'occur-mode-abbrev-table '())
 
 (define-abbrev-table 'offlineimap-mode-abbrev-table '())
+
+(define-abbrev-table 'org-brain-visualize-mode-abbrev-table '())
 
 (define-abbrev-table 'org-export-stack-mode-abbrev-table '())
 
@@ -245,6 +254,8 @@
 
 (define-abbrev-table 'package-menu-mode-abbrev-table '())
 
+(define-abbrev-table 'paperless-mode-abbrev-table '())
+
 (define-abbrev-table 'pdf-annot-list-mode-abbrev-table '())
 
 (define-abbrev-table 'pdf-occur-buffer-mode-abbrev-table '())
@@ -252,6 +263,8 @@
 (define-abbrev-table 'pdf-outline-buffer-mode-abbrev-table '())
 
 (define-abbrev-table 'plain-tex-mode-abbrev-table '())
+
+(define-abbrev-table 'pomidor-mode-abbrev-table '())
 
 (define-abbrev-table 'process-menu-mode-abbrev-table '())
 
@@ -304,4 +317,8 @@
 (define-abbrev-table 'vc-git-log-edit-mode-abbrev-table '())
 
 (define-abbrev-table 'vc-git-log-view-mode-abbrev-table '())
+
+(define-abbrev-table 'vc-git-region-history-mode-abbrev-table '())
+
+(define-abbrev-table 'xref--xref-buffer-mode-abbrev-table '())
 
