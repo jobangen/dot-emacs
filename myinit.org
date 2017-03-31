@@ -788,6 +788,9 @@ SCHEDULED: %t
 :END:
 %?" :clock-in t :clock-resume t)
 
+("p" "push" plain (clock)
+ "- %U: [[%l]%?]")
+
 ("j" "Journal")
 ("jj" "Journal" entry (file+datetree+prompt "journal.org")
  "* %^{Headline}  :journal:
