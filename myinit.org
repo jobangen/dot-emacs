@@ -1281,7 +1281,7 @@ Null prefix argument turns off the mode."
 (add-to-list 'org-latex-classes
       '("scrbook"
          "\\RequirePackage[l2tabu, orthodox]{nag}
-          \\documentclass[DIV12, a4paper, 12pt]{scrbook}
+          \\documentclass[DIV=12, a4paper, 12pt]{scrbook}
          [NO-DEFAULT-PACKAGES]
          [NO-PACKAGES]
          [EXTRA]"
@@ -1294,10 +1294,8 @@ Null prefix argument turns off the mode."
          ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 (add-to-list 'org-latex-classes
       '("abrechnung"
-         "\\documentclass[DIV12, a4paper, 12pt]{scrartcl}
+         "\\documentclass[DIV=12, a4paper, 12pt]{scrartcl}
           \\usepackage{marvosym}
-          \\usepackage{datetime}
-          \\newdateformat{mydate}{\\monthname[\\THEMONTH] \\THEYEAR}
          [NO-DEFAULT-PACKAGES]
          [PACKAGES]
          [EXTRA]"
@@ -1306,7 +1304,7 @@ Null prefix argument turns off the mode."
          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
 (add-to-list 'org-latex-classes
       '("zettel"
-         "\\documentclass[DIV12, a4paper, 12pt, headings=normal]{scrartcl}
+         "\\documentclass[DIV=12, a4paper, 12pt, headings=normal]{scrartcl}
           \\usepackage{enumitem}
           \\setlist[itemize]{itemsep=-0.5ex}
          \\makeatletter
