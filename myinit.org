@@ -1448,7 +1448,7 @@ Null prefix argument turns off the mode."
       '(TeX-fold-macro-spec-list
         '(("[f]"     ("sidenote"))
           ("[fn]"    ("footnote" "marginpar"))
-          ("[ac]"    ("autocite")) ;; new
+          ("[ac]"    ("autocite" "avolcite")) ;; new
           ("[c]"     ("cite"))
           ("[l]"     ("label"))
           ("[r]"     ("ref" "pageref" "eqref"))
