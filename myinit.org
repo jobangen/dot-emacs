@@ -949,7 +949,8 @@ tags: §content, \n* Inhalt
                                  (("irw.org") :maxlevel . 4)
                                  (("~/Dropbox/diss/diss.org") :maxlevel . 4)
                                  (("antiq.org") :maxlevel . 2)
-                                 (("~/Dropbox/db/contacts.org") :maxlevel . 2))
+                                 (("~/Dropbox/db/contacts.org") :maxlevel . 2)
+                                 (("goals.org") :maxlevel . 2))
 ))
 
 (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
