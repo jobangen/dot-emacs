@@ -773,7 +773,7 @@ SCHEDULED: %t
 :END:
 %?\n")
 
-("n" "note" entry (file "inbox.org")
+("n" "note" entry (file+headline "inbox.org" "Notes")
  "* %^{Note}
 :PROPERTIES:
 :CREATED: %U
