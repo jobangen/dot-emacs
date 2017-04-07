@@ -1146,7 +1146,7 @@ http://doc.norang.ca/org-mode.org
               (bh/clock-in-default-task)))))))
 
   ;; (defvar bh/organization-task-id "eb155a82-92b2-4f25-a3c6-0304591af2f9")
-  (defvar bh/organization-task-id "5b1d075d-8ef1-4646-a598-27b59b2c7b9e")
+  (defvar bh/organization-task-id "ebeed4f3-60e1-49a6-ab7d-c52a4587348c")
 
   (defun bh/clock-in-organization-task-as-default ()
     (interactive)
