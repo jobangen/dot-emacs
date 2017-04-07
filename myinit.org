@@ -2743,7 +2743,8 @@ the body of this command."
   :config
     (require 'org-brain)
     (setq org-brain-path "~/Dropbox/db/zk")
-    (setq org-brain-children-headline-default-name "Links & Files"))
+    (setq org-brain-children-headline-default-name "Links & Files")
+    (setq org-brain-files-extension "txt"))
 #+end_src
 
 * defun
