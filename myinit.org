@@ -1452,17 +1452,22 @@ Null prefix argument turns off the mode."
           ("[l]"     ("label"))
           ("[r]"     ("ref" "pageref" "eqref"))
           ("[i]"     ("index" "glossary"))
-          ("[1]:||"  ("item"))
+          ("[1]:||--"  ("item"))
           ("…"       ("dots"))
           ("(C)"     ("copyright"))
           ("(R)"     ("textregistered"))
           ("TM"      ("texttrademark"))
-          (1         ("part" "chapter" "section" "subsection" "subsubsection"
-                      "paragraph" "subparagraph" "part*" "chapter*" "section*"
-                      "subsection*" "subsubsection*" "paragraph*" "subparagraph*"
-                      "emph" "textit" "textsl" "textmd" "textrm" "textsf"
-                      "texttt" "textbf" "textsc" "textup")))))
-
+          ("\"{1}\"" ("enquote"))
+          ("'{1}'"   ("enquote*"))
+          ("\"{2}\"" ("blockcquote"))
+          ("\"{1}\"" ("chapname"))
+          ("'{1}'"   ("uneigtl"))
+          (1         ("part" "part*" "chapter" "chapter*"
+                      "section" "section*" "subsection" "subsection*"
+                      "subsubsection" "subsubsection*"
+                      "paragraph" "paragraph*" "subparagraph" "subparagraph*"
+                      "emph" "textit" "textsl" "textmd" "textrm"
+                      "textsf" "texttt" "textbf" "textsc" "textup")))))
     ;;SyncTeX
     (setq TeX-source-correlate-mode 'synctex)
 
