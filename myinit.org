@@ -2137,10 +2137,13 @@ rotate entire document."
 (setq dired-recursive-copies 'always)
 (setq dired-dwim-target t)
 (setq delete-by-moving-to-trash t
-     trash-directory "~/.local/share/Trash")
+      trash-directory "~/.local/share/Trash")
 (setq dired-listing-switches "--group-directories-first -alh1v")
 (put 'dired-find-alternate-file 'disabled nil)
+
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+;; auto refresh dired when file changes; from Ben Maughan
+(add-hook 'dired-mode-hook 'auto-revert-mode)
 #+end_src
 
 *** dired-subtree
