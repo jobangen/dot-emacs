@@ -75,6 +75,7 @@
 (setq delete-old-versions -1)
 (setq version-control t)
 (setq vc-make-backup-files t)
+(setq auto-save-list-file-prefix autosave-dir)
 (setq auto-save-file-name-transforms
       `((".*" ,autosave-dir t)))
 #+end_src
