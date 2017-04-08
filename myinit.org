@@ -64,16 +64,44 @@
 
 ** dir-setup
 #+begin_src emacs-lisp
-(defun expand-dir-db (name)
-   (expand-file-name name "~/Dropbox/db/"))
+(defvar db-dir
+   (expand-file-name "~/Dropbox/db/"))
 
 (setq org-directory "~/Dropbox/db/org/")
 
-(defun expand-dir-zk (name)
-   (expand-file-name name (expand-dir-db "zk/")))
+(defvar zettelkasten-dir
+   (expand-file-name (concat db-dir "zk/")))
 
-(defun expand-dir-texte (name)
-   (expand-file-name name "~/texte/"))
+(defvar texte-dir
+   (expand-file-name "~/texte/"))
+
+(defvar backup-dir
+   (expand-file-name (concat user-emacs-directory "backups/")))
+
+(defvar autosave-dir
+   (expand-file-name (concat user-emacs-directory "autosave/")))
+
+(defvar job/bibliography-file
+   (expand-file-name (concat db-dir "biblio.bib")))
+#+end_src
+
+** Backups
+#+begin_src emacs-lisp
+(setq backup-directory-alist
+      `(("." . ,backup-dir)))
+(setq delete-old-versions -1)
+(setq version-control t)
+(setq vc-make-backup-files t)
+(setq auto-save-file-name-transforms
+      `((".*" ,autosave-dir t)))
+#+end_src
+
+** Archive und Packages
+#+begin_src emacs-lisp
+(require 'package)
+(setq package-archives '(("gnu"       . "http://elpa.gnu.org/packages/")
+                         ("melpa"     . "http://melpa.milkbox.net/packages/")
+                         ("org"       . "http://orgmode.org/elpa/")))
 #+end_src
 
 * use-package, bind-key
@@ -109,7 +137,7 @@ müssen manuell deaktiviert werden
 
 ** Themes
 #+begin_src emacs-lisp
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'custom-theme-load-path (concat user-emacs-directory "themes"))
 (load-theme 'greylines t)
 ;;(load-theme 'leuven t)
 #+end_src
@@ -472,7 +500,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ** shortcuts for major org-files
 [[https://github.com/baron42bba/.emacs.d/blob/master/bba.org#define-some-shortcuts-to-access-major-org-files][Define some shortcuts to access major org files.]]
 #+begin_src emacs-lisp
-(bind-key "C-c 0" '(lambda () (interactive) (find-file "~/.emacs.d/myinit.org")))
+(bind-key "C-c 0" '(lambda () (interactive) (find-file (concat user-emacs-directory "myinit.org"))))
 (bind-key "C-c 1" '(lambda () (interactive) (find-file "~/Dropbox/db/org/journal.org")))
 (bind-key "C-c 2" '(lambda () (interactive) (find-file "~/Dropbox/db/org/wiss.org")))
 (bind-key "C-c 3" '(lambda () (interactive) (find-file "~/Dropbox/db/org/pers.org")))
@@ -746,7 +774,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 <%(org-read-date)%?>
 \n")
 
-("c" "Contact" entry (file (lambda () (expand-dir-db "contacts.org")))
+("c" "Contact" entry (file (lambda () (expand-file-name (concat db-dir "contacts.org"))))
  "* %(org-contacts-template-name)
 :PROPERTIES:
 :EMAIL: %(org-contacts-template-email)
@@ -826,7 +854,7 @@ SCHEDULED: %t
 ("jb" "BerlinAntiquariat" entry (file+datetree+prompt "journal.org")
  #'org-capture-berlinantiquariat :jump-to-captured t)
 
-("je" "Electricity" plain (file (lambda () (expand-dir-db "plot/electricity.csv")))
+("je" "Electricity" plain (file (lambda () (expand-file-name (concat db-dir "plot/electricity.csv"))))
 "%(org-read-date); %?")
 
 ("jw" "Wissenschaft" entry (file+datetree+prompt "journal.org")
@@ -845,7 +873,7 @@ Subject: [[%l][%:subject]]
 %i
 #+END_QUOTE")
 
-("b" "bibtex" plain (file (lambda () (expand-dir-db "biblio.bib")))
+("b" "bibtex" plain (file (lambda () (expand-file-name job/bibliography-file)))
 "%?" :jump-to-captured t :empty-lines 1)
 
 ("l" "Literatur" entry (file+headline "inbox.org" "Literatur")
@@ -859,37 +887,37 @@ Subject: [[%l][%:subject]]
 :END:")
 
 ("g" "Geld - Ledger entries")
-("gb" "Bargeld" plain (file (lambda () (expand-dir-db "money.dat")))
+("gb" "Bargeld" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Kartenverfügung
     Expenses:Bargeld                           %^{Amount}€
     Assets:Giro"
     :immediate-finish t)
     
-("gg" "Giro" plain (file (lambda () (expand-dir-db "money.dat")))
+("gg" "Giro" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * %^{Payee| |Deutsche Bahn}
     Expenses:%^{Expenses|Kauf:|Geschenk:|Reisen:}%^{Expenses}    %^{Amount}€
     Assets:Giro"
     :immediate-finish t)
 
-("gh" "Handy" plain (file (lambda () (expand-dir-db "money.dat")))
+("gh" "Handy" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Telekom
     Expenses:Handy                             %^{Amount|29,89}€
     Assets:Giro"
     :immediate-finish t)
 
-("gi" "Internet+Telefon" plain (file (lambda () (expand-dir-db "money.dat")))
+("gi" "Internet+Telefon" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Kabel Deutschland
     Expenses:Wohnung:Internet+Telefon          %^{Amount|19,90}€
     Assets:Giro" 
     :immediate-finish t)
 
-("gk" "Krankenkasse" plain (file (lambda () (expand-dir-db "money.dat")))
+("gk" "Krankenkasse" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Techniker Krankenkasse
     Expenses:Versicherung:Krankenkasse        240,30€
     Assets:Giro"
     :immediate-finish t)
     
-("gm" "Miete" plain (file (lambda () (expand-dir-db "money.dat")))
+("gm" "Miete" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Unter den Eichen
     Expenses:Wohnung:Grundmiete               402,52€
     Expenses:Wohnung:Heizkosten                91,00€
@@ -897,32 +925,32 @@ Subject: [[%l][%:subject]]
     Assets:Giro" 
     :immediate-finish t)
 
-("gn" "Netflix" plain (file (lambda () (expand-dir-db "money.dat")))
+("gn" "Netflix" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Netflix ;;geht beides an Samuel
     Expenses:Unterhaltung:Netflix               3,00€
     Liabilities:Ha-Sa:Netflix                   3,00€
     Assets:Giro"
     :immediate-finish t)
 
-("gu" "Untermiete" plain (file (lambda () (expand-dir-db "money.dat")))
+("gu" "Untermiete" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Kevin Schürer (%^{Monat})
     Assets:Giro                               %^{Amount|330,00}€
     Income:Wohnung" 
     :immediate-finish t)
     
-("gs" "Strom" plain (file (lambda () (expand-dir-db "money.dat")))
+("gs" "Strom" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Stadtwerke
     Expenses:Wohnung:Strom                     %^{Amount|59,00}€
     Assets:Giro" 
     :immediate-finish t)
     
-("gt" "Topoi Stipendium" plain (file (lambda () (expand-dir-db "money.dat")))
+("gt" "Topoi Stipendium" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Stipendium Topoi
     Assets:Giro                              %^{Amount|1350,00}€
     Income:Stipendium:Topoi" 
     :immediate-finish t)
      
-("z" "Zettel" plain (file (lambda () (capture-report-date-file (expand-dir-db "zk/"))))
+("z" "Zettel" plain (file (lambda () (capture-report-date-file (expand-file-name zettelkasten-dir))))
  "#+TITLE: %^{Title}
 #+DATE: %U\n* Schlagwörter
 tags: §content, \n* Inhalt
@@ -930,7 +958,7 @@ tags: §content, \n* Inhalt
 \n* Links & Files"
 :immediate-finish t :jump-to-captured t)
 
-("Z" "Zettel TODO" entry (file+headline (lambda () (expand-dir-zk "0-0a~zettelkasten-todo.txt") "Inhalt"))
+("Z" "Zettel TODO" entry (file+headline (lambda () (expand-file-name (concat zettelkasten-dir "0-0a~zettelkasten-todo.txt")) "Inhalt"))
  "* TODO %^{Task}
 :PROPERTIES:
 :CREATED: %U
@@ -1351,9 +1379,9 @@ Null prefix argument turns off the mode."
 :config
  (progn
    (require 'org-ref)
-   (setq org-ref-notes-directory (expand-dir-zk ""))
+   (setq org-ref-notes-directory (expand-file-name zettelkasten-dir))
    (setq org-ref-default-bibliography '("~/Dropbox/db/biblio.bib"))
-   (setq org-ref-pdf-directory (expand-dir-texte ""))
+   (setq org-ref-pdf-directory (expand-file-name texte-dir))
    (setq org-ref-default-citation-link "autocite")
 ))
 
@@ -1513,8 +1541,7 @@ Null prefix argument turns off the mode."
 	(setq reftex-external-file-finders
 	      '(("tex" . "kpsewhich -format=.tex %f")
         	("bib" . "kpsewhich -format=.bib %f")))
-	(setq reftex-default-bibliography
-		'((expand-dir-db "biblio.bib")))
+    (setq reftex-default-bibliography '("~/Dropbox/db/biblio.bib"))
 	(setq reftex-cite-format
 		'((?\C-m . "\\autocite[][]{%l}")
 		  (?c . "\\cite[][]{%l}")
@@ -1558,7 +1585,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
 #+begin_src emacs-lisp
 (use-package gscholar-bibtex
  :config
- (setq gscholar-bibtex-database-file (expand-dir-db "import.bib"))
+ (setq gscholar-bibtex-database-file (expand-file-name db-dir "import.bib"))
  (setq gscholar-bibtex-default-source "Google Scholar"))
 #+end_src
 
@@ -1566,10 +1593,10 @@ http://www.jonathanleroux.org/bibtex-mode.html
 #+begin_src emacs-lisp
 (use-package bibtex-completion
   :config
-   (setq bibtex-completion-bibliography (expand-dir-db "biblio.bib"))
-   (setq bibtex-completion-library-path (expand-dir-texte ""))
+   (setq bibtex-completion-bibliography (expand-file-name job/bibliography-file))
+   (setq bibtex-completion-library-path (expand-file-name texte-dir))
    (setq bibtex-completion-pdf-field "Files")
-   (setq bibtex-completion-notes-path (expand-dir-zk ""))
+   (setq bibtex-completion-notes-path (expand-file-name zettelkasten-dir))
    (setq bibtex-completion-notes-extension ".txt")
    (setq bibtex-completion-additional-search-fields '("subtitle"
                                                       "date"
@@ -1738,7 +1765,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
   (progn
     (setq-default ispell-program-name "aspell")
     (setq ispell-dictionary "german")
-    (setq ispell-personal-dictionary "~/.emacs.d/.customdict-de")
+    (setq ispell-personal-dictionary (expand-file-name (concat user-emacs-directory ".customdict-de")))
 ;;	(setq ispell-extra-args '("--dont-tex-check-comments"))
 ;;  (setq ispell-parser 'tex)
 ))
@@ -1958,7 +1985,7 @@ abort completely with `C-g'."
     (progn
      (bbdb-initialize 'gnus 'message)
      (bbdb-mua-auto-update-init 'gnus)
-     (setq bbdb-file (expand-dir-db "bbdb"))
+     (setq bbdb-file (db-dir "bbdb"))
      (setq bbdb-north-american-phone-numbers-p nil)
      (setq bbdb-default-country "Deutschland")
      (setq bbdb-user-mail-names
@@ -2202,7 +2229,7 @@ rotate entire document."
   :ensure t
   :bind ("C-<menu>" . bookmark-jump)
   :init
-   (setq bookmark-default-file "~/.emacs.d/bookmarks")
+   (setq bookmark-default-file (expand-file-name (concat user-emacs-directory "bookmarks")))
    (setq bookmark-save-flag 1))
 #+end_src
 
@@ -2637,7 +2664,7 @@ removed before collection."
 (defun zettelkasten-parse-values-combined ()
   (interactive)
   (zettelkasten-combine-zettel)
-  (find-file (expand-dir-db "stats/zettelkasten/zettel-combined.txt"))
+  (find-file (expand-file-name (concat db-dir "stats/zettelkasten/zettel-combined.txt")))
   (zettelkasten-parse-tags-values))
 
 (defun zettelkasten-tangle-combined ()
@@ -2739,10 +2766,9 @@ the body of this command."
 ** org-brain
 #+begin_src emacs-lisp
 (use-package org-brain
-  :load-path "~/.emacs.d/non-elpa/org-brain"
   :config
     (require 'org-brain)
-    (setq org-brain-path "~/Dropbox/db/zk")
+    (setq org-brain-path (expand-file-name zettelkasten-dir))
     (setq org-brain-children-headline-default-name "Links & Files")
     (setq org-brain-files-extension "txt"))
 #+end_src
