@@ -1372,20 +1372,18 @@ Null prefix argument turns off the mode."
 
 ** org-clock-csv
 #+begin_src emacs-lisp
-(use-package org-clock-csv
-  :load-path "~/.emacs.d/non-elpa/org-clock-csv"
-  :config
-  (defun my/org-clock-csv-calc ()
-    "Ruft script auf und verarbeitet die "
-    (interactive)
-    (shell-command "source ~/script/clock-entries.sh"))
+  (use-package org-clock-csv
+    :load-path "~/.emacs.d/non-elpa/org-clock-csv"
+    :config
+      (defun my/org-clock-csv-calc ()
+        "Ruft script auf und verarbeitet die "
+        (interactive)
+        (shell-command "source ~/script/clock-entries.sh"))
 
-  (defun my/org-clock-csv-write-calc ()
-    (interactive)
-    (org-clock-csv)
-    (my/org-clock-csv-calc)))
-
-
+      (defun my/org-clock-csv-write-calc ()
+        (interactive)
+        (org-clock-csv)
+        (my/org-clock-csv-calc)))
 #+end_src
 
 ** org-present
