@@ -2717,6 +2717,29 @@ the body of this command."
    (highlight-regexp "\[0-9a-z\\-\]*~" 'zettelkasten-id-face))
 
 (add-hook 'dired-mode-hook 'zettelkasten-markup)
+
+;;(defun zettelkasten-finish-zettel (reverse)
+;;   (interactive "*P\nr")
+;;   (goto-char (point-min))
+;;   (search-forward-regexp "tags: " nil t)
+;;   (search-forward-regexp ", " nil t)
+;;   (set-mark (point))
+;;   (move-end-of-line 1)
+;;   (search-backward-regexp "§" nil t)
+;;   (search-forward-regexp ", " nil t)
+;;   (sort-regexp-fields reverse "[a-zA-Z0-9->§]+" "\\&" nil nil)
+;;)
+
+(defun zettelkasten-mark-tags ()
+   (interactive)
+   (goto-char (point-min))
+   (search-forward-regexp "tags: " nil t)
+   (move-end-of-line 1)
+   (search-backward-regexp "§" nil t)
+   (search-forward-regexp ", " nil t)
+   (set-mark (point))
+   (move-end-of-line 1)
+)
 #+end_src
 ** deft
 #+begin_src emacs-lisp
@@ -2759,6 +2782,18 @@ the body of this command."
     (setq org-brain-path (expand-file-name zettelkasten-dir))
     (setq org-brain-children-headline-default-name "Links & Files")
     (setq org-brain-files-extension "txt"))
+#+end_src
+
+** zettelkasten-hydra
+#+begin_src emacs-lisp
+(bind-key "C-c z" 'hydra-zettelkasten/body)
+(defhydra hydra-zettelkasten (:hint nil
+                              :color red
+                              :columns 2)
+"Zettelkasten"
+("m" zettelkasten-mark-tags "mark-tags")
+("s" sort-symbols "sort-symbols")
+)
 #+end_src
 
 * defun
