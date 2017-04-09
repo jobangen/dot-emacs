@@ -2458,8 +2458,8 @@ _q_: cancel     _r_: resolve    _tI_: insert item       ^ ^                   _p
 
 ** hydra-projectile
 #+begin_src emacs-lisp
-(bind-key "C-c z" 'hydra-projectile/body)
-(bind-key "C-ä z" 'hydra-projectile/body)
+(bind-key "C-c P" 'hydra-projectile/body)
+(bind-key "C-ä P" 'hydra-projectile/body)
 (defhydra hydra-projectile (:color teal
                             :hint nil)
   "
