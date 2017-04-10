@@ -337,20 +337,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                 (buffer "*OfflineIMAP*")))
              (",zettelkasten"
               (horz
-               (file "~/Dropbox/db/zk")
-               (file "~/Dropbox/db/zk")))))
-)
-#+end_src
-
-** ivy-rich
-#+begin_src emacs-lisp
-(use-package ivy-rich
-  :ensure t
-  :config
-   (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer)
-   (setq ivy-rich-switch-buffer-name-max-length 64
-         ivy-rich-switch-buffer-mode-max-length 16
-         ivy-rich-switch-buffer-project-max-length 10)
+               (file "~/Dropbox/db/zk/")
+               (file "~/Dropbox/db/zk/")))))
 )
 #+end_src
 
