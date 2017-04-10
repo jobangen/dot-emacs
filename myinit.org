@@ -291,6 +291,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
            ("C-w" . backward-kill-word)
         )
   :config
+     (require 'ivy-hydra)
      (ivy-mode 1)
      (setq ivy-height 13)
 ;;     (setq ivy-fixed-height-minibuffer t)
