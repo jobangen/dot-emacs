@@ -1608,7 +1608,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
      (lambda (fpath)
       (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))
 
-   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n* Schlagwörter\ntags: §${=key=}, §txt, ${keywords},\n\n* Inhalt\n\n* Literatur\n\n* Links & Files\n- [[file:~/Dropbox/db/biblio.bib::${=key=}][BibTeX Entry]]\n- [[file:~/Dropbox/db/stats/zettelkasten/zettel-similarities/sim-${=key=}.txt][Similarities]]\n\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv :padline no\n${source}, ${=key=}\n#+end_src")
+   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n* Schlagwörter\ntags: §${=key=}, §txt, ${keywords},\n\n* Inhalt\n\n* Literatur\n\n* Links & Files\n- [[file:~/Dropbox/db/biblio.bib::${=key=}][BibTeX Entry]]\n- [[file:~texte/${=key=}*][Files]]\n- [[file:~/Dropbox/db/stats/zettelkasten/zettel-similarities/sim-${=key=}.txt][Similarities]]\n\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv :padline no\n${source}, ${=key=}\n#+end_src")
 
   (setq bibtex-completion-format-citation-functions
      '((org-mode      . bibtex-completion-format-citation-org-ref-autocite)
