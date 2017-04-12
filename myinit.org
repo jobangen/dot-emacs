@@ -2803,8 +2803,10 @@ the body of this command."
                               :color red
                               :columns 2)
 "Zettelkasten"
+("l" org-brain-insert-link "brain-link")
 ("m" zettelkasten-mark-tags "mark-tags")
 ("s" sort-symbols "sort-symbols")
+("v" org-brain-visualize "visualize")
 )
 #+end_src
 
