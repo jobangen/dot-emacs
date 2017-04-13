@@ -1944,7 +1944,15 @@ abort completely with `C-g'."
  :bind (("C-c g" . magit-status))
  :config
    (setq magit-last-seen-setup-instructions "1.4.0")
-   (setq magit-diff-refine-hunk 'all))
+   (setq magit-diff-refine-hunk 'all)
+   (setq magit-repository-directories
+      `(("~/.xmonad")
+        (,zettelkasten-dir)
+        (,user-emacs-directory)
+        ("~/Dropbox/diss")
+        ("~/Dropbox/db")
+        ))
+)
 #+end_src
 
 ** git-wip
