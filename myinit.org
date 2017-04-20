@@ -747,11 +747,10 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
     (let ((date        (org-read-date))
           (name        (completing-read "Veranstaltung: "
                          '((""                                1)
-                            ("Knoblauch: Forschungswerkstatt" 2)
-                           ("Kogge: Wissenschaftstheorie II"  3)
+                           ("Knoblauch: Forschungswerkstatt"  2)
+                           ("Wissenschaftskommunikation    "  3)
                            ("Topoi: Lesezirkel"               4)
                            ("Colloquium"                      5)
-                           ("Autorität"                       6)
                           )  nil t ""))
           (time-begin  (read-string "Begin: " nil nil '(nil)))
           (time-end    (read-string "End: " nil nil '(nil))))
