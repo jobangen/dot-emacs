@@ -78,6 +78,9 @@
 
 (defvar job/bibliography-file
    (expand-file-name (concat db-dir "biblio.bib")))
+
+(defvar custom-temp
+   (expand-file-name "~/.custom-temp/"))
 #+end_src
 
 ** Backups
