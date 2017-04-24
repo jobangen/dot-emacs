@@ -1445,6 +1445,17 @@ Null prefix argument turns off the mode."
 (setq org-attach-method 'lns)
 #+end_src
 
+** org-babel
+#+begin_src emacs-lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages '((shell . t)))
+
+  (defun my-org-confirm-babel-evaluate (lang body)
+    (not (string= lang "sh")))  ; don't ask for shell
+  (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+#+end_src
+
+
 * LaTeX und BibTeX
 ** auctex
 #+begin_src emacs-lisp
