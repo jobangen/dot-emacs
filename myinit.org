@@ -2836,14 +2836,6 @@ the body of this command."
 )
 #+end_src
 
-** zettelkasten-gitstats
-#+begin_src emacs-lisp
-(defun zettelkasten-gitstats ()
-   (interactive)
-   (sc (concat "cd ~/Dropbox/db/zk &&"
-               "gitstats .git gitstats &&"
-               "firefox 'gitstats/index.html'")))
-#+end_src
 
 * defun
 ** my/insert-date
@@ -3603,3 +3595,21 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 (bind-key "C-k" 'job/kill-line)
 #+end_src
 
+
+* shell-interaktion
+** zettelkasten-gitstats
+#+begin_src emacs-lisp
+(defun zettelkasten-gitstats ()
+   (interactive)
+   (sc (concat "cd ~/Dropbox/db/zk &&"
+               "gitstats .git gitstats &&"
+               "firefox 'gitstats/index.html'")))
+#+end_src
+
+** write-channel
+#+begin_src emacs-lisp
+(defun job/write-channels ()
+  (interactive)
+  (sc "iwlist wlp3s0 scan > ~/.custom-temp/channels.txt")
+  (find-file (expand-file-name (concat custom-temp "channels.txt"))))
+#+end_src
