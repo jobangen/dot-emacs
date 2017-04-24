@@ -1,5 +1,10 @@
 #+STARTUP: content
 * Grundeinstellungen
+** defalias
+#+begin_src emacs-lisp
+(defalias 'sc 'shell-command-to-string)
+#+end_src
+
 ** Einst
 #+BEGIN_SRC emacs-lisp
 (setq split-width-threshold 110)
