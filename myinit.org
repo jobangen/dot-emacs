@@ -3613,3 +3613,109 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
   (sc "iwlist wlp3s0 scan > ~/.custom-temp/channels.txt")
   (find-file (expand-file-name (concat custom-temp "channels.txt"))))
 #+end_src
+
+** xrandr
+*** xrandr-hydra
+#+begin_src emacs-lisp
+  (bind-key "C-c x" 'hydra-xrandr/body)
+  (defhydra hydra-xrandr (:hint nil
+                          :color red)
+"
+ ^Main^          ^VGA^                   ^HDMI^
+-^-^-------------^---^-------------------^---^-----------------
+ _a_: 1024x768   _vac_: 1024x768 clone   _hac_: 1024x768 clone
+ ^ ^             _val_: 1024x768 left    _hal_: 1024x768 left
+ _s_: 1366x768   _vsc_: 1366x768 clone   _hsc_: 1366x768 clone
+ ^ ^             _vsl_: 1366x768 left    _hsl_: 1366x768 left
+"
+  ("r" xrandr-reset "reset")
+  ("a" xrandr-main-1024x768)
+  ("s" xrandr-main-1366x768)
+  ("vac" xrandr-vga-1024x768-clone)
+  ("val" xrandr-vga-1024x768-left)
+  ("vsc" xrandr-vga-1366x768-clone)
+  ("vsl" xrandr-vga-1366x768-left)
+  ("hac" xrandr-hdmi-1024x768-clone)
+  ("hal" xrandr-hdmi-1024x768-left)
+  ("hsc" xrandr-hdmi-1366x768-clone)
+  ("hsl" Xrandr-hdmi-1366x768-left)
+  )
+
+#+end_src
+
+*** xrandr-reset
+#+begin_src emacs-lisp
+(defun xrandr-reset ()
+  (interactive)
+  (sc "xrandr --output eDP1 --mode 1366x768 --output DP1 --off --output HDMI1 --off --output VIRTUAL1 --off"))
+#+end_src
+
+*** xrandr-main-1024x768
+#+begin_src emacs-lisp
+(defun xrandr-main-1024x768 ()
+  (interactive)
+  (sc "xrandr --output eDP1 --mode 1024x768"))
+#+end_src
+
+*** xrandr-main-1366x768
+#+begin_src emacs-lisp
+(defun xrandr-main-1366x768 ()
+  (interactive)
+  (sc "xrandr --output eDP1 --mode 1366x768"))
+#+end_src
+
+*** xrandr-vga-1024x768-clone
+#+begin_src emacs-lisp
+(defun xrandr-vga-1024x768-clone ()
+  (interactive)
+  (sc "xrandr --output DP1 --mode 1024x768"))
+#+end_src
+
+*** xrandr-vga-1024x768-left
+#+begin_src emacs-lisp
+(defun xrandr-vga-1024x768-left ()
+  (interactive)
+  (sc "xrandr --output DP1 --mode 1024x768 --left-of eDP1"))
+#+end_src
+
+*** xrandr-vga-1366x768-clone
+#+begin_src emacs-lisp
+(defun xrandr-vga-1366x768-clone ()
+  (interactive)
+  (sc "xrandr --output DP1 --mode 1366x768"))
+#+end_src
+
+*** xrandr-vga-1366x768-left
+#+begin_src emacs-lisp
+(defun xrandr-vga-1366x768-left ()
+  (interactive)
+  (sc "xrandr --output DP1 --mode 1366x768 --left-of eDP1"))
+#+end_src
+
+*** xrandr-hdmi-1024x768-clone
+#+begin_src emacs-lisp
+(defun xrandr-hdmi-1024x768-clone ()
+  (interactive)
+  (sc "xrandr --output HDMI1 --mode 1024x768"))
+#+end_src
+
+*** xrandr-hdmi-1024x768-left
+#+begin_src emacs-lisp
+(defun xrandr-hdmi-1024x768-left ()
+  (interactive)
+  (sc "xrandr --output HDMI1 --mode 1024x768 --left-of eDP1"))
+#+end_src
+
+*** xrandr-hdmi-1366x768-clone
+#+begin_src emacs-lisp
+(defun xrandr-hdmi-1366x768-clone ()
+  (interactive)
+  (sc "xrandr --output HDMI1 --mode 1366x768"))
+#+end_src
+
+*** xrandr-hdmi-1366x768-left
+#+begin_src emacs-lisp
+(defun xrandr-hdmi-1366x768-left ()
+  (interactive)
+  (sc "xrandr --output HDMI1 --mode 1366x768 --left-of eDP1"))
+#+end_src
