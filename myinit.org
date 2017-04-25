@@ -1124,6 +1124,7 @@ http://doc.norang.ca/org-mode.org
   as the default task."
     (interactive "p")
     (setq bh/keep-clock-running t)
+    (pomodoro)
     (if (equal major-mode 'org-agenda-mode)
         ;;
         ;; We're in the agenda
@@ -1142,7 +1143,6 @@ http://doc.norang.ca/org-mode.org
         (if (and (equal major-mode 'org-mode) (not (org-before-first-heading-p)) (eq arg 4))
             (org-clock-in '(16))
           (bh/clock-in-organization-task-as-default))))
-    (pomidor)
     (delete-other-windows)
     (switch-to-buffer-other-window "*Org Agenda*")
   )
@@ -1153,7 +1153,8 @@ http://doc.norang.ca/org-mode.org
     (when (org-clock-is-active)
       (org-clock-out))
     (org-agenda-remove-restriction-lock)
-    (pomidor-quit))
+    (pomodoro-stop)
+  )
 
 ;;https://github.com/mattfidler/my-emacs-startup/blob/master/startup-org.org
   (defun job/punch-in-or-out (arg)
