@@ -3719,3 +3719,11 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
   (interactive)
   (sc "xrandr --output HDMI1 --mode 1366x768 --left-of eDP1"))
 #+end_src
+
+** vpn
+*** vpn-zedat
+#+begin_src emacs-lisp
+(defun job/vpn-zedat ()
+  (interactive)
+  (eshell-command "sudo openconnect -s /usr/share/vpnc-scripts/vpnc-script vpn.fu-berlin.de"))
+#+end_src
