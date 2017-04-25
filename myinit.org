@@ -2491,6 +2491,7 @@ _q_: cancel     _r_: resolve    _tI_: insert item       ^ ^                   _p
 ("l" paperless "paperless")
 ("p" pdf-tools-install "pdf-tools")
 ("P" pandoc-mode "pandoc")
+("r" rainbow-delimiters-mode "rainbow-delimiters")
 ("v" visual-line-mode "visual-line")
 ("w" writegood-mode "writegood"))
 #+end_src
