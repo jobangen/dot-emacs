@@ -963,7 +963,7 @@ Subject: [[%l][%:subject]]
 ("z" "Zettel" plain (file (lambda () (capture-report-date-file (expand-file-name zettelkasten-dir))))
  "#+TITLE: %^{Title}
 #+DATE: %U\n* Schlagwörter
-tags: §content, \n* Inhalt
+tags: %^{Type|§content|§index}, \n* Inhalt
 %?\n* Literatur\n
 \n* Links & Files"
 :immediate-finish t :jump-to-captured t)
