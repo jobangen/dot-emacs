@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: misc
+# key: misc
+# --
+@misc{,
+  author = 	 {$1},
+  title = 	 {$2},
+  subtitle =     {$3},
+  date =         {$4},
+  type =         {$5},
+  howpublished = {$6},
+  organization = {$7},
+  timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
+  source =       {$8, $9}
+  keywords =     {$0},
+  
+}
