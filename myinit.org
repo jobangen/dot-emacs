@@ -2669,7 +2669,7 @@ Git
 
 ** hydra-spellcheck
 #+begin_src emacs-lisp
-(bind-key "<f12>" 'hydra-spellcheck/body)
+(bind-key "C-c S" 'hydra-spellcheck/body)
 (defhydra hydra-spellcheck (:color red :columns 3)
 "Flyspell"
 ("b" flyspell-buffer "buffer")
