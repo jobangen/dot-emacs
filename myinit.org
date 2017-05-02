@@ -465,7 +465,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          ("C-c ä" . org-capture)
          ("<f11>" . org-clock-in)
          ("C-c i" . org-clock-in)
-)
+        )
   :config
    (progn
      ;;Pfade
