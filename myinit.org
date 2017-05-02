@@ -629,8 +629,9 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 
 *** agenda-hydra
 #+begin_src emacs-lisp
-(define-key org-agenda-mode-map
-    "v" 'hydra-org-agenda-view/body)
+  (add-hook 'org-agenda-mode-hook
+     (lambda ()
+        (bind-key "v" 'hydra-org-agenda-view/body org-agenda-mode-map)))
 
 (defun org-agenda-cts ()
   (let ((args (get-text-property
