@@ -1837,7 +1837,6 @@ http://www.jonathanleroux.org/bibtex-mode.html
 ** ispell
 #+begin_src emacs-lisp
 (use-package ispell
-  :bind ("C-c i d" . ispell-change-dictionary)
   :config
   (progn
     (setq-default ispell-program-name "aspell")
