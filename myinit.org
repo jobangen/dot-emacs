@@ -986,7 +986,7 @@ Subject: [[%l][%:subject]]
 ("gm" "Miete" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Unter den Eichen
     Expenses:Wohnung:Grundmiete               402,52€
-    Expenses:Wohnung:Heizkosten                91,00€
+    Expenses:Wohnung:Heizkosten                83,00€
     Expenses:Wohnung:Betriebskosten           103,00€
     Assets:Giro" 
     :immediate-finish t)
