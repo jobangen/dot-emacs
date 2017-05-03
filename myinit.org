@@ -816,7 +816,7 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
                            ("Knoblauch: Forschungswerkstatt"  2)
                            ("Wissenschaftskommunikation    "  3)
                            ("Topoi: Lesezirkel"               4)
-                           ("Colloquium"                      5)
+                           ("Forschungswerkstatt FU"          5)
                           )  nil t ""))
           (time-begin  (read-string "Begin: " nil nil '(nil)))
           (time-end    (read-string "End: " nil nil '(nil))))
