@@ -433,6 +433,13 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 )
 #+end_src
 
+** shell
+#+begin_src emacs-lisp
+(setq comint-password-prompt-regexp
+      (concat comint-password-prompt-regexp
+              "\\|^.*Passwort für.*:\\s *\\'"))
+#+end_src
+
 ** eshell
 #+begin_src emacs-lisp
 (bind-key "C-c j" 'eshell)
