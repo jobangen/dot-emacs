@@ -3793,7 +3793,12 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 ** vpn
 *** vpn-zedat
 #+begin_src emacs-lisp
-(defun job/vpn-zedat ()
+(defun job/vpn-zedat-shell ()
   (interactive)
-  (eshell-command "sudo openconnect -s /usr/share/vpnc-scripts/vpnc-script vpn.fu-berlin.de"))
+  (shell)
+  (rename-buffer "*vpn-shell*")
+  (end-of-buffer)
+  (insert "sudo openconnect -s /usr/share/vpnc-scripts/vpnc-script vpn.fu-berlin.de")
+  (comint-send-input)
+)
 #+end_src
