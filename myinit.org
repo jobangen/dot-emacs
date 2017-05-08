@@ -1306,9 +1306,10 @@ http://doc.norang.ca/org-mode.org
 
 ** gpg + sensitivemode
 #+begin_src emacs-lisp
-(setenv "GPG_AGENT_INFO" nil)
-(setf epa-pinentry-mode 'ask)
+(setq epg-gpg-program "gpg2")
 
+;; fragt in emacs nach pw; braucht "allow-loopback-pinentry" in gpg-agent.conf
+(setq epa-pinentry-mode 'loopback)
 
 ;; sensitive mode wird eingeschaltet, wenn gpg-files bearbeitet werden
 (setq auto-mode-alist
