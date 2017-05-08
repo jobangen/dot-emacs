@@ -1304,8 +1304,12 @@ http://doc.norang.ca/org-mode.org
 (setq org-columns-default-format "%50ITEM(Task) %6Effort(Effort){:} %6CLOCKSUM_T(Today) %6CLOCKSUM(Sum)")
 #+end_src
 
-** sensitivemode
+** gpg + sensitivemode
 #+begin_src emacs-lisp
+(setenv "GPG_AGENT_INFO" nil)
+(setf epa-pinentry-mode 'ask)
+
+
 ;; sensitive mode wird eingeschaltet, wenn gpg-files bearbeitet werden
 (setq auto-mode-alist
  (append '(("\\.gpg$" . sensitive-mode))
