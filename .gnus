@@ -25,6 +25,8 @@
 
 ;;        ("geschkult" "^To:.*alle@verteiler.geschkult.fu-berlin.de")
 
+;; get rid of message
+(setq gnus-always-read-dribble-file t)
 
 
 
