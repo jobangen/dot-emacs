@@ -362,7 +362,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 (use-package counsel
   :ensure t
-  :bind (("C-S-s" . counsel-grep-or-swiper)
+  :bind (("C-s" . counsel-grep-or-swiper)
          ("C-S-i" . counsel-grep-or-swiper)
          ("C-c u" . counsel-linux-app)
          ("C-ä u" . counsel-linux-app)
@@ -374,8 +374,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          :map ivy-minibuffer-map
           ("M-y" . ivy-next-line)
           ("M-ü" . ivy-next-line))
-  )
-#+end_src
+)
+  #+end_src
 
 ** smex
 #+BEGIN_SRC emacs-lisp
@@ -406,7 +406,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 (use-package avy
   :ensure t
-  :bind (("C-s" . avy-goto-char-timer)
+  :bind (("C-S-s" . avy-goto-char-timer)
          ("H-i" . avy-goto-char-timer))
   :config
    (progn
