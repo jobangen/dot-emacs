@@ -1,5 +1,12 @@
+;;gnus init und setup
+(gnus-demon-init)
+
 (setq user-mail-address "jobangen@gmail.com"
       user-full-name "Jan Ole Bangen")
+(setq nndraft-directory "~/Mail/drafts")
+
+
+
 
 (setq gnus-select-method '(nnnil "")
       gnus-secondary-select-methods 
@@ -23,11 +30,8 @@
         ("INBOX" "")))
 
 
-;;        ("geschkult" "^To:.*alle@verteiler.geschkult.fu-berlin.de")
-
 ;; get rid of message
 (setq gnus-always-read-dribble-file t)
-
 
 
 ;; Sending Mail
@@ -63,48 +67,31 @@
 ;; Gnus-delay - send delayed mail with C-c C-j
 (gnus-delay-initialize)
 
-;;
+
+
+;; gnus group
+(add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
+(setq gnus-group-line-format "%P%3y:%C%B\n")
+(setq gnus-topic-line-format "%i%2{%n - %A%}%v\n")
 (gnus-demon-add-handler 'gnus-group-get-new-news 5 nil)
-(gnus-demon-init)
-
-
-
-;; Header, reply
-(setq message-citation-line-function 'message-insert-formatted-citation-line)
-(setq message-citation-line-format "On  %d. %b %Y (%R), %f wrote:\n")
-
-;; Wide reply; nil bedeutet, das nur mein name aus dem CC-Feld gelöscht wird.
-(setq message-dont-reply-to-names "jobangen@zedat.fu-berlin.de")
 
 
 
 
-;; Versteht auch die "internationalisierten" Versionen als Reply
-(setq message-subject-re-regexp
-      (concat
-       "^[ \t]*"
-         "\\("
-           "\\("
-             "[Aa][Nn][Tt][Ww]\\.?\\|"     ; antw
-             "[Aa][Ww]\\|"                 ; aw
-             "[Ff][Ww][Dd]?\\|"            ; fwd
-             "[Oo][Dd][Pp]\\|"             ; odp
-             "[Rr][Ee]\\|"                 ; re
-             "[Rr][\311\351][Ff]\\.?\\|"   ; ref
-             "[Ss][Vv]"                    ; sv
-           "\\)"
-           "\\(\\[[0-9]*\\]\\)"
-           "*:[ \t]*"
-         "\\)"
-       "*[ \t]*"
-       ))
+;;;;;;;;; Summary ;;;;;;;;;
+(setq gnus-summary-sort-functions '(gnus-summary-sort-by-most-recent-date))
+(setq gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date))
+(setq gnus-summary-thread-gathering-function 'gnus-gather-threads-by-subject)
 
-
-
-;; Forwarding
-(setq message-forward-ignored-headers "DKIM-Signature:\\|^Return-path:\\|^Received:\\|^Received-SPF:\\|^Delivered-To:\\|^Authentication-Results:\\|^Thread-.*:\\|^Message-ID:\\|^References:\\|^In-Reply-To:\\|^Accept-Language:\\|^Content-Language:\\|^X-.*:")
-
-
+(setq-default
+     gnus-summary-line-format "%U%R %(%&user-date;  %-20,20f  %B%S%)\n"
+     gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M"))
+     gnus-sum-thread-tree-false-root ""
+     gnus-sum-thread-tree-indent " "
+     gnus-sum-thread-tree-leaf-with-other "├► "
+     gnus-sum-thread-tree-root ""
+     gnus-sum-thread-tree-single-leaf "╰► "
+     gnus-sum-thread-tree-vertical "│")
 
 
 ;;moving Mail
@@ -152,80 +139,82 @@
 
 
 
-;; Gnus startet im topic-mode
-(add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
+
+
+
+
+
+;; Header, reply
+(setq message-citation-line-function 'message-insert-formatted-citation-line)
+(setq message-citation-line-format "On  %d. %b %Y (%R), %f wrote:\n")
+
+;; Wide reply; nil bedeutet, das nur mein name aus dem CC-Feld gelöscht wird.
+(setq message-dont-reply-to-names "jobangen@zedat.fu-berlin.de")
 
 ;; In Group sent wird der Empfänger angezeigt und nicht ich als Absender
 (setq gnus-ignored-from-addresses
       "jobangen@googlemail.com\\|jobangen@zedat.fu-berlin.de\\|j.o.bangen@web.de\\|job@zedat.fu-berlin.de")
 
-(setq gnus-summary-sort-functions '(gnus-summary-sort-by-most-recent-date))
-(setq gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date))
-(setq gnus-summary-thread-gathering-function 'gnus-gather-threads-by-subject)
-;;(setq gnus-summary-thread-gathering-function
-;;      'gnus-gather-threads-by-references)
+
+;; Versteht auch die "internationalisierten" Versionen als Reply
+(setq message-subject-re-regexp
+      (concat
+       "^[ \t]*"
+         "\\("
+           "\\("
+             "[Aa][Nn][Tt][Ww]\\.?\\|"     ; antw
+             "[Aa][Ww]\\|"                 ; aw
+             "[Ff][Ww][Dd]?\\|"            ; fwd
+             "[Oo][Dd][Pp]\\|"             ; odp
+             "[Rr][Ee]\\|"                 ; re
+             "[Rr][\311\351][Ff]\\.?\\|"   ; ref
+             "[Ss][Vv]"                    ; sv
+           "\\)"
+           "\\(\\[[0-9]*\\]\\)"
+           "*:[ \t]*"
+         "\\)"
+       "*[ \t]*"
+       ))
 
 
-(setq notmuch-fcc-dirs nil); MÜsste das FCC ausschalten..
 
-(setq nndraft-directory "~/Mail/drafts")
-
-(setq-default
-     gnus-summary-line-format "%4i %U%R %(%&user-date;  %-20,20f  %B%S%)\n"
-     gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M"))
-     gnus-sum-thread-tree-false-root ""
-     gnus-sum-thread-tree-indent " "
-     gnus-sum-thread-tree-leaf-with-other "├► "
-     gnus-sum-thread-tree-root ""
-     gnus-sum-thread-tree-single-leaf "╰► "
-     gnus-sum-thread-tree-vertical "│")
+;; Forwarding
+(setq message-forward-ignored-headers "DKIM-Signature:\\|^Return-path:\\|^Received:\\|^Received-SPF:\\|^Delivered-To:\\|^Authentication-Results:\\|^Thread-.*:\\|^Message-ID:\\|^References:\\|^In-Reply-To:\\|^Accept-Language:\\|^Content-Language:\\|^X-.*:")
 
 
 
-;;(gnus-add-configuration
-;; '(summary
-;;   (horizontal 1.0
-;;               (vertical 29 (tree 1.0))
-;;               (vertical 1.0 (summary 1.0 point)))))
+
+
+
+
+
+
+
+
 
 (gnus-add-configuration  ; summary view
  '(summary
-   (vertical 1.0
-             (horizontal 1.0 (summary 1.0 point) ("*BBDB*" 0.18)))))
-
-
-;;(gnus-add-configuration
-;; '(article
-;;   (horizontal 1.0
-;;               (vertical 26 (tree 1.0))
-;;               (vertical 1.0 (summary 0.35 point) (article 1.0)))))
+   (horizontal 1.0 (group 0.14) (summary 1.0 point))))
 
 (gnus-add-configuration  ; article view
  '(article
-   (vertical 1.0
-             (horizontal 1.0 (summary 1.0 point) ("*BBDB*" 0.18))
-             (horizontal 0.75 (article 1.0)))))
+   (horizontal 1.0
+               (group 0.14)
+               (vertical 1.0 (summary 1.0 point) (article 0.75)))))
 
-(gnus-add-configuration  ; reply-yank view
+(gnus-add-configuration  ; reply view
  '(reply
-   (vertical 1.0
-             (horizontal 1.0 (summary 1.0 point) ("*BBDB*" 0.18))
-             (horizontal 0.75 (article 1.0) (reply-yank 0.5)))))
+   (horizontal 1.0
+               (group 0.14)
+               (vertical 1.0 (summary 1.0 point)
+                         (horizontal 0.75 (article 1.0) (reply 0.5))))))
 
-(gnus-add-configuration  ; reply-yank view
+(gnus-add-configuration  ; reply view
  '(reply-yank
-   (vertical 1.0
-             (horizontal 1.0 (summary 1.0 point) ("*BBDB*" 0.18))
-             (horizontal 0.75 (article 1.0) (reply-yank 0.5)))))
-
-
-(setq gnus-group-line-format "%P%3y:%c%B\n")
-(setq gnus-topic-line-format "%i%2{%n - %A%}%v\n")
-
-
-(setq gnus-use-trees t
-      gnus-generate-tree-function 'gnus-generate-horizontal-tree
-      gnus-tree-minimize-window nil)
+   (horizontal 1.0
+               (group 0.14)
+               (vertical 1.0 (summary 1.0 point)
+                         (horizontal 0.75 (article 1.0) (reply-yank 0.5))))))
 
 
 ;; don't ask how many emails to download
@@ -238,40 +227,6 @@
     (gnus-summary-rescan-group 'all)))
 
 
-;; Scoring
-(setq gnus-use-adaptive-scoring '(word line))
-(setq gnus-adaptive-word-length-limit 5)
-(setq gnus-adaptive-word-no-group-words t)
-(setq gnus-score-expiry-days 30)
-
-(setq gnus-score-interactive-default-score 100)
-
-(setq gnus-default-adaptive-score-alist
-      '((gnus-unread-mark)
-        (gnus-read-mark (subject 1)(from 2))
-        (gnus-replied-mark)
-        (gnus-forwarded-mark)
-        (gnus-ticked-mark (subject 0)(from 0))
-        (gnus-dormant-mark (subject 0)(from 0))
-        (gnus-del-mark (subject 0)(from 0))
-        (gnus-killed-mark (subject -1)(from -2))
-        (gnus-expirable-mark)
-        (gnus-kill-file-mark)
-        (gnus-ancient-mark)
-        (gnus-low-score-mark)
-        (gnus-catchup-mark)))
-
-;;(setq gnus-decay-scores t)
-;;(setq gnus-score-decay-constant 1) ;default = 3
-;;(setq gnus-score-decay-scale 0.03) ;default = 0.05
-
-;;BBDB-Einträge bekommen einen Bonus
-(setq bbdb/gnus-score-default 100) 
-(setq gnus-score-find-score-files-function
-      '(gnus-score-find-bnews bbdb/gnus-score))
-
-
-
 
 ; offlineimap kann aus gnus heraus gestartet werden
 (define-key gnus-group-mode-map (kbd "vo")
@@ -282,18 +237,14 @@
 
 
 
-;; BBDB-Integration
-(require 'bbdb)
-(bbdb-initialize 'gnus 'message)
-(add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
-
-
-
 
 ;; Notmuch searches usw
 (require 'notmuch)
 (add-hook 'gnus-group-mode-hook 'my/notmuch-shortcut)
 (require 'org-gnus)
+
+(setq notmuch-fcc-dirs nil) ;;Schaltet das FCC aus 
+
 
 (define-key notmuch-search-mode-map (kbd "/") 'notmuch-search-filter)
 
