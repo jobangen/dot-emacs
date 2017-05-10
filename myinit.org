@@ -2028,7 +2028,7 @@ abort completely with `C-g'."
 ** magit
 #+begin_src emacs-lisp
 (use-package magit
- :bind (("C-c g" . magit-status))
+ :bind (("C-x g" . magit-status))
  :config
    (setq magit-last-seen-setup-instructions "1.4.0")
    (setq magit-diff-refine-hunk 'all)
@@ -2670,7 +2670,7 @@ _<left>_    _<right>_    _y_: split-vert     _s_: ace-swap      _g_: refresh    
 #+end_src
 ** hydra-git
 #+begin_src emacs-lisp
-(bind-key "C-c G" 'hydra-git/body)
+(bind-key "C-x G" 'hydra-git/body)
 (defhydra hydra-git (:color blue)
 "
 Git
