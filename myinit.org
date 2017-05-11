@@ -1816,6 +1816,63 @@ http://www.jonathanleroux.org/bibtex-mode.html
                 "${author} ${date}: ${title}. ${subtitle}. ([[file:${=key=}.txt][Zettel]])"
                 'bibtex-completion-apa-get-value entry)))))
       (replace-regexp-in-string "\\([ .?!]\\)\\." "\\1" ref))) ; Avoid sequences of punctuation marks.
+
+
+;; Eigene Aktion für Logs
+(defcustom bibtex-completion-logs-extension "--log.txt"
+  "The extension of the files containing notes.  This is only
+used when `bibtex-completion-notes-path' is a directory (not a file)."
+  :group 'bibtex-completion
+  :type 'string)
+
+(defcustom bibtex-completion-logs-template-multiple-files
+  "#+TITLE: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n\n"
+  "Template used to create a new log when each note is stored in
+a separate file.  '${field-name}' can be used to insert the value
+of a BibTeX field into the template. Fork."
+  :group 'bibtex-completion
+  :type 'string)
+
+(defun bibtex-completion-edit-logs (keys)
+  "Open the log  associated with the selected entries using `find-file'. Fork from edit-notes"
+  (dolist (key keys)
+    (if (and bibtex-completion-notes-path
+             (f-directory? bibtex-completion-notes-path))
+                                        ; One log file per publication:
+        (let* ((path (f-join bibtex-completion-notes-path
+                             (s-concat key bibtex-completion-logs-extension))))
+          (find-file path)
+          (unless (f-exists? path)
+            (insert (s-format bibtex-completion-logs-template-multiple-files
+                              'bibtex-completion-apa-get-value
+                              (bibtex-completion-get-entry key)))))
+                                        ; One file for all logs:
+      (unless (and buffer-file-name
+                   (f-same? bibtex-completion-notes-path buffer-file-name))
+        (find-file-other-window bibtex-completion-notes-path))
+      (widen)
+      (show-all)
+      (goto-char (point-min))
+      (if (re-search-forward (format bibtex-completion-notes-key-pattern (regexp-quote key)) nil t)
+                                        ; Existing entry found:
+          (when (eq major-mode 'org-mode)
+            (org-narrow-to-subtree)
+            (re-search-backward "^\*+ " nil t)
+            (org-cycle-hide-drawers nil)
+            (bibtex-completion-notes-mode 1))
+                                        ; Create a new entry:
+        (let ((entry (bibtex-completion-get-entry key)))
+          (goto-char (point-max))
+          (insert (s-format bibtex-completion-notes-template-one-file
+                            'bibtex-completion-apa-get-value
+                            entry)))
+        (when (eq major-mode 'org-mode)
+          (org-narrow-to-subtree)
+          (re-search-backward "^\*+ " nil t)
+          (org-cycle-hide-drawers nil)
+          (goto-char (point-max))
+          (bibtex-completion-notes-mode 1))))))
+
 )
 #+end_src
 
@@ -1827,6 +1884,11 @@ http://www.jonathanleroux.org/bibtex-mode.html
         ("C-<f5>" . ivy-resume))
  :config
   (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
+
+  (ivy-bibtex-ivify-action bibtex-completion-edit-logs ivy-bibtex-edit-logs)
+  (ivy-add-actions
+   'ivy-bibtex
+   '(("E" ivy-bibtex-edit-logs "Edit log")))
 )
 #+end_src
 
