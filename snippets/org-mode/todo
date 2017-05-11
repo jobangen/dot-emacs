@@ -2,7 +2,6 @@
 # name: todo
 # key: todo
 # --
-
 * $1
 :PROPERTIES:
 :CREATED:  [`(format-time-string "%Y-%m-%d %a")`]
