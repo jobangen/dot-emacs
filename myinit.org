@@ -965,6 +965,13 @@ Subject: [[%l][%:subject]]
 :SOURCE:    %?
 :END:")
 
+("P" "Projekt" entry (file "inbox.org")
+"* PROJ %^{Projekt}
+:PROPERTIES:
+:CREATED: %U
+:CATEGORY:  %^{Category|wiss|work|pers}
+:END:")
+
 ("g" "Geld - Ledger entries")
 ("gb" "Bargeld" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Kartenverfügung
