@@ -35,6 +35,20 @@
 
 
 ;; Sending Mail
+(require 'smtpmail)
+(setq message-send-mail-function 'smtpmail-send-it
+      smtpmail-stream-type  'starttls
+      smtpmail-smtp-service 587
+      smtpmail-auth-credentials "~/.authinfo.gpg"
+      smtpmail-debug-info t
+      )
+
+;; gnutls
+(setq starttls-use-gnutls t)
+(setq starttls-gnutls-program "gnutls-cli")
+(setq starttls-extra-arguments nil)
+
+
 ;; Let Gnus change the "From:" line by looking at current group we are in.
 ;; X-Message-.. passt den Server an
 (setq gnus-posting-styles
@@ -47,8 +61,6 @@
         )
       )
 
-(setq send-mail-function 'smtpmail-send-it
-      message-send-mail-function 'smtpmail-send-it)
 
 ; Gesendete Mails werden bei gmail nicht archiviert; update, damit die methode immer .gnus entspricht
 (setq gnus-update-message-archive-method  t)
