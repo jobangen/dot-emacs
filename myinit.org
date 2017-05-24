@@ -1084,7 +1084,7 @@ Subject: [[%l][%:subject]]
 #+DATE: %U\n* Schlagwörter
 tags: %^{Type|§content|§index}, \n* Inhalt
 %?\n* Literatur\n
-\n* Links & Files"
+\n* Links & Files :children:"
 :immediate-finish t :jump-to-captured t)
 
 ("Z" "Zettel TODO" entry (file+headline (lambda () (expand-file-name (concat zettelkasten-dir "0-0a~zettelkasten-todo.txt")) "Inhalt"))
@@ -1713,7 +1713,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
      (lambda (fpath)
       (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))
 
-   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n* Schlagwörter\ntags: §${=key=}, §txt, ${keywords},\n\n* Inhalt\n\n* Literatur\n\n* Links & Files\n- [[file:~/Dropbox/db/biblio.bib::${=key=}][BibTeX Entry]]\n- [[file:~texte/${=key=}*][Files]]\n- [[file:~/Dropbox/db/stats/zettelkasten/zettel-similarities/sim-${=key=}.txt][Similarities]]\n\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv :padline no\n${source}, ${=key=}\n#+end_src")
+   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n* Schlagwörter\ntags: §${=key=}, §txt, ${keywords},\n\n* Inhalt\n\n* Literatur\n\n* Links & Files :children:\n- [[file:~/Dropbox/db/biblio.bib::${=key=}][BibTeX Entry]]\n- [[file:~texte/${=key=}*][Files]]\n- [[file:~/Dropbox/db/stats/zettelkasten/zettel-similarities/sim-${=key=}.txt][Similarities]]\n\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv :padline no\n${source}, ${=key=}\n#+end_src")
 
   (setq bibtex-completion-format-citation-functions
      '((org-mode      . bibtex-completion-format-citation-org-ref-autocite)
@@ -2973,7 +2973,9 @@ the body of this command."
     (require 'org-brain)
     (setq org-brain-path (expand-file-name zettelkasten-dir))
     (setq org-brain-children-headline-default-name "Links & Files")
-    (setq org-brain-files-extension "txt"))
+    (setq org-brain-children-tag-default-name "children")
+    (setq org-brain-files-extension "txt")
+    (org-brain-activate-cache-saving))
 #+end_src
 
 ** zettelkasten-hydra
