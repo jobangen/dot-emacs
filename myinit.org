@@ -3766,7 +3766,7 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 #+begin_src emacs-lisp
 (defun job/write-channels ()
   (interactive)
-  (sc "iwlist wlp3s0 scan > ~/.custom-temp/channels.txt")
+  (sc "iwlist wlp3s0 scanning > ~/.custom-temp/channels.txt")
   (find-file (expand-file-name (concat custom-temp "channels.txt"))))
 #+end_src
 
