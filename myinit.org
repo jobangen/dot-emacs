@@ -405,7 +405,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (use-package counsel
   :ensure t
   :bind (("C-s" . counsel-grep-or-swiper)
-         ("M-s" . counsel-imenu)
+         ("C-S-s" . counsel-imenu)
          ("C-S-i" . counsel-grep-or-swiper)
          ("C-c u" . counsel-linux-app)
          ("C-ä u" . counsel-linux-app)
@@ -449,7 +449,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 (use-package avy
   :ensure t
-  :bind (("C-S-s" . avy-goto-char-timer)
+  :bind (("M-s" . avy-goto-char-timer)
          ("H-i" . avy-goto-char-timer))
   :config
    (progn
