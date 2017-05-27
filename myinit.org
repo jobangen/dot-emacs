@@ -2989,6 +2989,8 @@ the body of this command."
 ("m" zettelkasten-mark-tags "mark-tags")
 ("s" sort-symbols "sort-symbols")
 ("v" org-brain-visualize "visualize")
+("c" org-brain-build-caches "Build Cache")
+("C" org-brain-invalidate-all-caches "Invalidate Cache")
 )
 #+end_src
 
