@@ -389,17 +389,21 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 
      (setq ivy-views
            '((",todo"
-              (horz
-                (buffer "*pomidor*")
-                (buffer "*Org Agenda*")))
+               (horz
+                 (buffer "*pomidor*")
+                 (buffer "*Org Agenda*")))
              (",mail"
-              (horz
-                (buffer "*Group*")
-                (buffer "*OfflineIMAP*")))
+               (horz
+                 (buffer "*Group*")
+                 (buffer "*OfflineIMAP*")))
              (",zettelkasten"
-              (horz
-               (file "~/Dropbox/db/zk/")
-               (file "~/Dropbox/db/zk/")))))
+               (horz
+                 (file "~/Dropbox/db/zk/")
+                 (file "~/Dropbox/db/zk/")))
+             (",refile"
+               (horz
+                 (file "~/archiv/date-description/")
+                 (file "~/Dropbox/scans/")))))
 )
 #+end_src
 
