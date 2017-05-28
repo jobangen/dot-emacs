@@ -2947,6 +2947,10 @@ the body of this command."
    (set-mark (point))
    (move-end-of-line 1)
 )
+
+(defun zettelkasten-ag-query ()
+   (interactive)
+   (counsel-ag nil "~/Dropbox/db/zk" nil))
 #+end_src
 ** deft
 #+begin_src emacs-lisp
@@ -3006,6 +3010,7 @@ the body of this command."
 ("v" org-brain-visualize "visualize")
 ("c" org-brain-build-caches "Build Cache")
 ("C" org-brain-invalidate-all-caches "Invalidate Cache")
+("z" zettelkasten-ag-query "zk-query")
 )
 #+end_src
 
