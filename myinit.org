@@ -1,4 +1,15 @@
 #+STARTUP: content
+* Comment
+#+begin_src emacs-lisp
+;;; myinit.el --- personal emacs config file job -*- lexical-binding: t ; eval: (read-only-mode 1)-*-
+
+;;; Commentary:
+
+;; THIS FILE HAS BEEN GENERATED.
+
+;;; Code:
+#+end_src
+
 * Grundeinstellungen
 ** defalias
 #+begin_src emacs-lisp
