@@ -76,7 +76,7 @@
 (setq org-directory "~/Dropbox/db/org/")
 
 (defvar zettelkasten-dir
-   (expand-file-name (concat db-dir "zk/")))
+   (expand-file-name (concat db-dir "zk/zettel/")))
 
 (defvar texte-dir
    (expand-file-name "~/texte/"))
@@ -398,8 +398,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                  (buffer "*OfflineIMAP*")))
              (",zettelkasten"
                (horz
-                 (file "~/Dropbox/db/zk/")
-                 (file "~/Dropbox/db/zk/")))
+                 (file "~/Dropbox/db/zk/zettel")
+                 (file "~/Dropbox/db/zk/zettel")))
              (",refile"
                (horz
                  (file "~/archiv/date-description/")
@@ -581,7 +581,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (bind-key "C-c 2" '(lambda () (interactive) (find-file "~/Dropbox/db/org/wiss.org")))
 (bind-key "C-c 3" '(lambda () (interactive) (find-file "~/Dropbox/db/org/pers.org")))
 (bind-key "C-c 4" '(lambda () (interactive) (find-file "~/Dropbox/db/org/irw.org")))
-(bind-key "C-c 9" '(lambda () (interactive) (find-file "~/Dropbox/db/zk")))
+(bind-key "C-c 9" '(lambda () (interactive) (find-file "~/Dropbox/db/zk/zettel")))
 
 
 #+end_src
@@ -1728,7 +1728,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
      (lambda (fpath)
       (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))
 
-   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n* Schlagwörter\ntags: §${=key=}, §txt, ${keywords},\n\n* Inhalt\n\n* Literatur\n\n* Links & Files :children:\n- [[file:~/Dropbox/db/biblio.bib::${=key=}][BibTeX Entry]]\n- [[file:~texte/${=key=}*][Files]]\n- [[file:~/Dropbox/db/stats/zettelkasten/zettel-similarities/sim-${=key=}.txt][Similarities]]\n\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv :padline no\n${source}, ${=key=}\n#+end_src")
+   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n* Schlagwörter\ntags: §${=key=}, §txt, ${keywords},\n\n* Inhalt\n\n* Literatur\n\n* Links & Files :children:\n- [[file:~/Dropbox/db/biblio.bib::${=key=}][BibTeX Entry]]\n- [[file:~texte/${=key=}*][Files]]\n- [[file:~/Dropbox/db/zk/zettel-similarities/sim-${=key=}.txt][Similarities]]\n\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv :padline no\n${source}, ${=key=}\n#+end_src")
 
   (setq bibtex-completion-format-citation-functions
      '((org-mode      . bibtex-completion-format-citation-org-ref-autocite)
@@ -1846,7 +1846,7 @@ used when `bibtex-completion-notes-path' is a directory (not a file)."
   :type 'string)
 
 (defcustom bibtex-completion-logs-template-multiple-files
-  "#+TITLE: Log: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n\n"
+  "#+TITLE: Log: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n\n* ${author} ${date}: ${title}\n[[autocite:${=key=}]]\n[[file:~/Dropbox/db/zk/zettel/${=key=}.txt][zettel]]"
   "Template used to create a new log when each note is stored in
 a separate file.  '${field-name}' can be used to insert the value
 of a BibTeX field into the template. Fork."
@@ -2827,7 +2827,7 @@ _y_: youtube      _bb_: bibtex
 ** zettelkasten defun
 #+begin_src emacs-lisp
 (defun zettelkasten-combine-zettel ()
-  (shell-command "cat ~/Dropbox/db/zk/*.txt > ~/Dropbox/db/stats/zettelkasten/zettel-combined.txt"))
+  (shell-command "cat ~/Dropbox/db/zk/zettel/*.txt > ~/Dropbox/db/zk/zettel-combined.txt"))
 
 
 (defvar zettelkasten-tags-values)
@@ -2859,11 +2859,11 @@ removed before collection."
 (defun zettelkasten-parse-values-combined ()
   (interactive)
   (zettelkasten-combine-zettel)
-  (find-file (expand-file-name (concat db-dir "stats/zettelkasten/zettel-combined.txt")))
+  (find-file (expand-file-name (concat db-dir "zk/zettel-combined.txt")))
   (zettelkasten-parse-tags-values))
 
 (defun zettelkasten-tangle-combined ()
-  (org-babel-tangle-file "~/Dropbox/db/stats/zettelkasten/zettel-combined.txt"))
+  (org-babel-tangle-file "~/Dropbox/db/zk/zettel-combined.txt"))
 
 (defun zettelkasten-combine-tangle-combined ()
   (interactive)
@@ -2950,13 +2950,13 @@ the body of this command."
 
 (defun zettelkasten-ag-query ()
    (interactive)
-   (counsel-ag nil "~/Dropbox/db/zk" nil))
+   (counsel-ag nil "~/Dropbox/db/zk/zettel" nil))
 #+end_src
 ** deft
 #+begin_src emacs-lisp
 (use-package deft
   :config
-  (setq deft-directory "~/Dropbox/db/zk")
+  (setq deft-directory "~/Dropbox/db/zk/zettel")
 
   (bind-key "C-h" 'deft-filter-decrement deft-mode-map)
   (bind-key "C-w" 'deft-filter-decrement-word deft-mode-map)
@@ -3779,7 +3779,7 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 #+begin_src emacs-lisp
 (defun zettelkasten-gitstats ()
    (interactive)
-   (sc (concat "cd ~/Dropbox/db/zk &&"
+   (sc (concat "cd ~/Dropbox/db/zk/zettel &&"
                "gitstats .git gitstats &&"
                "firefox 'gitstats/index.html'")))
 #+end_src
