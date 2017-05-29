@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: diss-codiert
+# key: diss
+# --
+#+begin_src csv :tangle diss/autoritaet-semantik-codiert/`(buffer-name)`
+${1:$$(yas-choose-value '("" "Autorität" "auctoritas"))}, ${2:$$(yas-choose-value '("" "=" "≈" "⊃" "⊂" "∥" "∦" "⇒" "⇐" "⇏" "⇍"))}, ${3:Begriff}, ${4:Jahr}, ${5:$$(yas-choose-value '("alt" "gesch" "soz" "pol" "other"))}, `(file-name-base)`, ${6:Seite}
+#+end_src
