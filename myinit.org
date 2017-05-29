@@ -1846,8 +1846,8 @@ used when `bibtex-completion-notes-path' is a directory (not a file)."
   :type 'string)
 
 (defcustom bibtex-completion-logs-template-multiple-files
-  "#+TITLE: Log: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n\n* ${author} ${date}: ${title}\n[[autocite:${=key=}]]\n[[file:~/Dropbox/db/zk/zettel/${=key=}.txt][zettel]]"
-  "Template used to create a new log when each note is stored in
+  "#+TITLE: Log: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n\n* ${author} ${date}: ${title}\n:PROPERTIES:\n:CATEGORY:  wiss\n:END:[[autocite:${=key=}]]\n[[file:~/Dropbox/db/zk/zettel/${=key=}.txt][zettel]]"
+  "Template used to create a new log when each log is stored in
 a separate file.  '${field-name}' can be used to insert the value
 of a BibTeX field into the template. Fork."
   :group 'bibtex-completion
