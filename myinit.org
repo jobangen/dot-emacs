@@ -70,6 +70,9 @@
 
 ** dir-setup
 #+begin_src emacs-lisp
+(let ((default-directory  "~/.emacs.d/lisp/"))
+  (normal-top-level-add-subdirs-to-load-path))
+
 (defvar db-dir
    (expand-file-name "~/Dropbox/db/"))
 
@@ -438,7 +441,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ** smex
 #+BEGIN_SRC emacs-lisp
 (use-package smex
-    :load-path "~/.emacs.d/non-elpa/smex-abo-abo"
     :bind (("M-x" . smex)
            ("C-x C-m" . smex)
            ("M-ö" . smex)
@@ -1501,7 +1503,6 @@ http://doc.norang.ca/org-mode.org
 ** org-clock-csv
 #+begin_src emacs-lisp
   (use-package org-clock-csv
-    :load-path "~/.emacs.d/non-elpa/org-clock-csv"
     :config
       (defun my/org-clock-csv-calc ()
         "Ruft script auf und verarbeitet die "
@@ -2139,7 +2140,6 @@ abort completely with `C-g'."
 ** git-wip
 #+begin_src emacs-lisp
 (use-package git-wip-mode
-  :load-path "~/.emacs.d/non-elpa/git-wip/emacs/"
   :diminish git-wip-mode
   :commands git-wip-mode)
 #+end_src
@@ -2582,8 +2582,7 @@ rotate entire document."
 
 ** pomodoro
 #+begin_src emacs-lisp
-(use-package pomodoro
-  :load-path "~/.emacs.d/non-elpa/pomodoro")
+(use-package pomodoro)
 #+end_src
 
 ** pomidor
@@ -2966,7 +2965,6 @@ the body of this command."
 ** Remembrance Agent
 #+begin_src emacs-lisp
 (use-package remem
-  :load-path "~/.emacs.d/non-elpa/remembrance-agent"
   :config
    (setq remem-database-dir "~/.custom-temp/ra-index")
    (setq remem-scopes-list '(("zettelkasten" 5 2 500)
