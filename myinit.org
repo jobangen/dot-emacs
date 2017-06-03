@@ -1729,7 +1729,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
      (lambda (fpath)
       (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))
 
-   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n* Schlagwörter\ntags: §${=key=}, §txt, ${keywords},\n\n* Inhalt\n\n* Literatur\n\n* Links & Files :children:\n- [[file:~/Dropbox/db/biblio.bib::${=key=}][BibTeX Entry]]\n- [[file:~texte/${=key=}*][Files]]\n- [[file:~/Dropbox/db/zk/zettel-similarities/sim-${=key=}.txt][Similarities]]\n\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv :padline no\n${source}, ${=key=}\n#+end_src")
+   (setq bibtex-completion-notes-template-multiple-files "#+TITLE: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n* Schlagwörter\ntags: §${=key=}, §txt, ${keywords},\n\n* Inhalt\n\n* Literatur\n\n* Links & Files :children:\n- [[file:~/Dropbox/db/biblio.bib::${=key=}][BibTeX Entry]]\n- [[file:~/texte/${=key=}*][Files]]\n- [[file:~/Dropbox/db/zk/zettel-similarities/sim-${=key=}.txt][Similarities]]\n\n* Data\n** misc\n#+begin_src csv :tangle zettel-txt-references-path.csv :padline no\n${source}, ${=key=}\n#+end_src")
 
   (setq bibtex-completion-format-citation-functions
      '((org-mode      . bibtex-completion-format-citation-org-ref-autocite)
@@ -1847,7 +1847,7 @@ used when `bibtex-completion-notes-path' is a directory (not a file)."
   :type 'string)
 
 (defcustom bibtex-completion-logs-template-multiple-files
-  "#+TITLE: Log: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n\n* ${author} ${date}: ${title}\n:PROPERTIES:\n:CATEGORY:  wiss\n:END:[[autocite:${=key=}]]\n[[file:~/Dropbox/db/zk/zettel/${=key=}.txt][zettel]]"
+  "#+TITLE: Log: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n\n* ${author} ${date}: ${title}\n:PROPERTIES:\n:CATEGORY: wiss\n:END:\n[[autocite:${=key=}]]\n[[file:~/Dropbox/db/zk/zettel/${=key=}.txt][zettel]]\n"
   "Template used to create a new log when each log is stored in
 a separate file.  '${field-name}' can be used to insert the value
 of a BibTeX field into the template. Fork."
