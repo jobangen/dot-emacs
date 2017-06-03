@@ -2945,6 +2945,13 @@ the body of this command."
 (defun zettelkasten-ag-query ()
    (interactive)
    (counsel-ag nil "~/Dropbox/db/zk/zettel" nil))
+
+(defun zettelkasten-finish-zettel ()
+  "Zettelkasten: delete whitespace, save, kill buffer."
+  (interactive)
+  (delete-trailing-whitespace)
+  (kill-buffer)
+  )
 #+end_src
 ** deft
 #+begin_src emacs-lisp
@@ -2993,20 +3000,26 @@ the body of this command."
 ** zettelkasten-hydra
 #+begin_src emacs-lisp
 (bind-key "C-c z" 'hydra-zettelkasten/body)
-(defhydra hydra-zettelkasten (:hint nil
-                              :color red
-                              :columns 2)
+(defhydra hydra-zettelkasten (:color pink
+                              :columns 3)
 "Zettelkasten"
-("l" org-brain-insert-link "brain-link")
-("m" zettelkasten-mark-tags "mark-tags")
-("s" sort-symbols "sort-symbols")
-("v" org-brain-visualize "visualize")
+;;General
+("C-s" counsel-grep-or-swiper "swiper")
+("k" projectile-kill-buffers "kill buffers")
+("v" org-brain-visualize "visualize" :color blue)
 ("c" org-brain-build-caches "Build Cache")
 ("C" org-brain-invalidate-all-caches "Invalidate Cache")
-("z" zettelkasten-ag-query "zk-query")
+("q" zettelkasten-ag-query "query")
+;; new Zettel
+;; Zettel
+("l" org-brain-insert-link "brain-link")
+("t" zettelkasten-insert-tags "tags")
+("f" zettelkasten-finish-zettel "finish")
+("m" zettelkasten-mark-tags "mark-tags")
+("s" sort-symbols "sort-symbols")
+("R" remem-toggle "remem")
 )
 #+end_src
-
 
 * defun
 ** my/insert-date
