@@ -1179,8 +1179,6 @@ tags: %^{Type|§content|§index}, \n* Inhalt
 (setq org-global-properties (quote (("Effort_ALL" . "0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 3:00 4:00 5:00 6:00 7:00 8:00")
                                     ("STYLE_ALL" . "habit"))))
 
-;; property inheritance
-(setq org-use-property-inheritance (quote ("QUANTIFIED")))
 #+end_src
 ** clocking
 *** config
