@@ -492,7 +492,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ;;  :bind ("C-S-s" . ivy-imenu-anywhere)
 )
 #+end_src
-
 ** shell
 #+begin_src emacs-lisp
 (setq comint-password-prompt-regexp
@@ -543,7 +542,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
      ;; shift-select
      (setq org-support-shift-select 'always)
      ;;keine automatischen Leerzeilen vor Entries
-     (setq org-blank-before-new-entry nil) 
+     (setq org-blank-before-new-entry nil)
      ;; follow links by pressing ENTER on them
      (setq org-return-follows-link t)
      ;; syntax highlight code in source blocks
@@ -556,7 +555,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          (bind-key "<f11>" 'org-agenda-clock-in org-agenda-mode-map)))
    )
 )
-   
+
 
 (use-package org-plus-contrib
   :ensure t
@@ -629,10 +628,10 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                   ((org-agenda-overriding-header "Projects & Tasks:")
 			 (org-agenda-remove-tags t)
                    (org-tags-match-list-sublevels 'indented)
-			 (org-agenda-skip-function  
+			 (org-agenda-skip-function
                     '(org-agenda-skip-entry-if 'deadline 'scheduled))
                    (org-agenda-skip-function
-                    '(org-agenda-skip-subtree-if 
+                    '(org-agenda-skip-subtree-if
                       'regexp ":txt:"))
                    (org-agenda-sorting-strategy
                     '( category-keep))
@@ -684,10 +683,10 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 			((org-agenda-overriding-header "Ideen:")
 			 (org-agenda-remove-tags t)))))
 	("k" "Kalender & Termine"
-        	 ((agenda "" 
+        	 ((agenda ""
                ((org-agenda-span 96)
 		      (org-agenda-show-all-dates t)
-		      (org-agenda-skip-function 
+		      (org-agenda-skip-function
                  '(org-agenda-skip-entry-if 'deadline 'scheduled))))))
 	("c" "Clean up"
            ((tags-todo "/WAITING"
