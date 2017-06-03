@@ -2242,14 +2242,6 @@ abort completely with `C-g'."
 )
 
 #+end_src
-client-ID:
-553301842275-clecdgmr7i8741e3ck5iltlgfk3qf79r.apps.googleusercontent.com 
-
-secret/schlüssel
-4zyEbm_F_BMuJsA7rZZmgFBm 
-
-
-Kalender-ID: 3nh2s5l59kgkoshecpffpuapq8@group.calendar.google.com
 
 ** pdf-tools
 #+begin_src emacs-lisp
