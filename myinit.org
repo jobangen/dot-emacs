@@ -662,6 +662,10 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 			 (org-tags-match-list-sublevels 'indented)
 			 (org-agenda-sorting-strategy
                              '(category-up))))))
+  ("z" "Zettelkasten"
+           ((tags-todo "zk"
+                  ((org-agenda-overriding-header "Zettelkasten")
+                   (org-agenda-remove-tags t)))))
   ("l" "Literatur"
            ((tags-todo "literature"
 			((org-agenda-overriding-header "Texts & Tasks")
