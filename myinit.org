@@ -303,7 +303,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (use-package char-menu
  :ensure t
 ;;  :bind ("H-s" . char-menu)
- :config 
+ :config
   (setq char-menu '("–" "—" "„“" "‘’" "“”" "»«" "…"
                             ("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
                             ("Math"       "≈" "≡" "≠" "∞" "×" "±" "∓" "÷" "√" "⊂" "⊃")
@@ -696,7 +696,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 		      (org-agenda-remove-tags t)))
 	        (todo "DONE"
 			((org-agenda-overriding-header "Tasks to Archive:")
-			 (org-agenda-remove-tags t)))))))
+			 (org-agenda-remove-tags t))))))
+)
 #+end_src
 
 *** agenda-hydra
@@ -1038,7 +1039,7 @@ Subject: [[%l][%:subject]]
     Expenses:Bargeld                           %^{Amount}€
     Assets:Giro"
     :immediate-finish t)
-    
+
 ("gg" "Giro" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * %^{Payee| |Deutsche Bahn}
     Expenses:%^{Expenses|Kauf:|Geschenk:|Reisen:}%^{Expenses}    %^{Amount}€
@@ -1054,7 +1055,7 @@ Subject: [[%l][%:subject]]
 ("gi" "Internet+Telefon" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Kabel Deutschland
     Expenses:Wohnung:Internet+Telefon          %^{Amount|19,90}€
-    Assets:Giro" 
+    Assets:Giro"
     :immediate-finish t)
 
 ("gk" "Krankenkasse" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
@@ -1062,13 +1063,13 @@ Subject: [[%l][%:subject]]
     Expenses:Versicherung:Krankenkasse        240,30€
     Assets:Giro"
     :immediate-finish t)
-    
+
 ("gm" "Miete" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Unter den Eichen
     Expenses:Wohnung:Grundmiete               402,52€
     Expenses:Wohnung:Heizkosten                83,00€
     Expenses:Wohnung:Betriebskosten           103,00€
-    Assets:Giro" 
+    Assets:Giro"
     :immediate-finish t)
 
 ("gn" "Netflix" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
@@ -1081,21 +1082,21 @@ Subject: [[%l][%:subject]]
 ("gu" "Untermiete" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Kevin Schürer (%^{Monat})
     Assets:Giro                               %^{Amount|330,00}€
-    Income:Wohnung" 
+    Income:Wohnung"
     :immediate-finish t)
-    
+
 ("gs" "Strom" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Stadtwerke
     Expenses:Wohnung:Strom                     %^{Amount|59,00}€
-    Assets:Giro" 
+    Assets:Giro"
     :immediate-finish t)
-    
+
 ("gt" "Topoi Stipendium" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Stipendium Topoi
     Assets:Giro                              %^{Amount|1350,00}€
-    Income:Stipendium:Topoi" 
+    Income:Stipendium:Topoi"
     :immediate-finish t)
-     
+
 ("z" "Zettel" plain (file (lambda () (capture-report-date-file (expand-file-name zettelkasten-dir))))
  "#+TITLE: %^{Title}
 #+DATE: %U\n* Schlagwörter
@@ -1469,7 +1470,7 @@ http://doc.norang.ca/org-mode.org
 (setq org-latex-tables-booktabs t)
 (setq org-export-default-language "en")
 (setq org-export-with-smart-quotes t)
-(add-to-list 'org-export-smart-quotes-alist 
+(add-to-list 'org-export-smart-quotes-alist
              '("en"
                (opening-double-quote :utf-8 "“" :html "&ldquo;" :latex "\\enquote{" :texinfo "``")
                (closing-double-quote :utf-8 "”" :html "&rdquo;" :latex "}" :texinfo "''")
@@ -1573,11 +1574,11 @@ http://doc.norang.ca/org-mode.org
 	(setq TeX-auto-save	t)
 	(setq TeX-parse-self	t)
 	(setq TeX-PDF-mode	t)
-    
+
     ;; Use pdf-tools to open PDF files
     (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
           TeX-source-correlate-start-server t)
-    
+
     ;; Update PDF buffers after successful LaTeX runs
     (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook
              #'TeX-revert-document-buffer)
@@ -1627,19 +1628,19 @@ http://doc.norang.ca/org-mode.org
 
 
 
-    (add-hook 'LaTeX-mode-hook 
+    (add-hook 'LaTeX-mode-hook
          (lambda()
             (add-to-list 'TeX-command-list '("Latexmk" "%`latexmk -pdf %t" TeX-run-TeX nil t))
             (setq TeX-save-query nil)
             (setq TeX-show-compilation t)))
 
-    (add-hook 'LaTeX-mode-hook 
+    (add-hook 'LaTeX-mode-hook
          (lambda()
             (add-to-list 'TeX-command-list '("Latex -se" "%`pdflatex --synctex=1 -shell-escape %t" TeX-run-TeX nil t))
             (setq TeX-save-query nil)
             (setq TeX-show-compilation t)))
 
-      (add-hook 'LaTeX-mode-hook 
+      (add-hook 'LaTeX-mode-hook
           (lambda()
              (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex --synctex=1 %(mode)%' %t" TeX-run-TeX nil t))
              (setq TeX-save-query nil)
@@ -2405,7 +2406,7 @@ rotate entire document."
 (use-package abbrev
  :diminish abbrev-mode
  :config
- (progn 
+ (progn
   (setq save-abbrevs 'silently)
   (setq save-abbrevs t)
   (setq-default abbrev-mode t))
@@ -2493,7 +2494,7 @@ rotate entire document."
     (counsel-projectile-on))
 #+end_src
 
-** smartparens 
+** smartparens
 #+begin_src emacs-lisp
 (use-package smartparens
   :ensure t
@@ -2621,7 +2622,7 @@ _i_: in         _j_: goto       _ti_: in                _c_: countdown '25    _p
 _l_: in-last    _s_: select     _tp_: pause/continue    ^ ^                   _po_: out
 _o_: out        _d_: display    _ti_: insert            ^ ^                   _ps_: status
 _q_: cancel     _r_: resolve    _tI_: insert item       ^ ^                   _pn_: next
-" 
+"
  ("c" org-timer-set-timer)
  ("d" org-clock-display)
  ("i" org-clock-in)
@@ -2819,7 +2820,7 @@ _y_: youtube      _bb_: bibtex
 ("s" www-synonyms-insert-synonym)
 ("t" google-translate-smooth-translate)
 ("w" engine/search-wikipedia)
-) 
+)
 #+end_src
 
 * zettelkasten
@@ -3198,8 +3199,8 @@ arguments."
       ((not func) (lambda (e) (format "%7d, %s\n" (cdr e) (car e))))
       ((equal func t)
        (lambda (e) (format "%7d, %6.2f%%, %03d, %s\n"
-                           (cdr e) 
-               (/ (* 1e2 (cdr e)) sum) 
+                           (cdr e)
+               (/ (* 1e2 (cdr e)) sum)
                (length (car e))
                (car e))))
       ((equal func 'raw) (lambda (e) (format "%d %s\n" (cdr e) (car e))))
@@ -3343,10 +3344,10 @@ https://gist.github.com/tonyday567/4343164
 #+end_src
 
 ** pdf-extract - x
-;; modified from https://github.com/politza/pdf-tools/pull/133 
+;; modified from https://github.com/politza/pdf-tools/pull/133
 #+begin_src emacs-lisp
 (defun mwp/pdf-multi-extract (sources)
-  "Helper function to print highlighted text from a list of pdf's, with one org header per pdf, 
+  "Helper function to print highlighted text from a list of pdf's, with one org header per pdf,
 and links back to page of highlight."
   (let (
         (output ""))
@@ -3379,7 +3380,7 @@ are referenced by its edges, but functions for these tasks need region."
 (defun pdf-annot-markups-as-org-text (pdfpath &optional title level)
   "Acquire highligh annotations as text, and return as org-heading"
 
-  (interactive "fPath to PDF: ")  
+  (interactive "fPath to PDF: ")
   (let* ((outputstring "") ;; the text to be returned
          (title (or title (replace-regexp-in-string "-" " " (file-name-base pdfpath ))))
          (level (or level (1+ (org-current-level)))) ;; I guess if we're not in an org-buffer this will fail
@@ -3404,7 +3405,7 @@ are referenced by its edges, but functions for these tasks need region."
 
                   (height (nth 1 real-edges)) ;; distance down the page
                   ;; use pdfview link directly to page number
-                  (linktext (concat "[[pdfview:" pdfpath "::" (number-to-string page) 
+                  (linktext (concat "[[pdfview:" pdfpath "::" (number-to-string page)
                                     "++" (number-to-string height) "][" title  "]]" ))
                   )
              (setq outputstring (concat outputstring text " ("
@@ -3421,19 +3422,19 @@ are referenced by its edges, but functions for these tasks need region."
 (defun my/bibtex-to-biblatex ()
     (interactive)
     (goto-char 1)
-       (while (search-forward-regexp "{[a-z0-9]*,$" nil t) 
+       (while (search-forward-regexp "{[a-z0-9]*,$" nil t)
           (replace-match "{," t nil))
-       (while (search-forward-regexp "^  journal" nil t) 
+       (while (search-forward-regexp "^  journal" nil t)
           (replace-match "  journaltitle" t nil))
-       (while (search-forward-regexp "^  year" nil t) 
+       (while (search-forward-regexp "^  year" nil t)
           (replace-match "  date" t nil))
-       (while (search-forward-regexp "^}$" nil t) 
+       (while (search-forward-regexp "^}$" nil t)
           (replace-match "  timestamp={},
     keywords={},
   }" t nil))
-       (while (search-forward-regexp "{\\\"a}" nil t) 
+       (while (search-forward-regexp "{\\\"a}" nil t)
           (replace-match "ä" t nil))
-       (while (search-forward-regexp "{\\\"u}" nil t) 
+       (while (search-forward-regexp "{\\\"u}" nil t)
           (replace-match "ü" t nil))
    )
 
