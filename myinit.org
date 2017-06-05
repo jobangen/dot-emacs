@@ -2952,6 +2952,11 @@ the body of this command."
   (delete-trailing-whitespace)
   (kill-buffer)
   )
+
+(defun zettelkasten-new-zettel ()
+  "Capture a Zettel"
+  (interactive)
+  (org-capture  nil "z"))
 #+end_src
 ** deft
 #+begin_src emacs-lisp
@@ -3010,7 +3015,7 @@ the body of this command."
 ("c" org-brain-build-caches "Build Cache")
 ("C" org-brain-invalidate-all-caches "Invalidate Cache")
 ("q" zettelkasten-ag-query "query")
-;; new Zettel
+("z" zettelkasten-new-zettel "Zettel" :color blue)
 ;; Zettel
 ("l" org-brain-insert-link "brain-link")
 ("t" zettelkasten-insert-tags "tags")
