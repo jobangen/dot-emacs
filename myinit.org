@@ -1064,6 +1064,13 @@ Subject: [[%l][%:subject]]
     Assets:Giro"
     :immediate-finish t)
 
+("ge" "Essen" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
+ "%(org-read-date) * %^{Payee| |Mensa|Penny|Rewe}
+    Expenses:Essen    %^{Amount}€
+    Assets:Giro"
+    :immediate-finish t)
+
+
 ("gg" "Giro" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * %^{Payee| |Deutsche Bahn}
     Expenses:%^{Expenses|Kauf:|Geschenk:|Reisen:}%^{Expenses}    %^{Amount}€
@@ -1111,13 +1118,13 @@ Subject: [[%l][%:subject]]
 
 ("gs" "Strom" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Stadtwerke
-    Expenses:Wohnung:Strom                     %^{Amount|59,00}€
+    Expenses:Wohnung:Strom                     %^{Amount||59,00}€
     Assets:Giro"
     :immediate-finish t)
 
 ("gt" "Topoi Stipendium" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Stipendium Topoi
-    Assets:Giro                              %^{Amount|1350,00}€
+    Assets:Giro                              %^{Amount||1350,00}€
     Income:Stipendium:Topoi"
     :immediate-finish t)
 
