@@ -68,33 +68,54 @@
   )
 #+end_src
 
+** system-type
+https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
+#+begin_src emacs-lisp
+(defun system-type-is-gnu ()
+  (interactive)
+  "Return true if system is GNU/Linux-based"
+  (string-equal system-type "gnu/linux"))
+
+(defun system-type-is-windows ()
+  (interactive)
+  "Return true if system is Windows-based"
+  (string-equal system-type "windows-nt"))
+#+end_src
+
 ** dir-setup
 #+begin_src emacs-lisp
-(let ((default-directory  "~/.emacs.d/lisp/"))
-  (normal-top-level-add-subdirs-to-load-path))
-
-(defvar db-dir
-   (expand-file-name "~/Dropbox/db/"))
-
-(setq org-directory "~/Dropbox/db/org/")
-
-(defvar zettelkasten-dir
-   (expand-file-name (concat db-dir "zk/zettel/")))
-
-(defvar texte-dir
-   (expand-file-name "~/texte/"))
-
 (defvar backup-dir
    (expand-file-name (concat user-emacs-directory "backups/")))
 
 (defvar autosave-dir
    (expand-file-name (concat user-emacs-directory "autosave/")))
 
-(defvar job/bibliography-file
-   (expand-file-name (concat db-dir "biblio.bib")))
+(if (system-type-is-darwin)
+   (let ((default-directory  "~/.emacs.d/lisp/"))
+     (normal-top-level-add-subdirs-to-load-path)))
 
 (defvar custom-temp
    (expand-file-name "~/.custom-temp/"))
+
+(defvar texte-dir
+   (expand-file-name "~/texte/"))
+
+(defvar dropbox-dir
+  (if (system-type-is-darwin)
+    (expand-file-name "~/Dropbox/"))
+  (if (system-type-is-windows)
+    (expand-file-name "C:/Users/job/Dropbox/")))
+
+(defvar db-dir
+  (expand-file-name (concat dropbox-dir "/db/")))
+
+(setq org-directory (concat dropbox-dir "/db/org/"))
+
+(defvar zettelkasten-dir
+  (expand-file-name (concat dropbox-dir "/db/zk/zettel/")))
+
+(defvar job/bibliography-file
+  (expand-file-name (concat dropbox-dir "/db/biblio.bib")))
 #+end_src
 
 ** Backups
