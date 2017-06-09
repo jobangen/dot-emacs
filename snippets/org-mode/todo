@@ -2,7 +2,7 @@
 # name: todo
 # key: todo
 # --
-** TODO [[~/Dropbox/db/zk/zettel/`(buffer-name)`][`(file-name-base)`]] $3 :zk:$1:
+** TODO [[file:~/Dropbox/db/zk/zettel/`(buffer-name)`][`(file-name-base)`]] $3 :zk:$1:
 :PROPERTIES:
 :CREATED:  [`(format-time-string "%Y-%m-%d %a")`]
 :CATEGORY: wiss

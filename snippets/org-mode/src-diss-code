@@ -2,6 +2,6 @@
 # name: diss-codiert
 # key: diss
 # --
-#+begin_src csv :tangle diss/autoritaet-semantik-codiert/`(buffer-name)`
+#+begin_src csv :tangle diss/autoritaet-semantik-codiert/`(file-name-base)`.csv
 $0
 #+end_src
