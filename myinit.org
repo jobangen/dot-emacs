@@ -2978,6 +2978,7 @@ the body of this command."
   "Zettelkasten: delete whitespace, save, kill buffer."
   (interactive)
   (delete-trailing-whitespace)
+  (save-buffer)
   (kill-buffer)
   )
 
@@ -3038,19 +3039,22 @@ the body of this command."
 "Zettelkasten"
 ;;General
 ("C-s" counsel-grep-or-swiper "swiper")
-("k" projectile-kill-buffers "kill buffers")
-("v" org-brain-visualize "visualize" :color blue)
 ("c" org-brain-build-caches "Build Cache")
 ("C" org-brain-invalidate-all-caches "Invalidate Cache")
+("k" projectile-kill-buffers "kill buffers")
 ("q" zettelkasten-ag-query "query")
+("v" org-brain-visualize "visualize" :color blue)
 ("z" zettelkasten-new-zettel "Zettel" :color blue)
 ;; Zettel
-("l" org-brain-insert-link "brain-link")
-("t" zettelkasten-insert-tags "tags")
 ("f" zettelkasten-finish-zettel "finish")
+("l" org-brain-insert-link "brain-link")
 ("m" zettelkasten-mark-tags "mark-tags")
-("s" sort-symbols "sort-symbols")
+("n" org-next-link "next link")
+("o" org-open-at-point "open")
+("p" org-previous-link "previous-lin")
 ("R" remem-toggle "remem")
+("s" sort-symbols "sort-symbols")
+("t" zettelkasten-insert-tags "tags")
 )
 #+end_src
 
