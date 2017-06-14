@@ -2,4 +2,4 @@
 # name: csv-semantik
 # key: csv
 # --
-${1:$$(yas-choose-value '("" "Autorität" "auctoritas"))}, ${2:$$(yas-choose-value '("" "=" "≈" "∩" "ǂ" "⊃" "⊂" "∥" "∦" "⇒" "⇐" "⇏" "⇍"))}, ${3:Begriff}, ${4:Jahr}, ${5:$$(yas-choose-value '("alt" "gesch" "soz" "pol" "other"))}, `(file-name-base)`, ${6:Seite}, ${7:Kommentar}
+${1:$$(yas-choose-value '("" "Autorität" "auctoritas"))}, ${2:$$(yas-choose-value '("" "=" "≈" "∩" "≠" "ǂ" "⊃" "⊂" "∥" "∦" "⇒" "⇐" "⇏" "⇍"))}, ${3:Begriff}, ${4:Jahr}, ${5:$$(yas-choose-value '("alt" "gesch" "soz" "pol" "other"))}, `(file-name-base)`, ${6:Seite}, ${7:Kommentar}
