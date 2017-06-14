@@ -90,7 +90,7 @@ https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
 (defvar autosave-dir
    (expand-file-name (concat user-emacs-directory "autosave/")))
 
-(if (system-type-is-darwin)
+(if (system-type-is-gnu)
    (let ((default-directory  "~/.emacs.d/lisp/"))
      (normal-top-level-add-subdirs-to-load-path)))
 
@@ -101,7 +101,7 @@ https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
    (expand-file-name "~/texte/"))
 
 (defvar dropbox-dir
-  (if (system-type-is-darwin)
+  (if (system-type-is-gnu)
     (expand-file-name "~/Dropbox/"))
   (if (system-type-is-windows)
     (expand-file-name "C:/Users/job/Dropbox/")))
