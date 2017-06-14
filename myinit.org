@@ -2990,6 +2990,10 @@ the body of this command."
   "Capture a Zettel"
   (interactive)
   (org-capture  nil "z"))
+
+(defun zettelkasten-ag-thing-at-point ()
+  (interactive)
+  (counsel-ag (thing-at-point 'symbol) "~/Dropbox/db/zk/zettel" nil))
 #+end_src
 ** deft
 #+begin_src emacs-lisp
@@ -3047,6 +3051,7 @@ the body of this command."
 ("C" org-brain-invalidate-all-caches "Invalidate Cache")
 ("k" projectile-kill-buffers "kill buffers")
 ("q" zettelkasten-ag-query "query")
+("Q" zettelkasten-ag-thing-at-point "query at point")
 ("v" org-brain-visualize "visualize" :color blue)
 ("x" zettelkasten-txt-query "txt query")
 ("z" zettelkasten-new-zettel "Zettel" :color blue)
