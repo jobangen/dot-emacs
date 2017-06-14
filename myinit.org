@@ -2974,6 +2974,10 @@ the body of this command."
    (interactive)
    (counsel-ag nil "~/Dropbox/db/zk/zettel" nil))
 
+(defun zettelkasten-txt-query ()
+   (interactive)
+   (counsel-ag nil "~/.custom-temp/pdfs-extracted" nil))
+
 (defun zettelkasten-finish-zettel ()
   "Zettelkasten: delete whitespace, save, kill buffer."
   (interactive)
@@ -3044,6 +3048,7 @@ the body of this command."
 ("k" projectile-kill-buffers "kill buffers")
 ("q" zettelkasten-ag-query "query")
 ("v" org-brain-visualize "visualize" :color blue)
+("x" zettelkasten-txt-query "txt query")
 ("z" zettelkasten-new-zettel "Zettel" :color blue)
 ;; Zettel
 ("f" zettelkasten-finish-zettel "finish")
