@@ -950,7 +950,7 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED:   %U
-:CATEGORY:  %^{Category|wiss|work|pers}
+:CATEGORY:  %^{Category||wiss|work|pers}
 :EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
 :END:
 %?")
@@ -960,7 +960,7 @@ SCHEDULED: %t
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
-:CATEGORY:  %^{Category|wiss|work|pers}
+:CATEGORY:  %^{Category||wiss|work|pers}
 :EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
 :END:
 %?\n")
@@ -976,7 +976,7 @@ SCHEDULED: %t
  "%^{Task}
 :PROPERTIES:
 :CREATED: %U
-:CATEGORY:  %^{Category|wiss|work|pers}
+:CATEGORY:  %^{Category||wiss|work|pers}
 :END:
 %?" :clock-in t :clock-resume t)
 
@@ -989,7 +989,7 @@ SCHEDULED: %t
 %T%?
 :PROPERTIES:
 :CREATED: [%<%Y-%m-%d %a %H:%M>]
-:CATEGORY:  %^{Category|wiss|work|pers}
+:CATEGORY:  %^{Category||wiss|work|pers}
 :END:
 ")
 
@@ -1029,7 +1029,7 @@ SCHEDULED: %t
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
-:CATEGORY:  %^{Category|wiss|work|pers}
+:CATEGORY:  %^{Category||wiss|work|pers}
 :END:
 %:fromname wrote on %:date-timestamp-inactive:
 Subject: [[%l][%:subject]]
@@ -1045,7 +1045,7 @@ Subject: [[%l][%:subject]]
 :PROPERTIES:
 :CREATED:   %U
 :CATEGORY:  wiss
-:BIBL:      %^{Bibl|ub|sozbib|cba|cbn|fmi}
+:BIBL:      %^{Bibl||ub|sozbib|cba|cbn|fmi}
 :SIGNATURE: %^{Signatur}
 :SOURCE:    %?
 :END:")
