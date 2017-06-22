@@ -43,6 +43,21 @@
       smtpmail-debug-info t
       )
 
+(defun job/message-mail ()
+  (interactive)
+  (message-mail)
+  (erase-buffer)
+  (let ((account (completing-read "Choose Account: "
+                                  '(("From: Jan Ole Bangen <jobangen@gmail.com>\nX-Message-SMTP-Method: smtp smtp.gmail.com 587" 1)
+                                    ("Gcc: nnimap+zedat:sent\nFrom: Jan Ole Bangen <jobangen@zedat.fu-berlin.de>\nX-Message-SMTP-Method: smtp mail.zedat.fu-berlin.de 587")
+                                    ("Gcc: nnimap+zedatma:sent\nFrom: Jan Ole Bangen <job@zedat.fu-berlin.de>\nX-Message-SMTP-Method: smtp mail.zedat.fu-berlin.de 587")) nil t nil)))
+    (when (and account)
+        (insert (concat (format "To: \n")
+                (format "Subject: \n")
+                (format "%s\n" account)
+                (format "--text follows this line--"))
+))))
+
 ;; gnutls
 (setq starttls-use-gnutls t)
 (setq starttls-gnutls-program "gnutls-cli")
@@ -52,11 +67,14 @@
 ;; Let Gnus change the "From:" line by looking at current group we are in.
 ;; X-Message-.. passt den Server an
 (setq gnus-posting-styles
-      '(("gmail" (address "jobangen@gmail.com")
+      '((""
+         (address "jobangen@gmail.com")
          ("X-Message-SMTP-Method" "smtp smtp.gmail.com 587"))
-        ("zedat" (address "jobangen@zedat.fu-berlin.de")
+        ("zedat"
+         (address "jobangen@zedat.fu-berlin.de")
          ("X-Message-SMTP-Method" "smtp mail.zedat.fu-berlin.de 587"))
-        ("zedatma" (address "job@zedat.fu-berlin.de")
+        ("zedatma"
+         (address "job@zedat.fu-berlin.de")
          ("X-Message-SMTP-Method" "smtp mail.zedat.fu-berlin.de 587"))
         )
       )
@@ -224,10 +242,9 @@
 (gnus-add-configuration  ; reply view
  '(reply-yank
    (horizontal 1.0
-               (group 0.14)
+              (group 0.14)
                (vertical 1.0 (summary 1.0 point)
                          (horizontal 0.75 (article 1.0) (reply-yank 0.5))))))
-
 
 ;; don't ask how many emails to download
 ;;(setq gnus-large-newsgroup 'nil)
