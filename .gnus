@@ -70,8 +70,8 @@
 (setq gnus-update-message-archive-method  t)
 (setq gnus-message-archive-group
       '(("gmail" nil)
-        ("zedat" "nnimap+zedat:sent")
         ("zedatma" "nnimap+zedatma:sent")
+        ("zedat" "nnimap+zedat:sent")
         )
 )
 
