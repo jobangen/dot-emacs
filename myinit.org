@@ -3016,6 +3016,17 @@ the body of this command."
 (defun zettelkasten-ag-thing-at-point ()
   (interactive)
   (counsel-ag (thing-at-point 'symbol) "~/Dropbox/db/zk/zettel" nil))
+
+(defun zettelkasten-open-dir ()
+  (interactive)
+  (find-file zettelkasten-dir))
+
+;;https://emacs.stackexchange.com/questions/15255/put-the-current-file-name-in-the-minibuffer
+(defun job/name-of-the-file ()
+  "Gets the name of the file the current buffer is based on."
+  (interactive)
+  (insert (file-name-base (buffer-file-name (window-buffer (minibuffer-selected-window))))))
+
 #+end_src
 ** deft
 #+begin_src emacs-lisp
@@ -3065,12 +3076,14 @@ the body of this command."
 #+begin_src emacs-lisp
 (bind-key "C-c z" 'hydra-zettelkasten/body)
 (defhydra hydra-zettelkasten (:color pink
-                              :columns 3)
+                              :columns 4)
 "Zettelkasten"
 ;;General
 ("C-s" counsel-grep-or-swiper "swiper")
+("b" ivy-bibtex "bibtex")
 ("c" org-brain-build-caches "Build Cache")
 ("C" org-brain-invalidate-all-caches "Invalidate Cache")
+("d" zettelkasten-open-dir "Dir")
 ("k" projectile-kill-buffers "kill buffers")
 ("q" zettelkasten-ag-query "query")
 ("Q" zettelkasten-ag-thing-at-point "query at point")
@@ -3079,11 +3092,12 @@ the body of this command."
 ("z" zettelkasten-new-zettel "Zettel" :color blue)
 ;; Zettel
 ("f" zettelkasten-finish-zettel "finish")
+("j" join-line "join-line")
 ("l" org-brain-insert-link "brain-link")
 ("m" zettelkasten-mark-tags "mark-tags")
 ("n" org-next-link "next link")
 ("o" org-open-at-point "open")
-("p" org-previous-link "previous-lin")
+("p" org-previous-link "previous-link")
 ("R" remem-toggle "remem")
 ("s" sort-symbols "sort-symbols")
 ("t" zettelkasten-insert-tags "tags")
