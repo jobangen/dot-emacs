@@ -911,7 +911,7 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
           (name        (completing-read "Veranstaltung: "
                          '((""                                1)
                            ("Knoblauch: Forschungswerkstatt"  2)
-                           ("Wissenschaftskommunikation    "  3)
+                           ("Wissenschaftskommunikation"      3)
                            ("Topoi: Lesezirkel"               4)
                            ("Forschungswerkstatt FU"          5)
                           )  nil t ""))
@@ -973,7 +973,7 @@ SCHEDULED: %t
  %?")
 
 ("i" "interruption" entry (file "inbox.org")
- "%^{Task}
+ "* %^{Task}
 :PROPERTIES:
 :CREATED: %U
 :CATEGORY:  %^{Category||wiss|work|pers}
@@ -1069,7 +1069,6 @@ Subject: [[%l][%:subject]]
     Expenses:Essen    %^{Amount}€
     Assets:Giro"
     :immediate-finish t)
-
 
 ("gg" "Giro" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * %^{Payee| |Deutsche Bahn}
