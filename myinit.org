@@ -3844,25 +3844,25 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 
 ** job/insert-enquote
 #+begin_src emacs-lisp
-  (defun job/insert-enquote ()
-    (interactive)
-    (insert "\\enquote{} "))
+(defun job/insert-enquote ()
+  (interactive)
+  (insert "\\enquote{} "))
 
-  (defun job/insert-enquote* ()
-    (interactive)
-    (insert "\\enquote*{} "))
+(defun job/insert-enquote* ()
+  (interactive)
+  (insert "\\enquote*{} "))
 
-  (defun job/enquote-wrapper ()
-    (interactive)
-    (if (not (eq last-command 'job/enquote-wrapper))
-        (job/insert-enquote)
-      (setq this-command nil)
-      (forward-char 2)
-      (delete-backward-char 11)
-      (call-interactively 'job/insert-enquote*))
-    (backward-char 2))
+(defun job/enquote-wrapper ()
+  (interactive)
+  (if (not (eq last-command 'job/enquote-wrapper))
+      (job/insert-enquote)
+    (setq this-command nil)
+    (forward-char 2)
+    (delete-backward-char 11)
+    (call-interactively 'job/insert-enquote*))
+  (backward-char 2))
 
-  (eval-after-load 'tex '(define-key TeX-mode-map "\"" 'job/enquote-wrapper))
+(eval-after-load 'tex '(define-key TeX-mode-map "\"" 'job/enquote-wrapper))
 #+end_src
 
 ** job/kill-line
@@ -3881,10 +3881,10 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 ** zettelkasten-gitstats
 #+begin_src emacs-lisp
 (defun zettelkasten-gitstats ()
-   (interactive)
-   (sc (concat "cd ~/Dropbox/db/zk/zettel &&"
-               "gitstats .git gitstats &&"
-               "firefox 'gitstats/index.html'")))
+  (interactive)
+  (sc (concat "cd ~/Dropbox/db/zk/zettel &&"
+              "gitstats .git gitstats &&"
+              "firefox 'gitstats/index.html'")))
 #+end_src
 
 ** write-channel
