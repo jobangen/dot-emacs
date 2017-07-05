@@ -3898,8 +3898,9 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 ** xrandr
 *** xrandr-hydra
 #+begin_src emacs-lisp
-  (bind-key "C-c x" 'hydra-xrandr/body)
-  (defhydra hydra-xrandr (:hint nil
+(bind-key "C-c x" 'hydra-xrandr/body)
+
+(defhydra hydra-xrandr (:hint nil
                           :color red)
 "
  ^Main^          ^VGA^                   ^HDMI^
