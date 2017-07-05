@@ -4006,10 +4006,10 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 #+begin_src emacs-lisp
 (defun job/vpn-zedat-shell ()
   (interactive)
+  (ignore-errors (kill-buffer "*vpn-shell*"))
   (shell)
   (rename-buffer "*vpn-shell*")
   (end-of-buffer)
   (insert "sudo openconnect -s /usr/share/vpnc-scripts/vpnc-script vpn.fu-berlin.de")
-  (comint-send-input)
-)
+  (comint-send-input))
 #+end_src
