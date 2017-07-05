@@ -1171,17 +1171,24 @@ tags: %^{Type|§content|§index}, \n* Inhalt
 ; Tags with fast selection keys
 (setq org-tags-exclude-from-inheritance '("txt"))
 
-(setq org-tag-alist (quote ((:startgroup)
-                            ("@home" . ?h)
-                            (:endgroup)
-                            (:startgroup)
-                            ("today" . ?t)
-                            ("someday" . ?s)
-                            (:endgroup)
-)))
+(setq org-tag-alist '((:startgroup)
+                       ("@home"     . ?h)
+                       ("@irw"      . ?i)
+                       ("@mail"     . ?m)
+                       ("@topoi"    . ?o)
+                      (:endgroup)
+                      (:startgroup)
+                       ("today"     . ?t)
+                       ("someday"   . ?s)
+                      (:endgroup)
+                      ("computer"   . ?c)
+                      ("verwaltung" . ?v)
+                      ("lehre")
+                      ("lesen")
+))
 
 ; Allow setting single tags without the menu
-(setq org-fast-tag-selection-single-key (quote expert))
+(setq org-fast-tag-selection-single-key t)
 #+end_src
 ** dependencies
 #+begin_src emacs-lisp
