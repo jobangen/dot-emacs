@@ -436,7 +436,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (use-package swiper
   :ensure t
   :bind (:map ivy-minibuffer-map
-         ("C-#" . zettelkasten-insert-regex)))
+         ("C-#" . zettelkasten-insert-regex)
+         ("C-c C-c" . job/name-of-the-file)))
 #+END_SRC
 
 ** counsel
