@@ -3804,8 +3804,6 @@ http://zck.me/emacs-move-file
     (when (and old-location
                (file-exists-p new-location))
       (delete-file old-location))))
-
-(bind-key "C-x m" #'my/move-file)
 #+end_src
 
 ** buffer file name to kill ring
