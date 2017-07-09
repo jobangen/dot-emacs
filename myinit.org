@@ -3086,42 +3086,83 @@ the body of this command."
 (use-package org-brain
   :config
     (require 'org-brain)
-    (setq org-brain-path (expand-file-name zettelkasten-dir))
-    (setq org-brain-children-headline-default-name "Links & Files")
-    (setq org-brain-children-tag-default-name "children")
+    (setq org-brain-path (expand-file-name zettelkasten-dir "zettel"))
+    (setq org-brain-data-file (expand-file-name ".org-brain-data.el" custom-temp))
     (setq org-brain-files-extension "txt")
-    (org-brain-activate-cache-saving))
+    (setq org-brain-visualize-default-choices 'root)
+    (setq org-brain-show-resources nil)
+    (setq org-brain-show-text t)
+)
+#+end_src
+
+** org-brain-visualize-hydra
+#+begin_src emacs-lisp
+(defun job/brain-visualize-wrapper ()
+  (interactive)
+  (org-brain-visualize))
+
+(defun job/brain-goto-current-wrapper ()
+  (interactive)
+  (org-brain-goto-current)
+  (hydra-zettelkasten/body))
+
+(defhydra hydra-brain-visualize (:color pink
+                                 :columns 3)
+  "Visualize"
+  ("b" org-brain-visualize-back "back")
+  ("c" org-brain-add-child "add-child")
+  ("C" org-brain-remove-child "remove-child")
+  ("p" org-brain-add-parent "add-parent")
+  ("P" org-brain-remove-parent "remove-parent")
+  ("f" org-brain-add-friendship "add-friend")
+  ("F" org-brain-remove-friendship "remove-friend")
+  ("n" org-brain-pin "pin")
+  ("t" org-brain-set-title "title")
+  ("T" org-brain-set-tags "tags")
+  ("d" org-brain-delete-entry "del entry")
+  ("o" job/brain-goto-current-wrapper "open" :color blue)
+  ("v" org-brain-visualize "visualize")
+  ("q" nil "quit" :color blue)
+  ("z" zettelkasten-hydra "zk" :color blue))
 #+end_src
 
 ** zettelkasten-hydra
 #+begin_src emacs-lisp
 (bind-key "C-c z" 'hydra-zettelkasten/body)
-(defhydra hydra-zettelkasten (:color pink
-                              :columns 4)
-"Zettelkasten"
+
+(defhydra hydra-zettelkasten (:hint nil
+                              :color pink)
+"
+ ^Zettelkasten^ ^ ^             ^Zettel^             ^ ^              ^Var^
+-^---^--------------------------^-^------------------^-^--------------^-^---------------
+ _d_: zk        _z_: zettel     _m_: mark tags       _v_: visualize   _s_: sort symbols
+ _b_: bibtex    _q_: query      _s_: sort symbols   _cp_: parent      _R_: remem
+ _k_: kill b.   _K_: kill bfs   _f_: finish         _cc_: child       _x_: txt query
+ ^ ^            ^ ^             ^ ^                 _cf_: friend
+"
 ;;General
-("C-s" counsel-grep-or-swiper "swiper")
-("b" ivy-bibtex "bibtex")
-("c" org-brain-build-caches "Build Cache")
-("C" org-brain-invalidate-all-caches "Invalidate Cache")
-("d" zettelkasten-open-dir "Dir")
-("k" projectile-kill-buffers "kill buffers")
-("q" zettelkasten-ag-query "query")
-("Q" zettelkasten-ag-thing-at-point "query at point")
-("v" org-brain-visualize "visualize" :color blue)
-("x" zettelkasten-txt-query "txt query")
-("z" zettelkasten-new-zettel "Zettel" :color blue)
+("C-s" counsel-grep-or-swiper)
+("C-m" job/open-at-point)
+("<tab>" org-next-link "next link")
+("C-<tab>" org-previous-link "prev link")
+("b" ivy-bibtex)
+("d" zettelkasten-open-dir)
+("k" kill-this-buffer)
+("K" projectile-kill-buffers)                           ;;proj
+("q" zettelkasten-ag-query)                     ;;proj
+("Q" zettelkasten-ag-thing-at-point)                    ;;(proj)
+("v" hydra-brain-visualize/body :color blue) ;;brain
+("x" zettelkasten-txt-query)               ;;var
+("z" zettelkasten-new-zettel :color blue)    ;;proj
 ;; Zettel
-("f" zettelkasten-finish-zettel "finish")
-("j" join-line "join-line")
-("l" org-brain-insert-link "brain-link")
-("m" zettelkasten-mark-tags "mark-tags")
-("n" org-next-link "next link")
-("o" org-open-at-point "open")
-("p" org-previous-link "previous-link")
-("R" remem-toggle "remem")
-("s" sort-symbols "sort-symbols")
-("t" zettelkasten-insert-tags "tags")
+("cp" org-brain-add-parent)              ;brain
+("cc" org-brain-add-child)                ;brain
+("cf" org-brain-add-friend)              ;brain
+("f" zettelkasten-finish-zettel)               ;zet
+("m" zettelkasten-mark-tags)              ;zet
+("R" remem-toggle)                             ;var
+("s" sort-symbols)                      ;var
+("t" zettelkasten-insert-tags)                 ;zet
 )
 #+end_src
 
