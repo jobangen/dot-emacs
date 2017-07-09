@@ -3906,7 +3906,7 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 (bind-key "C-c x" 'hydra-xrandr/body)
 
 (defhydra hydra-xrandr (:hint nil
-                          :color red)
+                        :color red)
 "
  ^Main^          ^VGA^                   ^HDMI^
 -^-^-------------^---^-------------------^---^-----------------
@@ -3925,8 +3925,7 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
   ("hac" xrandr-hdmi-1024x768-clone)
   ("hal" xrandr-hdmi-1024x768-left)
   ("hsc" xrandr-hdmi-1366x768-clone)
-  ("hsl" Xrandr-hdmi-1366x768-left)
-  )
+  ("hsl" xrandr-hdmi-1366x768-left))
 
 #+end_src
 
