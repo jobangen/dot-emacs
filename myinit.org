@@ -3042,6 +3042,12 @@ the body of this command."
   (interactive)
   (insert (file-name-base (buffer-file-name (window-buffer (minibuffer-selected-window))))))
 
+(defun job/open-at-point ()
+  (interactive)
+  (if (equal major-mode 'dired-mode)
+    (dired-view-file))
+  (if (equal major-mode 'org-mode)
+    (org-open-at-point)))
 #+end_src
 ** deft
 #+begin_src emacs-lisp
