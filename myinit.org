@@ -3045,7 +3045,7 @@ the body of this command."
 (defun job/open-at-point ()
   (interactive)
   (if (equal major-mode 'dired-mode)
-    (dired-view-file))
+    (dired-find-file))
   (if (equal major-mode 'org-mode)
     (org-open-at-point)))
 #+end_src
