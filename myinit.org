@@ -3123,7 +3123,7 @@ the body of this command."
   ("o" job/brain-goto-current-wrapper "open" :color blue)
   ("v" org-brain-visualize "visualize")
   ("q" nil "quit" :color blue)
-  ("z" zettelkasten-hydra "zk" :color blue))
+  ("z" hydra-zettelkasten/body "zk" :color blue))
 #+end_src
 
 ** zettelkasten-hydra
