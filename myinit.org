@@ -2152,6 +2152,12 @@ abort completely with `C-g'."
 )
 #+end_src
 
+** define-word
+#+begin_src emacs-lisp
+(use-package define-word
+  :ensure t)
+#+end_src
+
 * Versionskontrolle
 ** undo-tree
 #+begin_src emacs-lisp
