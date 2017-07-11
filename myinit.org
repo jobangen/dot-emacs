@@ -3134,11 +3134,11 @@ the body of this command."
                               :color pink)
 "
  ^Zettelkasten^ ^ ^             ^Zettel^             ^ ^              ^Var^
--^---^--------------------------^-^------------------^-^--------------^-^---------------
- _d_: zk        _z_: zettel     _m_: mark tags       _v_: visualize   _s_: sort symbols
- _b_: bibtex    _q_: query      _s_: sort symbols   _cp_: parent      _R_: remem
- _k_: kill b.   _K_: kill bfs   _f_: finish         _cc_: child       _x_: txt query
- ^ ^            ^ ^             ^ ^                 _cf_: friend
+-^---^--------------------------^-^-----------------^-^-------------^-^---------------
+ _d_: zk        _z_: zettel     _m_: mark tags     _v_: visualize   _s_: sort symbols
+ _b_: bibtex    _q_: query      _t_: insert tags   _cp_: parent     _R_: remem
+ _k_: kill b.   _K_: kill bfs   _f_: finish        _cc_: child      _x_: txt query
+ ^ ^            ^ ^             ^ ^                _cf_: friend
 "
 ;;General
 ("C-s" counsel-grep-or-swiper)
