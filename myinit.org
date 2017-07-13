@@ -358,22 +358,19 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 )
 #+end_src
 
-** isearch
-#+begin_src emacs-lisp
-(bind-key  "M-i" 'swiper-from-isearch isearch-mode-map)
-#+end_src
-
 ** ivy
 #+begin_src emacs-lisp
 (use-package ivy
   :ensure t
   :diminish ivy-mode
   :bind (("C-c C-r" . ivy-resume)
-         :map ivy-mode-map
-           ("C-h" . backward-delete-char)
          :map ivy-minibuffer-map
            ("C-h" . backward-delete-char)
            ("C-w" . backward-kill-word)
+           ("C-#" . zettelkasten-insert-regex)
+           ("C-c C-c" . job/name-of-the-file)
+           ("M-y" . ivy-next-line)
+           ("M-ü" . ivy-next-line)
         )
   :config
      (require 'ivy-hydra)
@@ -434,10 +431,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ** swiper
 #+BEGIN_SRC emacs-lisp
 (use-package swiper
-  :ensure t
-  :bind (:map ivy-minibuffer-map
-         ("C-#" . zettelkasten-insert-regex)
-         ("C-c C-c" . job/name-of-the-file)))
+  :ensure t)
 #+END_SRC
 
 ** counsel
@@ -445,36 +439,28 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (use-package counsel
   :ensure t
   :bind (("C-s" . counsel-grep-or-swiper)
+         ("C-." . counsel-imenu)
          ("C-S-s" . counsel-imenu)
          ("C-S-i" . counsel-grep-or-swiper)
          ("C-c u" . counsel-linux-app)
          ("C-ä u" . counsel-linux-app)
          ("C-M-s" . counsel-ag)
          ("C-x l" . counsel-locate)
-         ("C-ö l" . counsel-locate)
+         ("C-ö l" . counsel-lochte)
          ("M-y" . counsel-yank-pop)
          ("M-ü" . counsel-yank-pop)
-         :map ivy-minibuffer-map
-          ("M-y" . ivy-next-line)
-          ("M-ü" . ivy-next-line))
-)
+         ("M-x" . counsel-M-x)
+         ("C-x C-m" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)
+         )
+  )
   #+end_src
 
 ** smex
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package smex
-    :bind (("M-x" . smex)
-           ("C-x C-m" . smex)
-           ("M-ö" . smex)
-           ("M-X" . smex-major-mode-commands)
-           ("M-Ö" . smex-major-mode-commands)
-           ("C-c C-c M-x" . execute-extended-command))
-    :init
-     (require 'smex)
-     (setq smex-completion-method 'ivy)
-     (smex-initialize)
-)
-#+END_SRC
+  :ensure t)
+#+end_src
 
 ** which-key
 #+begin_src emacs-lisp
