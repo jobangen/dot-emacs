@@ -452,6 +452,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          ("M-x" . counsel-M-x)
          ("C-x C-m" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
+         ("C-x C-SPC" . counsel-mark-ring)
          )
   )
   #+end_src
