@@ -2452,6 +2452,19 @@ rotate entire document."
               ("P" . peep-dired)))
 #+end_src
 
+** calfw
+#+begin_src emacs-lisp
+(use-package calfw
+  :ensure t
+  :config
+  (setq calendar-week-start-day 1))
+#+end_src
+*** calfw-org
+#+begin_src emacs-lisp
+(use-package calfw-org
+  :ensure t)
+#+end_src
+
 * Minor-modes
 ** abbrev-mode
 #+begin_src emacs-lisp
