@@ -2464,7 +2464,9 @@ rotate entire document."
 *** calfw-org
 #+begin_src emacs-lisp
 (use-package calfw-org
-  :ensure t)
+  :ensure t
+  :config
+  (setq cfw:org-agenda-schedule-args '(:sexp :timestamp)))
 #+end_src
 
 * Minor-modes
