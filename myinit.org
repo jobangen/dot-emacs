@@ -878,10 +878,10 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
           (time-end    (read-string "End: " nil nil '(nil)))
           (length      (read-string "Length: " nil nil '(nil))))
       (when (and date)
-        (concat (format "* BerlinAntiquariat   :work:\n")
+        (concat (format "* BerlinAntiquariat   :arbeit:\n")
                 (format ":PROPERTIES:\n")
-                (format ":CATEGORY: work\n")
-                (format ":TYPE:     work\n")
+                (format ":CATEGORY: arbeit\n")
+                (format ":TYPE:     arbeit\n")
                 (format ":WORK:     berlinantiquariat\n")
                 (format ":DATE:     [%s]\n" date)
                 (format ":TIME:     %s--%s\n" time-begin time-end)
@@ -934,21 +934,21 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 )
 
 ("t" "todo" entry (file "inbox.org")
- "* TODO %^{Task} %^G
+ "* TODO %^{Task} :%^{Category|arbeit|pers|wiss}:%^G
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED:   %U
-:CATEGORY:  %^{Category||wiss|work|pers}
+:CATEGORY:  %\\2
 :EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
 :END:
 %?")
 
 ("T" "todo at point" entry (clock)
- "* TODO %^{Task}
+ "* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
-:CATEGORY:  %^{Category||wiss|work|pers}
+:CATEGORY:  %\\2
 :EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
 :END:
 %?\n")
@@ -961,10 +961,10 @@ SCHEDULED: %t
  %?")
 
 ("i" "interruption" entry (file "inbox.org")
- "* %^{Task}
+ "* %^{Task} :%^{Category||wiss|arbeit|pers}:
 :PROPERTIES:
 :CREATED: %U
-:CATEGORY:  %^{Category||wiss|work|pers}
+:CATEGORY:  %\\2
 :END:
 %?" :clock-in t :clock-resume t)
 
@@ -973,16 +973,16 @@ SCHEDULED: %t
 
 ("j" "Journal")
 ("jj" "Journal" entry (file+datetree+prompt "journal.org")
- "* %^{Headline}  :journal:
+ "* %^{Headline}  :%^{Category||wiss|arbeit|pers}:journal:
 %T%?
 :PROPERTIES:
 :CREATED: [%<%Y-%m-%d %a %H:%M>]
-:CATEGORY:  %^{Category||wiss|work|pers}
+:CATEGORY:  %\\2
 :END:
 ")
 
 ("jt" "Journal todo" entry (file+datetree "journal.org")
-"* TODO %^{Task} :today:
+"* TODO %^{Task} :pers:today:
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
@@ -992,13 +992,13 @@ SCHEDULED: %t
 %?")
 
 ("jl" "Literaturbearbeitung" entry (file+datetree "journal.org")
- "* Literaturbearbeitung
+ "* Literaturbearbeitung :wiss:
 :PROPERTIES:
 :CATEGORY: wiss
 :END:" :immediate-finish t :jump-to-captured t)
 
 ("jm" "Mailbearbeitung" entry (file+datetree "journal.org")
- "* Mailbearbeitung
+ "* Mailbearbeitung :wiss:
 :PROPERTIES:
 :CATEGORY: wiss
 :END:" :jump-to-captured t :immediate-finish t)
@@ -1013,11 +1013,11 @@ SCHEDULED: %t
  #'org-capture-wiss :jump-to-captured t)
 
 ("m" "mail todo" entry (file+headline "inbox.org" "Mail")
- "* TODO %^{Task}
+ "* TODO %^{Task} :%^{Category||wiss|arbeit|pers}:
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
-:CATEGORY:  %^{Category||wiss|work|pers}
+:CATEGORY:  %\\2
 :END:
 %:fromname wrote on %:date-timestamp-inactive:
 Subject: [[%l][%:subject]]
@@ -1029,7 +1029,7 @@ Subject: [[%l][%:subject]]
 "%?" :jump-to-captured t :empty-lines 1)
 
 ("l" "Literatur" entry (file+headline "inbox.org" "Literatur")
- "* TODO %^{Author & Titel} :txt:
+ "* TODO %^{Author & Titel} :txt:wiss
 :PROPERTIES:
 :CREATED:   %U
 :CATEGORY:  wiss
@@ -1039,10 +1039,10 @@ Subject: [[%l][%:subject]]
 :END:")
 
 ("P" "Projekt" entry (file "inbox.org")
-"* PROJ %^{Projekt}
+"* PROJ %^{Projekt} :%^{Category|wiss|arbeit|pers}:
 :PROPERTIES:
 :CREATED: %U
-:CATEGORY:  %^{Category|wiss|work|pers}
+:CATEGORY:  %\\2
 :END:")
 
 ("g" "Geld - Ledger entries")
@@ -1159,15 +1159,17 @@ tags: %^{Type|§content|§index}, \n* Inhalt
 (setq org-tags-exclude-from-inheritance '("txt"))
 
 (setq org-tag-alist '((:startgroup)
+                       ("arbeit"    . ?a)
+                       ("pers"      . ?p)
+                       ("wiss"      . ?w)(:endgroup)
+                      (:startgroup)
                        ("@home"     . ?h)
                        ("@irw"      . ?i)
                        ("@mail"     . ?m)
-                       ("@topoi"    . ?o)
-                      (:endgroup)
+                       ("@topoi"    . ?o)(:endgroup)
                       (:startgroup)
                        ("today"     . ?t)
-                       ("someday"   . ?s)
-                      (:endgroup)
+                       ("someday"   . ?s)(:endgroup)
                       ("computer"   . ?c)
                       ("verwaltung" . ?v)
                       ("lehre")
