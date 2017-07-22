@@ -2465,8 +2465,16 @@ rotate entire document."
 #+begin_src emacs-lisp
 (use-package calfw-org
   :ensure t
+  :bind (("C-c f" . job/open-org-calendar))
   :config
-  (setq cfw:org-agenda-schedule-args '(:sexp :timestamp)))
+  (setq cfw:org-agenda-schedule-args '(:sexp :timestamp))
+
+  (defun job/open-org-calendar ()
+    (interactive)
+    (delete-other-windows)
+    (cfw:open-org-calendar)
+    )
+  )
 #+end_src
 
 * Minor-modes
