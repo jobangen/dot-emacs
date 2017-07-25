@@ -1647,9 +1647,17 @@ http://doc.norang.ca/org-mode.org
                       "subsubsection" "subsubsection*"
                       "paragraph" "paragraph*" "subparagraph" "subparagraph*"
                       "emph" "textit" "textsl" "textmd" "textrm"
-                      "textsf" "texttt" "textbf" "textsc" "textup")))))
+                      "textsf" "texttt" "textbf" "textsc" "textup"))))
+      )
+
     ;;SyncTeX
     (setq TeX-source-correlate-mode 'synctex)
+
+    (add-hook 'LaTeX-mode-hook
+              (lambda ()
+                (TeX-add-symbols "enquote")
+                (TeX-add-symbols "enquote*")
+                ))
 
 	(add-hook 'LaTeX-mode-hook 'flyspell-mode)
 	(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
