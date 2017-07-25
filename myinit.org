@@ -2207,13 +2207,12 @@ abort completely with `C-g'."
 #+begin_src emacs-lisp
 (defun job/message-mail ()
   (interactive)
-  (message-mail)
-  (erase-buffer)
   (let ((account-name (completing-read "Choose Account: "
                                        '(("Gmail")
                                          ("Zedat")
-                                         ("Zedatma")) nil t nil)
-                      ))
+                                         ("Zedatma")) nil t nil)))
+    (message-mail)
+    (erase-buffer)
     (when (string-equal account-name "Gmail")
       (insert (concat
                (format "To: \n")
