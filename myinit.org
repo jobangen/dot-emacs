@@ -35,9 +35,9 @@
 (set-terminal-coding-system 'utf-8) ;;UTF 8 by default
 (set-keyboard-coding-system 'utf-8) ;;(prefer-coding-system 'utf-8)
 (setq-default indent-tabs-mode nil ;; Insert tabs as spaces (not tabs)
-	          indicate-buffer-boundaries 'left	;; Graphical gimmick
-	          indicate-empty-lines t	;; Graphical gimmick
-)
+              indicate-buffer-boundaries 'left ;; Graphical gimmick
+              indicate-empty-lines t           ;; Graphical gimmick
+              )
 (setq next-line-add-newlines t) ;; C-n erzeugt Absatz am Ender der Zeile
 
 ;; Save whatever’s in the current (system) clipboard before
@@ -46,8 +46,7 @@
 (setq save-interprogram-paste-before-kill t)
 
 ;; (add-hook 'text-mode-hook (lambda () (variable-pitch-mode t)))
-(dolist (hook '(LaTeX-mode-hook
-                ))
+(dolist (hook '(LaTeX-mode-hook))
   (add-hook hook (lambda () (variable-pitch-mode t))))
 
 (setq time-stamp-active t
