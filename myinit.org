@@ -69,13 +69,13 @@
 https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
 #+begin_src emacs-lisp
 (defun system-type-is-gnu ()
-  (interactive)
   "Return true if system is GNU/Linux-based"
+  (interactive)
   (string-equal system-type "gnu/linux"))
 
 (defun system-type-is-windows ()
-  (interactive)
   "Return true if system is Windows-based"
+  (interactive)
   (string-equal system-type "windows-nt"))
 #+end_src
 
