@@ -2709,6 +2709,15 @@ rotate entire document."
   :disabled t)
 #+end_src
 
+** lispy
+#+begin_src emacs-lisp
+(use-package lispy
+  :ensure t
+  :defer t
+  :init
+  (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1))))
+#+end_src
+
 * hydra
 ** hydra-setup
 #+begin_src emacs-lisp
