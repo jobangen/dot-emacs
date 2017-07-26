@@ -3995,16 +3995,18 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 (defhydra hydra-xrandr (:hint nil
                         :color red)
 "
- ^Main^          ^VGA^                   ^HDMI^
--^-^-------------^---^-------------------^---^-----------------
- _a_: 1024x768   _vac_: 1024x768 clone   _hac_: 1024x768 clone
- ^ ^             _val_: 1024x768 left    _hal_: 1024x768 left
+ ^Main^          ^VGA^                   ^HDMI^                 ^Presets^
+-^-^-------------^---^-------------------^---^----------------------------
+ _a_: 1024x768   _vac_: 1024x768 clone   _hac_: 1024x768 clone  _t_: Topoi
+ ^ ^             _val_: 1024x768 left    _hal_: 1024x768 left   _r_: reset
  _s_: 1366x768   _vsc_: 1366x768 clone   _hsc_: 1366x768 clone
  ^ ^             _vsl_: 1366x768 left    _hsl_: 1366x768 left
 "
-  ("r" xrandr-reset "reset")
+  ("r" xrandr-reset)
   ("a" xrandr-main-1024x768)
   ("s" xrandr-main-1366x768)
+  ("t" xrandr-preset-topoi)
+  ("x" xrandr-list "xrandr")
   ("vac" xrandr-vga-1024x768-clone)
   ("val" xrandr-vga-1024x768-left)
   ("vsc" xrandr-vga-1366x768-clone)
@@ -4091,6 +4093,23 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 (defun xrandr-hdmi-1366x768-left ()
   (interactive)
   (sc "xrandr --output HDMI1 --mode 1366x768 --left-of eDP1"))
+#+end_src
+
+*** xrandr-preset-topoi
+#+begin_src emacs-lisp
+(defun xrandr-preset-topoi ()
+  (interactive)
+    (shell-command "xrandr --output eDP1 --mode 1366x768 --output HDMI1 --mode 1680x1050 --left-of eDP1")
+    (shell-command "xmodmap ~/.Xmodmap"))
+#+end_src
+*** xrandr-list
+#+begin_src emacs-lisp
+(defun xrandr-list ()
+  (interactive)
+  (with-output-to-temp-buffer "*xrandr*"
+    (shell-command "xrandr"
+                   "*xrandr*"
+                   "*Messages*")))
 #+end_src
 
 ** vpn
