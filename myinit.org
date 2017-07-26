@@ -3226,15 +3226,14 @@ the body of this command."
 #+begin_src emacs-lisp
 (defun my/insert-date (prefix)
   "Insert the current date ISO-format; With prefix-argument: insert current date ISO-format with time. With two prefix arguments, insert date."
-    (interactive "P")
-    (let ((format (cond
-                   ((not prefix) "%Y-%m-%d")
-                   ((equal prefix '(4)) "%Y-%m-%d-%H%M")
-                   ((equal prefix '(16)) "%d.%m.%Y")
-;;                   ((equal prefix '(??)) "%A, %d. %B %Y")
-))
-          (system-time-locale "de_DE"))
-      (insert (format-time-string format))))
+  (interactive "P")
+  (let ((format (cond
+                 ((not prefix) "%Y-%m-%d")
+                 ((equal prefix '(4)) "%Y-%m-%d-%H%M")
+                 ((equal prefix '(16)) "%d.%m.%Y")))
+        (system-time-locale "de_DE"))
+    (insert (format-time-string format))))
+
 (bind-key "C-c d" 'my/insert-date)
 #+end_src
 
