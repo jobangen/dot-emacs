@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: diss-syntagma
+# key: diss
+# --
+#+begin_src csv :tangle diss/autoritaet-semantik-syntagma/`(file-name-base)`.csv
+$0
+#+end_src
