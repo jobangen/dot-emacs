@@ -3969,7 +3969,8 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 #+begin_src emacs-lisp
 (defun job/kill-line ()
   (interactive)
-  (if (equal (point) (line-end-position))
+  (if (equal (point)
+             (line-end-position))
       (kill-whole-line)
     (call-interactively 'kill-line)))
 
