@@ -1657,6 +1657,9 @@ http://doc.norang.ca/org-mode.org
               (lambda ()
                 (TeX-add-symbols "enquote")
                 (TeX-add-symbols "enquote*")
+                (TeX-add-symbols "blockcquote")
+                (TeX-add-symbols "textquote")
+                (TeX-add-symbols "textcquote")
                 ))
 
 	(add-hook 'LaTeX-mode-hook 'flyspell-mode)
