@@ -462,6 +462,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ** which-key
 #+begin_src emacs-lisp
 (use-package which-key
+  :ensure t
   :diminish which-key-mode
   :config
    (which-key-mode))
