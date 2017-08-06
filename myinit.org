@@ -535,31 +535,29 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          ("C-c c" . org-capture)
          ("C-c ä" . org-capture)
          ("<f11>" . org-clock-in)
-         ("C-c i" . org-clock-in)
-        )
+         ("C-c i" . org-clock-in))
   :config
-   (progn
-     ;;Pfade
-     (setq org-default-notes-file "inbox.org"
-           org-agenda-diary-file "journal.org"
-           org-agenda-include-diary nil)
+  (progn
+    ;;Pfade
+    (setq org-default-notes-file "inbox.org"
+          org-agenda-diary-file "journal.org"
+          org-agenda-include-diary nil)
 
-     ;; shift-select
-     (setq org-support-shift-select 'always)
-     ;;keine automatischen Leerzeilen vor Entries
-     (setq org-blank-before-new-entry nil)
-     ;; follow links by pressing ENTER on them
-     (setq org-return-follows-link t)
-     ;; syntax highlight code in source blocks
-     (setq org-src-fontify-natively t)
-     ;; Don't allow editing of folded regions
-     (setq org-catch-invisible-edits 'error)
+    ;; shift-select
+    (setq org-support-shift-select 'always)
+    ;;keine automatischen Leerzeilen vor Entries
+    (setq org-blank-before-new-entry nil)
+    ;; follow links by pressing ENTER on them
+    (setq org-return-follows-link t)
+    ;; syntax highlight code in source blocks
+    (setq org-src-fontify-natively t)
+    ;; Don't allow editing of folded regions
+    (setq org-catch-invisible-edits 'error)
 
-     (add-hook 'org-agenda-mode-hook
-       (lambda ()
-         (bind-key "<f11>" 'org-agenda-clock-in org-agenda-mode-map)))
-   )
-)
+    (add-hook 'org-agenda-mode-hook
+              (lambda ()
+                (bind-key "<f11>" 'org-agenda-clock-in org-agenda-mode-map)))))
+
 
 
 (use-package org-plus-contrib
@@ -861,55 +859,52 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 ** capture-functions
 #+begin_src emacs-lisp
 (defun capture-report-date-file (path)
-  (let
-      ((name    (read-string "Name: ")))
-    (expand-file-name (concat path (format-time-string "%Y-%m-%d-%H%M-") name ".txt"))))
+  (let ((name (read-string "Name: ")))
+    (expand-file-name
+     (concat path name (format-time-string "-%Y-%m-%d-%H%M") ".txt"))))
 
 ;;http://stackoverflow.com/questions/24967910/org-mode-capture
 (defun org-capture-berlinantiquariat ()
   "Capture a class template for org-capture."
-    (let ((date        (org-read-date))
-          (time-begin  (read-string "Begin: " nil nil '(nil)))
-          (time-end    (read-string "End: " nil nil '(nil)))
-          (length      (read-string "Length: " nil nil '(nil))))
-      (when (and date)
-        (concat (format "* BerlinAntiquariat   :arbeit:\n")
-                (format ":PROPERTIES:\n")
-                (format ":CATEGORY: arbeit\n")
-                (format ":TYPE:     arbeit\n")
-                (format ":WORK:     berlinantiquariat\n")
-                (format ":DATE:     [%s]\n" date)
-                (format ":TIME:     %s--%s\n" time-begin time-end)
-                (format ":LENGTH:   %s\n" length)
-                (format ":END:\n")
-                (format ":CLOCK:\n")
-                (format "CLOCK: [%s %s]--" date time-begin)
-                (format "[%s %s] =>\n" date time-end)
-                (format ":END:")
-))))
+  (let ((date (org-read-date))
+        (time-begin (read-string "Begin: " nil nil '(nil)))
+        (time-end (read-string "End: " nil nil '(nil)))
+        (length (read-string "Length: " nil nil '(nil))))
+    (when (and date)
+      (concat (format "* BerlinAntiquariat   :arbeit:\n")
+              (format ":PROPERTIES:\n")
+              (format ":CATEGORY: arbeit\n")
+              (format ":TYPE:     arbeit\n")
+              (format ":WORK:     berlinantiquariat\n")
+              (format ":DATE:     [%s]\n" date)
+              (format ":TIME:     %s--%s\n" time-begin time-end)
+              (format ":LENGTH:   %s\n" length)
+              (format ":END:\n")
+              (format ":CLOCK:\n")
+              (format "CLOCK: [%s %s]--" date time-begin)
+              (format "[%s %s] =>\n" date time-end)
+              (format ":END:")))))
 
 (defun org-capture-wiss ()
   "Capture a class template for org-capture."
-    (let ((date        (org-read-date))
-          (name        (completing-read "Veranstaltung: "
-                         '((""                                1)
-                           ("Knoblauch: Forschungswerkstatt"  2)
-                           ("Wissenschaftskommunikation"      3)
-                           ("Topoi: Lesezirkel"               4)
-                           ("Forschungswerkstatt FU"          5)
-                          )  nil t ""))
-          (time-begin  (read-string "Begin: " nil nil '(nil)))
-          (time-end    (read-string "End: " nil nil '(nil))))
-      (when (and date)
-        (concat (format "* %s      :wiss:\n" name)
-                (format ":PROPERTIES:\n")
-                (format ":CATEGORY: wiss\n")
-                (format ":END:\n")
-                (format ":CLOCK:\n")
-                (format "CLOCK: [%s %s]--" date time-begin)
-                (format "[%s %s] => %%?\n" date time-end)
-                (format ":END:")
-))))
+  (let ((date (org-read-date))
+        (name (completing-read "Veranstaltung: "
+                               '(("" 1)
+                                 ("Knoblauch: Forschungswerkstatt" 2)
+                                 ("Wissenschaftskommunikation" 3)
+                                 ("Topoi: Lesezirkel" 4)
+                                 ("Forschungswerkstatt FU" 5)) nil t ""))
+        (time-begin (read-string "Begin: " nil nil '(nil)))
+        (time-end (read-string "End: " nil nil '(nil))))
+    (when (and date)
+      (concat (format "* %s      :wiss:\n" name)
+              (format ":PROPERTIES:\n")
+              (format ":CATEGORY: wiss\n")
+              (format ":END:\n")
+              (format ":CLOCK:\n")
+              (format "CLOCK: [%s %s]--" date time-begin)
+              (format "[%s %s] => %%?\n" date time-end)
+              (format ":END:")))))
 #+end_src
 
 ** capture
