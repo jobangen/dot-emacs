@@ -1556,9 +1556,9 @@ http://doc.norang.ca/org-mode.org
 ** org-contacts
 #+begin_src emacs-lisp
 (use-package org-contacts
- :init
-(setq org-contacts-files '("~/Dropbox/db/contacts.org"))
-)
+  :bind (("C-c g" . org-contacts))
+  :config
+  (setq org-contacts-files '("~/Dropbox/db/contacts.org")))
 #+end_src
 
 ** org-attach
