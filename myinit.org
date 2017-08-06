@@ -1556,7 +1556,7 @@ http://doc.norang.ca/org-mode.org
 ** org-contacts
 #+begin_src emacs-lisp
 (use-package org-contacts
-  :bind (("C-c g" . org-contacts))
+  :bind ("C-c g" . org-contacts)
   :config
   (setq org-contacts-files '("~/Dropbox/db/contacts.org")))
 #+end_src
@@ -1992,20 +1992,22 @@ of a BibTeX field into the template. Fork."
 #+begin_src emacs-lisp
 (use-package flyspell
   :diminish flyspell-mode
-  :bind (("C-c s" . my/flyspell-check-previous-highlighted-word)
-         ("C-c S" . my/flyspell-check-next-highlighted-word))
-  :config
+  :bind (("C-," . my/flyspell-check-previous-highlighted-word))
+  :init
   (dolist (hook '(org-mode-hook))
-    (add-hook hook (lambda() (flyspell-mode 1))))
+    (add-hook hook (lambda () (flyspell-mode 1))))
   (dolist (hook '(text-mode-hook))
     (add-hook hook (lambda () (flyspell-mode 1))))
   (dolist (hook '(change-log-mode-hook log-edit-mode-hook))
     (add-hook hook (lambda () (flyspell-mode -1))))
 
-  (setq flyspell-tex-command-regexp "\\(\\(begin\\|end\\)[ \t]*{\\|\\(cite[.*]*\\|autocite[.*]*\\|label\\|ref\\|eqref\\|usepackage\\|documentclass\\|addbibresource\\|pagestyle\\|KOMAoptions\\|setkomafont\\|newclassic\\|printbibliography\\)[ \t]*\\(\\[[^]]*\\]\\)?{[^{}]*\\)")
-
+  :config
   (eval-after-load "flyspell"
     '(define-key flyspell-mode-map (kbd "C-.") nil))
+  (eval-after-load "flyspell"
+    '(define-key flyspell-mode-map (kbd "C-,") nil))
+
+  (setq flyspell-tex-command-regexp "\\(\\(begin\\|end\\)[ \t]*{\\|\\(cite[.*]*\\|autocite[.*]*\\|label\\|ref\\|eqref\\|usepackage\\|documentclass\\|addbibresource\\|pagestyle\\|KOMAoptions\\|setkomafont\\|newclassic\\|printbibliography\\)[ \t]*\\(\\[[^]]*\\]\\)?{[^{}]*\\)")
 
   (defun my/flyspell-check-previous-highlighted-word (&optional arg)
     "Correct the closer misspelled word.
@@ -2045,14 +2047,6 @@ of a BibTeX field into the template. Fork."
     (flyspell-correct-word-generic)
     (setq flyspell-word-cache-word nil))
   )
-
-;; http://www.emacswiki.org/emacs/FlySpell
-;;(bind-key "<f10>" 'ispell-word)
-;;(bind-key "C-c f p" 'flyspell-check-previous-highlighted-word)
-;;(bind-key "C-<f10>" 'flyspell-check-next-highlighted-word)
-;;(bind-key "C-c f m" 'flyspell-mode)
-;;(bind-key "C-c f b" 'flyspell-buffer)
-
 #+end_src
 
 ** flyspell-correct
@@ -2886,17 +2880,17 @@ Git
 
 ** hydra-spellcheck
 #+begin_src emacs-lisp
-(bind-key "C-c S" 'hydra-spellcheck/body)
+(bind-key "C-c s" 'hydra-spellcheck/body)
+
 (defhydra hydra-spellcheck (:color red :columns 3)
-"Flyspell"
-("b" flyspell-buffer "buffer")
-("c" ispell-word "ispell word")
-("d" ispell-change-dictionary "change dictionary")
-("i" ispell-buffer "ispell buffer")
-("m" flyspell-mode "mode")
-("n" flyspell-check-next-highlighted-word "next")
-("p" flyspell-check-previous-highlighted-word "previous")
-)
+  "Flyspell"
+  ("b" flyspell-buffer "buffer")
+  ("c" ispell-word "ispell word")
+  ("d" ispell-change-dictionary "change dictionary")
+  ("i" ispell-buffer "ispell buffer")
+  ("m" flyspell-mode "mode")
+  ("n" flyspell-check-next-highlighted-word "next")
+  ("p" flyspell-check-previous-highlighted-word "previous"))
 #+end_src
 
 ** hydra-engine+
