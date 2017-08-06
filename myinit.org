@@ -346,13 +346,12 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ** ace-window
 #+begin_src emacs-lisp
 (use-package ace-window
- :bind ("C-c k" . ace-delete-window)
- :config
+  :bind ("C-c k" . ace-delete-window)
+  :config
   (progn
-   (setq aw-scope 'frame)
-   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
-   (setq aw-dispatch-always nil))
-)
+    (setq aw-scope 'frame)
+    (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+    (setq aw-dispatch-always nil)))
 #+end_src
 
 ** ivy
