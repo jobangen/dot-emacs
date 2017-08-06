@@ -2062,6 +2062,7 @@ of a BibTeX field into the template. Fork."
 ** writegood
 #+begin_src emacs-lisp
 (use-package writegood-mode
+  :defer t
   :config
    (progn
     (setq writegood-weasel-words
@@ -2073,6 +2074,7 @@ of a BibTeX field into the template. Fork."
 ** languagetool
 #+begin_src emacs-lisp
 (use-package langtool
+  :defer t
   :init
    (setq langtool-language-tool-jar "~/programme/LanguageTool-3.1/languagetool-commandline.jar"))
 #+end_src
