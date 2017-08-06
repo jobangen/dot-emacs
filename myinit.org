@@ -319,15 +319,15 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ** char-menu
 #+begin_src emacs-lisp
 (use-package char-menu
- :ensure t
-;;  :bind ("H-s" . char-menu)
- :config
+  :ensure t
+  :defer t
+  :config
   (setq char-menu '("–" "—" "„“" "‘’" "“”" "»«" "…"
-                            ("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
-                            ("Math"       "≈" "≡" "≠" "∞" "×" "±" "∓" "÷" "√" "⊂" "⊃")
-                            ("Arrows"     "←" "→" "↑" "↓" "⇐" "⇒" "⇑" "⇓")
-                            ("Greek"      "α" "β" "Y" "δ" "ε" "ζ" "η" "θ" "ι" "κ" "λ" "μ" "ν" "ξ" "ο" "π" "ρ" "σ" "τ" "υ" "φ" "χ" "ψ" "ω")
-                            ("Other Languages" "Œ"))))
+                    ("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
+                    ("Math" "≈" "≡" "≠" "∞" "×" "±" "∓" "÷" "√" "⊂" "⊃")
+                    ("Arrows" "←" "→" "↑" "↓" "⇐" "⇒" "⇑" "⇓")
+                    ("Greek" "α" "β" "Y" "δ" "ε" "ζ" "η" "θ" "ι" "κ" "λ" "μ" "ν" "ξ" "ο" "π" "ρ" "σ" "τ" "υ" "φ" "χ" "ψ" "ω")
+                    ("Other Languages" "Œ"))))
 #+end_src
 
 ** key-chord
