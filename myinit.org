@@ -494,8 +494,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (setq org-imenu-depth 9)
 
 (use-package imenu-anywhere
-;;  :bind ("C-S-s" . ivy-imenu-anywhere)
-)
+  :ensure t
+  :bind ("C-:" . ivy-imenu-anywhere))
 #+end_src
 ** shell
 #+begin_src emacs-lisp
