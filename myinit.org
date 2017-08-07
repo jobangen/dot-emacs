@@ -3092,6 +3092,33 @@ the body of this command."
     (dired-find-file))
   (if (equal major-mode 'org-mode)
     (org-open-at-point)))
+
+(defun zettelkasten-rename-zettel-upd-links ()
+  (interactive)
+  (if (equal major-mode 'dired-mode)
+      (dired-find-file))
+  (kill-new (file-name-base))
+  (let ((old-name-base
+         (file-name-base))
+        (new-name-base
+         (read-string "New Name: ")))
+    (rename-file (concat old-name-base ".txt") (concat new-name-base ".txt"))
+    (kill-buffer)
+    (lgrep old-name-base "*.txt")
+    (other-window 1)
+    (if (y-or-n-p "Do you want to replace basenames? ")
+        (progn
+          (wgrep-change-to-wgrep-mode)
+          (search-forward old-name-base nil t)
+          (while (search-forward old-name-base nil t)
+            (replace-match new-name-base t nil))
+          (wgrep-finish-edit))
+      (message "Changed filename without updating links."))
+    (switch-to-buffer "zettelkasten-log.txt")
+    (end-of-buffer)
+    (insert "\n" (format-time-string "%Y-%m-%d-%H%M") ": " old-name-base ".txt --> " new-name-base ".txt")
+    (bury-buffer)
+    (save-some-buffers)))
 #+end_src
 ** deft
 #+begin_src emacs-lisp
