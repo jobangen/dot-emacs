@@ -3296,24 +3296,24 @@ point reaches the beginning or end of the buffer, stop there."
 
 ** my/html-to-german
 #+begin_src emacs-lisp
-(defun my/html-to-german ()
-"Replace HTML token with german umlauts in current buffer"
-   (interactive)
-      (save-excursion
-	(goto-char (point-min))
-	(perform-replace "&Auml;" "Ä" nil nil nil)
-	(goto-char (point-min))
-	(perform-replace "&auml;" "ä" nil nil nil)
-	(goto-char (point-min))
-	(perform-replace "&Ouml;" "Ö" nil nil nil)
-	(goto-char (point-min))
-	(perform-replace "&ouml;" "ö" nil nil nil)
-	(goto-char (point-min))
-	(perform-replace "&Uuml;" "Ü" nil nil nil)
-	(goto-char (point-min))
-	(perform-replace "&uuml;" "ü" nil nil nil)
-	(goto-char (point-min))
-	(perform-replace "&szlig;" "ß" nil nil nil)))
+(defun job/html-to-umlaut ()
+  "Replace HTML token with german umlauts in current buffer"
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (perform-replace "&Auml;" "Ä" nil nil nil)
+    (goto-char (point-min))
+    (perform-replace "&auml;" "ä" nil nil nil)
+    (goto-char (point-min))
+    (perform-replace "&Ouml;" "Ö" nil nil nil)
+    (goto-char (point-min))
+    (perform-replace "&ouml;" "ö" nil nil nil)
+    (goto-char (point-min))
+    (perform-replace "&Uuml;" "Ü" nil nil nil)
+    (goto-char (point-min))
+    (perform-replace "&uuml;" "ü" nil nil nil)
+    (goto-char (point-min))
+    (perform-replace "&szlig;" "ß" nil nil nil)))
 #+end_src
 
 ** my/uniquify-all-lines
