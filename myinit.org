@@ -554,9 +554,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
     ;; Don't allow editing of folded regions
     (setq org-catch-invisible-edits 'error)
 
-    (add-hook 'org-agenda-mode-hook
-              (lambda ()
-                (bind-key "<f11>" 'org-agenda-clock-in org-agenda-mode-map)))))
+    (eval-after-load "org"
+      '(define-key org-mode-map (kbd "C-,") nil))))
 
 
 
