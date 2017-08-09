@@ -2446,19 +2446,19 @@ rotate entire document."
   :config
   (add-hook 'dired-mode-hook 'dired-filter-group-mode t)
   (setq dired-filter-group-saved-groups
-      '(("default"
-        ("DIR"
-         (directory))
-        ("PDF"
-         (extension . "pdf"))
-        ("LaTeX"
-         (extension "tex" "bib"))
-        ("Text & Data"
-         (extension "org" "txt" "doc" "docx" "csv" "odt"))
-        ("Media"
-         (extension "JPG" "jpg" "PNG" "png" "gif" "bmp"))
-        ("Archives"
-         (extension "zip" "rar" "gz" "bz2" "tar" "org_archive"))))))
+        '(("default"
+           ("DIR"
+            (directory))
+           ("PDF"
+            (extension "pdf"))
+           ("LaTeX"
+            (extension "tex" "bib"))
+           ("Text & Data"
+            (extension "org" "txt" "doc" "docx" "csv" "odt"))
+           ("Media"
+            (extension "JPG" "jpg" "PNG" "png" "gif" "bmp"))
+           ("Archives"
+            (extension "zip" "rar" "gz" "bz2" "tar" "org_archive"))))))
 #+end_src
 
 *** peep-dired
