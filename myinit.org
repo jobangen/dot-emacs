@@ -442,7 +442,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          ("C-ä u" . counsel-linux-app)
          ("C-M-s" . counsel-ag)
          ("C-x l" . counsel-locate)
-         ("C-ö l" . counsel-lochte)
+         ("C-ö l" . counsel-locate)
          ("M-y" . counsel-yank-pop)
          ("M-ü" . counsel-yank-pop)
          ("M-x" . counsel-M-x)
