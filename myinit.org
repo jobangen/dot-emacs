@@ -2122,7 +2122,8 @@ abort completely with `C-g'."
 ** google-translate
 #+begin_src emacs-lisp
 (use-package google-translate
-  :init
+  :commands google-translate-smooth-translate
+  :config
    (require 'google-translate-smooth-ui)
    (setq google-translate-translation-directions-alist
          '(("de" . "en") ("en" . "de") ("de" . "fr") ("fr" . "de")))
@@ -2133,8 +2134,8 @@ abort completely with `C-g'."
 ** www-synonyms
 #+begin_src emacs-lisp
 (use-package www-synonyms
+  :commands www-synonyms-insert-synonym
   :config
-  (require 'www-synonyms)
   (setq www-synonyms-key "gaGF6dLppnG6whJVPKFg")
   (setq www-synonyms-change-lang "de") ;; funktioniert nicht
 )
@@ -2143,7 +2144,8 @@ abort completely with `C-g'."
 ** define-word
 #+begin_src emacs-lisp
 (use-package define-word
-  :ensure t)
+  :ensure t
+  :commands define-word define-word-at-point)
 #+end_src
 
 * Versionskontrolle
