@@ -3927,10 +3927,10 @@ http://zck.me/emacs-move-file
 ** buffer file name to kill ring
 https://github.com/baron42bba/.emacs.d/blob/master/bba.org#copy-buffer-file-name-to-kill-ring
 #+begin_src emacs-lisp
-(defun job/copy-buffer-file-name ()
+(defun job/buffer-file-name-to-kill-ring ()
   (interactive)
   (kill-new (buffer-file-name))
-  (message ( format "stored '%s' in kill-ring" buffer-file-name)))
+  (message (format "stored '%s' in kill-ring" buffer-file-name)))
 #+end_src
 
 ** smart comma
