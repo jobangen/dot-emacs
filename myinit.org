@@ -2694,7 +2694,10 @@ rotate entire document."
 ** rainbow-delimiters
 #+begin_src emacs-lisp
 (use-package rainbow-delimiters
-  :disabled t)
+  :ensure t
+  :defer t
+  :init
+  (add-hook 'emacs-lisp-mode-hook (lambda () (rainbow-delimiters-mode 1))))
 #+end_src
 
 ** lispy
