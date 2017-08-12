@@ -271,15 +271,15 @@ müssen manuell deaktiviert werden
 (bind-key "<menu>" 'switch-to-buffer)
 (bind-key "C-h" 'backward-delete-char)
 (bind-key "C-x C-k" 'kill-region)
-;;(bind-key "C-r" 'previous-line)
-(bind-key "C-ö ö" 'save-some-buffers)
+;; (bind-key "C-r" 'previous-line)
+;; (bind-key "C-ö ö" 'save-some-buffers)
 (bind-key "C-ß" 'help)
 (bind-key "C-x C-b" 'ibuffer)
 (bind-key "M-SPC" 'cycle-spacing)
 
 (global-set-key (kbd "<return>") 'ignore)
 (global-set-key (kbd "<backspace>") 'ignore)
-(global-set-key (kbd "C-ö") ctl-x-map)
+;; (global-set-key (kbd "C-ö") ctl-x-map)
 (define-key key-translation-map (kbd "C-ä") (kbd "C-c"))
 #+end_src
 
