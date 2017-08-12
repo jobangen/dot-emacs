@@ -2017,8 +2017,8 @@ of a BibTeX field into the template. Fork."
     misspelled words backwards."
     (interactive)
     (let ((pos1 (point))
-          (pos  (point))
-          (arg  (if (or (not (numberp arg)) (< arg 1)) 1 arg))
+          (pos (point))
+          (arg (if (or (not (numberp arg)) (< arg 1)) 1 arg))
           ov ovs)
       (if (catch 'exit
             (while (and (setq pos (previous-overlay-change pos))
