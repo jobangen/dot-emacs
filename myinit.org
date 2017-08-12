@@ -2933,6 +2933,17 @@ _y_: youtube      _bb_: bibtex
 )
 #+end_src
 
+** hydra-word
+#+begin_src emacs-lisp
+(bind-key "C-ö" 'hydra-word/body)
+
+(defhydra hydra-word (:color blue :columns 1)
+  "Operaten on word"
+  ("d" define-word-at-point "define-word")
+  ("s" www-synonyms-insert-synonym "insert synonym")
+  ("t" google-translate-smooth-translate "translate"))
+#+end_src
+
 * zettelkasten
 ** zettelkasten defun
 #+begin_src emacs-lisp
