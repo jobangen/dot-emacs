@@ -3152,6 +3152,7 @@ the body of this command."
 ** Remembrance Agent
 #+begin_src emacs-lisp
 (use-package remem
+  :commands remem-toggle
   :config
    (setq remem-database-dir "~/.custom-temp/ra-index")
    (setq remem-scopes-list '(("zettelkasten" 5 2 500)
