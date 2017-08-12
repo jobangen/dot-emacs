@@ -3176,14 +3176,13 @@ the body of this command."
 (use-package org-brain
   :bind (("C-c v" . org-brain-visualize))
   :config
-    (require 'org-brain)
-    (setq org-brain-path (expand-file-name zettelkasten-dir "zettel"))
-    (setq org-brain-data-file (expand-file-name ".org-brain-data.el" custom-temp))
-    (setq org-brain-files-extension "txt")
-    (setq org-brain-visualize-default-choices 'root)
-    (setq org-brain-show-resources nil)
-    (setq org-brain-show-text t)
-    )
+  (require 'org-brain)
+  (setq org-brain-path (expand-file-name zettelkasten-dir "zettel"))
+  (setq org-brain-data-file (expand-file-name ".org-brain-data.el" custom-temp))
+  (setq org-brain-files-extension "txt")
+  (setq org-brain-visualize-default-choices 'root)
+  (setq org-brain-show-resources nil)
+  (setq org-brain-show-text t))
 #+end_src
 
 ** org-brain-visualize-hydra
