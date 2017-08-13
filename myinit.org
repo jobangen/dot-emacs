@@ -3190,13 +3190,17 @@ the body of this command."
 (use-package org-brain
   :bind (("C-c v" . org-brain-visualize))
   :config
-  (require 'org-brain)
   (setq org-brain-path (expand-file-name zettelkasten-dir "zettel"))
   (setq org-brain-data-file (expand-file-name ".org-brain-data.el" custom-temp))
   (setq org-brain-files-extension "txt")
   (setq org-brain-visualize-default-choices 'root)
-  (setq org-brain-show-resources nil)
-  (setq org-brain-show-text t))
+  (setq org-brain-show-resources t)
+  (setq org-brain-show-text t)
+
+  (defun aa2u-buffer ()
+    (aa2u (point-min) (point-max)))
+
+  (add-hook 'org-brain-after-visualize-hook #'aa2u-buffer))
 #+end_src
 
 ** org-brain-visualize-hydra
