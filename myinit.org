@@ -475,6 +475,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+end_src
 
 ** avy
+*** avy-config
 #+begin_src emacs-lisp
 (use-package avy
   :ensure t
@@ -485,6 +486,13 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
     (setq avy-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?ö))
 
     (define-key input-decode-map (kbd "C-i") (kbd "H-i"))))
+#+end_src
+
+*** link-hint
+#+begin_src emacs-lisp
+(use-package link-hint
+  :bind (:map org-brain-visualize-mode-map
+              ("l" . link-hint-open-link)))
 #+end_src
 
 ** zzz-to-char
