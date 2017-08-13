@@ -254,6 +254,12 @@ müssen manuell deaktiviert werden
                         visual-fill-column-fringes-outside-margins t))
 #+end_src
 
+** ascii-art-to-unicode
+#+begin_src emacs-lisp
+(use-package ascii-art-to-unicode
+  :commands aa2u)
+#+end_src
+
 * Bedienung & Interface
 ** kbd
 [[http://pragmaticemacs.com/emacs/use-your-digits-and-a-personal-key-map-for-super-shortcuts/][Use your digits and a personal key map for super shortcuts]]
