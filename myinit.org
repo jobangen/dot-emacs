@@ -2696,17 +2696,6 @@ rotate entire document."
 (use-package pomodoro)
 #+end_src
 
-** pomidor
-#+begin_src emacs-lisp
-(use-package pomidor
-  :config
-    (setq pomidor-sound-tick nil
-          pomidor-sound-tack nil
-          pomidor-sound-overwork nil)
-    (setq alert-default-style 'libnotify)
- )
-#+end_src
-
 ** rainbow-delimiters
 #+begin_src emacs-lisp
 (use-package rainbow-delimiters
