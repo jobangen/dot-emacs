@@ -548,7 +548,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          ("C-c a" . org-agenda)
          ("C-c c" . org-capture)
          ("C-c ä" . org-capture)
-         ("<f11>" . org-clock-in)
          ("C-c i" . org-clock-in))
   :config
   (progn
@@ -2730,18 +2729,18 @@ rotate entire document."
 
 ** hydra-time
 #+begin_src emacs-lisp
-(bind-key "C-<f11>" 'hydra-time/body)
+(bind-key "<f11>" 'hydra-time/body)
 
 (defhydra hydra-time (:hint nil)
 "
 ^Clock^        ^ ^             ^Timer^                  ^Countdown^           ^Pomodoro
 ^-^-------------^-^----------╯╭-^-^------------------╯╭^-^----------------╯╭-^-^--------
-_i_: in         _j_: goto       _ti_: in                _c_: countdown '25    _pi_: in
+_i_: in         _j_: goto       _ti_: in                _c_: chronos          _pi_: in
 _l_: in-last    _s_: select     _tp_: pause/continue    ^ ^                   _po_: out
 _o_: out        _d_: display    _ti_: insert            ^ ^                   _ps_: status
 _q_: cancel     _r_: resolve    _tI_: insert item       ^ ^                   _pn_: next
 "
- ("c" org-timer-set-timer)
+ ("c" chronos-add-timer)
  ("d" org-clock-display)
  ("i" org-clock-in)
  ("j" org-clock-goto)
