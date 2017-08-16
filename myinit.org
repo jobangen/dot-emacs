@@ -491,8 +491,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 *** link-hint
 #+begin_src emacs-lisp
 (use-package link-hint
-  :bind (:map org-brain-visualize-mode-map
-              ("l" . link-hint-open-link)))
+  :bind )
 #+end_src
 
 ** zzz-to-char
@@ -3182,7 +3181,9 @@ the body of this command."
 ** org-brain
 #+begin_src emacs-lisp
 (use-package org-brain
-  :bind (("C-c v" . org-brain-visualize))
+  :bind (("C-c v" . org-brain-visualize)
+         (:map org-brain-visualize-mode-map
+               ("l" . link-hint-open-link)))
   :config
   (setq org-brain-path (expand-file-name zettelkasten-dir "zettel"))
   (setq org-brain-data-file (expand-file-name ".org-brain-data.el" custom-temp))
