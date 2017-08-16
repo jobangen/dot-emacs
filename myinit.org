@@ -1599,6 +1599,12 @@ http://doc.norang.ca/org-mode.org
       org-src-tab-acts-natively t)
 #+end_src
 
+** org-contrib
+*** org-checklist
+#+begin_src emacs-lisp
+(use-package org-checklist)
+#+end_src
+
 * LaTeX und BibTeX
 ** auctex
 #+begin_src emacs-lisp
