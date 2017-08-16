@@ -370,7 +370,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
            ("C-h" . backward-delete-char)
            ("C-w" . backward-kill-word)
            ("C-#" . zettelkasten-insert-regex)
-           ("C-c C-c" . job/name-of-the-file)
+           ("C-v" . job/name-of-the-file)
            ("M-y" . ivy-next-line)
            ("M-ü" . ivy-next-line)
         )
