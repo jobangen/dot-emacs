@@ -54,6 +54,8 @@
 (setq time-stamp-start "#\\+DATE:[ \t]+\\\\?[\[\"<]+")
 (setq time-stamp-end "\\\\?[\]\">]")
 (add-hook 'write-file-hooks 'time-stamp)
+
+(setq reb-re-syntax 'rx)
 #+END_SRC
 
 ** server
