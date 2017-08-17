@@ -962,7 +962,7 @@ SCHEDULED: %t
  %?")
 
 ("i" "interruption" entry (file "inbox.org")
- "* %^{Task} :%^{Category||wiss|arbeit|pers}:
+ "* %^{Task} :%^{Category|wiss|arbeit|pers}:
 :PROPERTIES:
 :CREATED: %U
 :CATEGORY:  %\\2
@@ -974,7 +974,7 @@ SCHEDULED: %t
 
 ("j" "Journal")
 ("jj" "Journal" entry (file+datetree+prompt "journal.org")
- "* %^{Headline}  :%^{Category||wiss|arbeit|pers}:journal:
+ "* %^{Headline}  :%^{Category|wiss|arbeit|pers}:journal:
 %T%?
 :PROPERTIES:
 :CREATED: [%<%Y-%m-%d %a %H:%M>]
@@ -1014,7 +1014,7 @@ SCHEDULED: %t
  #'org-capture-wiss :jump-to-captured t)
 
 ("m" "mail todo" entry (file+headline "inbox.org" "Mail")
- "* TODO %^{Task} :%^{Category||wiss|arbeit|pers}:
+ "* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
@@ -1034,7 +1034,7 @@ Subject: [[%l][%:subject]]
 :PROPERTIES:
 :CREATED:   %U
 :CATEGORY:  wiss
-:BIBL:      %^{Bibl||ub|sozbib|cba|cbn|fmi}
+:BIBL:      %^{Bibl|ub|sozbib|cba|cbn|fmi}
 :SIGNATURE: %^{Signatur}
 :SOURCE:    %?
 :END:")
@@ -1106,22 +1106,22 @@ Subject: [[%l][%:subject]]
 
 ("gs" "Strom" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Stadtwerke
-    Expenses:Wohnung:Strom                     %^{Amount||59,00}€
+    Expenses:Wohnung:Strom                     %^{Amount|59,00}€
     Assets:Giro"
     :immediate-finish t)
 
 ("gt" "Topoi Stipendium" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Stipendium Topoi
-    Assets:Giro                              %^{Amount||1350,00}€
+    Assets:Giro                              %^{Amount|1350,00}€
     Income:Stipendium:Topoi"
     :immediate-finish t)
 
 ("z" "Zettel" plain (file (lambda () (capture-report-date-file (expand-file-name zettelkasten-dir))))
  "#+TITLE: %^{Title}
-#+DATE: %U\n* Schlagwörter
-tags: %^{Type|§content|§index}, \n* Inhalt
-%?\n* Literatur\n
-\n* Links & Files :children:"
+#+DATE: %U\n+*+ Schlagwörter
+tags: %^{Type|§content|§index}, \n+*+ Inhalt
+%?\n+*+ Literatur\n
+\n+*+ Links & Files :children:"
 :immediate-finish t :jump-to-captured t)
 
 ("Z" "Zettel TODO" entry (file+headline (lambda () (expand-file-name (concat zettelkasten-dir "0-0a~zettelkasten-todo.txt")) "Inhalt"))
