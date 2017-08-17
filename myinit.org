@@ -490,8 +490,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 
 *** link-hint
 #+begin_src emacs-lisp
-(use-package link-hint
-  :bind )
+(use-package link-hint)
 #+end_src
 
 ** zzz-to-char
