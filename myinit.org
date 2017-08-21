@@ -4177,10 +4177,14 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 #+begin_src emacs-lisp
 (defun job/vpn-zedat-shell ()
   (interactive)
-  (ignore-errors (kill-buffer "*vpn-shell*"))
-  (shell)
-  (rename-buffer "*vpn-shell*")
-  (end-of-buffer)
-  (insert "sudo openconnect -s /usr/share/vpnc-scripts/vpnc-script vpn.fu-berlin.de")
-  (comint-send-input))
+  (load-library "~/.emacs.d/mycredentials.el.gpg")
+  (with-temp-buffer
+    (cd "/sudo::/")
+    (async-shell-command (concat " echo " job/credentials-fu-berlin-password
+                                 " | openconnect -s /usr/share/vpnc-scripts/vpnc-script vpn.fu-berlin.de --user=jobangen --passwd-on-stdin"))))
 #+end_src
+
+
+
+
+
