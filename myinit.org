@@ -3149,6 +3149,7 @@ the body of this command."
 ** deft
 #+begin_src emacs-lisp
 (use-package deft
+  :commands deft
   :config
   (setq deft-directory "~/Dropbox/db/zk/zettel")
 
