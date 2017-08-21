@@ -622,92 +622,103 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 ;; Custom agenda command definitions
 (setq org-agenda-custom-commands
- '(
-	(" " "Custom-Agenda"
-           ((agenda ""
+      '((" " "Custom-Agenda"
+         ((agenda ""
                   ((org-agenda-span 1)
-		         (org-agenda-remove-tags t)
+                   (org-agenda-remove-tags t)
                    (org-agenda-show-all-dates t)))
-		  (tags "INBOX"
-			((org-agenda-overriding-header "Inbox:")
-			 (org-agenda-remove-tags t)))
-		  (todo "PROJ|TODO"
-                  ((org-agenda-overriding-header "Projects & Tasks:")
-			 (org-agenda-remove-tags t)
-                   (org-tags-match-list-sublevels 'indented)
-			 (org-agenda-skip-function
-                    '(org-agenda-skip-entry-if 'deadline 'scheduled))
+          (tags "INBOX"
+                ((org-agenda-overriding-header "Inbox:")
+                 (org-agenda-remove-tags t)))
+          (todo "PROJ|TODO"
+                ((org-agenda-overriding-header "Projects & Tasks:")
+                 (org-agenda-remove-tags t)
+                 (org-tags-match-list-sublevels
+                  'indented)
+                 (org-agenda-skip-function
+                  '(org-agenda-skip-entry-if
+                    'deadline
+                    'scheduled))
+                 (org-agenda-skip-function
+                  '(org-agenda-skip-subtree-if
+                    'regexp ":txt:"))
+                 (org-agenda-sorting-strategy
+                  '(category-keep))
+                 (org-agenda-prefix-format "%l")))
+          (todo "WAITING"
+                ((org-agenda-overriding-header "Waiting Tasks:")
+                 (org-agenda-remove-tags t)))
+          (todo "HOLD"
+                ((org-agenda-overriding-header "Postponed Tasks:")
+                 (org-agenda-remove-tags t)))))
+        ("t" "Today"
+         ((tags-todo "today"
+                     ((org-agenda-overriding-header "Today's Tasks:")
+                      (org-agenda-remove-tags t)))
+          (todo "STARTED"
+                ((org-agenda-overriding-header "Started:")
+                 (org-agenda-remove-tags t)
+                 (org-agenda-skip-function
+                  '(org-agenda-skip-subtree-if
+                    'regexp ":today:"))))
+          (todo "NEXT"
+                ((org-agenda-overriding-header "Next Tasks:")
+                 (org-agenda-remove-tags t)
+                 (org-agenda-skip-function
+                  '(org-agenda-skip-entry-if
+                    'regexp ":today:"))))))
+        ("d" "Dissertation"
+         ((tags-todo "diss"
+                     ((org-agenda-overriding-header "Dissertation")
+                      (org-agenda-remove-tags t)
+                      (org-tags-match-list-sublevels
+                       'indented)
+                      (org-agenda-sorting-strategy
+                       '(category-up))))))
+        ("z" "Zettelkasten"
+         ((tags-todo "zk"
+                     ((org-agenda-overriding-header "Zettelkasten")
+                      (org-agenda-remove-tags t)))))
+        ("l" "Literatur"
+         ((tags-todo "literature"
+                     ((org-agenda-overriding-header "Texts & Tasks")
+                      (org-agenda-remove-tags t)
+                      (org-tags-match-list-sublevels
+                       'indented)
+                      (org-agenda-sorting-strategy
+                       '(category-up))))))
+        ("p" "Produktion"
+         ((tags-todo "produktion"
+                     ((org-agenda-overriding-header "Projekte:")
+                      (org-agenda-remove-tags t)
+                      (org-tags-match-list-sublevels 'indented)
+                      (org-agenda-sorting-strategy
+                       '(category-keep))))
+          (todo "ENTWURF"
+                ((org-agenda-overriding-header "Entwürfe:")
+                 (org-agenda-remove-tags t)))
+          (todo "IDEE"
+                ((org-agenda-overriding-header "Ideen:")
+                 (org-agenda-remove-tags t)))))
+        ("k" "Kalender & Termine"
+         ((agenda ""
+                  ((org-agenda-span 96)
+                   (org-agenda-show-all-dates t)
                    (org-agenda-skip-function
-                    '(org-agenda-skip-subtree-if
-                      'regexp ":txt:"))
-                   (org-agenda-sorting-strategy
-                    '( category-keep))
-                   (org-agenda-prefix-format "%l")))
-            (todo "WAITING"
-			((org-agenda-overriding-header "Waiting Tasks:")
-			 (org-agenda-remove-tags t)))
-            (todo "HOLD"
-			((org-agenda-overriding-header "Postponed Tasks:")
-			 (org-agenda-remove-tags t)))))
-  ("t" "Today"
-           ((tags-todo "today"
-                 ((org-agenda-overriding-header "Today's Tasks:")
-                  (org-agenda-remove-tags t)))
-            (todo "STARTED"
-                  ((org-agenda-overriding-header "Started:")
-         	         (org-agenda-remove-tags t)
-                   (org-agenda-skip-function
-                    '(org-agenda-skip-subtree-if
-                      'regexp ":today:"))))
-            (todo "NEXT"
-                  ((org-agenda-overriding-header "Next Tasks:")
-         	         (org-agenda-remove-tags t)))))
-  ("d" "Dissertation"
-           ((tags-todo "diss"
-			((org-agenda-overriding-header "Dissertation")
-			 (org-agenda-remove-tags t)
-			 (org-tags-match-list-sublevels 'indented)
-			 (org-agenda-sorting-strategy
-                             '(category-up))))))
-  ("z" "Zettelkasten"
-           ((tags-todo "zk"
-                  ((org-agenda-overriding-header "Zettelkasten")
-                   (org-agenda-remove-tags t)))))
-  ("l" "Literatur"
-           ((tags-todo "literature"
-			((org-agenda-overriding-header "Texts & Tasks")
-			 (org-agenda-remove-tags t)
-			 (org-tags-match-list-sublevels 'indented)
-			 (org-agenda-sorting-strategy
-                             '(category-up))))))
-	("p" "Produktion"
-	         ((tags-todo "produktion"
-			((org-agenda-overriding-header "Projekte:")
-			 (org-agenda-remove-tags t)
-			 (org-tags-match-list-sublevels 'indented)
-			 (org-agenda-sorting-strategy
-                             '(category-keep))))
-            (todo "ENTWURF"
-			((org-agenda-overriding-header "Entwürfe:")
-			 (org-agenda-remove-tags t)))
-   	  (todo "IDEE"
-			((org-agenda-overriding-header "Ideen:")
-			 (org-agenda-remove-tags t)))))
-	("k" "Kalender & Termine"
-        	 ((agenda ""
-               ((org-agenda-span 96)
-		      (org-agenda-show-all-dates t)
-		      (org-agenda-skip-function
-                 '(org-agenda-skip-entry-if 'deadline 'scheduled))))))
-	("c" "Clean up"
-           ((tags-todo "/WAITING"
-		     ((org-agenda-overriding-header "Waiting but unscheduled:")
-		      (org-agenda-skip-function  '(org-agenda-skip-entry-if 'deadline 'scheduled))
-		      (org-agenda-remove-tags t)))
-	        (todo "DONE"
-			((org-agenda-overriding-header "Tasks to Archive:")
-			 (org-agenda-remove-tags t))))))
-)
+                    '(org-agenda-skip-entry-if
+                      'deadline
+                      'scheduled))))))
+        ("c" "Clean up"
+         ((tags-todo "/WAITING"
+                     ((org-agenda-overriding-header "Waiting but unscheduled:")
+                      (org-agenda-skip-function
+                       '(org-agenda-skip-entry-if
+                         'deadline
+                         'scheduled))
+                      (org-agenda-remove-tags t)))
+          (todo "DONE"
+                ((org-agenda-overriding-header "Tasks to Archive:")
+                 (org-agenda-remove-tags t)))))))
 #+end_src
 
 *** agenda-hydra
