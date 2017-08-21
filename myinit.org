@@ -567,26 +567,18 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
     ;; Don't allow editing of folded regions
     (setq org-catch-invisible-edits 'error)
 
+    (setq org-startup-folded nil)
+    (setq org-startup-indented t)
+    (setq org-ellipsis "…")
+
     (eval-after-load "org"
-      '(define-key org-mode-map (kbd "C-,") nil))))
-
-
-
-(use-package org-plus-contrib
-  :ensure t
-  :defer t)
+      '(define-key org-mode-map (kbd "C-,") nil))
+    (add-to-list 'auto-mode-alist '("\\.txt\\'" . org-mode))
+))
 
 (require 'ox-extra)
 (ox-extras-activate '(ignore-headlines))
 
-;; 18.23 Highlight clock when running overtime ;; in theme!!!
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ubuntu Mono" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
- '(org-mode-line-clock ((t (:foreground "red" :box (:line-width -1 :style released-button)))) t))
 #+end_src
 
 ** shortcuts for major org-files
@@ -773,35 +765,6 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
      (org-agenda-check-type t 'timeline 'agenda)
      (org-agenda-redo)))
   ("q" (message "Abort") :exit t))
-#+end_src
-
-** appearance
-#+begin_src emacs-lisp
-(use-package org-indent
-;;  :commands org-indent-mode
-  :diminish org-indent-mode
-  :init
-  (progn
-   (setq org-startup-indented t))
-)
-
-(setq org-hide-leading-stars t)
-(setq org-startup-folded nil)
-(setq org-ellipsis "…")
-
-(add-to-list 'auto-mode-alist '("\\.txt\\'" . org-mode))
-#+end_src
-
-** behaviour
-#+begin_src emacs-lisp
-;; autolist
-(use-package org-autolist
-  :commands org-autolist-mode
-  :diminish org-autolist-mode
-  :init
-  (progn
-    (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
-  ))
 #+end_src
 
 ** speedkeys
@@ -1191,6 +1154,7 @@ tags: %^{Type|§content|§index}, \n+*+ Inhalt
 (setq org-deadline-warning-days 14) ;; Default Spanne bei Deadlines
 #+end_src
 ** drawers & logging
+*** config
 #+begin_src emacs-lisp
 (setq org-drawers (quote ("PROPERTIES" "LOGBOOK" "CLOCK")))
 (setq org-clock-into-drawer "CLOCK")
@@ -1205,9 +1169,9 @@ tags: %^{Type|§content|§index}, \n+*+ Inhalt
 #+begin_src emacs-lisp
 ; global Effort estimate values
 ; global STYLE property values for completion
-(setq org-global-properties (quote (("Effort_ALL" . "0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 3:00 4:00 5:00 6:00 7:00 8:00")
-                                    ("STYLE_ALL" . "habit"))))
-
+(setq org-global-properties
+      (quote (("Effort_ALL" . "0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 3:00 4:00 5:00 6:00 7:00 8:00")
+              ("STYLE_ALL" . "habit"))))
 #+end_src
 ** clocking
 *** config
@@ -1309,9 +1273,8 @@ http://doc.norang.ca/org-mode.org
           (org-clock-in '(16))
         (bh/clock-in-organization-task-as-default))))
   (delete-other-windows)
-  (switch-to-buffer "punch-in.org")
-  (switch-to-buffer-other-window "*Org Agenda*")
-  )
+  (find-file "~/Dropbox/db/org/punch-in.org")
+  (switch-to-buffer-other-window "*Org Agenda*"))
 
 (defun bh/punch-out ()
   (interactive)
@@ -1367,17 +1330,6 @@ http://doc.norang.ca/org-mode.org
 (bind-key "C-c <f11>" 'job/punch-in-or-out)
 #+end_src
 
-*** org-clock-convenience
-#+begin_src emacs-lisp
-(use-package org-clock-convenience
-  :ensure t
-  :bind (:map org-agenda-mode-map
-   	   ("<C-S-up>" . org-clock-convenience-timestamp-up)
-   	   ("<C-S-down>" . org-clock-convenience-timestamp-down)
-   	   ("ö" . org-clock-convenience-fill-gap)
-   	   ("ä" . org-clock-convenience-fill-gap-both)))
-#+end_src
-
 ** timer
 #+begin_src emacs-lisp
 (setq org-timer-default-timer 25)
@@ -1405,16 +1357,20 @@ http://doc.norang.ca/org-mode.org
 #+end_src
 
 ** calendar
+*** config
 #+begin_src emacs-lisp
-(use-package german-holidays
-  :config
-   (setq holiday-other-holidays holiday-german-holidays))
-
 (setq calendar-latitude 52.450894)
 (setq calendar-longitude 13.308570)
 (setq calendar-location-name "Berlin")
 
 (setq calendar-time-display-form '(24-hours ":" minutes))
+#+end_src
+
+*** german-holidays
+#+begin_src emacs-lisp
+(use-package german-holidays
+  :config
+  (setq holiday-other-holidays holiday-german-holidays))
 #+end_src
 ** export
 *** ox-pandoc
@@ -1565,16 +1521,6 @@ http://doc.norang.ca/org-mode.org
                  ))))
 #+end_src
 
-** org-contacts
-#+begin_src emacs-lisp
-(use-package org-contacts
-  :bind ("C-c g" . org-contacts)
-  :defer t
-  :config
-  (setq org-contacts-files '("~/Dropbox/db/contacts.org"))
-  (setq org-contacts-icon-use-gravatar nil))
-#+end_src
-
 ** org-attach
 #+begin_src emacs-lisp
 (setq org-attach-directory "~/Dropbox/db/data/")
@@ -1599,9 +1545,63 @@ http://doc.norang.ca/org-mode.org
 #+end_src
 
 ** org-contrib
+*** org-plus-contrib
+#+begin_src emacs-lisp
+(use-package org-plus-contrib
+  :ensure t
+  :defer t)
+#+end_src
+
+*** org-contacts
+#+begin_src emacs-lisp
+(use-package org-contacts
+  :bind ("C-c g" . org-contacts)
+  :config
+  (setq org-contacts-files '("~/Dropbox/db/contacts.org"))
+  (setq org-contacts-icon-use-gravatar nil))
+#+end_src
+
 *** org-checklist
 #+begin_src emacs-lisp
 (use-package org-checklist)
+#+end_src
+
+*** org-collector
+#+begin_src emacs-lisp
+(use-package org-collector)
+#+end_src
+
+*** org-indent
+#+begin_src emacs-lisp
+(use-package org-indent
+  ;;  :commands org-indent-mode
+  :diminish org-indent-mode
+  :init
+  (progn
+    (setq org-indent-mode-turns-on-hiding-stars t)))
+#+end_src
+
+** additional packages
+*** org-autolist
+#+begin_src emacs-lisp
+;; autolist
+(use-package org-autolist
+  :commands org-autolist-mode
+  :diminish org-autolist-mode
+  :init
+  (progn
+    (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))))
+#+end_src
+
+*** org-clock-convenience
+#+begin_src emacs-lisp
+(use-package org-clock-convenience
+  :ensure t
+  :bind (:map org-agenda-mode-map
+   	   ("<C-S-up>" . org-clock-convenience-timestamp-up)
+   	   ("<C-S-down>" . org-clock-convenience-timestamp-down)
+   	   ("ö" . org-clock-convenience-fill-gap)
+   	   ("ä" . org-clock-convenience-fill-gap-both)))
 #+end_src
 
 * LaTeX und BibTeX
