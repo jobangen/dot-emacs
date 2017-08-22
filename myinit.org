@@ -3142,7 +3142,8 @@ the body of this command."
          (read-string "New Name: ")))
     (rename-file (concat old-name-base ".txt") (concat new-name-base ".txt"))
     (kill-buffer)
-    (lgrep old-name-base "*.txt" "~/Dropbox/db/zk/zettel")
+    (grep-compute-defaults)
+    (lgrep old-name-base "*.txt" "~/Dropbox/db/zk/zettel" nil)
     (other-window 1)
     (if (y-or-n-p "Do you want to replace basenames? ")
         (progn
