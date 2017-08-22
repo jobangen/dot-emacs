@@ -492,7 +492,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 
 *** link-hint
 #+begin_src emacs-lisp
-(use-package link-hint)
+(use-package link-hint
+  :bind ("C-c h" . link-hint-open-link))
 #+end_src
 
 ** zzz-to-char
