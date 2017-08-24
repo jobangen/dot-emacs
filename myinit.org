@@ -129,26 +129,6 @@ https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
       `((".*" ,autosave-dir t)))
 #+end_src
 
-** Archive und Packages
-#+begin_src emacs-lisp
-(require 'package)
-(setq package-archives '(("gnu"       . "https://elpa.gnu.org/packages/")
-                         ("melpa"     . "https://melpa.milkbox.net/packages/")
-                         ("org"       . "http://orgmode.org/elpa/")))
-#+end_src
-
-* use-package, bind-key
-#+begin_src emacs-lisp
-;; Load use-package, used for loading packages everywhere else
-(setq use-package-enable-imenu-support t)
-(require 'use-package nil t)
-;; Set to t to debug package loading or nil to disable
-(setq use-package-verbose t)
-
-(use-package bind-key
-  :ensure t)
-#+end_src
-
 * Sicherheit
 ** gpg
 #+begin_src emacs-lisp
