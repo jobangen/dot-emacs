@@ -58,15 +58,6 @@
 (setq reb-re-syntax 'rx)
 #+END_SRC
 
-** server
-#+begin_src emacs-lisp
-(defun server-shutdown ()
-  "Save buffers, Quit, and Shutdown (kill) server"
-  (interactive)
-  (save-some-buffers)
-  (kill-emacs))
-#+end_src
-
 ** system-type
 https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
 #+begin_src emacs-lisp
