@@ -3993,6 +3993,16 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 (bind-key "C-k" 'job/kill-line)
 #+end_src
 
+** job/clean-kill-emacs
+#+begin_src emacs-lisp
+(defun job/clean-kill-emacs ()
+  (interactive)
+  (save-some-buffers)
+  (kill-matching-buffers "\.gpg")
+  (kill-emacs)
+  )
+#+end_src
+
 
 * shell-interaktion
 ** zettelkasten-gitstats
