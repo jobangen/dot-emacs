@@ -3,12 +3,14 @@
 # key: zettel
 # --
 #+TITLE: $1
-#+DATE: $2
-* Schlagwörter
+#+DATE: [2017-08-23 11:08:42]
+
++*+ Schlagwörter
 tags: $0
 
-* Inhalt
++*+ Inhalt
 
-* Literatur
++*+ Literatur
 
-* Links
++*+ Links
+- [[file:~/Dropbox/db/stats/zettelkasten/zettel-similarities/sim-`(buffer-name)`][Similarities]]
