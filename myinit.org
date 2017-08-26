@@ -4057,7 +4057,11 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 #+begin_src emacs-lisp
 (defun xrandr-reset ()
   (interactive)
-  (sc "xrandr --output eDP1 --mode 1366x768 --output DP1 --off --output HDMI1 --off --output VIRTUAL1 --off"))
+  (shell-command 
+   (concat "xrandr --output eDP1 --mode 1366x768 &" 
+           "xrandr --output DP1 --off &"
+           "xrandr --output HDMI1 --off &"
+           "xrandr --output VIRTUAL1 --off")))
 #+end_src
 
 *** xrandr-main-1024x768
@@ -4134,8 +4138,10 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 #+begin_src emacs-lisp
 (defun xrandr-preset-topoi ()
   (interactive)
-    (shell-command "xrandr --output eDP1 --mode 1366x768 --output HDMI1 --mode 1680x1050 --left-of eDP1")
-    (shell-command "xmodmap ~/.Xmodmap"))
+    (shell-command
+     (concat "xrandr --output eDP1 --mode 1366x768 &"
+             "xrandr --output HDMI1 --mode 1680x1050 --left-of eDP1 &"
+             "xmodmap ~/.Xmodmap")))
 #+end_src
 *** xrandr-list
 #+begin_src emacs-lisp
