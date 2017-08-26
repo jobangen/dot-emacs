@@ -3168,9 +3168,7 @@ the body of this command."
 ** org-brain
 #+begin_src emacs-lisp
 (use-package org-brain
-  :bind (("C-c v" . org-brain-visualize)
-         (:map org-brain-visualize-mode-map
-               ("l" . link-hint-open-link)))
+  :bind (("C-c v" . org-brain-visualize))
   :config
   (setq org-brain-path (expand-file-name zettelkasten-dir "zettel"))
   (setq org-brain-data-file (expand-file-name ".org-brain-data.el" custom-temp))
@@ -3178,6 +3176,8 @@ the body of this command."
   (setq org-brain-visualize-default-choices 'root)
   (setq org-brain-show-resources t)
   (setq org-brain-show-text t)
+
+  (bind-key "l" 'link-hint-open-link org-brain-visualize-mode-map)
 
   (defun aa2u-buffer ()
     (aa2u (point-min) (point-max)))
