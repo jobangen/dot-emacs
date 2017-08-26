@@ -213,9 +213,10 @@ müssen manuell deaktiviert werden
 ** volatile-highlights
 #+begin_src emacs-lisp
 (use-package volatile-highlights
+  :ensure t
   :diminish volatile-highlights-mode
-  :config
-   (volatile-highlights-mode t))
+  :init
+  (volatile-highlights-mode t))
 #+end_src
 
 ** visual-fill-column
