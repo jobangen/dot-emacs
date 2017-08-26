@@ -2157,15 +2157,13 @@ abort completely with `C-g'."
 ** undo-tree
 #+begin_src emacs-lisp
 (use-package undo-tree
-  :ensure t
   :diminish undo-tree-mode
-  :bind ("C-x u" . undo-tree-visualize)
+  :init
+  (global-undo-tree-mode)
   :config
   (progn
-    (global-undo-tree-mode)
     (setq undo-tree-visualizer-timestamps t)
-    (setq undo-tree-visualizer-diff t))
-)
+    (setq undo-tree-visualizer-diff t)))
 #+end_src
 
 ** magit
