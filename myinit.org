@@ -4158,7 +4158,7 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 #+begin_src emacs-lisp
 (defun job/vpn-zedat-shell ()
   (interactive)
-  (load-library "~/.emacs.d/mycredentials.el.gpg")
+  (load-library "~/.password-store/.data/mycredentials.el.gpg")
   (with-temp-buffer
     (cd "/sudo::/")
     (async-shell-command (concat " echo " job/credentials-fu-berlin-password
