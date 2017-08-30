@@ -556,7 +556,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 
 (require 'ox-extra)
 (ox-extras-activate '(ignore-headlines))
-
 #+end_src
 
 ** shortcuts for major org-files
