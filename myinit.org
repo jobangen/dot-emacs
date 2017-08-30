@@ -2211,6 +2211,13 @@ abort completely with `C-g'."
 #+end_src
 
 * Mail und Kontakte
+** gnus
+#+begin_src emacs-lisp
+(use-package gnus
+  :init
+  (setq gnus-init-file (no-littering-expand-etc-file-name "gnus-config.el")))
+#+end_src
+
 ** message-mode
 #+begin_src emacs-lisp
 (defun job/message-mail ()
