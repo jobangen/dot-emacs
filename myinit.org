@@ -1549,7 +1549,8 @@ http://doc.norang.ca/org-mode.org
   :bind ("C-c g" . org-contacts)
   :config
   (setq org-contacts-files '("~/Dropbox/db/contacts.org"))
-  (setq org-contacts-icon-use-gravatar nil))
+  (setq org-contacts-icon-use-gravatar nil)
+  (setq org-contacts-birthday-format "%l (%y)"))
 #+end_src
 
 *** org-checklist
