@@ -229,8 +229,9 @@ müssen manuell deaktiviert werden
 (use-package visual-fill-column
   :ensure t
   :defer t
-  :config (setq-default visual-fill-column-center-text t
-                        visual-fill-column-fringes-outside-margins t))
+  :config
+  (setq-default visual-fill-column-center-text t
+                visual-fill-column-fringes-outside-margins t))
 #+end_src
 
 ** ascii-art-to-unicode
