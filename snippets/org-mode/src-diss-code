@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: diss-codiert
-# key: diss
-# --
-#+begin_src csv :tangle diss/autoritaet-semantik-codiert/`(file-name-base)`.csv
-$0
-#+end_src

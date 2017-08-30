@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: citeauthor
-# key: cc
-# --
-\citeauthor[$2][$3]{$1}$0

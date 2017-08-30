@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: Link zu txt-Zettel
-# key: txt
-# --
-[[file:$1.txt][#$1]$0

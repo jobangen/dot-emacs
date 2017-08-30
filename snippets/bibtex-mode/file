@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: file
-# key: file
-# --
-  Files = {~/texte/$1},

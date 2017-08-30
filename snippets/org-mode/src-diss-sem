@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: diss-semantik
-# key: diss
-# --
-#+begin_src txt :tangle diss/autoritaet-semantik/`(buffer-name)`
-
-#+end_src

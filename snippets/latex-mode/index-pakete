@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: index-pakete
-# key: index
-# --
-Indexerstellung: Beim Aktivieren unten die Ausgabe nicht vergessen.
-\usepackage{makeidx} % Ausgabe: \printindex
-  \makeindex
-

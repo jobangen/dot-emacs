@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: fullcite
-# key: cc
-# --
-\fullcite[$2][$3]{$1}$0

@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: footnote
-# key: fn
-# --
-%
-\footnote{%
-$1}
-$0

@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: citetitle
-# key: cc
-# --
-\citetitle[$2][$3]{$1}$0

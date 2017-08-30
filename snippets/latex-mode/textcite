@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: textcite
-# key: cc
-# --
-\textcite[$2][$3]{$1}$0

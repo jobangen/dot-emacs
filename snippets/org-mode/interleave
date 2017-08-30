@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: interleave
-# key: int
-# --
-:PROPERTIES:
-:interleave_page_note:  $1
-:END:
-$0

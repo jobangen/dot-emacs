@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: tabelle-pakete
-# key: tabelle
-# --
-\usepackage{booktabs}
-\usepackage{longtable}
-%\usepackage{array} %nur für die Automatisierung von Zählungen
-%\usepackage{etoolbox} %für die Festlegung eines neues Zählers nötig.
