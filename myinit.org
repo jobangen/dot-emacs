@@ -3127,13 +3127,15 @@ the body of this command."
         (progn
           (wgrep-change-to-wgrep-mode)
           (search-forward "txt:" nil t)
-          (while (search-forward old-name-base nil t)
-            (replace-match new-name-base t nil))
+          (condition-case nil
+              ((while (search-forward old-name-base nil t)
+                 (replace-match new-name-base t nil)))
+            (error nil))
           (wgrep-finish-edit))
       (message "Changed filename without updating links."))
-    (find-file "~/Dropbox/db/zk/zettelkasten-log.txt")
-    (end-of-buffer)
-    (insert "\n" (format-time-string "%Y-%m-%d-%H%M") ": " old-name-base ".txt --> " new-name-base ".txt")
+    (find-file "~/Dropbox/db/zk/zettelkasten-log.csv")
+    (beginning-of-buffer)
+    (insert (format-time-string "%Y-%m-%d-%H%M") ", " old-name-base ".txt, " new-name-base ".txt")
     (bury-buffer)
     (save-some-buffers)))
 #+end_src
