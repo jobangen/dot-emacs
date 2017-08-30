@@ -2439,17 +2439,21 @@ rotate entire document."
 
 ** dired
 #+begin_src emacs-lisp
-(setq dired-recursive-deletes 'always)
-(setq dired-recursive-copies 'always)
-(setq dired-dwim-target t)
-(setq delete-by-moving-to-trash t
-      trash-directory "~/.local/share/Trash")
-(setq dired-listing-switches "--group-directories-first -alh1v")
-(put 'dired-find-alternate-file 'disabled nil)
+(use-package dired
+  :bind (:map dired-mode-map
+              ("P" . peep-dired))
+  :init
+  (setq dired-recursive-deletes 'always)
+  (setq dired-recursive-copies 'always)
+  (setq dired-dwim-target t)
+  (setq delete-by-moving-to-trash t
+        trash-directory "~/.local/share/Trash")
+  (setq dired-listing-switches "--group-directories-first -alh1v")
+  (put 'dired-find-alternate-file 'disabled nil)
 
-(add-hook 'dired-mode-hook 'dired-hide-details-mode)
-;; auto refresh dired when file changes; from Ben Maughan
-(add-hook 'dired-mode-hook 'auto-revert-mode)
+  (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+  ;; auto refresh dired when file changes; from Ben Maughan
+  (add-hook 'dired-mode-hook 'auto-revert-mode))
 #+end_src
 
 *** dired-subtree
@@ -2485,8 +2489,7 @@ rotate entire document."
 (use-package peep-dired
   :ensure t
   :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
-  :bind (:map dired-mode-map
-              ("P" . peep-dired)))
+)
 #+end_src
 
 ** calfw
