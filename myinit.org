@@ -11,6 +11,11 @@
 #+end_src
 
 * Grundeinstellungen
+** no-littering
+#+begin_src emacs-lisp
+(use-package no-littering)
+#+end_src
+
 ** defalias
 #+begin_src emacs-lisp
 (defalias 'sc 'shell-command-to-string)
@@ -2518,7 +2523,7 @@ rotate entire document."
   :ensure t
   :bind ("C-<menu>" . bookmark-jump)
   :init
-   (setq bookmark-default-file (expand-file-name (concat user-emacs-directory "bookmarks")))
+   (setq bmkp-bmenu-state-file (no-littering-expand-var-file-name "bmkp/bmenu-state.el"))
    (setq bookmark-save-flag 1))
 #+end_src
 
@@ -2645,39 +2650,40 @@ rotate entire document."
 ** keyfreq
 #+begin_src emacs-lisp
 (use-package keyfreq
-  :config
+  :init
+  (keyfreq-autosave-mode 1)
+  (keyfreq-mode 1)
+  (setq keyfreq-file (no-littering-expand-var-file-name "keyfreq.el"))
+  (setq keyfreq-file-lock (no-littering-expand-var-file-name "keyfreq.lock"))
   (setq keyfreq-excluded-commands
-      '(backward-char
-        delete-backward-char
-        forward-char
-        handle-switch-frame
-        left-char
-        left-word
-        mouse-drag-region
-        mouse-set-point
-        mwheel-scroll
-        next-line
-        previous-line
-        right-char
-        right-word
-        self-insert-command
-        ;;isearch
-        isearch-printing-char
-        ;;org
-        org-self-insert-command
-        org-delete-backward-char
-        org-return
-        org-agenda-next-line
-        org-agenda-previous-line
-        org-ref-next-key
-        ;;Ivy
-        ivy-done
-        ivy-next-line
-        ivy-previous-line
-        magit-invoke-popup-action
-))
-(keyfreq-mode 1)
-(keyfreq-autosave-mode 1))
+        '(backward-char
+          delete-backward-char
+          forward-char
+          handle-switch-frame
+          left-char
+          left-word
+          mouse-drag-region
+          mouse-set-point
+          mwheel-scroll
+          next-line
+          previous-line
+          right-char
+          right-word
+          self-insert-command
+          ;;isearch
+          isearch-printing-char
+          ;;org
+          org-self-insert-command
+          org-delete-backward-char
+          org-return
+          org-agenda-next-line
+          org-agenda-previous-line
+          org-ref-next-key
+          ;;Ivy
+          ivy-done
+          ivy-next-line
+          ivy-previous-line
+          magit-invoke-popup-action)))
 #+end_src
 
 ** pomodoro
