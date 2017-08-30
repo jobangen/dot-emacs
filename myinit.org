@@ -4163,6 +4163,8 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 (defun job/vpn-zedat-shell ()
   (interactive)
   (load-library "~/.password-store/.data/mycredentials.el.gpg")
+  (if (y-or-n-p "Deactivate WLAN? ")
+      (shell-command "nmcli radio wifi off"))
   (with-temp-buffer
     (cd "/sudo::/")
     (async-shell-command (concat " echo " job/credentials-fu-berlin-password
