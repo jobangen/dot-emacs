@@ -462,7 +462,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   :config
    (progn
     (setq avy-all-windows t)
-    (setq avy-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?ö))
+    (setq avy-keys '(?w ?e ?r ?u ?i ?o ?a ?s ?d ?f ?g ?h ?j ?k ?l ?ö ?v ?b ?n ?m))
 
     (define-key input-decode-map (kbd "C-i") (kbd "H-i"))))
 #+end_src
