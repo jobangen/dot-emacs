@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: typographie-pakete
+# key: typo
+# --
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{ellipsis}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage{marginnote}
+%\usepackage{bigfoot}
+

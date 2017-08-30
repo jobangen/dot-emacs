@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: online
+# key: online
+# --
+
+@Online{,
+  author =       {$1},
+  title =        {$2},
+  organization = {$3},
+  year =         {$4},
+  url =          {$5},
+  urldate =      {$6},
+  timestamp =    {`(format-time-string "%Y-%m-%d %a %H:%M")`},
+  source =       {$7, $8},
+  keywords =     {$0}
+}
+
+
+
+

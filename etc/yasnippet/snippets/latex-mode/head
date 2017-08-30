@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: header
+# key: head
+# --
+\usepackage[headsepline]{scrlayer-scrpage}
+ \pagestyle{scrheadings}
+ \ihead{}\chead{}\ohead{}

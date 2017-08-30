@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: footcite
+# key: cc
+# --
+\footcite{$1}$0

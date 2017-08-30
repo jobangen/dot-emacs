@@ -1,0 +1,39 @@
+# -*- mode: snippet -*-
+# name: manual
+# key: man
+# --
+@Manual{$1$2,
+  ALTauthor = 	 {$3},
+  ALTeditor = 	 {$4},
+  title = 	 {$5},
+  OPTsubtitle =  {$6},
+  ALTyear = 	 {$7},
+  ALTdate = 	 {$8},
+  OPTversion = 	 {$2},
+  timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
+  keywords =     {$0},
+  OPTtitleaddon = {},
+  OPTkey = 	 {},
+  OPTlanguage =  {},
+  OPTedition = 	 {},
+  OPTtype = 	 {},
+  OPTseries = 	 {},
+  OPTnumber = 	 {}
+  OPTnote = 	 {},
+  OPTorganization = {},
+  OPTpublisher = {},
+  OPTlocation =  {},
+  OPTisbn = 	 {},
+  OPTchapter = 	 {},
+  OPTpages = 	 {},
+  OPTpagetotal = {},
+  OPTaddendum =  {},
+  OPTpubstate =  {},
+  OPTdoi = 	 {},
+  OPTeprint = 	 {},
+  OPTeprintclass = {},
+  OPTeprinttype = {},
+  OPTurl = 	 {},
+  OPTurldate = 	 {},
+  OPTannote = 	 {}
+}

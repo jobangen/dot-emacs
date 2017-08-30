@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: src-references
+# key: src-ref
+# --
+#+begin_src csv :tangle zettel-txt-references-path.csv :padline no
+$1, , $0
+#+end_src

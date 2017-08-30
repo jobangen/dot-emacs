@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: parencite
+# key: cc
+# --
+\parencite[$2][$3]{$1}$0

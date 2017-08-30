@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: BibTeX
+# key: bib
+# --
+- [[file:~/Dropbox/db/biblio.bib::`(buffer-name)` ][BibTeX Entry]]

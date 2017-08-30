@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: prop-money
+# key: pm
+# --
+:PROPERTIES:
+:type:     money
+:money:    $1
+:group:    $2
+:cause:    $3
+:amount:   $4
+:date:     [`(format-time-string "%Y-%m-%d %a")`]$0
+:END:

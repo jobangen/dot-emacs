@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: unpublished
+# key: unp
+# --
+@Unpublished{,
+  author = 	 {$1},
+  title = 	 {$2},
+  OPTsubtitle =  {$3},
+  OPTtitleaddon = {$4},
+  howpublished = {$5},
+  number = 	 {$6},
+  date =         {$7},
+  timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
+  source =       {$11, $12},
+  keywords=      {$0},
+}

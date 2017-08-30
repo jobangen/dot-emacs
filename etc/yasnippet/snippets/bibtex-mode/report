@@ -1,0 +1,38 @@
+# -*- mode: snippet -*-
+# name: report
+# key: rep
+# --
+@Report{,
+  author = 	 {$1},
+  title = 	 {$2},
+  OPTsubtitle =  {$3},
+  OPTtitleaddon = {$4},
+  institution =  {$5},
+  type =         {$6},
+  date = 	 {$7},
+  url =          {$10},
+  urldate =      {$11},
+  timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
+  source =      {$12, $13},
+  keywords=      {$0},
+  language =     {},
+  number =       {},
+  version =      {},
+  note =         {},
+  location =     {},
+  isrn =         {},
+  chapter =      {},
+  pages =        {},
+  pagetotal =    {},
+  addendum =     {},
+  pubstate =     {},
+  doi =          {},
+  eprint =       {},
+  eprintclass =  {},
+  eprinttype =   {},
+}
+
+
+
+
+

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: autocite
+# key: c
+# --
+\autocite[$2][$3]{$1}$0

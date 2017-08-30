@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: inproceedings
+# key: inp
+# --
+@Inproceedings{,
+  author = 	 {$1},
+  title = 	 {$3},
+  OPTsubtitle =  {$4},
+  ALTdate = 	 {$5},
+  pages = 	 {$6},
+  OPTcrossref =  {$7},
+  timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
+  keywords=      {$9},
+  OPToriglanguage = {$0},
+}

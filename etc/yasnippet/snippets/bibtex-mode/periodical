@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: periodical
+# key: per
+# --
+@Periodical{,
+  editor =       {$1},
+  OPTissuetitle = {$2},
+  OPTissuesubtitle = {$3},
+  title =        {$2},
+  OPTvolume = 	 {$4},
+  OPTnumber = 	 {$5},
+  OPTissue =     {$6},
+  OPTseries = 	 {$7},
+  ALTdate = 	 {$8},
+  crossref =     {$9},
+  timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
+  source =       {$10, $11},
+  keywords =     {$0},
+}

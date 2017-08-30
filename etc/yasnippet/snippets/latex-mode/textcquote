@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: textcquote
+# key: tq
+# --
+\textcquote[$3]{$0}[${2:.}]{$1}

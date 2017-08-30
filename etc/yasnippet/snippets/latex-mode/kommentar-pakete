@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: fixme-pakete
+# key: fixme
+# --
+\usepackage[footnote,draft,silent,nomargin]{fixme} %\listoffixmes gibt die kommentare als Liste aus
+   \fxusetheme{color}

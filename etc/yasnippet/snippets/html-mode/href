@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: a href
+# key: href
+# --
+<a href="${1:Link}" target="${2:_blank}">${3:Text}</a>$0

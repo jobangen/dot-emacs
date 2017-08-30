@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: hyperref-pakete
+# key: hyper
+# --
+\usepackage[colorlinks=true,
+			linkcolor=black,
+			citecolor=black
+			]{hyperref}     % Unauffällige Hyperrefs
