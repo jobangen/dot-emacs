@@ -3006,7 +3006,7 @@ removed before collection."
     (zettelkasten-parse-values-combined)
     (zettelkasten-tangle-combined))
 
-(add-hook 'after-init-hook 'zettelkasten-update-tags-tangle)
+(add-hook 'after-init-hook 'zettelkasten-parse-values-combined)
 
 
 (defun zettelkasten-insert-tags (&optional arg)
