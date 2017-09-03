@@ -4196,4 +4196,40 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 
 
 
+** pdftk
+#+begin_src emacs-lisp
+(defun job/pdftk ()
+  (interactive)
+  (let ((operation
+         (completing-read "Choose Operation: "
+                          '(("1->1")
+                            ("2->1")
+                            ("1->n")) nil t nil)))
+    (when (string-equal operation "1->1")
+      (let ((input-file
+             (read-file-name "Input:"))
+            (arguments
+             (read-string "Arguments: "))
+            (output-file
+             (read-file-name "Output:")))
+        (shell-command
+         (concat "pdftk " input-file " cat " arguments " output " output-file))))
+    (when (string-equal operation "2->1")
+      (let ((input-file-1
+             (read-file-name "Input 1:"))
+            (input-file-2
+             (read-file-name "Input 2:"))
+            (output-file
+             (read-file-name "Output:")))
+        (shell-command
+         (concat "pdftk " input-file-1 " " input-file-2 " cat output " output-file))))
+    (when (string-equal operation "1->n")
+      (let ((input-file
+             (read-file-name "Input:"))
+            ;; (output-dir
+            ;;  (read-file-name "Output:"))
+            )
+        (shell-command
+         (concat "pdftk " input-file " burst"))))))
+#+end_src
 
