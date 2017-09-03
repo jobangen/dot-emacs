@@ -2221,13 +2221,22 @@ abort completely with `C-g'."
 
 ** message-mode
 #+begin_src emacs-lisp
+(setq mail-user-agent 'gnus-user-agent)
+
+(defadvice gnus-msg-mail (before start-gnus activate)
+  (require 'gnus-start)
+  (unless (gnus-alive-p)
+    (save-window-excursion
+      (let ((inhibit-redisplay t))
+        (gnus)))))
+
 (defun job/message-mail ()
   (interactive)
   (let ((account-name (completing-read "Choose Account: "
                                        '(("Gmail")
                                          ("Zedat")
                                          ("Zedatma")) nil t nil)))
-    (message-mail)
+    (gnus-msg-mail)
     (erase-buffer)
     (when (string-equal account-name "Gmail")
       (insert (concat
