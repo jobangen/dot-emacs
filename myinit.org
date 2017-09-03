@@ -2280,7 +2280,7 @@ abort completely with `C-g'."
   :config
     (progn
 ;;     (bbdb-initialize 'gnus 'message)
-     (bbdb-mua-auto-update-init 'gnus)
+;;     (bbdb-mua-auto-update-init 'gnus)
      (setq bbdb-file (expand-file-name (concat db-dir "bbdb")))
      (setq bbdb-north-american-phone-numbers-p nil)
      (setq bbdb-default-country "Deutschland")
