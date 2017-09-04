@@ -1302,7 +1302,7 @@ http://doc.norang.ca/org-mode.org
           (when bh/keep-clock-running
             (bh/clock-in-default-task)))))))
 
-(defvar bh/organization-task-id "44a90c5a-2284-4a7a-94ba-603e4854ea48")
+(defvar bh/organization-task-id "fec8faf6-41b8-4adf-b4cb-18b7c673f08b")
 
 (defun bh/clock-in-organization-task-as-default ()
   (interactive)
