@@ -2501,6 +2501,28 @@ rotate entire document."
 )
 #+end_src
 
+*** dired-launch
+#+begin_src emacs-lisp
+(use-package dired-launch
+  :init
+  (dired-launch-enable)
+  (setf dired-launch-extensions-map
+        '( ;; Office
+          ("odt" ("libreoffice"))
+          ("doc" ("libreoffice"))
+          ("docx" ("libreoffice"))
+          ("csv" ("libreoffice"))
+          ("ppt" ("libreoffice"))
+          ("pptx" ("libreoffice"))
+          ;; Web
+          ("html" ("firefox"))
+          ;; Pictures
+          ("jpg" ("eog" "gimp-2.8"))
+          ("png" ("eog" "gimp-2.8"))
+          ;; Video
+          ("mov" ("totem" "vlc")))))
+#+end_src
+
 ** calfw
 #+begin_src emacs-lisp
 (use-package calfw
