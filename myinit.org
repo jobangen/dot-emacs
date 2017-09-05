@@ -1108,7 +1108,7 @@ tags: %^{Type|§content|§index},
 
 +*+ Links & Files
 
-+*+ Data 
++*+ Data
 
 "
 :immediate-finish t :jump-to-captured t)
@@ -4135,8 +4135,8 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 #+begin_src emacs-lisp
 (defun xrandr-reset ()
   (interactive)
-  (shell-command 
-   (concat "xrandr --output eDP1 --mode 1366x768 &" 
+  (shell-command
+   (concat "xrandr --output eDP1 --mode 1366x768 &"
            "xrandr --output DP1 --off &"
            "xrandr --output HDMI1 --off &"
            "xrandr --output VIRTUAL1 --off")))
@@ -4284,4 +4284,3 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
         (shell-command
          (concat "pdftk " input-file " burst"))))))
 #+end_src
-
