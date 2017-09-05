@@ -2159,6 +2159,11 @@ abort completely with `C-g'."
   :commands define-word define-word-at-point)
 #+end_src
 
+** sdcv-mode
+#+begin_src emacs-lisp
+(use-package sdcv-mode)
+#+end_src
+
 * Versionskontrolle
 ** undo-tree
 #+begin_src emacs-lisp
