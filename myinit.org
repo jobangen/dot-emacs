@@ -80,10 +80,10 @@ https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
 ** dir-setup
 #+begin_src emacs-lisp
 (defvar backup-dir
-   (expand-file-name (concat user-emacs-directory "backups/")))
+   (expand-file-name (convert-standard-filename "backups/") user-emacs-directory))
 
 (defvar autosave-dir
-   (expand-file-name (concat user-emacs-directory "autosave/")))
+   (expand-file-name (convert-standard-filename "autosave/")  user-emacs-directory))
 
 (if (system-type-is-gnu)
    (let ((default-directory  "~/.emacs.d/lisp/"))
@@ -91,6 +91,9 @@ https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
 
 (defvar custom-temp
    (expand-file-name "~/.custom-temp/"))
+
+(defun job/custom-temp-file-name (file)
+    (expand-file-name (convert-standard-filename file) custom-temp))
 
 (defvar texte-dir
    (expand-file-name "~/texte/"))
@@ -102,15 +105,16 @@ https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
     (expand-file-name "C:/Users/job/Dropbox/")))
 
 (defvar db-dir
-  (expand-file-name (concat dropbox-dir "/db/")))
+  (expand-file-name (convert-standard-filename "db/") dropbox-dir))
 
-(setq org-directory (concat dropbox-dir "/db/org/"))
+(setq org-directory
+      (expand-file-name (convert-standard-filename "db/org/") dropbox-dir))
 
-(defvar zettelkasten-dir
-  (expand-file-name (concat dropbox-dir "/db/zk/zettel/")))
+(defvar zettel-dir
+  (expand-file-name (convert-standard-filename "db/zk/zettel/") dropbox-dir))
 
 (defvar job/bibliography-file
-  (expand-file-name (concat dropbox-dir "/db/biblio.bib")))
+  (expand-file-name (convert-standard-filename "db/biblio.bib") dropbox-dir))
 #+end_src
 
 ** Backups
@@ -562,12 +566,33 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ** shortcuts for major org-files
 [[https://github.com/baron42bba/.emacs.d/blob/master/bba.org#define-some-shortcuts-to-access-major-org-files][Define some shortcuts to access major org files.]]
 #+begin_src emacs-lisp
-(bind-key "C-c 0" '(lambda () (interactive) (find-file (concat user-emacs-directory "myinit.org"))))
-(bind-key "C-c 1" '(lambda () (interactive) (find-file "~/Dropbox/db/org/journal.org")))
-(bind-key "C-c 2" '(lambda () (interactive) (find-file "~/Dropbox/db/org/wiss.org")))
-(bind-key "C-c 3" '(lambda () (interactive) (find-file "~/Dropbox/db/org/pers.org")))
-(bind-key "C-c 4" '(lambda () (interactive) (find-file "~/Dropbox/db/org/irw.org")))
-(bind-key "C-c 9" '(lambda () (interactive) (find-file "~/Dropbox/db/zk/zettel")))
+(bind-key "C-c 0" '(lambda ()
+                     (interactive)
+                     (find-file
+                      (concat user-emacs-directory "myinit.org"))))
+(bind-key "C-c 1" '(lambda ()
+                     (interactive)
+                     (find-file
+                      (concat org-directory "inbox.org"))))
+(bind-key "C-c 2" '(lambda ()
+                     (interactive)
+                     (find-file
+                      (concat org-directory "journal.org"))))
+(bind-key "C-c 3" '(lambda ()
+                     (interactive)
+                     (find-file
+                      (concat org-directory "pers.org"))))
+(bind-key "C-c 4" '(lambda ()
+                     (interactive)
+                     (find-file
+                      (concat org-directory "wiss.org"))))
+(bind-key "C-c 5" '(lambda ()
+                     (interactive)
+                     (find-file
+                      (concat org-directory "irw.org"))))
+(bind-key "C-c 9" '(lambda ()
+                     (interactive)
+                     (find-file zettel-dir)))
 
 
 #+end_src
@@ -1069,7 +1094,7 @@ Subject: [[%l][%:subject]]
     Income:Stipendium:Topoi"
     :immediate-finish t)
 
-("z" "Zettel" plain (file (lambda () (capture-report-date-file (expand-file-name zettelkasten-dir))))
+("z" "Zettel" plain (file (lambda () (capture-report-date-file (expand-file-name zettel-dir))))
  "#+TITLE: %^{Title}
 #+DATE: %U
 
@@ -1468,7 +1493,7 @@ http://doc.norang.ca/org-mode.org
 :config
  (progn
    (require 'org-ref)
-   (setq org-ref-notes-directory (expand-file-name zettelkasten-dir))
+   (setq org-ref-notes-directory (expand-file-name zettel-dir))
    (setq org-ref-default-bibliography '("~/Dropbox/db/biblio.bib"))
    (setq org-ref-pdf-directory (expand-file-name texte-dir))
    (setq org-ref-default-citation-link "autocite")
@@ -1765,7 +1790,7 @@ http://www.jonathanleroux.org/bibtex-mode.html
    (setq bibtex-completion-bibliography (expand-file-name job/bibliography-file))
    (setq bibtex-completion-library-path (expand-file-name texte-dir))
    (setq bibtex-completion-pdf-field "Files")
-   (setq bibtex-completion-notes-path (expand-file-name zettelkasten-dir))
+   (setq bibtex-completion-notes-path (expand-file-name zettel-dir))
    (setq bibtex-completion-notes-extension ".txt")
    (setq bibtex-completion-additional-search-fields '("subtitle"
                                                       "date"
@@ -2186,7 +2211,7 @@ abort completely with `C-g'."
    (setq magit-diff-refine-hunk 'all)
    (setq magit-repository-directories
       `(("~/.xmonad")
-        (,zettelkasten-dir)
+        (,zettel-dir)
         (,user-emacs-directory)
         ("~/Dropbox/diss")
         ("~/Dropbox/db")
@@ -3141,7 +3166,7 @@ the body of this command."
 
 (defun zettelkasten-open-dir ()
   (interactive)
-  (find-file zettelkasten-dir))
+  (find-file zettel-dir))
 
 ;;https://emacs.stackexchange.com/questions/15255/put-the-current-file-name-in-the-minibuffer
 (defun job/name-of-the-file ()
@@ -3203,7 +3228,7 @@ the body of this command."
 (use-package remem
   :commands remem-toggle
   :config
-   (setq remem-database-dir "~/.custom-temp/ra-index")
+   (setq remem-database-dir (job/custom-temp-file-name "ra-index"))
    (setq remem-scopes-list '(("zettelkasten" 5 2 500)
                              ("texte" 5 2 500)))
    (setq remem-print-exact-relevance-p t)
@@ -3225,7 +3250,7 @@ the body of this command."
 (use-package org-brain
   :bind (("C-c v" . org-brain-visualize))
   :config
-  (setq org-brain-path (expand-file-name zettelkasten-dir "zettel"))
+  (setq org-brain-path (expand-file-name zettel-dir "zettel"))
   (setq org-brain-data-file (expand-file-name ".org-brain-data.el" custom-temp))
   (setq org-brain-files-extension "txt")
   (setq org-brain-visualize-default-choices 'root)
