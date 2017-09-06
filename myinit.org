@@ -3015,6 +3015,37 @@ _y_: youtube      _bb_: bibtex
   ("ö" sdcv-search "sdcv"))
 #+end_src
 
+** xrandr-hydra
+#+begin_src emacs-lisp
+(bind-key "C-c x" 'hydra-xrandr/body)
+
+(defhydra hydra-xrandr (:hint nil
+                        :color red)
+"
+ ^Main^          ^VGA^                   ^HDMI^                 ^Presets^
+-^-^-------------^---^-------------------^---^----------------------------
+ _a_: 1024x768   _vac_: 1024x768 clone   _hac_: 1024x768 clone  _t_: Topoi
+ ^ ^             _val_: 1024x768 left    _hal_: 1024x768 left   _r_: reset
+ _s_: 1366x768   _vsc_: 1366x768 clone   _hsc_: 1366x768 clone
+ ^ ^             _vsl_: 1366x768 left    _hsl_: 1366x768 left
+"
+  ("r" xrandr-reset)
+  ("a" xrandr-main-1024x768)
+  ("s" xrandr-main-1366x768)
+  ("t" xrandr-preset-topoi)
+  ("x" xrandr-list "xrandr")
+  ("vac" xrandr-vga-1024x768-clone)
+  ("val" xrandr-vga-1024x768-left)
+  ("vsc" xrandr-vga-1366x768-clone)
+  ("vsl" xrandr-vga-1366x768-left)
+  ("hac" xrandr-hdmi-1024x768-clone)
+  ("hal" xrandr-hdmi-1024x768-left)
+  ("hsc" xrandr-hdmi-1366x768-clone)
+  ("hsl" xrandr-hdmi-1366x768-left))
+
+#+end_src
+
+
 * zettelkasten
 ** zettelkasten defun
 #+begin_src emacs-lisp
@@ -3337,7 +3368,21 @@ the body of this command."
 )
 #+end_src
 
+** zettelkasten-gitstats
+#+begin_src emacs-lisp
+(defun zettelkasten-gitstats ()
+  (interactive)
+  (sc (concat "cd ~/Dropbox/db/zk/zettel &&"
+              "gitstats .git gitstats &&"
+              "firefox 'gitstats/index.html'")))
+#+end_src
+
 * defun
+** shell-interaction
+#+begin_src emacs-lisp
+(use-package shell-interaction)
+#+end_src
+
 ** my/insert-date
 #+begin_src emacs-lisp
 (defun my/insert-date (prefix)
@@ -4083,205 +4128,3 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 #+end_src
 
 
-* shell-interaktion
-** zettelkasten-gitstats
-#+begin_src emacs-lisp
-(defun zettelkasten-gitstats ()
-  (interactive)
-  (sc (concat "cd ~/Dropbox/db/zk/zettel &&"
-              "gitstats .git gitstats &&"
-              "firefox 'gitstats/index.html'")))
-#+end_src
-
-** write-channel
-#+begin_src emacs-lisp
-(defun job/write-channels ()
-  (interactive)
-  (sc "iwlist wlp3s0 scanning > ~/.custom-temp/channels.txt")
-  (find-file (expand-file-name (concat custom-temp "channels.txt"))))
-#+end_src
-
-** xrandr
-*** xrandr-hydra
-#+begin_src emacs-lisp
-(bind-key "C-c x" 'hydra-xrandr/body)
-
-(defhydra hydra-xrandr (:hint nil
-                        :color red)
-"
- ^Main^          ^VGA^                   ^HDMI^                 ^Presets^
--^-^-------------^---^-------------------^---^----------------------------
- _a_: 1024x768   _vac_: 1024x768 clone   _hac_: 1024x768 clone  _t_: Topoi
- ^ ^             _val_: 1024x768 left    _hal_: 1024x768 left   _r_: reset
- _s_: 1366x768   _vsc_: 1366x768 clone   _hsc_: 1366x768 clone
- ^ ^             _vsl_: 1366x768 left    _hsl_: 1366x768 left
-"
-  ("r" xrandr-reset)
-  ("a" xrandr-main-1024x768)
-  ("s" xrandr-main-1366x768)
-  ("t" xrandr-preset-topoi)
-  ("x" xrandr-list "xrandr")
-  ("vac" xrandr-vga-1024x768-clone)
-  ("val" xrandr-vga-1024x768-left)
-  ("vsc" xrandr-vga-1366x768-clone)
-  ("vsl" xrandr-vga-1366x768-left)
-  ("hac" xrandr-hdmi-1024x768-clone)
-  ("hal" xrandr-hdmi-1024x768-left)
-  ("hsc" xrandr-hdmi-1366x768-clone)
-  ("hsl" xrandr-hdmi-1366x768-left))
-
-#+end_src
-
-*** xrandr-reset
-#+begin_src emacs-lisp
-(defun xrandr-reset ()
-  (interactive)
-  (shell-command
-   (concat "xrandr --output eDP1 --mode 1366x768 &"
-           "xrandr --output DP1 --off &"
-           "xrandr --output HDMI1 --off &"
-           "xrandr --output VIRTUAL1 --off")))
-#+end_src
-
-*** xrandr-main-1024x768
-#+begin_src emacs-lisp
-(defun xrandr-main-1024x768 ()
-  (interactive)
-  (sc "xrandr --output eDP1 --mode 1024x768"))
-#+end_src
-
-*** xrandr-main-1366x768
-#+begin_src emacs-lisp
-(defun xrandr-main-1366x768 ()
-  (interactive)
-  (sc "xrandr --output eDP1 --mode 1366x768"))
-#+end_src
-
-*** xrandr-vga-1024x768-clone
-#+begin_src emacs-lisp
-(defun xrandr-vga-1024x768-clone ()
-  (interactive)
-  (sc "xrandr --output DP1 --mode 1024x768"))
-#+end_src
-
-*** xrandr-vga-1024x768-left
-#+begin_src emacs-lisp
-(defun xrandr-vga-1024x768-left ()
-  (interactive)
-  (sc "xrandr --output DP1 --mode 1024x768 --left-of eDP1"))
-#+end_src
-
-*** xrandr-vga-1366x768-clone
-#+begin_src emacs-lisp
-(defun xrandr-vga-1366x768-clone ()
-  (interactive)
-  (sc "xrandr --output DP1 --mode 1366x768"))
-#+end_src
-
-*** xrandr-vga-1366x768-left
-#+begin_src emacs-lisp
-(defun xrandr-vga-1366x768-left ()
-  (interactive)
-  (sc "xrandr --output DP1 --mode 1366x768 --left-of eDP1"))
-#+end_src
-
-*** xrandr-hdmi-1024x768-clone
-#+begin_src emacs-lisp
-(defun xrandr-hdmi-1024x768-clone ()
-  (interactive)
-  (sc "xrandr --output HDMI1 --mode 1024x768"))
-#+end_src
-
-*** xrandr-hdmi-1024x768-left
-#+begin_src emacs-lisp
-(defun xrandr-hdmi-1024x768-left ()
-  (interactive)
-  (sc "xrandr --output HDMI1 --mode 1024x768 --left-of eDP1"))
-#+end_src
-
-*** xrandr-hdmi-1366x768-clone
-#+begin_src emacs-lisp
-(defun xrandr-hdmi-1366x768-clone ()
-  (interactive)
-  (sc "xrandr --output HDMI1 --mode 1366x768"))
-#+end_src
-
-*** xrandr-hdmi-1366x768-left
-#+begin_src emacs-lisp
-(defun xrandr-hdmi-1366x768-left ()
-  (interactive)
-  (sc "xrandr --output HDMI1 --mode 1366x768 --left-of eDP1"))
-#+end_src
-
-*** xrandr-preset-topoi
-#+begin_src emacs-lisp
-(defun xrandr-preset-topoi ()
-  (interactive)
-    (shell-command
-     (concat "xrandr --output eDP1 --mode 1366x768 &"
-             "xrandr --output HDMI1 --mode 1680x1050 --left-of eDP1 &"
-             "xmodmap ~/.Xmodmap")))
-#+end_src
-*** xrandr-list
-#+begin_src emacs-lisp
-(defun xrandr-list ()
-  (interactive)
-  (with-output-to-temp-buffer "*xrandr*"
-    (shell-command "xrandr"
-                   "*xrandr*"
-                   "*Messages*")))
-#+end_src
-
-** vpn
-*** vpn-zedat
-#+begin_src emacs-lisp
-(defun job/vpn-zedat-shell ()
-  (interactive)
-  (load-library "~/.password-store/.data/mycredentials.el.gpg")
-  (if (y-or-n-p "Deactivate WLAN? ")
-      (shell-command "nmcli radio wifi off"))
-  (with-temp-buffer
-    (cd "/sudo::/")
-    (async-shell-command (concat " echo " job/credentials-fu-berlin-password
-                                 " | openconnect -s /usr/share/vpnc-scripts/vpnc-script vpn.fu-berlin.de --user=jobangen --passwd-on-stdin"))))
-#+end_src
-
-
-
-
-** pdftk
-#+begin_src emacs-lisp
-(defun job/pdftk ()
-  (interactive)
-  (let ((operation
-         (completing-read "Choose Operation: "
-                          '(("1->1")
-                            ("2->1")
-                            ("1->n")) nil t nil)))
-    (when (string-equal operation "1->1")
-      (let ((input-file
-             (read-file-name "Input:"))
-            (arguments
-             (read-string "Arguments: "))
-            (output-file
-             (read-file-name "Output:")))
-        (shell-command
-         (concat "pdftk " input-file " cat " arguments " output " output-file))))
-    (when (string-equal operation "2->1")
-      (let ((input-file-1
-             (read-file-name "Input 1:"))
-            (input-file-2
-             (read-file-name "Input 2:"))
-            (output-file
-             (read-file-name "Output:")))
-        (shell-command
-         (concat "pdftk " input-file-1 " " input-file-2 " cat output " output-file))))
-    (when (string-equal operation "1->n")
-      (let ((input-file
-             (read-file-name "Input:"))
-            ;; (output-dir
-            ;;  (read-file-name "Output:"))
-            )
-        (shell-command
-         (concat "pdftk " input-file " burst"))))))
-#+end_src
