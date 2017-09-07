@@ -152,7 +152,7 @@
   (shell-command "nmcli radio wifi on"))
 
 ;;;###autoload
-(defun wlan-activate ()
+(defun wlan-deactivate ()
   "Activate Wlan per shell-command with nmcli"
   (interactive)
   (shell-command "nmcli radio wifi off"))
