@@ -3391,7 +3391,8 @@ the body of this command."
   (let ((format (cond
                  ((not prefix) "%Y-%m-%d")
                  ((equal prefix '(4)) "%Y-%m-%d-%H%M")
-                 ((equal prefix '(16)) "%d.%m.%Y")))
+                 ((equal prefix '(16)) "%Y%m%d.%H%M")
+                 ((equal prefix '(64)) "%d.%m.%Y")))
         (system-time-locale "de_DE"))
     (insert (format-time-string format))))
 
