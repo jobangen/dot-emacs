@@ -2541,13 +2541,17 @@ rotate entire document."
   :init
   (dired-launch-enable)
   (setf dired-launch-extensions-map
-        '( ;; Office
+        '(;;Archives
+          ("gz" ("file-roller"))
+          ;; Office
           ("odt" ("libreoffice"))
           ("doc" ("libreoffice"))
           ("docx" ("libreoffice"))
           ("csv" ("libreoffice"))
           ("ppt" ("libreoffice"))
           ("pptx" ("libreoffice"))
+          ("pdf" ("evince" "gimp-2.8"))
+          ("PDF" ("evince ""gimp-2.8"))
           ;; Web
           ("html" ("firefox"))
           ;; Pictures
