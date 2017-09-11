@@ -4,8 +4,8 @@
 
 ;; Author: Jan Ole Bangen <jobangen@gmail.com>
 ;; URL:
-;; Package-Version: 20170906.2142
-;; Version: 0.1.0
+;; Package-Version: 2017-09-11-1448
+;; Version: 0.1.1
 ;; Package-Requires:
 ;; Keywords: shell convenience
 
@@ -26,7 +26,7 @@
 
 ;;; Commentary:
 ;;
-;; Personal collection of different snippets and shell-commands
+;; Personal collection of snippets and shell-commands
 ;;
 ;;; Code:
 (defcustom shell-interaction-var-directory
@@ -162,8 +162,7 @@
 (defun vpn-zedat-shell ()
   (interactive)
   (load-library "~/.password-store/.data/mycredentials.el.gpg")
-  (if (y-or-n-p "Deactivate WLAN? ")
-      (shell-command "nmcli radio wifi off"))
+  (shell-command "nmcli radio wifi off")
   (with-temp-buffer
     (cd "/sudo::/")
     (async-shell-command (concat " echo " job/credentials-fu-berlin-password
