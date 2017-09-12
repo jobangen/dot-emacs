@@ -146,23 +146,22 @@
   (find-file (concat shell-interaction-var-directory "channels.txt")))
 
 ;;;###autoload
-(defun wlan-activate ()
-  "Activate Wlan per shell-command with nmcli"
+(defun wlan-toggle ()
   (interactive)
-  (shell-command "nmcli radio wifi on"))
-
-;;;###autoload
-(defun wlan-deactivate ()
-  "Activate Wlan per shell-command with nmcli"
-  (interactive)
-  (shell-command "nmcli radio wifi off"))
+  (if (string-equal (shell-command-to-string "nmcli radio wifi") "aktiviert\n")
+      (progn
+        (shell-command-to-string "nmcli radio wifi off")
+        (message "WLAN deactivated"))
+    (shell-command-to-string "nmcli radio wifi on")
+    (message "WLAN activated")))
 
 
 ;;;###autoload
 (defun vpn-zedat-shell ()
   (interactive)
   (load-library "~/.password-store/.data/mycredentials.el.gpg")
-  (shell-command "nmcli radio wifi off")
+  (if (y-or-n-p "Deactivate WLAN?")
+      (shell-command-to-string "nmcli radio wifi off"))
   (with-temp-buffer
     (cd "/sudo::/")
     (async-shell-command (concat " echo " job/credentials-fu-berlin-password
