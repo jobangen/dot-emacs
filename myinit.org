@@ -275,6 +275,11 @@ müssen manuell deaktiviert werden
 (global-set-key (kbd "<backspace>") 'ignore)
 ;; (global-set-key (kbd "C-ö") ctl-x-map)
 (define-key key-translation-map (kbd "C-ä") (kbd "C-c"))
+
+(bind-key "H-h" 'windmove-left)
+(bind-key "H-l" 'windmove-right)
+(bind-key "H-j" 'windmove-up)
+(bind-key "H-k" 'windmove-down)
 #+end_src
 
 ** cursor
