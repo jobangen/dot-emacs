@@ -111,14 +111,14 @@ tags: %^{Type|§content|§index},
           (wgrep-change-to-wgrep-mode)
           (search-forward "txt:" nil t)
           (condition-case nil
-              ((while (search-forward old-name-base nil t)
-                 (replace-match new-name-base t nil)))
+              (while (search-forward old-name-base nil t)
+                (replace-match new-name-base))
             (error nil))
           (wgrep-finish-edit))
       (message "Changed filename without updating links."))
     (find-file (concat zettelkasten-main-directory "/zettelkasten-log.csv"))
     (beginning-of-buffer)
-    (insert (format-time-string "%Y-%m-%d-%H%M") ", " old-name-base ".txt, " new-name-base ".txt")
+    (insert (format-time-string "%Y-%m-%d-%H%M") ", " old-name-base ".txt, " new-name-base ".txt\n")
     (bury-buffer)
     (save-some-buffers)))
 
