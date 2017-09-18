@@ -278,8 +278,8 @@ müssen manuell deaktiviert werden
 
 (bind-key "H-h" 'windmove-left)
 (bind-key "H-l" 'windmove-right)
-(bind-key "H-j" 'windmove-up)
-(bind-key "H-k" 'windmove-down)
+(bind-key "H-k" 'windmove-up)
+(bind-key "H-j" 'windmove-down)
 #+end_src
 
 ** cursor
