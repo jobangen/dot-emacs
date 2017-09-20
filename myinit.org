@@ -1545,10 +1545,12 @@ http://doc.norang.ca/org-mode.org
 ** org-babel
 #+begin_src emacs-lisp
 (org-babel-do-load-languages
- 'org-babel-load-languages '((shell . t)))
+ 'org-babel-load-languages '((shell . t)
+                             (dot . t)))
 
 (defun my-org-confirm-babel-evaluate (lang body)
-  (not (string= lang "sh")))  ; don't ask for shell
+  (not (string= lang "sh"))
+  (not (string= lang "dot")))  ; don't ask
 (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
 
 (setq org-src-fontify-natively t
