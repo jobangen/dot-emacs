@@ -2333,6 +2333,8 @@ abort completely with `C-g'."
 ** paperless
 #+begin_src emacs-lisp
 (use-package paperless
+  :bind (:map paperless-mode-map
+              ("C-m" . paperless-display))
   :config
    (setq paperless-capture-directory "~/texte/texteingang")
    (setq paperless-root-directory "~/"))
