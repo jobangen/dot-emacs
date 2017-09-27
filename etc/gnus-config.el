@@ -96,20 +96,34 @@
 
 ;;;;;;;;; Summary ;;;;;;;;;
 (setq gnus-summary-sort-functions '(gnus-summary-sort-by-most-recent-date))
+(setq gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references)
 (setq gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date))
-(setq gnus-summary-thread-gathering-function 'gnus-gather-threads-by-subject)
 
-(setq-default
-     gnus-summary-line-format "%U%R %(%&user-date;  %-20,20f  %B%S%)\n"
-     gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M"))
-     gnus-sum-thread-tree-false-root ""
-     gnus-sum-thread-tree-indent " "
-     gnus-sum-thread-tree-leaf-with-other "├► "
-     gnus-sum-thread-tree-root ""
-     gnus-sum-thread-tree-single-leaf "╰► "
-     gnus-sum-thread-tree-vertical "│")
+(setq-default gnus-summary-line-format "%U%R %(%&user-date;  %-20,20f  %B%S%)\n"
+              gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M"))
+              gnus-sum-thread-tree-indent " "
+              gnus-sum-thread-tree-root "● "
+              gnus-sum-thread-tree-false-root "● "
+              gnus-sum-thread-tree-vertical "│"
+              gnus-sum-thread-tree-leaf-with-other "├► "
+              gnus-sum-thread-tree-single-leaf "╰► "
+              gnus-sum-thread-tree-single-indent "")
+
+(setq gnus-user-date-format-alist
+      '(((gnus-seconds-today) . "Today, %H:%M")
+        ((+ 86400 (gnus-seconds-today)) . "Yesterday, %H:%M")
+        (604800 . "%A, %H:%M") ;;that's one week
+        ((gnus-seconds-month) . "%d. %B, %H:%M")
+        ;; ((gnus-seconds-year) . "%B %d %H:%M")
+        (t . "%Y-%m-%d, %H:%M"))) ;;this one is used when no other does match
 
 
+(setq gnus-summary-line-format
+      (concat " %U%R  "
+              "%*%~(max-right 25)~(pad-right 25)n  "
+              "%B%~(max-right 85)~(pad-right 85)s  "
+              "%-120=%&user-date;\n"))
+ 
 ;;moving Mail
 ;;Gmail, Move to archive 
 (define-key gnus-summary-mode-map "va" 
