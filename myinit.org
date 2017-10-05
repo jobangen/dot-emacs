@@ -1988,7 +1988,7 @@ of a BibTeX field into the template. Fork."
 #+begin_src emacs-lisp
 (use-package ivy-bibtex
  :ensure t
- :bind (("C-c b" . ivy-bibtex)
+ :bind (("C-c n" . ivy-bibtex)
         ("C-<f5>" . ivy-resume))
  :config
   (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
