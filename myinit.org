@@ -2343,6 +2343,11 @@ abort completely with `C-g'."
   (add-hook 'message-mode-hook 'messages-are-flowing-use-and-mark-hard-newlines))
 #+end_src
 
+** org-notmuch
+#+begin_src emacs-lisp
+(use-package org-notmuch)
+#+end_src
+
 * Major-modes
 ** paperless
 #+begin_src emacs-lisp
