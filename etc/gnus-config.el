@@ -119,9 +119,13 @@
 
 
 (setq gnus-summary-line-format
-      (concat " %U%R  "
-              "%*%~(max-right 25)~(pad-right 25)n  "
-              "%B%~(max-right 85)~(pad-right 85)s  "
+      (concat " "
+              "%U%R"
+              "  "
+              "%*%~(max-right 25)~(pad-right 25)n"
+              "  "
+              "%B%~(max-right 85)~(pad-right 85)s"
+              "  "
               "%-120=%&user-date;\n"))
  
 ;;moving Mail
