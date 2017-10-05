@@ -1823,11 +1823,13 @@ http://www.jonathanleroux.org/bibtex-mode.html
        (default       . bibtex-completion-format-citation-default)))
 
   (defun bibtex-completion-format-citation-org-ref-autocite (keys)
-     "Formatter for org-ref references."
-     (let* ((prenote  (if bibtex-completion-cite-prompt-for-optional-arguments (read-from-minibuffer "Prenote: ") ""))
-            (postnote (if bibtex-completion-cite-prompt-for-optional-arguments (read-from-minibuffer "Postnote: ") ""))
-            (prenote  (if (string= "" prenote)  "" (concat prenote  "::")))
-            (notes (if (string= "" postnote) "" (concat "[" prenote postnote "]"))))
+    "Formatter for org-ref references."
+    (let* ((prenote (if bibtex-completion-cite-prompt-for-optional-arguments
+                        (read-from-minibuffer "Prenote: ") ""))
+           (postnote (if bibtex-completion-cite-prompt-for-optional-arguments
+                         (read-from-minibuffer "Postnote: ") ""))
+           (prenote (if (string= "" prenote) "" (concat prenote "::")))
+           (notes (if (string= "" postnote) "" (concat "[" prenote postnote "]"))))
       (format "[[autocite:%s]%s]" (s-join ", " keys) notes)))
 
   (defun bibtex-completion-apa-get-value (field entry &optional default)
