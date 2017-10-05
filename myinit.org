@@ -1621,6 +1621,18 @@ http://doc.norang.ca/org-mode.org
    	   ("ä" . org-clock-convenience-fill-gap-both)))
 #+end_src
 
+*** contacts
+#+begin_src emacs-lisp
+(use-package contacts
+  :load-path "~/.emacs.d/lisp/scimax"
+  :bind (("C-c g" . ivy-contacts)
+         ("C-x m" . ivy-contacts))
+
+  :config
+  (setq contacts-files '("~/Dropbox/db/contacts.org"))
+  (setq contacts-cache-file (no-littering-expand-var-file-name "contacts-cache.el")))
+#+end_src
+
 * LaTeX und BibTeX
 ** auctex
 #+begin_src emacs-lisp
