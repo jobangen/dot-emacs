@@ -2,4 +2,4 @@
 # name: similarities
 # key: sim
 # --
-- [[file:~/Dropbox/db/stats/zettelkasten/zettel-similarities/sim-`(buffer-name)`][Similarities]]
+- [[file:~/.emacs.d/var/zettelkasten/similarities/sim-`(buffer-name)`][Similarities]]
