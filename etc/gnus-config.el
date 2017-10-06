@@ -6,8 +6,6 @@
 (setq nndraft-directory "~/Mail/drafts")
 
 
-
-
 (setq gnus-select-method '(nnnil "")
       gnus-secondary-select-methods 
 	'((nnimap "gmail"
@@ -216,39 +214,32 @@
 (setq message-forward-ignored-headers "DKIM-Signature:\\|^Return-path:\\|^Received:\\|^Received-SPF:\\|^Delivered-To:\\|^Authentication-Results:\\|^Thread-.*:\\|^Message-ID:\\|^References:\\|^In-Reply-To:\\|^Accept-Language:\\|^Content-Language:\\|^X-.*:")
 
 
-
-
-
-
-
-
-
-
-
-
-(gnus-add-configuration  ; summary view
+;; gnus layout
+(gnus-add-configuration
  '(summary
-   (horizontal 1.0 (group 0.14) (summary 1.0 point))))
+   (horizontal 1.0
+               (group 0.14) (summary 1.0 point))))
 
-(gnus-add-configuration  ; article view
+(gnus-add-configuration
  '(article
    (horizontal 1.0
-               (group 0.14)
-               (vertical 1.0 (summary 1.0 point) (article 0.75)))))
-
-(gnus-add-configuration  ; reply view
+               (group 0.14) (vertical 1.0
+                                      (summary 10 point)
+                                      (article 1.0)))))
+(gnus-add-configuration
  '(reply
    (horizontal 1.0
-               (group 0.14)
-               (vertical 1.0 (summary 1.0 point)
-                         (horizontal 0.75 (article 1.0) (reply 0.5))))))
+               (group 0.14) (vertical 1.0
+                                      (summary 10)
+                                      (horizontal 1.0 (article 1.0) (message 0.5 point))))))
 
-(gnus-add-configuration  ; reply view
+(gnus-add-configuration
  '(reply-yank
    (horizontal 1.0
-              (group 0.14)
-               (vertical 1.0 (summary 1.0 point)
-                         (horizontal 0.75 (article 1.0) (reply-yank 0.5))))))
+               (group 0.14) (vertical 1.0
+                                      (summary 10)
+                                      (horizontal 1.0 (article 1.0) (message 0.5 point))))))
+
 
 ;; don't ask how many emails to download
 ;;(setq gnus-large-newsgroup 'nil)
@@ -313,4 +304,12 @@
      	  (gnus-summary-refer-article message-id)) ; simpler than org-gnus method?
       (message "Couldn't get relevant infos for switching to Gnus."))))
 
-     (define-key notmuch-show-mode-map (kbd "C-c C-c") 'notmuch-goto-message-in-gnus)
+(define-key notmuch-show-mode-map (kbd "C-c C-c") 'notmuch-goto-message-in-gnus)
+
+
+
+
+
+
+
+
