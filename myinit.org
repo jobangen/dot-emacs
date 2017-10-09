@@ -1017,12 +1017,12 @@ SCHEDULED: %t
 :END:
 %:fromname wrote on %:date-timestamp-inactive:
 Subject: [[%l][%:subject]]
-#+BEGIN_QUOTE
+,#+BEGIN_QUOTE
 %i
-#+END_QUOTE")
+,#+END_QUOTE")
 
 ("b" "bibtex" plain (file (lambda () (expand-file-name job/bibliography-file)))
-"%?" :jump-to-captured t :empty-lines 1)
+"%?" :immediate-finish t :jump-to-captured t :empty-lines 1)
 
 ("l" "Literatur" entry (file+headline "inbox.org" "Literatur")
  "* TODO %^{Author & Titel} :txt:wiss
