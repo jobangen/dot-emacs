@@ -3105,9 +3105,6 @@ _y_: youtube      _bb_: bibtex
 )
 #+end_src
 
-** zettelkasten defun
-
-+end_src
 ** deft
 #+begin_src emacs-lisp
 (use-package deft
@@ -3148,18 +3145,16 @@ _y_: youtube      _bb_: bibtex
   :bind (("C-c v" . org-brain-visualize))
   :config
   (setq org-brain-path (expand-file-name zettel-dir "zettel"))
-  (setq org-brain-data-file (expand-file-name ".org-brain-data.el" custom-temp))
+  (setq org-brain-data-file (no-littering-expand-var-file-name "org/brain-data.el"))
   (setq org-brain-files-extension "txt")
   (setq org-brain-visualize-default-choices 'root)
   (setq org-brain-show-resources t)
   (setq org-brain-show-text t)
+  (push '("Z" "Add Content to Zettel" plain (function org-brain-goto-end)
+          (function zettelkasten-zettel-template) :empty-lines 1)
+        org-capture-templates)
 
-  (bind-key "l" 'link-hint-open-link org-brain-visualize-mode-map)
-
-  (defun aa2u-buffer ()
-    (aa2u (point-min) (point-max)))
-
-  (add-hook 'org-brain-after-visualize-hook #'aa2u-buffer))
+  (bind-key "l" 'link-hint-open-link org-brain-visualize-mode-map))
 #+end_src
 
 ** org-brain-visualize-hydra
