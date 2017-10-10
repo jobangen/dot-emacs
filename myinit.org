@@ -2503,6 +2503,9 @@ rotate entire document."
 #+begin_src emacs-lisp
 (use-package dired
   :bind (:map dired-mode-map
+              ("C-m". dired-find-file)
+              (";" . dired-subtree-insert)
+              ("i" . dired-subtree-remove)
               ("P" . peep-dired))
   :init
   (setq dired-recursive-deletes 'always)
@@ -2520,8 +2523,7 @@ rotate entire document."
 
 *** dired-subtree
 #+begin_src emacs-lisp
-(bind-key "i" 'dired-subtree-insert dired-mode-map)
-(bind-key "I" 'dired-subtree-remove dired-mode-map)
+(use-package dired-subtree)
 #+end_src
 
 *** dired-filter
@@ -2549,14 +2551,13 @@ rotate entire document."
 #+begin_src emacs-lisp
 ;;preview files in dired
 (use-package peep-dired
-  :ensure t
-  :defer t ; don't access `dired-mode-map' until `peep-dired' is loaded
-)
+  :ensure t)
 #+end_src
 
 *** dired-launch
 #+begin_src emacs-lisp
 (use-package dired-launch
+  :diminish dired-launch-mode
   :init
   (dired-launch-enable)
   (setf dired-launch-extensions-map
@@ -2578,6 +2579,11 @@ rotate entire document."
           ("png" ("eog" "gimp-2.8"))
           ;; Video
           ("mov" ("totem" "vlc")))))
+#+end_src
+
+*** dired-collapse
+#+begin_src emacs-lisp
+(use-package dired-collapse)
 #+end_src
 
 ** calfw
