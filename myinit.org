@@ -510,6 +510,10 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (setq comint-password-prompt-regexp
       (concat comint-password-prompt-regexp
               "\\|^.*Passwort für.*:\\s *\\'"))
+
+(unbind-key "C-c C-l" shell-mode-map)
+(bind-key "C-c C-l" #'counsel-shell-history shell-mode-map)
+
 #+end_src
 
 ** eshell
