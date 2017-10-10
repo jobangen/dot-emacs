@@ -365,8 +365,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          :map ivy-minibuffer-map
            ("C-h" . backward-delete-char)
            ("C-w" . backward-kill-word)
-           ("C-#" . zettelkasten-insert-regex)
-           ("C-v" . job/name-of-the-file)
+           ("<menu>" . zettelkasten-name-of-the-file)
            ("M-y" . ivy-next-line)
            ("M-ü" . ivy-next-line)
         )
