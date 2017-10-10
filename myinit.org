@@ -282,7 +282,7 @@ müssen manuell deaktiviert werden
 (bind-key "H-k" 'windmove-down)
 
 (bind-key "H-h" 'org-metaleft)
-(bind-key "H-ö" 'org-metayright)
+(bind-key "H-ö" 'org-metaright)
 #+end_src
 
 ** cursor
