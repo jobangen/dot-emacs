@@ -3000,17 +3000,17 @@ Git
 
 ** hydra-spellcheck
 #+begin_src emacs-lisp
-(bind-key "C-c s" 'hydra-spellcheck/body)
-
 (defhydra hydra-spellcheck (:color red :columns 3)
   "Flyspell"
-  ("b" flyspell-buffer "buffer")
+  ("b" flyspell-buffer "buffer" :color blue)
   ("c" ispell-word "ispell word")
   ("d" ispell-change-dictionary "change dictionary")
   ("i" ispell-buffer "ispell buffer")
   ("m" flyspell-mode "mode")
   ("n" flyspell-check-next-highlighted-word "next")
   ("p" flyspell-check-previous-highlighted-word "previous"))
+
+(bind-key "C-c s" 'hydra-spellcheck/body)
 #+end_src
 
 ** hydra-engine+
