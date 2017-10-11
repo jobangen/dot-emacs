@@ -1492,18 +1492,17 @@ http://doc.norang.ca/org-mode.org
 ** org-ref
 #+begin_src emacs-lisp
 (use-package org-ref
-:init
- (bind-key "C-c )" 'org-autocite-complete-link org-mode-map)
- (setq org-ref-completion-library 'org-ref-ivy-cite)
-
-:config
- (progn
-   (require 'org-ref)
-   (setq org-ref-notes-directory (expand-file-name zettel-dir))
-   (setq org-ref-default-bibliography '("~/Dropbox/db/biblio.bib"))
-   (setq org-ref-pdf-directory (expand-file-name texte-dir))
-   (setq org-ref-default-citation-link "autocite")
-))
+  :init
+  (bind-key "C-c )" 'org-autocite-complete-link org-mode-map)
+  (setq org-ref-completion-library 'org-ref-ivy-cite)
+  :config
+  (progn
+    (require 'org-ref)
+    (setq org-ref-notes-directory (expand-file-name zettel-dir))
+    (setq org-ref-default-bibliography '("~/Dropbox/db/biblio.bib"))
+    (setq org-ref-pdf-directory (expand-file-name texte-dir))
+    (setq orhc-bibtex-cache-file (no-littering-expand-var-file-name "org/ref/bibtex-cache.el"))
+    (setq org-ref-default-citation-link "autocite")))
 
 #+end_src
 
