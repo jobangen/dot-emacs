@@ -1,7 +1,8 @@
 * combine-logs
 #+begin_src sh :tangle zettelkasten-combine-logs.sh
 #!/bin/bash
-cat ~/Dropbox/db/zk/zettel/*--log.txt > ~/Dropbox/db/zk/zettel-logs.txt
+cat ~/Dropbox/db/zk/zettel/*--log.txt > ~/Dropbox/db/zk/zettel-logs-complete.txt
+sed '/^CLOCK:/ d' < ~/Dropbox/db/zk/zettel-logs-complete.txt > ~/Dropbox/db/zk/zettel-logs.txt
 #+end_src
 
 * extract-tags

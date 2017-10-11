@@ -229,7 +229,7 @@ the body of this command."
 ;; Shell-interaction
 (defun zettelkasten-combine-zettel ()
   (interactive)
-  (shell-command-to-string (concat "cat " zettelkasten-zettel-directory "*.txt > " zettelkasten-main-directory "zettel-combined.txt")))
+  (shell-command-to-string (concat "cat " zettelkasten-zettel-directory "*.txt > " zettelkasten-main-directory "/zettel-combined.txt")))
 
 
 ;; convenience functions
