@@ -2335,8 +2335,6 @@ abort completely with `C-g'."
                (format "--text follows this line--"))))
     )
   (message-goto-to))
-
-(bind-key "C-x m" 'job/message-mail)
 #+end_src
 
 ** offlineimap
