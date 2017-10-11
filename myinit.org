@@ -276,13 +276,15 @@ müssen manuell deaktiviert werden
 ;; (global-set-key (kbd "C-ö") ctl-x-map)
 (define-key key-translation-map (kbd "C-ä") (kbd "C-c"))
 
-(bind-key "H-j" 'windmove-left)
-(bind-key "H-l" 'windmove-right)
-(bind-key "H-i" 'windmove-up)
-(bind-key "H-k" 'windmove-down)
+(bind-key "H-a" 'windmove-left)
+(bind-key "H-d" 'windmove-right)
+(bind-key "H-w" 'windmove-up)
+(bind-key "H-s" 'windmove-down)
 
-(bind-key "H-h" 'org-metaleft)
-(bind-key "H-ö" 'org-metaright)
+(bind-key "H-j" 'org-metaleft)
+(bind-key "H-l" 'org-metaright)
+(bind-key "H-i" 'org-metaup)
+(bind-key "H-k" 'org-metadown)
 #+end_src
 
 ** cursor
