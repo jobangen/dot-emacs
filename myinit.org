@@ -163,16 +163,16 @@ Null prefix argument turns off the mode."
   nil
   (if (symbol-value sensitive-mode)
       (progn
-	;; disable backups
-	(set (make-local-variable 'backup-inhibited) t)
-	;; disable auto-save
-	(if auto-save-default
-	    (auto-save-mode -1)))
+        ;; disable backups
+        (set (make-local-variable 'backup-inhibited) t)
+        ;; disable auto-save
+        (if auto-save-default
+            (auto-save-mode -1)))
     ;resort to default value of backup-inhibited
     (kill-local-variable 'backup-inhibited)
     ;resort to default auto save setting
     (if auto-save-default
-	(auto-save-mode 1))))
+        (auto-save-mode 1))))
 #+end_src
 
 * Appearance
@@ -1360,17 +1360,17 @@ http://doc.norang.ca/org-mode.org
 #+begin_src emacs-lisp
 ;; Aufzählungszeichen wechseln durch
 (setq org-list-demote-modify-bullet '(("-" . "+")
-                                            ("+" . "-")
-                                            ("1." . "A.")
-				  	        ("A." . "1.")
-                                            ("1)" . "-")
-                                            ("A)" . "-")
-                                            ("B)" . "-")
-                                            ("a)" . "-")
-                                            ("b)" . "-")
-                                            ("B." . "-")
-                                            ("a." . "-")
-                                            ("b." . "-")))
+                                      ("+" . "-")
+                                      ("1." . "A.")
+                                      ("A." . "1.")
+                                      ("1)" . "-")
+                                      ("A)" . "-")
+                                      ("B)" . "-")
+                                      ("a)" . "-")
+                                      ("b)" . "-")
+                                      ("B." . "-")
+                                      ("a." . "-")
+                                      ("b." . "-")))
 #+end_src
 ** columns
 #+begin_src emacs-lisp
@@ -1622,10 +1622,10 @@ http://doc.norang.ca/org-mode.org
 (use-package org-clock-convenience
   :ensure t
   :bind (:map org-agenda-mode-map
-   	   ("<C-S-up>" . org-clock-convenience-timestamp-up)
-   	   ("<C-S-down>" . org-clock-convenience-timestamp-down)
-   	   ("ö" . org-clock-convenience-fill-gap)
-   	   ("ä" . org-clock-convenience-fill-gap-both)))
+              ("<C-S-up>" . org-clock-convenience-timestamp-up)
+              ("<C-S-down>" . org-clock-convenience-timestamp-down)
+              ("ö" . org-clock-convenience-fill-gap)
+              ("ä" . org-clock-convenience-fill-gap-both)))
 #+end_src
 
 *** scimax
@@ -1643,21 +1643,21 @@ http://doc.norang.ca/org-mode.org
   "Insert an org-entity using ivy."
   (interactive)
   (ivy-read "Entity: " (loop for element in (append org-entities org-entities-user)
-			     when (not (stringp element))
-			     collect
-			     (cons
-			      (format "%10s | %s | %s | %s"
-				      (car element) ;name
-				      (nth 1 element) ; latex
-				      (nth 3 element) ; html
-				      (nth 6 element)) ;utf-8
-			      element))
-	    :require-match t
-	    :action '(1
-		      ("u" (lambda (element) (insert (nth 6 (cdr element)))) "utf-8")
-		      ("o" (lambda (element) (insert "\\" (cadr element))) "org-entity")
-		      ("l" (lambda (element) (insert (nth 1 (cdr element)))) "latex")
-		      ("h" (lambda (element) (insert (nth 3 (cdr element)))) "html"))))
+                             when (not (stringp element))
+                             collect
+                             (cons
+                              (format "%10s | %s | %s | %s"
+                                      (car element) ;name
+                                      (nth 1 element) ; latex
+                                      (nth 3 element) ; html
+                                      (nth 6 element)) ;utf-8
+                              element))
+            :require-match t
+            :action '(1
+                      ("u" (lambda (element) (insert (nth 6 (cdr element)))) "utf-8")
+                      ("o" (lambda (element) (insert "\\" (cadr element))) "org-entity")
+                      ("l" (lambda (element) (insert (nth 1 (cdr element)))) "latex")
+                      ("h" (lambda (element) (insert (nth 3 (cdr element)))) "html"))))
 
 #+end_src
 
@@ -1668,10 +1668,10 @@ http://doc.norang.ca/org-mode.org
   :defer t
   :mode ("\\.tex\\'" . LaTeX-mode)
   :config
-   (progn
-	(setq TeX-auto-save	t)
-	(setq TeX-parse-self	t)
-	(setq TeX-PDF-mode	t)
+  (progn
+    (setq TeX-auto-save t)
+    (setq TeX-parse-self t)
+    (setq TeX-PDF-mode t)
 
     ;; Use pdf-tools to open PDF files
     (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
@@ -1679,44 +1679,44 @@ http://doc.norang.ca/org-mode.org
 
     ;; Update PDF buffers after successful LaTeX runs
     (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook
-             #'TeX-revert-document-buffer)
+              #'TeX-revert-document-buffer)
 
     (setq LaTeX-csquotes-open-quote "\\enquote{")
-	(setq LaTeX-csquotes-close-quote "}")
+    (setq LaTeX-csquotes-close-quote "}")
     (setq LaTeX-paragraph-commands '("…")) ;; Befehle, bei 'fill' eigene paragraphen bilden
 
-    (setq LaTeX-babel-hyphen nil); Disable language-specific hyphen insertion.
+    (setq LaTeX-babel-hyphen nil) ; Disable language-specific hyphen insertion.
 
     ;; TeX-fold-mode
     (add-hook 'TeX-mode-hook
-         (lambda () (TeX-fold-mode 1))); Automatically activate TeX-fold-mode.
+              (lambda () (TeX-fold-mode 1))) ; Automatically activate TeX-fold-mode.
 
     (custom-set-variables
-      '(TeX-fold-macro-spec-list
-        '(("[f]"     ("sidenote"))
-          ("[fn]"    ("footnote" "marginpar"))
-          ("[ac]"    ("autocite" "avolcite")) ;; new
-          ("[c]"     ("cite"))
-          ("[l]"     ("label"))
-          ("[r]"     ("ref" "pageref" "eqref"))
-          ("[i]"     ("index" "glossary"))
-          ("[1]:||--"  ("item"))
-          ("…"       ("dots"))
-          ("(C)"     ("copyright"))
-          ("(R)"     ("textregistered"))
-          ("TM"      ("texttrademark"))
-          ("\"{1}\"" ("enquote"))
-          ("'{1}'"   ("enquote*"))
-          ("\"{2}\"" ("blockcquote"))
-          ("\"{1}\"" ("chapname"))
-          ("'{1}'"   ("uneigtl"))
-          (1         ("part" "part*" "chapter" "chapter*"
-                      "section" "section*" "subsection" "subsection*"
-                      "subsubsection" "subsubsection*"
-                      "paragraph" "paragraph*" "subparagraph" "subparagraph*"
-                      "emph" "textit" "textsl" "textmd" "textrm"
-                      "textsf" "texttt" "textbf" "textsc" "textup"))))
-      )
+     '(TeX-fold-macro-spec-list
+       '(("[f]" ("sidenote"))
+         ("[fn]" ("footnote" "marginpar"))
+         ("[ac]" ("autocite" "avolcite")) ;; new
+         ("[c]" ("cite"))
+         ("[l]" ("label"))
+         ("[r]" ("ref" "pageref" "eqref"))
+         ("[i]" ("index" "glossary"))
+         ("[1]:||--" ("item"))
+         ("…" ("dots"))
+         ("(C)" ("copyright"))
+         ("(R)" ("textregistered"))
+         ("TM" ("texttrademark"))
+         ("\"{1}\"" ("enquote"))
+         ("'{1}'" ("enquote*"))
+         ("\"{2}\"" ("blockcquote"))
+         ("\"{2}\"" ("textcquote"))
+         ("\"{1}\"" ("chapname"))
+         ("'{1}'" ("uneigtl"))
+         (1 ("part" "part*" "chapter" "chapter*"
+             "section" "section*" "subsection" "subsection*"
+             "subsubsection" "subsubsection*"
+             "paragraph" "paragraph*" "subparagraph" "subparagraph*"
+             "emph" "textit" "textsl" "textmd" "textrm"
+             "textsf" "texttt" "textbf" "textsc" "textup")))))
 
     ;;SyncTeX
     (setq TeX-source-correlate-mode 'synctex)
@@ -1727,13 +1727,12 @@ http://doc.norang.ca/org-mode.org
                 (TeX-add-symbols "enquote*")
                 (TeX-add-symbols "blockcquote")
                 (TeX-add-symbols "textquote")
-                (TeX-add-symbols "textcquote")
-                ))
+                (TeX-add-symbols "textcquote")))
 
-	(add-hook 'LaTeX-mode-hook 'flyspell-mode)
-	(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-	(add-hook 'LaTeX-mode-hook 'latex-extra-mode)
-    (add-hook 'LaTeX-mode-hook 'visual-fill-column-mode)
+    (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+    (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+    (add-hook 'LaTeX-mode-hook 'latex-extra-mode)
+
 
     ;; upd pdf-buffer after comp: https://github.com/politza/pdf-tools
     (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
@@ -1741,23 +1740,22 @@ http://doc.norang.ca/org-mode.org
 
 
     (add-hook 'LaTeX-mode-hook
-         (lambda()
-            (add-to-list 'TeX-command-list '("Latexmk" "%`latexmk -pdf %t" TeX-run-TeX nil t))
-            (setq TeX-save-query nil)
-            (setq TeX-show-compilation t)))
+              (lambda ()
+                (add-to-list 'TeX-command-list '("Latexmk" "%`latexmk -pdf %t" TeX-run-TeX nil t))
+                (setq TeX-save-query nil)
+                (setq TeX-show-compilation t)))
 
     (add-hook 'LaTeX-mode-hook
-         (lambda()
-            (add-to-list 'TeX-command-list '("Latex -se" "%`pdflatex --synctex=1 -shell-escape %t" TeX-run-TeX nil t))
-            (setq TeX-save-query nil)
-            (setq TeX-show-compilation t)))
+              (lambda ()
+                (add-to-list 'TeX-command-list '("Latex -se" "%`pdflatex --synctex=1 -shell-escape %t" TeX-run-TeX nil t))
+                (setq TeX-save-query nil)
+                (setq TeX-show-compilation t)))
 
-      (add-hook 'LaTeX-mode-hook
-          (lambda()
-             (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex --synctex=1 %(mode)%' %t" TeX-run-TeX nil t))
-             (setq TeX-save-query nil)
-             (setq TeX-show-compilation t)))
-))
+    (add-hook 'LaTeX-mode-hook
+              (lambda ()
+                (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex --synctex=1 %(mode)%' %t" TeX-run-TeX nil t))
+                (setq TeX-save-query nil)
+                (setq TeX-show-compilation t)))))
 
 (use-package latex-extra
  :defer t
@@ -1769,27 +1767,26 @@ http://doc.norang.ca/org-mode.org
 (use-package reftex
   :diminish reftex-mode
   :config
-    (progn
-	(setq reftex-plug-into-AUCTeX t)
-	(setq reftex-sort-bibtex-matches "author")
-	(setq reftex-external-file-finders
-	      '(("tex" . "kpsewhich -format=.tex %f")
-        	("bib" . "kpsewhich -format=.bib %f")))
+  (progn
+    (setq reftex-plug-into-AUCTeX t)
+    (setq reftex-sort-bibtex-matches "author")
+    (setq reftex-external-file-finders
+          '(("tex" . "kpsewhich -format=.tex %f")
+            ("bib" . "kpsewhich -format=.bib %f")))
     (setq reftex-default-bibliography '("~/Dropbox/db/biblio.bib"))
-	(setq reftex-cite-format
-		'((?\C-m . "\\autocite[][]{%l}")
-		  (?c . "\\cite[][]{%l}")
-		  (?t . "\\textcite[][]{%l}")
-		  (?y . "\\autocite*[][]{%l}")
-		  (?n . "\\nocite{%l}")
-		  (?f . "\\footcite[][]{%l}")
-              (?T . "\\textcquote[][]{%l}[]{")
-              (?B . "\\blockcquote[][]{%l}[]{")))
+    (setq reftex-cite-format
+          '((?\C-m . "\\autocite[][]{%l}")
+            (?c . "\\cite[][]{%l}")
+            (?t . "\\textcite[][]{%l}")
+            (?y . "\\autocite*[][]{%l}")
+            (?n . "\\nocite{%l}")
+            (?f . "\\footcite[][]{%l}")
+            (?T . "\\textcquote[][]{%l}[]{")
+            (?B . "\\blockcquote[][]{%l}[]{")))
     (setq reftex-cite-prompt-optional-args t)
     (setq reftex-cite-cleanup-optional-arg t)
-	(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-	(add-hook 'latex-mode-hook 'turn-on-reftex)
-))
+    (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+    (add-hook 'latex-mode-hook 'turn-on-reftex)))
 #+end_src
 
 ** bibtex-mode
@@ -2354,10 +2351,10 @@ abort completely with `C-g'."
        (let (buffers)
         (save-current-buffer
          (dolist (buffer (buffer-list t))
-	  (set-buffer buffer)
-	  (when (and (derived-mode-p 'message-mode)
-		(null message-sent-message-via))
-	     (push (buffer-name buffer) buffers))))
+          (set-buffer buffer)
+          (when (and (derived-mode-p 'message-mode)
+                (null message-sent-message-via))
+             (push (buffer-name buffer) buffers))))
         (nreverse buffers)))
      (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 ))
@@ -3343,15 +3340,15 @@ Funktioniert noch nicht richtig..oder?
 
 http://mbork.pl/2017-02-26_other-window-or-switch-buffer
 #+begin_src emacs-lisp
-  (defun job/other-window-or-my/hsplit-last-buffer (prefix)
-    "Call `other-window' if more than one window is visible, create
+(defun job/other-window-or-my/hsplit-last-buffer (prefix)
+  "Call `other-window' if more than one window is visible, create
   and swith otherwise"
-    (interactive "p")
-    (if (one-window-p)
-	    (my/hsplit-last-buffer prefix)
-	  (other-window 1)))
+  (interactive "p")
+  (if (one-window-p)
+      (my/hsplit-last-buffer prefix)
+    (other-window 1)))
 
-  (bind-key "C-t" 'job/other-window-or-my/hsplit-last-buffer)
+(bind-key "C-t" 'job/other-window-or-my/hsplit-last-buffer)
 #+end_src
 
 ** frequencies
@@ -3483,18 +3480,18 @@ http://mbork.pl/2015-11-14_A_simple_unfilling_function
 (defun my/unfill-region (begin end)
   "Change isolated newlines in region into spaces."
   (interactive (if (use-region-p)
-		   (list (region-beginning)
-			 (region-end))
-		 (list nil nil)))
+                   (list (region-beginning)
+                         (region-end))
+                 (list nil nil)))
   (save-restriction
     (narrow-to-region (or begin (point-min))
-		      (or end (point-max)))
+                      (or end (point-max)))
     (goto-char (point-min))
     (while (search-forward "\n" nil t)
       (if (eq (char-after) ?\n)
-	  (skip-chars-forward "\n")
-	(delete-char -1)
-	(insert ?\s)))))
+          (skip-chars-forward "\n")
+        (delete-char -1)
+        (insert ?\s)))))
 #+end_src
 ** my/random-todo
 https://gist.github.com/tonyday567/4343164
@@ -3885,9 +3882,9 @@ http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
   ;; Setting process-setup-function makes exit-message-function work
   ;; even when async processes aren't supported.
   (compilation-start (if (and grep-use-null-device null-device)
-			 (concat command-args " " null-device)
-		       command-args)
-		     'grep-mode))
+                         (concat command-args " " null-device)
+                       command-args)
+                     'grep-mode))
 #+end_src
 ** my/move-file
 http://zck.me/emacs-move-file
@@ -3994,5 +3991,3 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
   (kill-emacs)
   )
 #+end_src
-
-
