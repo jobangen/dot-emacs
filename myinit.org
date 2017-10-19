@@ -1117,8 +1117,7 @@ Subject: [[%l][%:subject]]
  "%(org-read-date) * Stipendium Topoi
     Assets:Giro                              %^{Amount|1350,00}€
     Income:Stipendium:Topoi"
-    :immediate-finish t)
-))
+ :immediate-finish t)))
 #+end_src
 
 ** refile
