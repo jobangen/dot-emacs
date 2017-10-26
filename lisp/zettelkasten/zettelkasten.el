@@ -222,6 +222,7 @@ the body of this command."
 
 ;; Zettel outout
 (defun zettelkasten-tangle-combined ()
+  (interactive)
   (org-babel-tangle-file
    (concat zettelkasten-main-directory "/zettel-combined.txt")))
 
