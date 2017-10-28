@@ -1487,6 +1487,7 @@ http://doc.norang.ca/org-mode.org
 ** org-ref
 #+begin_src emacs-lisp
 (use-package org-ref
+  :ensure t
   :init
   (bind-key "C-c )" 'org-autocite-complete-link org-mode-map)
   (setq org-ref-completion-library 'org-ref-ivy-cite)
