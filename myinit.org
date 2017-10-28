@@ -2609,6 +2609,14 @@ rotate entire document."
                '("\\.plot\\'" . gnuplot-mode)))
 #+end_src
 
+** ledger-mode
+#+begin_src emacs-lisp
+(use-package ledger-mode
+  :init
+  (add-to-list 'auto-mode-alist
+               '("\\.dat\\'" . ledger-mode)))
+#+end_src
+
 * Minor-modes
 ** abbrev-mode
 #+begin_src emacs-lisp
