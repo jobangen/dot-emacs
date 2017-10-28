@@ -883,10 +883,7 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 ;;http://stackoverflow.com/questions/24967910/org-mode-capture
 (defun org-capture-berlinantiquariat ()
   "Capture a class template for org-capture."
-  (let ((date (org-read-date))
-        (time-begin (read-string "Begin: " nil nil '(nil)))
-        (time-end (read-string "End: " nil nil '(nil)))
-        (length (read-string "Length: " nil nil '(nil))))
+  (let ((date (org-read-date)))
     (when (and date)
       (concat (format "* BerlinAntiquariat   :arbeit:\n")
               (format ":PROPERTIES:\n")
@@ -894,12 +891,12 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
               (format ":TYPE:     arbeit\n")
               (format ":WORK:     berlinantiquariat\n")
               (format ":DATE:     [%s]\n" date)
-              (format ":TIME:     %s--%s\n" time-begin time-end)
-              (format ":LENGTH:   %s\n" length)
+              (format ":TIME:    15:00--18:30\n")
+              (format ":DURATION:   3.5h\n")
               (format ":END:\n")
               (format ":CLOCK:\n")
-              (format "CLOCK: [%s %s]--" date time-begin)
-              (format "[%s %s] =>\n" date time-end)
+              (format "CLOCK: [%s 15:00]--" date)
+              (format "[%s 18:30] =>\n" date)
               (format ":END:")))))
 
 (defun org-capture-wiss ()
@@ -1442,8 +1439,7 @@ http://doc.norang.ca/org-mode.org
 (add-to-list 'org-latex-classes
       '("abrechnung"
          "\\documentclass[DIV=12, a4paper, 12pt]{scrartcl}
-          \\usepackage{marvosym}
-          \\usepackage{datetime}
+          \\usepackage{job-abrechnung-ba}
          [NO-DEFAULT-PACKAGES]
          [PACKAGES]
          [EXTRA]"
