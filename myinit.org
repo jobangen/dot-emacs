@@ -32,6 +32,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq large-file-warning-threshold nil)
 (setq sentence-end-double-space nil)
+(setq visible-bell t) ;; blinken bei error
 
 (transient-mark-mode nil) ;; No region when it is not highlighted
 (global-font-lock-mode 1) ;;syntax highlighting everywhere
