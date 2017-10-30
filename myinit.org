@@ -1496,7 +1496,6 @@ http://doc.norang.ca/org-mode.org
     (setq org-ref-pdf-directory (expand-file-name texte-dir))
     (setq orhc-bibtex-cache-file (no-littering-expand-var-file-name "org/ref/bibtex-cache.el"))
     (setq org-ref-default-citation-link "autocite")))
-
 #+end_src
 
 ** org-clock-csv
@@ -1651,7 +1650,6 @@ http://doc.norang.ca/org-mode.org
                       ("o" (lambda (element) (insert "\\" (cadr element))) "org-entity")
                       ("l" (lambda (element) (insert (nth 1 (cdr element)))) "latex")
                       ("h" (lambda (element) (insert (nth 3 (cdr element)))) "html"))))
-
 #+end_src
 
 * LaTeX und BibTeX
