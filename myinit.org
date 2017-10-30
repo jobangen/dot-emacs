@@ -442,18 +442,14 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          ("C-S-s" . counsel-imenu)
          ("C-S-i" . counsel-grep-or-swiper)
          ("C-c u" . counsel-linux-app)
-         ("C-ä u" . counsel-linux-app)
          ("C-M-s" . counsel-ag)
          ("C-x l" . counsel-locate)
-         ("C-ö l" . counsel-locate)
          ("M-y" . counsel-yank-pop)
-         ("M-ü" . counsel-yank-pop)
          ("M-x" . counsel-M-x)
          ("C-x C-m" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
          ("C-x C-SPC" . counsel-mark-ring)
-         )
-  )
+         ("C-c o" . counsel-outline)))
   #+end_src
 
 ** smex
