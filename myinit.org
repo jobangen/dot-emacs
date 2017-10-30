@@ -16,8 +16,7 @@
 (use-package no-littering
   :init
   (eval-after-load 'shell-interaction
-    `(make-directory ,(concat user-emacs-directory "var/shell-interaction") t))
-)
+    `(make-directory ,(concat user-emacs-directory "var/shell-interaction") t)))
 #+end_src
 
 ** defalias
