@@ -41,6 +41,9 @@
       smtpmail-debug-info t
       )
 
+(setq gnus-confirm-mail-reply-to-news t)
+(setq gnus-confirm-treat-mail-like-news t)
+
 
 ;; gnutls
 (setq starttls-use-gnutls t)
