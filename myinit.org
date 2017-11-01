@@ -358,6 +358,12 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
     (setq aw-dispatch-always nil)))
 #+end_src
 
+** isearch
+#+begin_src emacs-lisp
+(define-key isearch-mode-map (kbd "C-h") 'isearch-delete-char)
+(define-key isearch-mode-map (kbd "C-c C-o") 'pdf-isearch-occur)
+#+end_src
+
 ** ivy
 #+begin_src emacs-lisp
 (use-package ivy
