@@ -1092,8 +1092,8 @@ Subject: [[%l][%:subject]]
     :immediate-finish t)
 
 ("gu" "Untermiete" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
- "%(org-read-date) * Kevin Schürer (%^{Monat})
-    Assets:Giro                               %^{Amount|330,00}€
+ "%(org-read-date) * Sabine und Hartmut (%^{Monat})
+    Assets:Giro                               100,00€
     Income:Wohnung"
     :immediate-finish t)
 
