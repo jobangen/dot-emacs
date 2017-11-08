@@ -42,7 +42,7 @@
       )
 
 (setq gnus-confirm-mail-reply-to-news t)
-(setq gnus-confirm-treat-mail-like-news t)
+(setq gnus-confirm-treat-mail-like-news nil)
 
 
 ;; gnutls
@@ -137,9 +137,14 @@
     (gnus-summary-move-article nil "nnimap+gmail:arch" nil)
     (gnus-summary-next-unread-article)))
 
+(define-key gnus-summary-mode-map "vt"
+  (lambda () (interactive)
+    (gnus-summary-move-article nil "nnimap+gmail:trash" nil)
+    (gnus-summary-next-article)))
+
 (define-key gnus-summary-mode-map "vd"
   (lambda () (interactive)
-    (gnus-summary-delete-article)
+    (gnus-summary-move-article nil "nnimap+zedat:Trash" nil)
     (gnus-summary-next-article)))
 
 (define-key gnus-summary-mode-map "vg"
