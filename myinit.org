@@ -2330,9 +2330,11 @@ abort completely with `C-g'."
 
 ** offlineimap
 #+begin_src emacs-lisp
-  (require 'offlineimap)
+(use-package offlineimap
+  :init
   (add-hook 'gnus-before-startup-hook 'offlineimap)
-  (setq offlineimap-mode-line-style 'symbol)
+  :config
+  (setq offlineimap-timestamp "%Y-%m-%d-%H:%M:%S "))
 #+end_src
 
 ** gnus-dired
