@@ -252,39 +252,46 @@ müssen manuell deaktiviert werden
 ** kbd
 [[http://pragmaticemacs.com/emacs/use-your-digits-and-a-personal-key-map-for-super-shortcuts/][Use your digits and a personal key map for super shortcuts]]
 #+begin_src emacs-lisp
-  ;; unset C- and M- digit keys
-  (dotimes (n 10)
-    (global-unset-key (kbd (format "C-%d" n)))
-    (global-unset-key (kbd (format "M-%d" n))))
-
-  (define-prefix-command 'job-map)
-  (global-set-key (kbd "C-1") 'job-map)
-#+end_src
-
-#+begin_src emacs-lisp
-(bind-key "<menu>" 'switch-to-buffer)
-(bind-key "C-h" 'backward-delete-char)
-(bind-key "C-x C-k" 'kill-region)
-;; (bind-key "C-r" 'previous-line)
-;; (bind-key "C-ö ö" 'save-some-buffers)
-(bind-key "C-ß" 'help)
-(bind-key "C-x C-b" 'ibuffer)
-(bind-key "M-SPC" 'cycle-spacing)
+;; unset C- and M- digit keys
+(dotimes (n 10)
+  (global-unset-key (kbd (format "C-%d" n)))
+  (global-unset-key (kbd (format "M-%d" n))))
 
 (global-set-key (kbd "<return>") 'ignore)
 (global-set-key (kbd "<backspace>") 'ignore)
-;; (global-set-key (kbd "C-ö") ctl-x-map)
-(define-key key-translation-map (kbd "C-ä") (kbd "C-c"))
 
-(bind-key "H-a" 'windmove-left)
-(bind-key "H-d" 'windmove-right)
-(bind-key "H-w" 'windmove-up)
-(bind-key "H-s" 'windmove-down)
 
-(bind-key "H-j" 'org-metaleft)
-(bind-key "H-l" 'org-metaright)
-(bind-key "H-i" 'org-metaup)
-(bind-key "H-k" 'org-metadown)
+(define-prefix-command 'job-map)
+(global-set-key (kbd "C-1") 'job-map)
+
+
+(bind-keys
+ ("<menu>" . switch-to-buffer)
+ ("<f5>" . revert-buffer))
+
+(bind-keys*
+ ("C-h" . backward-delete-char)
+ ("C-ß" . help))
+
+(bind-keys*
+ ("C-x C-b" . ibuffer)
+ ("C-x C-k" . kill-region))
+
+(bind-keys*
+ ("M-SPC" . cycle-spacing))
+
+(bind-keys*
+ ;; windowmove
+ ("H-a" . windmove-left)
+ ("H-d" . windmove-right)
+ ("H-w" . windmove-up)
+ ("H-s" . windmove-down)
+ ;; org-meta
+ ("H-j" . org-metaleft)
+ ("H-l" . org-metaright)
+ ("H-i" . org-metaup)
+ ("H-k" . org-metadown))
+
 #+end_src
 
 ** cursor
