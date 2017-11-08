@@ -13,7 +13,7 @@
   OPTorigdate =  {$7},
   timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
   keywords =     {$11},
-  source =       {$12, $13},
+  source =       {$12,$13},
   crossref=	 {$0},
   publisher =    {},
   location =     {},

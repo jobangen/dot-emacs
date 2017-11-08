@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: diss-sem-todo
+# key: diss
+# --
+#+begin_src csv :tangle diss/diss-semantik-todo.csv :padline no
+`(file-name-base)`, ${2:$$(yas-choose-value '("Auctoritas" "Augustus" "Christen" "Streit" "Soziales" "Ansehensmacht" "Weber"))}, ${4:page-range}, ${5:pages}, ${6:pages-done}
+#+end_src

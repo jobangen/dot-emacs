@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: csv-autfor
+# key: csv
+# --
+`(file-name-base)`, , , ${1:Seite}, ${2:$$(yas-choose-value '("Zitat" "Nennung"))}, ${3:Ziel}, ${4:Zielseite}, $0

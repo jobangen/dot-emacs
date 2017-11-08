@@ -11,7 +11,7 @@
   howpublished = {$6},
   organization = {$7},
   timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
-  source =       {$8, $9}
+  source =       {$8,$9}
   keywords =     {$0},
   
 }

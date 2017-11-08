@@ -11,6 +11,6 @@
   OPTcrossref =  {$7},
   timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
   keywords=      {$9},
-  source =       {$10, $11},
+  source =       {$10,$11},
   OPToriglanguage = {$0},
 }

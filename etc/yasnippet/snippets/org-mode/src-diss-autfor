@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: diss-autfor
+# key: diss
+# --
+#+begin_src csv :tangle diss/autoritaetsforschung/`(file-name-base)`.csv
+$0
+#+end_src

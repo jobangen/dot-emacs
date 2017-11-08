@@ -16,7 +16,7 @@
   OPTseries = 	 {$8},
   OPTnumber = 	 {$9},
   timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
-  source =       {$10, $11},
+  source =       {$10,$11},
   keywords =     {$0},
   OPTcrossref=	 {},
   OPTtype=       {},

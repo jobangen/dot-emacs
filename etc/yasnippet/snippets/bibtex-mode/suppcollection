@@ -11,7 +11,7 @@
   pages = 	 {$6},
   timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
   OPTcrossref =  {$7},
-  source =       {$8, $9},
+  source =       {$8,$9},
   keywords=      {$0},
   OPTbooktitle = {},
   OPTbooksubtitle = {},

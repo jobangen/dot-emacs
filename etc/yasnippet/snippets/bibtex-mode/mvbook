@@ -24,7 +24,7 @@
   OPTseries = 	 {$18},
   OPTnumber = 	 {$19},
   timestamp =	 {`(format-time-string "%Y-%m-%d %a %H:%M")`},
-  source =       {$20, $21},
+  source =       {$20,$21},
   keywords =     {$0},
   crossref=	 {},
   OPTtranslator = {},
