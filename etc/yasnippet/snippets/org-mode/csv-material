@@ -2,4 +2,4 @@
 # name: csv-material
 # key: csv
 # --
-`(file-name-base)`,cha:${1:$$(yas-choose-value '("Auctoritas" "Augustus" "Christen" "Streit" "Soziales" "Ansehensmacht" "Weber"))},${2:$$(yas-choose-value '("Primär" "Sekundär"))},${3:1-9},${8:comment}
+`(file-name-base)`,cha:${1:$$(yas-choose-value '("Auctoritas" "Augustus" "Christen" "Streit" "Soziales" "Ansehensmacht" "Weber" "Einleitung"))},${2:$$(yas-choose-value '("Primär" "Sekundär"))},${3:1-9},${8:comment}
