@@ -2407,10 +2407,13 @@ abort completely with `C-g'."
               ("am" . pdf-annot-add-markup-annotation)
               ("al" . pdf-annot-list-annotations)
               ("ad" . pdf-annot-delete)
+              ("d" . pdf-annot-delete)
               ("ah" . pdf-annot-add-highlight-markup-annotation)
+              ("h" . pdf-annot-add-highlight-markup-annotation)
               ("aq" . pdf-annot-add-squiggly-markup-annotation)
               ("as" . pdf-annot-add-strikeout-markup-annotation)
               ("at" . pdf-annot-add-text-annotation)
+              ("t" . pdf-annot-add-text-annotation)
               ("au" . pdf-annot-add-underline-markup-annotation)
               ("j"  . pdf-view-goto-page))
   :ensure t
