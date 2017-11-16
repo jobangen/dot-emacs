@@ -133,6 +133,15 @@ https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
       `((".*" ,autosave-dir t)))
 #+end_src
 
+** wrapper and helper
+#+begin_src emacs-lisp
+;; wrapper for save-buffer ignoring arguments
+;; http://pragmaticemacs.com/emacs/even-more-pdf-tools-tweaks/
+(defun job/save-buffer-no-args ()
+  "Save buffer ignoring arguments"
+  (save-buffer))
+#+end_src
+
 * Sicherheit
 ** gpg
 #+begin_src emacs-lisp
