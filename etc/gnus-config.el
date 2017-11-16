@@ -130,22 +130,45 @@
               "%-120=%&user-date;\n"))
  
 ;;moving Mail
-;;Gmail, Move to archive 
-(define-key gnus-summary-mode-map "va" 
+;;Move to archive
+(define-key gnus-summary-mode-map "va"
   (lambda () (interactive)
-    (gnus-summary-put-mark-as-unread nil)
-    (gnus-summary-move-article nil "nnimap+gmail:arch" nil)
-    (gnus-summary-next-unread-article)))
+    (if (string-match "zedatma" gnus-newsgroup-name)
+        (progn
+          (gnus-summary-put-mark-as-read))
+      (if (string-match "zedat" gnus-newsgroup-name)
+          (progn
+            (gnus-summary-put-mark-as-unread nil)
+            (gnus-summary-move-article nil "nnimap+zedat:2017" nil)
+            (gnus-summary-next-article))
+        (if (string-match "gmail" gnus-newsgroup-name)
+            (progn
+              (gnus-summary-put-mark-as-unread nil)
+              (gnus-summary-move-article nil "nnimap+gmail:arch" nil)
+              (gnus-summary-next-article)))))))
 
-(define-key gnus-summary-mode-map "vt"
-  (lambda () (interactive)
-    (gnus-summary-move-article nil "nnimap+gmail:trash" nil)
-    (gnus-summary-next-article)))
-
+;; Move to group-specifiv trash
 (define-key gnus-summary-mode-map "vd"
   (lambda () (interactive)
-    (gnus-summary-move-article nil "nnimap+zedat:Trash" nil)
-    (gnus-summary-next-article)))
+    (if (string-match "zedatma" gnus-newsgroup-name)
+        (progn
+          (gnus-summary-put-mark-as-read nil))
+      (if (string-match "zedat" gnus-newsgroup-name)
+          (progn
+            (gnus-summary-put-mark-as-read nil)
+            (gnus-summary-move-article nil "nnimap+zedat:Trash" nil)
+            (gnus-summary-next-article))
+        (if (string-match "gmail" gnus-newsgroup-name)
+            (progn
+              (gnus-summary-put-mark-as-read nil)
+              (gnus-summary-move-article nil "nnimap+gmail:trash" nil)
+              (gnus-summary-next-article)))))))
+
+(define-key gnus-summary-mode-map "vi" 
+  (lambda () (interactive)
+    (gnus-summary-put-mark-as-unread nil)
+    (gnus-summary-move-article nil "nnimap+zedat:2017/17-irw" nil)
+    (gnus-summary-next-unread-article)))
 
 (define-key gnus-summary-mode-map "vg"
   (lambda () (interactive)
@@ -164,23 +187,6 @@
 (define-key gnus-summary-mode-map "v6" 
   (lambda () (interactive)
         (gnus-summary-move-article nil "nnimap+zedat:2016" nil)))
-
-(define-key gnus-summary-mode-map "vi" 
-  (lambda () (interactive)
-    (gnus-summary-put-mark-as-unread nil)
-    (gnus-summary-move-article nil "nnimap+zedat:2017/17-irw" nil)
-    (gnus-summary-next-unread-article)))
-
-(define-key gnus-summary-mode-map "vv" 
-  (lambda () (interactive)
-    (gnus-summary-put-mark-as-unread nil)
-    (gnus-summary-move-article nil "nnimap+zedat:2017" nil)
-    (gnus-summary-next-unread-article)))
-
-
-
-
-
 
 
 
