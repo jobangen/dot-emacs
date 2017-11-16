@@ -1,8 +1,9 @@
 # -*- mode: snippet -*-
 # name: diss-material
 # key: diss
+# expand-env: ((yas-indent-line 'fixed))
 # --
 #+begin_src csv :tangle diss/diss-material.csv :padline no
-$0
+csvm$0
 #+end_src
 

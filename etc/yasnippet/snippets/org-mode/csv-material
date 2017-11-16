@@ -1,5 +1,7 @@
 # -*- mode: snippet -*-
 # name: csv-material
-# key: csv
+# key: csvm
+# expand-env: ((yas-indent-line 'fixed))
 # --
-`(file-name-base)`,cha:${1:$$(yas-choose-value '("Auctoritas" "Augustus" "Christen" "Streit" "Soziales" "Ansehensmacht" "Weber" "Einleitung"))},${2:$$(yas-choose-value '("Primär" "Sekundär"))},${3:1-9},${8:comment}
+`(file-name-base)`,cha:${1:$$(yas-choose-value '("Auctoritas" "Augustus" "Christen" "Streit" "Soziales" "Ansehensmacht" "Weber" "Einleitung" "other"))},${2:$$(yas-choose-value '("Primär" "Sekundär"))},${3:1-9},${8:comment}
+csvm$0

@@ -2,4 +2,4 @@
 # name: BibTeX
 # key: bib
 # --
-- [[file:~/Dropbox/db/biblio.bib::`(buffer-name)` ][BibTeX Entry]]
+- [[file:~/Dropbox/db/biblio.bib::`(file-name-base)`][BibTeX Entry]]
