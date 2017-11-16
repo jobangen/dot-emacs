@@ -2234,7 +2234,9 @@ abort completely with `C-g'."
 
 ** sdcv-mode
 #+begin_src emacs-lisp
-(use-package sdcv-mode)
+(use-package sdcv-mode
+  :bind (:map sdcv-mode-map
+              ("<tab>" . sdcv-toggle-entry)))
 #+end_src
 
 * Versionskontrolle
