@@ -2425,7 +2425,8 @@ abort completely with `C-g'."
               ("at" . pdf-annot-add-text-annotation)
               ("t" . pdf-annot-add-text-annotation)
               ("au" . pdf-annot-add-underline-markup-annotation)
-              ("j"  . pdf-view-goto-page))
+              ("j" . pdf-view-goto-page)
+              ("sa" . pdf-view-auto-slice-minor-mode))
   :ensure t
   :mode ("\\.pdf\\'" . pdf-view-mode)
   :config
@@ -2480,6 +2481,9 @@ entire document."
 rotate entire document."
     (interactive "P")
     (pdf-view--rotate :counterclockwise (not arg)))
+
+  ;; http://pragmaticemacs.com/emacs/even-more-pdf-tools-tweaks/
+  (advice-add 'pdf-annot-edit-contents-commit :after 'job/save-buffer-no-args)
 
   (add-to-list 'org-file-apps
                '("\\.pdf\\'" . org-pdfview-open))
