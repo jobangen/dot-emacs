@@ -60,7 +60,7 @@ more...")
 ;;   '(swiper-minibuffer-match-face-4
 ;;     ((t :background "#ffbbff" :weight bold)))
 
-   `(default ((,class (:slant normal :foreground "#333333" :background "#FFFFFF"))))
+   `(default ((,class (:slant normal :foreground "#333333" :background "#f3f3f3"))))
    `(bold ((,class (:weight bold :foreground "black" :family "Ubuntu Mono"))))
    `(bold-italic ((,class (:weight bold :slant italic :foreground "black"))))
    `(italic ((,class (:slant italic :foreground "#1A1A1A" :family "Ubuntu Mono"))))
