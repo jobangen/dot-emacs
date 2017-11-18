@@ -1683,6 +1683,13 @@ http://doc.norang.ca/org-mode.org
                       ("h" (lambda (element) (insert (nth 3 (cdr element)))) "html"))))
 #+end_src
 
+*** ox-reveal
+#+begin_src emacs-lisp
+(use-package ox-reveal
+  :config
+  (setq org-reveal-root "file:///home/job/programme/reveal.js"))
+#+end_src
+
 * LaTeX und BibTeX
 ** auctex
 #+begin_src emacs-lisp
