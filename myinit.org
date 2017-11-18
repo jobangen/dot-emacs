@@ -985,19 +985,21 @@ SCHEDULED: %t
 :CREATED: %U
 :CATEGORY:  %\\2
 :END:
-%?" :clock-in t :clock-resume t)
+%?"
+ :clock-in t
+ :clock-resume t)
 
 ("j" "Journal")
-("jj" "Journal" entry (file+datetree+prompt "journal.org")
+("jj" "Journal" entry (file+olp+datetree "journal.org")
  "* %^{Headline}  :%^{Category|wiss|arbeit|pers}:journal:
 %T%?
 :PROPERTIES:
 :CREATED: [%<%Y-%m-%d %a %H:%M>]
 :CATEGORY:  %\\2
-:END:
-")
+:END:"
+ :time-prompt t)
 
-("jt" "Journal todo" entry (file+datetree "journal.org")
+("jt" "Journal todo" entry (file+olp+datetree "journal.org")
 "* TODO %^{Task} :pers:today:
 SCHEDULED: %t
 :PROPERTIES:
@@ -1007,26 +1009,34 @@ SCHEDULED: %t
 :END:
 %?")
 
-("jl" "Literaturbearbeitung" entry (file+datetree "journal.org")
+("jl" "Literaturbearbeitung" entry (file+olp+datetree "journal.org")
  "* Literaturbearbeitung :wiss:
 :PROPERTIES:
 :CATEGORY: wiss
-:END:" :immediate-finish t :jump-to-captured t)
+:END:"
+ :immediate-finish t
+ :jump-to-captured t)
 
-("jm" "Mailbearbeitung" entry (file+datetree "journal.org")
+("jm" "Mailbearbeitung" entry (file+olp+datetree "journal.org")
  "* Mailbearbeitung :wiss:
 :PROPERTIES:
 :CATEGORY: wiss
-:END:" :jump-to-captured t :immediate-finish t)
+:END:"
+ :jump-to-captured t
+ :immediate-finish t)
 
-("jb" "BerlinAntiquariat" entry (file+datetree+prompt "journal.org")
- #'org-capture-berlinantiquariat :jump-to-captured t)
+("jb" "BerlinAntiquariat" entry (file+olp+datetree "journal.org")
+ #'org-capture-berlinantiquariat
+ :time-prompt t
+ :jump-to-captured t)
 
 ("je" "Electricity" plain (file (lambda () (expand-file-name (concat db-dir "plot/electricity.csv"))))
 "%(org-read-date); %?")
 
-("jw" "Wissenschaft" entry (file+datetree+prompt "journal.org")
- #'org-capture-wiss :jump-to-captured t)
+("jw" "Wissenschaft" entry (file+olp+datetree "journal.org")
+ #'org-capture-wiss
+ :time-prompt t
+ :jump-to-captured t)
 
 ("m" "mail todo" entry (file+headline "inbox.org" "Mail")
  "* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:
@@ -1042,7 +1052,10 @@ Subject: [[%l][%:subject]]
 ,#+END_QUOTE")
 
 ("b" "bibtex" plain (file (lambda () (expand-file-name job/bibliography-file)))
-"%?" :immediate-finish t :jump-to-captured t :empty-lines 1)
+"%?"
+:immediate-finish t
+:jump-to-captured t
+:empty-lines 1)
 
 ("l" "Literatur" entry (file+headline "inbox.org" "Literatur")
  "* TODO %^{Author & Titel} :txt:wiss
@@ -1066,37 +1079,37 @@ Subject: [[%l][%:subject]]
  "%(org-read-date) * Kartenverfügung
     Expenses:Bargeld                           %^{Amount}€
     Assets:Giro"
-    :immediate-finish t)
+ :immediate-finish t)
 
 ("ge" "Essen" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * %^{Payee| |Mensa|Penny|Rewe}
     Expenses:Essen    %^{Amount}€
     Assets:Giro"
-    :immediate-finish t)
+ :immediate-finish t)
 
 ("gg" "Giro" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * %^{Payee| |Deutsche Bahn}
     Expenses:%^{Expenses|Kauf:|Geschenk:|Reisen:}%^{Expenses}    %^{Amount}€
     Assets:Giro"
-    :immediate-finish t)
+ :immediate-finish t)
 
 ("gh" "Handy" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Telekom
     Expenses:Handy                             %^{Amount|29,89}€
     Assets:Giro"
-    :immediate-finish t)
+ :immediate-finish t)
 
 ("gi" "Internet+Telefon" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Kabel Deutschland
     Expenses:Wohnung:Internet+Telefon          %^{Amount|19,90}€
     Assets:Giro"
-    :immediate-finish t)
+ :immediate-finish t)
 
 ("gk" "Krankenkasse" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Techniker Krankenkasse
     Expenses:Versicherung:Krankenkasse        240,30€
     Assets:Giro"
-    :immediate-finish t)
+ :immediate-finish t)
 
 ("gm" "Miete" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Unter den Eichen
@@ -1104,26 +1117,26 @@ Subject: [[%l][%:subject]]
     Expenses:Wohnung:Heizkosten                83,00€
     Expenses:Wohnung:Betriebskosten           103,00€
     Assets:Giro"
-    :immediate-finish t)
+ :immediate-finish t)
 
 ("gn" "Netflix" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Netflix ;;geht beides an Samuel
     Expenses:Unterhaltung:Netflix               3,00€
     Liabilities:Ha-Sa:Netflix                   3,00€
     Assets:Giro"
-    :immediate-finish t)
+ :immediate-finish t)
 
 ("gu" "Untermiete" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Sabine und Hartmut (%^{Monat})
     Assets:Giro                               100,00€
     Income:Wohnung"
-    :immediate-finish t)
+ :immediate-finish t)
 
 ("gs" "Strom" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Stadtwerke
     Expenses:Wohnung:Strom                     %^{Amount|59,00}€
     Assets:Giro"
-    :immediate-finish t)
+ :immediate-finish t)
 
 ("gt" "Topoi Stipendium" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Stipendium Topoi
