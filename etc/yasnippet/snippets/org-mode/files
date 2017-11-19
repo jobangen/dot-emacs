@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: zk-Files
+# key: fil
+# --
+- [[file:~/texte/`(file-name-base)`*][Files]]
