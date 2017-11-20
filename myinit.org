@@ -1031,7 +1031,9 @@ SCHEDULED: %t
  :jump-to-captured t)
 
 ("je" "Electricity" plain (file (lambda () (expand-file-name (concat db-dir "plot/electricity.csv"))))
-"%(org-read-date); %?")
+"%(org-read-date), %?"
+:immediate-finish t
+:jump-to-captured t)
 
 ("jw" "Wissenschaft" entry (file+olp+datetree "journal.org")
  #'org-capture-wiss
