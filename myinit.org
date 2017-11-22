@@ -531,17 +531,30 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
       (concat comint-password-prompt-regexp
               "\\|^.*Passwort für.*:\\s *\\'"))
 
-(unbind-key "C-c C-l" shell-mode-map)
-(bind-key "C-c C-l" #'counsel-shell-history shell-mode-map)
+;(unbind-key "C-c C-l" shell-mode-map)
+;(bind-key "C-c C-l" #'counsel-shell-history shell-mode-map)
 
 #+end_src
 
-** eshell
+*** eshell
 #+begin_src emacs-lisp
-(bind-key "C-c j" 'eshell)
+;; (bind-key "C-c j" 'eshell)
 
 (setq eshell-visual-commands
 '("less" "tmux" "htop" "top" "bash" "zsh" "fish" "watch" "time" "sudo"))
+#+end_src
+
+** shell-pop
+#+begin_src emacs-lisp
+(use-package shell-pop
+  :bind (("C-c j" . shell-pop))
+  :config
+  (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
+  (setq shell-pop-term-shell "/usr/bin/zsh")
+  (setq shell-pop-window-size 45)
+  ;; need to do this manually or not picked up by `shell-pop'
+  (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type)
+  )
 #+end_src
 
 ** winner-mode
