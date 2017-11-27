@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: csv-semantik
+# key: csvr
+# expand-env: ((yas-indent-line 'fixed))
+# --
+`(file-name-base)`,$0
+csvr
+

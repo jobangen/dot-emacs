@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: diss-references
+# key: diss
+# expand-env: ((yas-indent-line 'fixed))
+# --
+#+begin_src csv :tangle diss/diss-references.csv  :padline no
+`(file-name-base)`,$0
+csvr
+#+end_src
