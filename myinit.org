@@ -920,7 +920,7 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
               (format ":WORK:     berlinantiquariat\n")
               (format ":DATE:     [%s]\n" date)
               (format ":TIME:    15:00--18:30\n")
-              (format ":DURATION:   3.5h\n")
+              (format ":DURATION:   3.5\n")
               (format ":END:\n")
               (format ":CLOCK:\n")
               (format "CLOCK: [%s 15:00]--" date)
