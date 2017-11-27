@@ -1670,8 +1670,7 @@ http://doc.norang.ca/org-mode.org
 #+begin_src emacs-lisp
 (use-package contacts
   :load-path "~/.emacs.d/lisp/scimax"
-  :bind (("C-c g" . ivy-contacts)
-         ("C-x m" . ivy-contacts))
+  :bind (("C-c g" . ivy-contacts))
 
   :config
   (setq contacts-files '("~/Dropbox/db/contacts.org"))
@@ -2378,6 +2377,8 @@ abort completely with `C-g'."
                (format "--text follows this line--"))))
     )
   (message-goto-to))
+
+(bind-key "C-x m" 'job/message-mail)
 #+end_src
 
 ** offlineimap
