@@ -48,6 +48,7 @@
               indicate-empty-lines t           ;; Graphical gimmick
               )
 (setq next-line-add-newlines t) ;; C-n erzeugt Absatz am Ender der Zeile
+(setq recenter-positions '(top middle bottom))
 
 ;; Save whatever’s in the current (system) clipboard before
 ;; replacing it with the Emacs’ text.
