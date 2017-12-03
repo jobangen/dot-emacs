@@ -281,7 +281,9 @@ müssen manuell deaktiviert werden
 
 (bind-keys*
  ("C-h" . backward-delete-char)
- ("C-ß" . help))
+ ("C-ß" . help)
+ ("C-z" . undo)
+ ("C-S-z" . undo-tree-redo))
 
 (bind-keys*
  ("C-x C-b" . ibuffer)
