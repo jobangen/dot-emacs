@@ -220,7 +220,7 @@ the body of this command."
   (kill-buffer))
 
 
-;; Zettel outout
+;; Zettel output
 (defun zettelkasten-tangle-combined ()
   (interactive)
   (org-babel-tangle-file
@@ -240,9 +240,6 @@ the body of this command."
   (insert (file-name-base (buffer-file-name (window-buffer (minibuffer-selected-window))))))
 
 
-
-
 (provide 'zettelkasten)
 
 ;;; zettelkasten.el ends here
-(setq zettelkasten-main-directory "~/Dropbox/db/zk")
