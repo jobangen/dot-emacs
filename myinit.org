@@ -465,8 +465,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   :ensure t
   :bind (("C-s" . counsel-grep-or-swiper)
          ("C-." . counsel-imenu)
-         ("C-S-s" . counsel-imenu)
-         ("C-S-i" . counsel-grep-or-swiper)
          ("C-c u" . counsel-linux-app)
          ("C-M-s" . counsel-ag)
          ("C-x l" . counsel-locate)
