@@ -2545,6 +2545,7 @@ rotate entire document."
   :defer t
   :config
    (setq csv-separators '("," ";"))
+   (setq csv-align-padding 2)
    (add-hook 'csv-mode-hook
           '(lambda () (csv-align-fields nil (buffer-end -1) (buffer-end +1))))
 )
