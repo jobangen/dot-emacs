@@ -2273,9 +2273,10 @@ abort completely with `C-g'."
 ** undo-tree
 #+begin_src emacs-lisp
 (use-package undo-tree
+  :bind (("C-x u" . undo-tree-visualize))
   :diminish undo-tree-mode
   :init
-  (global-undo-tree-mode)
+  (global-undo-tree-mode 1)
   :config
   (progn
     (setq undo-tree-visualizer-timestamps t)
