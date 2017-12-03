@@ -513,14 +513,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   :bind ("C-c h" . link-hint-open-link))
 #+end_src
 
-** zzz-to-char
-#+begin_src emacs-lisp
-(use-package zzz-to-char
-  :bind ("C-z" . zzz-to-char)
-  :config
-    (setq zzz-to-char-reach 6))
-#+end_src
-
 ** imenu
 #+begin_src emacs-lisp
 (setq org-imenu-depth 9)
