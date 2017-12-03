@@ -2555,7 +2555,7 @@ rotate entire document."
 #+begin_src emacs-lisp
 (use-package dired
   :bind (:map dired-mode-map
-              ("C-m". dired-find-file)
+              ("C-m" . dired-find-file)
               (";" . dired-subtree-insert)
               ("i" . dired-subtree-remove)
               ("P" . peep-dired))
