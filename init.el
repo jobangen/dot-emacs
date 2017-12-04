@@ -12,8 +12,10 @@
 
 (eval-when-compile
   (require 'use-package))
-(require 'diminish)
 (require 'bind-key)
+
+(use-package diminish
+  :ensure t)
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
