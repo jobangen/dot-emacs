@@ -14,6 +14,7 @@
 ** no-littering
 #+begin_src emacs-lisp
 (use-package no-littering
+  :ensure t
   :init
   (eval-after-load 'shell-interaction
     `(make-directory ,(concat user-emacs-directory "var/shell-interaction") t)))
