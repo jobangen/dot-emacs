@@ -1130,9 +1130,8 @@ Subject: [[%l][%:subject]]
  :immediate-finish t)
 
 ("gn" "Netflix" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
- "%(org-read-date) * Netflix ;;geht beides an Samuel
-    Expenses:Unterhaltung:Netflix               3,00€
-    Liabilities:Ha-Sa:Netflix                   3,00€
+ "%(org-read-date) * Netflix
+    Expenses:Unterhaltung:Netflix               3,50€
     Assets:Giro"
  :immediate-finish t)
 
@@ -1144,7 +1143,7 @@ Subject: [[%l][%:subject]]
 
 ("gs" "Strom" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
  "%(org-read-date) * Stadtwerke
-    Expenses:Wohnung:Strom                     %^{Amount|59,00}€
+    Expenses:Wohnung:Strom                     %^{Amount|50,00}€
     Assets:Giro"
  :immediate-finish t)
 
