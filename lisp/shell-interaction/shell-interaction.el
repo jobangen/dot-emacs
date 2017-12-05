@@ -171,6 +171,32 @@
     (async-shell-command (concat " echo " job/credentials-fu-berlin-password
                                  " | openconnect -s /usr/share/vpnc-scripts/vpnc-script vpn.fu-berlin.de --user=jobangen --passwd-on-stdin"))))
 
-(provide 'shell-interaction)
+;;;###autoload
+(defun mount-lsblk ()
+  (interactive)
+  (shell-command "lsblk"))
 
+(defun mount-mount-device ()
+  (interactive)
+  (mount-lsblk)
+  (sit-for 1.5)
+  (let ((name
+         (completing-read "Name: "
+                          '(("sdb1")) nil t nil)))
+    (let ((mountpoint
+           (read-string "Mountpoint: ")))
+      (shell-command (concat "pmount /dev/" name " " mountpoint))))
+  (mount-lsblk))
+
+(defun mount-unmount-device ()
+  (interactive)
+  (mount-lsblk)
+  (sit-for 1)
+  (let ((name
+         (completing-read "Name: "
+                          '(("sdb1")) nil t nil)))
+    (shell-command (concat "pumount /dev/" name)))
+  (mount-lsblk))
+
+(provide 'shell-interaction)
 ;;; shell-interaction.el ends here
