@@ -357,6 +357,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ** key-chord
 #+begin_src emacs-lisp
 (use-package key-chord
+  :ensure t
   :config
   (progn
     (setq key-chord-two-keys-delay 0.15)
