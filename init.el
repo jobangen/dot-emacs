@@ -5,10 +5,7 @@
 (package-initialize)
 (setq package-enable-at-startup nil)
 
-(unless package-archive-contents
-   (package-refresh-contents))
-(unless (package-installed-p 'use-package)
-   (package-install 'use-package))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/use-package"))
 
 (eval-when-compile
   (require 'use-package))
