@@ -570,7 +570,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ** allgemein
 #+begin_src emacs-lisp
 (use-package org
-  :ensure t
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
          ("C-c c" . org-capture)
@@ -1598,16 +1597,9 @@ http://doc.norang.ca/org-mode.org
 #+end_src
 
 ** org-contrib
-*** org-plus-contrib
-#+begin_src emacs-lisp
-(use-package org-plus-contrib
-  :ensure t
-  :defer t)
-#+end_src
 *** ox-extra
 #+begin_src emacs-lisp
 (use-package ox-extra
-  :ensure org-plus-contrib
   :config
   (ox-extras-activate '(ignore-headlines)))
 #+end_src

@@ -1,7 +1,6 @@
 (require 'package)
 (setq package-archives '(("gnu"       . "https://elpa.gnu.org/packages/")
-                         ("melpa"     . "https://melpa.org/packages/")
-                         ("org"       . "http://orgmode.org/elpa/")))
+                         ("melpa"     . "https://melpa.org/packages/")))
 (package-initialize)
 (setq package-enable-at-startup nil)
 
@@ -13,6 +12,10 @@
 
 (use-package diminish
   :ensure t)
+
+(use-package org
+  :load-path ("site-lisp/org-mode/lisp"
+              "site-lisp/org-mode/contrib/lisp"))
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
