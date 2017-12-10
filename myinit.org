@@ -1601,7 +1601,7 @@ http://doc.norang.ca/org-mode.org
 #+begin_src emacs-lisp
 (use-package ox-extra
   :config
-  (ox-extras-activate '(ignore-headlines)))
+  (ox-extras-activate '(latex-header-blocks ignore-headlines)))
 #+end_src
 *** org-contacts
 #+begin_src emacs-lisp
