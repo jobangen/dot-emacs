@@ -4046,3 +4046,19 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
   (kill-emacs)
   )
 #+end_src
+** capitalize & downcase word
+#+begin_src emacs-lisp
+(defun job/capitalize-last-word ()
+  (interactive)
+  (left-word)
+  (capitalize-word 1))
+
+(defun job/downcase-last-word ()
+  (interactive)
+  (left-word)
+  (downcase-word 1))
+
+(global-set-key (kbd "M-c") 'job/capitalize-last-word)
+(global-set-key (kbd "M-l") 'job/downcase-last-word)
+#+end_src
+
