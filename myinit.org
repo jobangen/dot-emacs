@@ -1100,9 +1100,9 @@ Subject: [[%l][%:subject]]
  :immediate-finish t)
 
 ("gh" "Handy" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
- "%(org-read-date) * Telekom
-    Expenses:Handy                             %^{Amount|29,89}€
-    Assets:Giro"
+ "%(org-read-date) * Congstar
+    Expenses:Handy:%^{Expenses|Paket:|Verbrauch}%                         8,00€
+    Assets:Congstar-Guthaben"
  :immediate-finish t)
 
 ("gi" "Internet+Telefon" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
