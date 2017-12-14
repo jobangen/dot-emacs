@@ -2876,12 +2876,6 @@ rotate entire document."
   (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1))))
 #+end_src
 
-** syntactic-close
-#+begin_src emacs-lisp
-(use-package syntactic-close
-  :bind (")" . syntactic-close))
-#+end_src
-
 * hydra
 ** hydra-setup
 #+begin_src emacs-lisp
