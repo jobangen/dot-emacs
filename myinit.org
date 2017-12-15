@@ -2876,6 +2876,14 @@ rotate entire document."
   (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1))))
 #+end_src
 
+** helpful
+#+begin_src emacs-lisp
+(use-package helpful
+  :bind (("C-ß f" . helpful-callable)
+         ("C-ß v" . helpful-variable)
+         ("C-ß k" . helpful-key)))
+#+end_src
+
 * hydra
 ** hydra-setup
 #+begin_src emacs-lisp
