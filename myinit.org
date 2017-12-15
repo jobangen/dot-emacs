@@ -2879,9 +2879,10 @@ rotate entire document."
 ** helpful
 #+begin_src emacs-lisp
 (use-package helpful
-  :bind (("C-ß f" . helpful-callable)
-         ("C-ß v" . helpful-variable)
-         ("C-ß k" . helpful-key)))
+  :bind (:map help-map
+              ("f" . helpful-callable)
+              ("v" . helpful-variable)
+              ("k" . helpful-key)))
 #+end_src
 
 * hydra
