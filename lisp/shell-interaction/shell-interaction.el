@@ -35,7 +35,7 @@
   :group 'shell-interaction
   :type 'string)
 
-
+;;; pdftk
 ;;;###autoload
 (defun pdftk ()
   (interactive)
@@ -71,7 +71,7 @@
         (shell-command
          (concat "pdftk " input-file " burst"))))))
 
-
+;;; xrandr
 ;;;###autoload
 (defun xrandr-list ()
   (interactive)
@@ -161,7 +161,7 @@
     (shell-command-to-string "nmcli radio wifi on")
     (message "WLAN activated")))
 
-
+;;; VPN
 ;;;###autoload
 (defun vpn-zedat-shell ()
   (interactive)
@@ -176,6 +176,7 @@
     (async-shell-command (concat " echo " job/credentials-fu-berlin-password
                                  " | openconnect -s /usr/share/vpnc-scripts/vpnc-script vpn.fu-berlin.de --user=jobangen --passwd-on-stdin"))))
 
+;;; mount
 ;;;###autoload
 (defun mount-lsblk ()
   (interactive)
