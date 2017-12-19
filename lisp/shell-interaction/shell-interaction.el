@@ -135,6 +135,11 @@
              "xrandr --output HDMI1 --mode 1680x1050 --left-of eDP1 &"
              "xmodmap ~/.Xmodmap")))
 
+;;; WLAN
+;;;###autoload
+(defun nmcli-show-short ()
+  (interactive)
+  (shell-command "nmcli dev"))
 
 ;;;###autoload
 (defun wlan-write-find-channels ()
