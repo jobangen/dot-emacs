@@ -2887,8 +2887,7 @@ rotate entire document."
 (use-package helpful
   :bind (:map help-map
               ("f" . helpful-callable)
-              ("v" . helpful-variable)
-              ("k" . helpful-key)))
+              ("v" . helpful-variable)))
 #+end_src
 
 * hydra
