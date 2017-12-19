@@ -3004,8 +3004,8 @@ _<left>_    _<right>_    _y_: split-vert     _s_: ace-swap      _g_: refresh    
                      ^^^^_o_: delete-other                    ^^_j_: adjust
 
 "
-  ("+" enlarge-window-horizontally)
-  ("-" shrink-window-horizontally)
+  ("+" exwm-layout-enlarge-window-horizontally)
+  ("-" exwm-layout-shrink-window-horizontally)
   ("<left>"  windmove-left)
   ("<down>"  windmove-down)
   ("<up>"    windmove-up)
