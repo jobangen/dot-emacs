@@ -25,27 +25,25 @@
                          (interactive)
                          (exwm-workspace-switch-create ,i))))
 
+(exwm-input-set-key (kbd "s-<tab>") 'other-window)
+
 (exwm-input-set-key (kbd "s-f")
                     (lambda ()
                       (interactive)
                       (start-process-shell-command "firefox" nil "firefox")))
-
 (exwm-input-set-key (kbd "s-m")
                     (lambda ()
                       (interactive)
                       (start-process-shell-command
                        "gnome-terminal" nil "gnome-terminal")))
-
 (exwm-input-set-key (kbd "s-z")
                     (lambda ()
                       (interactive)
                       (start-process-shell-command "slock" nil "slock")))
-
 (exwm-input-set-key (kbd "s-x") 'counsel-linux-app)
+
 (exwm-input-set-key (kbd "s-+") 'exwm-layout-enlarge-window-horizontally)
 (exwm-input-set-key (kbd "s--") 'exwm-layout-shrink-window-horizontally)
-(exwm-input-set-key (kbd "s-<tab>") 'other-window)
-(exwm-input-set-key (kbd "s-g") 'keyboard-quit)
 
 (exwm-input-set-key (kbd "<XF86AudioMute>")
                     (lambda ()
@@ -69,7 +67,22 @@
                       (shell-command
                        "amixer -D pulse sget Master | grep -m1 -P -o '\[[0-9]+%.*'")))
 
+(exwm-input-set-key (kbd "s-<f11>")
+                    (lambda ()
+                      (interactive)
+                      (shell-command-to-string "xbacklight -dec 10")
+                      (shell-command "xbacklight")))
+(exwm-input-set-key (kbd "s-<f12>")
+                    (lambda ()
+                      (interactive)
+                      (shell-command-to-string "xbacklight -inc 10")
+                      (shell-command "xbacklight")))
 
+(exwm-input-set-key (kbd "<pause>") 'keyboard-quit)
+(exwm-input-set-key (kbd "<print>")
+                    (lambda ()
+                      (interactive)
+                      (shell-command-to-string "gnome-screenshot")))
 
 ;;; Simulation Keys
 (exwm-input-set-simulation-keys
