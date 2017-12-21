@@ -570,6 +570,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          ("C-c c" . org-capture)
          ("C-c ä" . org-capture)
          ("C-c i" . org-clock-in))
+  :mode "\\.txt\\'"
   :config
   (progn
     ;;Pfade
@@ -594,7 +595,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 
     (eval-after-load "org"
       '(define-key org-mode-map (kbd "C-,") nil))
-    (add-to-list 'auto-mode-alist '("\\.txt\\'" . org-mode))
 ))
 
 (defun my/fix-inline-images ()
@@ -2653,17 +2653,13 @@ rotate entire document."
 ** gnuplot
 #+begin_src emacs-lisp
 (use-package gnuplot-mode
-  :init
-  (add-to-list 'auto-mode-alist
-               '("\\.plot\\'" . gnuplot-mode)))
+  :mode "\\.plot\\'")
 #+end_src
 
 ** ledger-mode
 #+begin_src emacs-lisp
 (use-package ledger-mode
-  :init
-  (add-to-list 'auto-mode-alist
-               '("\\.dat\\'" . ledger-mode)))
+  :mode "\\.dat\\'")
 #+end_src
 
 * Minor-modes
