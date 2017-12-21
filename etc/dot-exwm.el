@@ -1,5 +1,4 @@
 ;;;_,EXWM
-
 (require 'exwm)
 
 ;;; Workspaces
