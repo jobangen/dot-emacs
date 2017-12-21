@@ -3291,36 +3291,6 @@ _y_: youtube      _bb_: bibtex
 * defun
 ** shell-interaction
 #+begin_src emacs-lisp
-(use-package shell-interaction)
-#+end_src
-
-** my/insert-date
-#+begin_src emacs-lisp
-(defun my/insert-date (prefix)
-  "Insert the current date ISO-format; With prefix-argument: insert current date ISO-format with time. With two prefix arguments, insert date."
-  (interactive "P")
-  (let ((format (cond
-                 ((not prefix) "%Y-%m-%d")
-                 ((equal prefix '(4)) "%Y-%m-%d-%H%M")
-                 ((equal prefix '(16)) "%Y%m%d.%H%M")
-                 ((equal prefix '(64)) "%d.%m.%Y")))
-        (system-time-locale "de_DE"))
-    (insert (format-time-string format))))
-
-(bind-key "C-c d" 'my/insert-date)
-#+end_src
-
-** smarter-move-beginning-of-line
-Funktioniert noch nicht richtig..oder?
-#+begin_src emacs-lisp
-(defun beginning-of-line-or-indentation ()
-  "move to beginning of line, or indentation"
-  (interactive)
-  (if (bolp)
-      (back-to-indentation)
-    (beginning-of-line)))
-
-(bind-key "C-a" 'beginning-of-line-or-indentation)
 #+end_src
 
 ** my/html-to-german
@@ -3699,27 +3669,6 @@ are referenced by its edges, but functions for these tasks need region."
 
 #+end_src
 
-** my/keywords
-#+begin_src emacs-lisp
-(defun my/keyword ()
-  (interactive)
-  (beginning-of-line)
-  (insert "§")
-  (join-line)
-  (insert ";")
-)
-#+end_src
-
-** my/find-file-as-sudo
-#+begin_src emacs-lisp
-(defun my/find-file-as-sudo ()
-  (interactive)
-  (let ((file-name (buffer-file-name)))
-    (when file-name
-      (find-alternate-file (concat "/sudo::" file-name)))))
-(bind-key "C-x C-v" 'my/find-file-as-sudo)
-#+end_src
-
 ** my/ora-dired-rsync
 [[gnus:nntp+news.gwene.org:gwene.org.emacsen.planet#x1-TbJMrYXpc6how8ft1npn6gGsHDg@gwene.org][Email from post@gwene.org: (or emacs: Using rsync in dire]]
 #+begin_src emacs-lisp
@@ -3979,21 +3928,6 @@ http://mbork.pl/2015-10-31_Smart_comma_and_other_punctuation
 (eval-after-load 'tex '(define-key TeX-mode-map ","
                          'smart-self-insert-punctuation))
 #+end_src
-** job/kill-word-or-region
-http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-line-if-no-active-region/29927
-#+begin_src emacs-lisp
-(defun job/kill-word-or-region (&optional arg)
-  "Kill active region or one word backward."
-  (interactive "p")
-  (if (use-region-p)
-      (kill-region
-       (region-beginning)
-       (region-end))
-      (backward-kill-word arg)))
-
-(bind-key "C-w" 'job/kill-word-or-region)
-#+end_src
-
 ** job/insert-enquote
 #+begin_src emacs-lisp
 (defun job/insert-enquote ()
@@ -4017,18 +3951,6 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
 (eval-after-load 'tex '(define-key TeX-mode-map "\"" 'job/enquote-wrapper))
 #+end_src
 
-** job/kill-line
-#+begin_src emacs-lisp
-(defun job/kill-line ()
-  (interactive)
-  (if (equal (point)
-             (line-end-position))
-      (kill-whole-line)
-    (call-interactively 'kill-line)))
-
-(bind-key "C-k" 'job/kill-line)
-#+end_src
-
 ** job/clean-kill-emacs
 #+begin_src emacs-lisp
 (defun job/clean-kill-emacs ()
@@ -4039,20 +3961,5 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
   (kill-matching-buffers "\.pdf")
   (kill-emacs)
   )
-#+end_src
-** capitalize & downcase word
-#+begin_src emacs-lisp
-(defun job/capitalize-last-word ()
-  (interactive)
-  (left-word)
-  (capitalize-word 1))
-
-(defun job/downcase-last-word ()
-  (interactive)
-  (left-word)
-  (downcase-word 1))
-
-(global-set-key (kbd "M-c") 'job/capitalize-last-word)
-(global-set-key (kbd "M-l") 'job/downcase-last-word)
 #+end_src
 

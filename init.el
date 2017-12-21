@@ -33,3 +33,15 @@
 (org-babel-load-file "~/.emacs.d/myinit.org")
 
 
+;;; dot-defun
+(use-package dot-defun
+  :bind (("C-a" . job/beginning-of-line-or-indentation)
+         ("C-k" . job/kill-line)
+         ("C-w" . job/kill-word-or-region)
+         ("C-c d" . job/insert-date)
+         ("C-x C-v" . job/find-file-as-sudo)
+         ("M-c" . job/capitalize-last-word)
+         ("M-l" . job/downcase-last-word)))
+
+;;; shell-interaction
+(use-package shell-interaction)
