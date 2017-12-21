@@ -196,16 +196,6 @@ Null prefix argument turns off the mode."
 tool-bar-mode
 menu-bar-mode
 müssen manuell deaktiviert werden
-** bar-modes
-#+begin_src emacs-lisp
-(if (window-system)
-      (tooltip-mode -1)
-      (tool-bar-mode -1)
-      (menu-bar-mode -1)
-      (scroll-bar-mode -1)
-      (set-fringe-mode '(1 . 1)))
-#+end_src
-
 ** Font
 #+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(font . "Inconsolata-12"))
