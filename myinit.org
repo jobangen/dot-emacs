@@ -4039,6 +4039,8 @@ http://emacs.stackexchange.com/questions/28543/smartparens-strict-mode-c-w-kill-
   (interactive)
   (save-some-buffers)
   (kill-matching-buffers "\.gpg")
+  (kill-matching-buffers "\.tex")
+  (kill-matching-buffers "\.pdf")
   (kill-emacs)
   )
 #+end_src
