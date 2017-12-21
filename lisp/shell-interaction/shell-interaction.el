@@ -80,6 +80,7 @@
                    "*xrandr*"
                    "*Messages*")))
 
+;;;###autoload
 (defun xrandr-reset ()
   (interactive)
   (shell-command
@@ -88,46 +89,57 @@
            "xrandr --output HDMI1 --off &"
            "xrandr --output VIRTUAL1 --off")))
 
+;;;###autoload
 (defun xrandr-main-1024x768 ()
   (interactive)
   (sc "xrandr --output eDP1 --mode 1024x768"))
 
+;;;###autoload
 (defun xrandr-main-1366x768 ()
   (interactive)
   (sc "xrandr --output eDP1 --mode 1366x768"))
 
+;;;###autoload
 (defun xrandr-vga-1024x768-clone ()
   (interactive)
   (sc "xrandr --output DP1 --mode 1024x768"))
 
+;;;###autoload
 (defun xrandr-vga-1024x768-left ()
   (interactive)
   (sc "xrandr --output DP1 --mode 1024x768 --left-of eDP1"))
 
+;;;###autoload
 (defun xrandr-vga-1366x768-clone ()
   (interactive)
   (sc "xrandr --output DP1 --mode 1366x768"))
 
+;;;###autoload
 (defun xrandr-vga-1366x768-left ()
   (interactive)
   (sc "xrandr --output DP1 --mode 1366x768 --left-of eDP1"))
 
+;;;###autoload
 (defun xrandr-hdmi-1024x768-clone ()
   (interactive)
   (sc "xrandr --output HDMI1 --mode 1024x768"))
 
+;;;###autoload
 (defun xrandr-hdmi-1024x768-left ()
   (interactive)
   (sc "xrandr --output HDMI1 --mode 1024x768 --left-of eDP1"))
 
+;;;###autoload
 (defun xrandr-hdmi-1366x768-clone ()
   (interactive)
   (sc "xrandr --output HDMI1 --mode 1366x768"))
 
+;;;###autoload
 (defun xrandr-hdmi-1366x768-left ()
   (interactive)
   (sc "xrandr --output HDMI1 --mode 1366x768 --left-of eDP1"))
 
+;;;###autoload
 (defun xrandr-preset-topoi ()
   (interactive)
     (shell-command
@@ -182,6 +194,7 @@
   (interactive)
   (shell-command "lsblk"))
 
+;;;###autoload
 (defun mount-mount-device ()
   (interactive)
   (mount-lsblk)
@@ -194,6 +207,7 @@
       (shell-command (concat "pmount /dev/" name " " mountpoint))))
   (mount-lsblk))
 
+;;;###autoload
 (defun mount-unmount-device ()
   (interactive)
   (mount-lsblk)
