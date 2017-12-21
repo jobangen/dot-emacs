@@ -2755,9 +2755,7 @@ rotate entire document."
 #+end_src
 
 #+begin_src emacs-lisp
-(use-package counsel-projectile
-  :config
-    (counsel-projectile-on))
+(use-package counsel-projectile)
 #+end_src
 
 ** smartparens
