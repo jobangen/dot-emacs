@@ -564,18 +564,11 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ** allgemein
 #+begin_src emacs-lisp
 (use-package org
-  :bind (("C-c l" . org-store-link)
-         ("C-c a" . org-agenda)
-         ("C-c c" . org-capture)
-         ("C-c ä" . org-capture)
-         ("C-c i" . org-clock-in))
-  :mode "\\.txt\\'"
   :config
   (progn
     ;;Pfade
     (setq org-default-notes-file "inbox.org"
-          org-agenda-diary-file "journal.org"
-          org-agenda-include-diary nil)
+)
 
     ;; shift-select
     (setq org-support-shift-select 'always)
@@ -634,8 +627,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (bind-key "C-c 9" '(lambda ()
                      (interactive)
                      (find-file zettel-dir)))
-
-
 #+end_src
 
 ** agenda
@@ -1999,14 +1990,8 @@ of a BibTeX field into the template. Fork."
 (use-package flyspell
   :diminish flyspell-mode
   :bind (("C-," . my/flyspell-check-previous-highlighted-word))
+  :hook (text-mode . flyspell-mode)
   :init
-  (dolist (hook '(org-mode-hook))
-    (add-hook hook (lambda () (flyspell-mode 1))))
-  (dolist (hook '(text-mode-hook))
-    (add-hook hook (lambda () (flyspell-mode 1))))
-  (dolist (hook '(change-log-mode-hook log-edit-mode-hook))
-    (add-hook hook (lambda () (flyspell-mode -1))))
-
   :config
   (eval-after-load "flyspell"
     '(define-key flyspell-mode-map (kbd "C-.") nil))
