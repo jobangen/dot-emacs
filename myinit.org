@@ -1687,111 +1687,13 @@ http://doc.norang.ca/org-mode.org
   (setq org-reveal-root "file:///home/job/programme/reveal.js"))
 #+end_src
 
-* LaTeX und BibTeX
-** auctex
-#+begin_src emacs-lisp
-(use-package tex-site
-  :defer t
-  :mode ("\\.tex\\'" . LaTeX-mode)
-  :config
-  (progn
-    (setq TeX-auto-save t)
-    (setq TeX-parse-self t)
-    (setq TeX-PDF-mode t)
-
-    ;; Use pdf-tools to open PDF files
-    (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
-          TeX-source-correlate-start-server t)
-
-    ;; Update PDF buffers after successful LaTeX runs
-    (add-hook 'TeX-after-TeX-LaTeX-command-finished-hook
-              #'TeX-revert-document-buffer)
-
-    (setq LaTeX-csquotes-open-quote "\\enquote{")
-    (setq LaTeX-csquotes-close-quote "}")
-    (setq LaTeX-paragraph-commands '("…")) ;; Befehle, bei 'fill' eigene paragraphen bilden
-
-    (setq LaTeX-babel-hyphen nil) ; Disable language-specific hyphen insertion.
-
-    ;; TeX-fold-mode
-    (add-hook 'TeX-mode-hook
-              (lambda () (TeX-fold-mode 1))) ; Automatically activate TeX-fold-mode.
-
-    (custom-set-variables
-     '(TeX-fold-macro-spec-list
-       '(("[f]" ("sidenote"))
-         ("[fn]" ("footnote" "marginpar"))
-         ("[ac]" ("autocite" "avolcite")) ;; new
-         ("[c]" ("cite"))
-         ("[l]" ("label"))
-         ("[r]" ("ref" "pageref" "eqref"))
-         ("[i]" ("index" "glossary"))
-         ("[1]:||--" ("item"))
-         ("…" ("dots"))
-         ("(C)" ("copyright"))
-         ("(R)" ("textregistered"))
-         ("TM" ("texttrademark"))
-         ("\"{1}\"" ("enquote"))
-         ("'{1}'" ("enquote*"))
-         ("\"{2}\"" ("blockcquote"))
-         ("\"{2}\"" ("textcquote"))
-         ("\"{1}\"" ("chapname"))
-         ("'{1}'" ("uneigtl"))
-         (1 ("part" "part*" "chapter" "chapter*"
-             "section" "section*" "subsection" "subsection*"
-             "subsubsection" "subsubsection*"
-             "paragraph" "paragraph*" "subparagraph" "subparagraph*"
-             "emph" "textit" "textsl" "textmd" "textrm"
-             "textsf" "texttt" "textbf" "textsc" "textup")))))
-
-    ;;SyncTeX
-    (setq TeX-source-correlate-mode 'synctex)
-
-    (add-hook 'LaTeX-mode-hook
-              (lambda ()
-                (TeX-add-symbols "enquote")
-                (TeX-add-symbols "enquote*")
-                (TeX-add-symbols "blockcquote")
-                (TeX-add-symbols "textquote")
-                (TeX-add-symbols "textcquote")))
-
-    (add-hook 'LaTeX-mode-hook 'flyspell-mode)
-    (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-    (add-hook 'LaTeX-mode-hook 'latex-extra-mode)
-
-
-    ;; upd pdf-buffer after comp: https://github.com/politza/pdf-tools
-    (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
-
-
-
-    (add-hook 'LaTeX-mode-hook
-              (lambda ()
-                (add-to-list 'TeX-command-list '("Latexmk" "%`latexmk -pdf %t" TeX-run-TeX nil t))
-                (setq TeX-save-query nil)
-                (setq TeX-show-compilation t)))
-
-    (add-hook 'LaTeX-mode-hook
-              (lambda ()
-                (add-to-list 'TeX-command-list '("Latex -se" "%`pdflatex --synctex=1 -shell-escape %t" TeX-run-TeX nil t))
-                (setq TeX-save-query nil)
-                (setq TeX-show-compilation t)))
-
-    (add-hook 'LaTeX-mode-hook
-              (lambda ()
-                (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex --synctex=1 %(mode)%' %t" TeX-run-TeX nil t))
-                (setq TeX-save-query nil)
-                (setq TeX-show-compilation t)))))
-
-(use-package latex-extra
- :defer t
- :diminish latex-extra-mode)
-#+end_src
-
+* Latex und Bibtex
 ** reftex
 #+begin_src emacs-lisp
 (use-package reftex
+  :defer t
   :diminish reftex-mode
+  :hook (TeX-mode . reftex-mode)
   :config
   (progn
     (setq reftex-plug-into-AUCTeX t)
@@ -1800,19 +1702,20 @@ http://doc.norang.ca/org-mode.org
           '(("tex" . "kpsewhich -format=.tex %f")
             ("bib" . "kpsewhich -format=.bib %f")))
     (setq reftex-default-bibliography '("~/Dropbox/db/biblio.bib"))
-    (setq reftex-cite-format
-          '((?\C-m . "\\autocite[][]{%l}")
-            (?c . "\\cite[][]{%l}")
-            (?t . "\\textcite[][]{%l}")
-            (?y . "\\autocite*[][]{%l}")
-            (?n . "\\nocite{%l}")
-            (?f . "\\footcite[][]{%l}")
-            (?T . "\\textcquote[][]{%l}[]{")
-            (?B . "\\blockcquote[][]{%l}[]{")))
+    (eval-after-load 'reftex-vars
+      '(progn
+         (setq reftex-cite-format
+               '((?\C-m . "\\autocite[][]{%l}")
+                 (?c . "\\cite[][]{%l}")
+                 (?t . "\\textcite[][]{%l}")
+                 (?y . "\\autocite*[][]{%l}")
+                 (?n . "\\nocite{%l}")
+                 (?f . "\\footcite[][]{%l}")
+                 (?T . "\\textcquote[][]{%l}[]{")
+                 (?B . "\\blockcquote[][]{%l}[]{")))))
+
     (setq reftex-cite-prompt-optional-args t)
-    (setq reftex-cite-cleanup-optional-arg t)
-    (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-    (add-hook 'latex-mode-hook 'turn-on-reftex)))
+    (setq reftex-cite-cleanup-optional-arg t)))
 #+end_src
 
 ** bibtex-mode
@@ -3908,46 +3811,6 @@ https://github.com/baron42bba/.emacs.d/blob/master/bba.org#copy-buffer-file-name
   (interactive)
   (kill-new (buffer-file-name))
   (message (format "stored '%s' in kill-ring" buffer-file-name)))
-#+end_src
-
-** smart comma
-http://mbork.pl/2015-10-31_Smart_comma_and_other_punctuation
-#+begin_src emacs-lisp
-(defun smart-self-insert-punctuation (count)
-  "If COUNT=1 and the point is after a space, insert the relevant
-      character before any spaces."
-  (interactive "p")
-  (if (and (= count 1)
-           (eq (char-before) ?\s))
-      (save-excursion
-        (skip-chars-backward " ")
-        (self-insert-command 1))
-    (self-insert-command count)))
-
-(eval-after-load 'tex '(define-key TeX-mode-map ","
-                         'smart-self-insert-punctuation))
-#+end_src
-** job/insert-enquote
-#+begin_src emacs-lisp
-(defun job/insert-enquote ()
-  (interactive)
-  (insert "\\enquote{} "))
-
-(defun job/insert-enquote* ()
-  (interactive)
-  (insert "\\enquote*{} "))
-
-(defun job/enquote-wrapper ()
-  (interactive)
-  (if (not (eq last-command 'job/enquote-wrapper))
-      (job/insert-enquote)
-    (setq this-command nil)
-    (forward-char 2)
-    (delete-backward-char 11)
-    (call-interactively 'job/insert-enquote*))
-  (backward-char 2))
-
-(eval-after-load 'tex '(define-key TeX-mode-map "\"" 'job/enquote-wrapper))
 #+end_src
 
 ** job/clean-kill-emacs
