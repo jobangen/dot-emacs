@@ -76,4 +76,11 @@
   :after (ivy hydra))
 
 ;;;
+(use-package paperless :defer t
+  :config
+  (bind-key "C-m" 'paperless-display paperless-mode-map)
+  (setq paperless-capture-directory "~/texte/texteingang")
+  (setq paperless-root-directory "~/"))
+
+;;;
 (use-package shell-interaction)
