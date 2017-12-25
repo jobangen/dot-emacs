@@ -67,13 +67,27 @@
          ("M-c" . job/capitalize-last-word)
          ("M-l" . job/downcase-last-word)))
 
-;;;
 (use-package counsel-notmuch :defer t)
-
 
 ;;;
 (use-package ivy-hydra
   :after (ivy hydra))
+
+;;;
+(use-package csv-mode :defer t
+  :config
+  (setq csv-separators '("," ";"))
+  (setq csv-align-padding 2))
+
+;;; Libraries
+(use-package gnuplot-mode :mode "\\.plot\\'")
+(use-package haskell-mode :defer t)
+(use-package ledger-mode :mode "\\.dat\\'")
+(use-package lispy :hook (emacs-lisp-mode . lispy-mode) :diminish lispy-mode)
+(use-package pomodoro :defer t)
+(use-package rainbow-delimiters :hook (emacs-lisp-mode . rainbow-delimiters-mode))
+
+
 
 ;;;
 (use-package paperless :defer t

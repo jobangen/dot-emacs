@@ -2396,22 +2396,8 @@ rotate entire document."
   :commands (R))
 #+end_src
 
-** haskell-mode
-#+begin_src emacs-lisp
-(use-package haskell-mode
-  :defer t)
-#+end_src
-
 ** csv-mode
 #+begin_src emacs-lisp
-(use-package csv-mode
-  :defer t
-  :config
-   (setq csv-separators '("," ";"))
-   (setq csv-align-padding 2)
-   (add-hook 'csv-mode-hook
-          '(lambda () (csv-align-fields nil (buffer-end -1) (buffer-end +1))))
-)
 #+end_src
 
 ** dired
@@ -2522,18 +2508,6 @@ rotate entire document."
     (cfw:open-org-calendar)
     )
   )
-#+end_src
-
-** gnuplot
-#+begin_src emacs-lisp
-(use-package gnuplot-mode
-  :mode "\\.plot\\'")
-#+end_src
-
-** ledger-mode
-#+begin_src emacs-lisp
-(use-package ledger-mode
-  :mode "\\.dat\\'")
 #+end_src
 
 * Minor-modes
@@ -2714,30 +2688,6 @@ rotate entire document."
           ivy-next-line
           ivy-previous-line
           magit-invoke-popup-action)))
-#+end_src
-
-** pomodoro
-#+begin_src emacs-lisp
-(use-package pomodoro)
-#+end_src
-
-** rainbow-delimiters
-#+begin_src emacs-lisp
-(use-package rainbow-delimiters
-  :ensure t
-  :defer t
-  :init
-  (add-hook 'emacs-lisp-mode-hook (lambda () (rainbow-delimiters-mode 1))))
-#+end_src
-
-** lispy
-#+begin_src emacs-lisp
-(use-package lispy
-  :ensure t
-  :defer t
-  :diminish lispy-mode
-  :init
-  (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1))))
 #+end_src
 
 ** helpful
