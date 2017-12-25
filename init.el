@@ -67,5 +67,13 @@
          ("M-c" . job/capitalize-last-word)
          ("M-l" . job/downcase-last-word)))
 
-;;; shell-interaction
+;;;
+(use-package counsel-notmuch :defer t)
+
+
+;;;
+(use-package ivy-hydra
+  :after (ivy hydra))
+
+;;;
 (use-package shell-interaction)
