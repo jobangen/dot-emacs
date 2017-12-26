@@ -13,6 +13,7 @@
 (eval-when-compile
   (require 'use-package))
 
+(setq use-package-always-ensure t)
 (require 'bind-key)
 (use-package diminish
   :ensure t)
@@ -22,12 +23,10 @@
 (load custom-file)
 
 ;;;
-(use-package dot-exwm
-  :ensure exwm)
-
+(use-package dot-exwm :ensure exwm)
 
 ;;;
-(use-package dot-org
+(use-package dot-org :ensure nil
   :load-path ("site-lisp/org-mode/lisp"
               "site-lisp/org-mode/contrib/lisp")
   :bind (("C-c a" . org-agenda)
@@ -39,10 +38,26 @@
 ;;;
 (org-babel-load-file "~/.emacs.d/myinit.org")
 
-;;; pkg:latex
+;;; Libraries
+(use-package counsel-notmuch :defer t)
+(use-package gnuplot-mode :mode "\\.plot\\'")
+(use-package haskell-mode :defer t)
+(use-package ledger-mode :mode "\\.dat\\'")
+(use-package lispy :hook (emacs-lisp-mode . lispy-mode) :diminish lispy-mode)
+(use-package pomodoro :defer t)
+(use-package rainbow-delimiters :hook (emacs-lisp-mode . rainbow-delimiters-mode))
+(use-package shell-interaction :ensure nil)
+
+
 ;;;
-(use-package dot-auctex
-  :ensure auctex
+(use-package csv-mode :defer t
+  :config
+  (setq csv-separators '("," ";"))
+  (setq csv-align-padding 2))
+
+
+;;;
+(use-package dot-auctex :ensure auctex
   :mode ("\\.tex$" . TeX-latex-mode)
   :hook ((TeX-mode . TeX-fold-mode)
          (TeX-mode . variable-pitch-mode)
@@ -50,15 +65,7 @@
          (TeX-mode . LaTeX-math-mode)))
 
 ;;;
-(use-package latex-extra
-  :ensure t
-  :defer t
-  :diminish latex-extra-mode
-  :hook (TeX-mode . latex-extra-mode))
-
-
-;;;
-(use-package dot-defun
+(use-package dot-defun :ensure nil
   :bind (("C-a" . job/beginning-of-line-or-indentation)
          ("C-k" . job/kill-line)
          ("C-w" . job/kill-word-or-region)
@@ -67,27 +74,20 @@
          ("M-c" . job/capitalize-last-word)
          ("M-l" . job/downcase-last-word)))
 
-(use-package counsel-notmuch :defer t)
-
 ;;;
 (use-package ivy-hydra
   :after (ivy hydra))
 
 ;;;
-(use-package csv-mode :defer t
-  :config
-  (setq csv-separators '("," ";"))
-  (setq csv-align-padding 2))
+(use-package latex-extra
+  :diminish latex-extra-mode
+  :hook (TeX-mode . latex-extra-mode))
 
-;;; Libraries
-(use-package gnuplot-mode :mode "\\.plot\\'")
-(use-package haskell-mode :defer t)
-(use-package ledger-mode :mode "\\.dat\\'")
-(use-package lispy :hook (emacs-lisp-mode . lispy-mode) :diminish lispy-mode)
-(use-package pomodoro :defer t)
-(use-package rainbow-delimiters :hook (emacs-lisp-mode . rainbow-delimiters-mode))
-
-
+(use-package multiple-cursors
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C-<" . mc/mark-next-like-this)
+         ("C-c C-<" . mc/mark-all-like-this))
+  :diminish multiple-cursors)
 
 ;;;
 (use-package paperless :defer t
@@ -97,4 +97,10 @@
   (setq paperless-root-directory "~/"))
 
 ;;;
-(use-package shell-interaction)
+
+
+
+
+
+
+

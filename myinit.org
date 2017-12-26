@@ -298,18 +298,6 @@ müssen manuell deaktiviert werden
  ("H-k" . org-metadown))
 
 #+end_src
-
-** cursor
-#+begin_src emacs-lisp
-(use-package multiple-cursors
-  :ensure t
-  :diminish multiple-cursors
-  :bind (("C-S-c C-S-c" . mc/edit-lines)
-         ("C-S-ä C-S-ä" . mc/edit-lines)
-         ("C-<" . mc/mark-next-like-this)
-         ("C-c C-<" . mc/mark-all-like-this)))
-#+end_src
-
 ** scrollen
 http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
@@ -3113,10 +3101,6 @@ _y_: youtube      _bb_: bibtex
 #+end_src
 
 * defun
-** shell-interaction
-#+begin_src emacs-lisp
-#+end_src
-
 ** my/html-to-german
 #+begin_src emacs-lisp
 (defun job/html-to-umlaut ()
@@ -3743,6 +3727,8 @@ https://github.com/baron42bba/.emacs.d/blob/master/bba.org#copy-buffer-file-name
   (kill-matching-buffers "\.gpg")
   (kill-matching-buffers "\.tex")
   (kill-matching-buffers "\.pdf")
+  (kill-matching-buffers "\.dat")
+  (kill-matching-buffers "\.csv")
   (kill-emacs)
   )
 #+end_src
