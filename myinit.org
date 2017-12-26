@@ -492,14 +492,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   :bind ("C-c h" . link-hint-open-link))
 #+end_src
 
-** imenu
-#+begin_src emacs-lisp
-(setq org-imenu-depth 9)
-
-(use-package imenu-anywhere
-  :ensure t
-  :bind ("C-:" . ivy-imenu-anywhere))
-#+end_src
 ** shell
 #+begin_src emacs-lisp
 (setq comint-password-prompt-regexp
@@ -532,18 +524,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   )
 #+end_src
 
-** winner-mode
-#+begin_src emacs-lisp
-  (use-package winner
-    :init
-     (winner-mode))
-#+end_src
-
-** expand-region
-#+begin_src emacs-lisp
-(use-package expand-region
-  :bind (("C-c m" . er/expand-region)))
-#+end_src
 
 * org-mode
 ** allgemein

@@ -75,6 +75,10 @@
          ("M-l" . job/downcase-last-word)))
 
 ;;;
+(use-package expand-region
+  :bind (("C-c m" . er/expand-region)))
+
+;;;
 (use-package ivy-hydra
   :after (ivy hydra))
 
@@ -97,8 +101,9 @@
   (setq paperless-root-directory "~/"))
 
 ;;;
-
-
+(use-package winner
+  :init
+  (winner-mode))
 
 
 
