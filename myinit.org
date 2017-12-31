@@ -1951,9 +1951,8 @@ of a BibTeX field into the template. Fork."
   :config
   (progn
     (setq-default ispell-program-name "aspell")
-    (setq ispell-dictionary "german")
-;;	(setq ispell-extra-args '("--dont-tex-check-comments"))
-;;  (setq ispell-parser 'tex)
+    (setq args (list "--sug-mode=ultra" "--lang=de_DE-neu"))
+    (setq ispell-parser 'use-mode-name)
 ))
 #+end_src
 
@@ -2012,16 +2011,6 @@ of a BibTeX field into the template. Fork."
   )
 #+end_src
 
-** flyspell-correct
-#+begin_src emacs-lisp
-(use-package flyspell-correct
-  :ensure t
-  :config
-   (setq flyspell-correct-interface 'flyspell-correct-ivy))
-
-(use-package flyspell-correct-ivy
-  :ensure t)
-#+end_src
 ** writegood
 #+begin_src emacs-lisp
 (use-package writegood-mode
@@ -2149,29 +2138,6 @@ abort completely with `C-g'."
 )
 #+end_src
 
-** git-wip
-#+begin_src emacs-lisp
-(use-package git-wip-mode
-  :pin manual
-  :diminish git-wip-mode
-  :commands git-wip-mode)
-#+end_src
-
-** git-messenger
-#+begin_src emacs-lisp
-(use-package git-messenger)
-#+end_src
-
-** git-timemachine
-#+begin_src emacs-lisp
-(use-package git-timemachine)
-#+end_src
-
-** git-wip-timemachine
-#+begin_src emacs-lisp
-(use-package git-wip-timemachine)
-#+end_src
-
 * Mail und Kontakte
 ** gnus
 #+begin_src emacs-lisp
@@ -2261,12 +2227,6 @@ abort completely with `C-g'."
 #+begin_src emacs-lisp
 (with-eval-after-load "message"
   (add-hook 'message-mode-hook 'messages-are-flowing-use-and-mark-hard-newlines))
-#+end_src
-
-** org-notmuch
-#+begin_src emacs-lisp
-(use-package org-notmuch
-    :pin manual)
 #+end_src
 
 * Major-modes
@@ -2388,6 +2348,7 @@ rotate entire document."
               (";" . dired-subtree-insert)
               ("i" . dired-subtree-remove)
               ("P" . peep-dired))
+  :hook (dired-mode . dired-hide-details-mode)
   :init
   (setq dired-recursive-deletes 'always)
   (setq dired-recursive-copies 'always)
@@ -2396,15 +2357,7 @@ rotate entire document."
         trash-directory "~/.local/share/Trash")
   (setq dired-listing-switches "--group-directories-first -alh1v")
   (put 'dired-find-alternate-file 'disabled nil)
-
-  (add-hook 'dired-mode-hook 'dired-hide-details-mode)
-  ;; auto refresh dired when file changes; from Ben Maughan
-  (add-hook 'dired-mode-hook 'auto-revert-mode))
-#+end_src
-
-*** dired-subtree
-#+begin_src emacs-lisp
-(use-package dired-subtree)
+)
 #+end_src
 
 *** dired-filter
@@ -2426,13 +2379,6 @@ rotate entire document."
             (extension "JPG" "jpg" "PNG" "png" "gif" "bmp"))
            ("Archives"
             (extension "zip" "rar" "gz" "bz2" "tar" "org_archive"))))))
-#+end_src
-
-*** peep-dired
-#+begin_src emacs-lisp
-;;preview files in dired
-(use-package peep-dired
-  :ensure t)
 #+end_src
 
 *** dired-launch
@@ -2460,11 +2406,6 @@ rotate entire document."
           ("png" ("eog" "gimp-2.8"))
           ;; Video
           ("mov" ("totem" "vlc")))))
-#+end_src
-
-*** dired-collapse
-#+begin_src emacs-lisp
-(use-package dired-collapse)
 #+end_src
 
 ** calfw

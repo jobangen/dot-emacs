@@ -40,14 +40,19 @@
 
 ;;; Libraries
 (use-package counsel-notmuch :defer t)
+(use-package dired-collapse :hook dired-mode)
+(use-package dired-subtree :commands dired-subtree-insert)
+(use-package flyspell-correct-ivy :after (flyspell-correct ivy))
+(use-package git-timemachine)
 (use-package gnuplot-mode :mode "\\.plot\\'")
 (use-package haskell-mode :defer t)
 (use-package ledger-mode :mode "\\.dat\\'")
 (use-package lispy :hook (emacs-lisp-mode . lispy-mode) :diminish lispy-mode)
+(use-package org-notmuch :pin manual)
+(use-package peep-dired :defert t)
 (use-package pomodoro :defer t)
-(use-package rainbow-delimiters :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 (use-package shell-interaction :pin manual)
-
+(use-package rainbow-delimiters :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 
 ;;;
 (use-package csv-mode :defer t
@@ -79,6 +84,11 @@
 ;;;
 (use-package expand-region
   :bind (("C-c m" . er/expand-region)))
+
+;;;
+(use-package flyspell-correct
+  :config
+  (setq flyspell-correct-interface 'flyspell-correct-ivy))
 
 ;;;
 (use-package ivy-hydra
