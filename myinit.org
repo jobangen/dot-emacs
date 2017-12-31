@@ -1489,6 +1489,7 @@ http://doc.norang.ca/org-mode.org
 ** org-clock-csv
 #+begin_src emacs-lisp
   (use-package org-clock-csv
+    :pin manual
     :config
       (defun my/org-clock-csv-calc ()
         "Ruft script auf und verarbeitet die "
@@ -1551,12 +1552,14 @@ http://doc.norang.ca/org-mode.org
 *** ox-extra
 #+begin_src emacs-lisp
 (use-package ox-extra
+  :pin manual
   :config
   (ox-extras-activate '(latex-header-blocks ignore-headlines)))
 #+end_src
 *** org-contacts
 #+begin_src emacs-lisp
 (use-package org-contacts
+  :pin manual
   :config
   (setq org-contacts-files '("~/Dropbox/db/contacts.org"))
   (setq org-contacts-icon-use-gravatar nil)
@@ -1565,18 +1568,21 @@ http://doc.norang.ca/org-mode.org
 
 *** org-checklist
 #+begin_src emacs-lisp
-(use-package org-checklist)
+(use-package org-checklist
+    :pin manual)
 #+end_src
 
 *** org-collector
 #+begin_src emacs-lisp
-(use-package org-collector)
+(use-package org-collector
+  :pin manual)
 #+end_src
 
 *** org-indent
 #+begin_src emacs-lisp
 (use-package org-indent
-  ;;  :commands org-indent-mode
+  :pin manual
+  :commands org-indent-mode
   :diminish org-indent-mode
   :init
   (progn
@@ -1708,7 +1714,8 @@ http://www.jonathanleroux.org/bibtex-mode.html
 
 ** bibtex-completion
 #+begin_src emacs-lisp
-(use-package bibtex-completion
+(use-package bibtex-completion ;; in ivy-bibtex einbauen
+  :ensure nil
   :config
    (setq bibtex-completion-bibliography (expand-file-name job/bibliography-file))
    (setq bibtex-completion-library-path (expand-file-name texte-dir))
@@ -2106,6 +2113,7 @@ abort completely with `C-g'."
 ** sdcv-mode
 #+begin_src emacs-lisp
 (use-package sdcv-mode
+  :pin manual
   :bind (:map sdcv-mode-map
               ("<tab>" . sdcv-toggle-entry)))
 #+end_src
@@ -2144,6 +2152,7 @@ abort completely with `C-g'."
 ** git-wip
 #+begin_src emacs-lisp
 (use-package git-wip-mode
+  :pin manual
   :diminish git-wip-mode
   :commands git-wip-mode)
 #+end_src
@@ -2231,6 +2240,7 @@ abort completely with `C-g'."
 ** gnus-dired
 #+begin_src emacs-lisp
 (use-package gnus-dired
+  :pin manual
   :config
    (progn
      (defun gnus-dired-mail-buffers ()
@@ -2255,7 +2265,8 @@ abort completely with `C-g'."
 
 ** org-notmuch
 #+begin_src emacs-lisp
-(use-package org-notmuch)
+(use-package org-notmuch
+    :pin manual)
 #+end_src
 
 * Major-modes
@@ -2371,6 +2382,7 @@ rotate entire document."
 ** dired
 #+begin_src emacs-lisp
 (use-package dired
+  :pin manual
   :bind (:map dired-mode-map
               ("C-m" . dired-find-file)
               (";" . dired-subtree-insert)
@@ -2482,13 +2494,13 @@ rotate entire document."
 ** abbrev-mode
 #+begin_src emacs-lisp
 (use-package abbrev
- :diminish abbrev-mode
- :config
- (progn
-  (setq save-abbrevs 'silently)
-  (setq save-abbrevs t)
-  (setq-default abbrev-mode t))
-)
+  :pin manual
+  :diminish abbrev-mode
+  :config
+  (progn
+    (setq save-abbrevs 'silently)
+    (setq save-abbrevs t)
+    (setq-default abbrev-mode t)))
 #+end_src
 
 ** bookmarks+
@@ -2533,6 +2545,7 @@ rotate entire document."
 ** hippie-expand
 #+begin_src emacs-lisp
 (use-package hippie-expand
+  :pin manual
   :bind ("M-<tab>" . hippie-expand)
   :init
    (setq hippie-expand-verbose t)
@@ -2613,6 +2626,7 @@ rotate entire document."
 ** epa-file
 #+begin_src emacs-lisp
 (use-package epa-file
+  :pin manual
   :config
     (epa-file-enable)
     ;; Symmetric Encryption.
@@ -2931,6 +2945,7 @@ _y_: youtube      _bb_: bibtex
 ** zettelkasten
 #+begin_src emacs-lisp
 (use-package zettelkasten
+  :pin manual
   :init
   (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
   (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
@@ -2963,6 +2978,7 @@ _y_: youtube      _bb_: bibtex
 ** Remembrance Agent
 #+begin_src emacs-lisp
 (use-package remem
+  :pin manual
   :commands remem-toggle
   :config
    (setq remem-database-dir (job/custom-temp-file-name "ra-index"))

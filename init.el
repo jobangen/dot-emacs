@@ -26,7 +26,7 @@
 (use-package dot-exwm :ensure exwm)
 
 ;;;
-(use-package dot-org :ensure nil
+(use-package dot-org :pin manual
   :load-path ("site-lisp/org-mode/lisp"
               "site-lisp/org-mode/contrib/lisp")
   :bind (("C-c a" . org-agenda)
@@ -46,7 +46,7 @@
 (use-package lispy :hook (emacs-lisp-mode . lispy-mode) :diminish lispy-mode)
 (use-package pomodoro :defer t)
 (use-package rainbow-delimiters :hook (emacs-lisp-mode . rainbow-delimiters-mode))
-(use-package shell-interaction :ensure nil)
+(use-package shell-interaction :pin manual)
 
 
 ;;;
@@ -58,6 +58,7 @@
 
 ;;;
 (use-package dot-auctex :ensure auctex
+  :demand t
   :mode ("\\.tex$" . TeX-latex-mode)
   :hook ((TeX-mode . TeX-fold-mode)
          (TeX-mode . variable-pitch-mode)
@@ -65,7 +66,8 @@
          (TeX-mode . LaTeX-math-mode)))
 
 ;;;
-(use-package dot-defun :ensure nil
+(use-package dot-defun
+  :pin manual
   :bind (("C-a" . job/beginning-of-line-or-indentation)
          ("C-k" . job/kill-line)
          ("C-w" . job/kill-word-or-region)
