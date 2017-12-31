@@ -1,5 +1,5 @@
 ;;;,_dot-auctex
-(require 'auctex)
+(require 'tex-site)
 
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
@@ -98,7 +98,7 @@
 
 (eval-after-load 'tex
   '(define-key TeX-mode-map ","
-     'smart-self-insert-punctuation))
+     'job/smart-self-insert-punctuation))
 
 ;;;###autoload
 (defun job/insert-enquote ()
