@@ -204,53 +204,6 @@ müssen manuell deaktiviert werden
 ;;(load-theme 'leuven t)
 #+end_src
 
-** smart-mode-line
-#+begin_src emacs-lisp
-(use-package smart-mode-line
-  :ensure t
-  :init
-   (setq sml/theme 'dark)
-   (sml/setup)
-   (setq sml/shorten-directory t)
-   (setq sml/shorten-modes t)
-   (setq sml/name-width 25)
-   (setq sml/mode-width 'full)
-   (add-to-list 'sml/replacer-regexp-list '("^:DB:diss/" ":ds:") t)
-   (add-to-list 'sml/replacer-regexp-list '("^:ds:tex/" ":ds:tx:") t)
-   (add-to-list 'sml/replacer-regexp-list '("^:ds:tx:parts/" ":ds:tx:p:") t)
-   (add-to-list 'sml/replacer-regexp-list '("^:ds:tx:p:part1/" ":ds:") t)
-   (add-to-list 'sml/replacer-regexp-list '("^~/Dokumente/" ":Dok:") t)
-   (add-to-list 'sml/replacer-regexp-list '("^~/archiv/" ":arch:") t)
-   (add-to-list 'sml/replacer-regexp-list '("^~/Downloads/" ":DL:") t)
-   (add-to-list 'sml/replacer-regexp-list '("^~/texte/" ":TXT:") t)
-)
-#+end_src
-
-** volatile-highlights
-#+begin_src emacs-lisp
-(use-package volatile-highlights
-  :ensure t
-  :diminish volatile-highlights-mode
-  :init
-  (volatile-highlights-mode t))
-#+end_src
-
-** visual-fill-column
-#+begin_src emacs-lisp
-(use-package visual-fill-column
-  :ensure t
-  :defer t
-  :config
-  (setq-default visual-fill-column-center-text t
-                visual-fill-column-fringes-outside-margins t))
-#+end_src
-
-** ascii-art-to-unicode
-#+begin_src emacs-lisp
-(use-package ascii-art-to-unicode
-  :commands aa2u)
-#+end_src
-
 * Bedienung & Interface
 ** kbd
 [[http://pragmaticemacs.com/emacs/use-your-digits-and-a-personal-key-map-for-super-shortcuts/][Use your digits and a personal key map for super shortcuts]]
@@ -318,45 +271,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 ;; Show unfinished keystrokes early.
 (setq echo-keystrokes 0.1)
-#+end_src
-
-** char-menu
-#+begin_src emacs-lisp
-(use-package char-menu
-  :ensure t
-  :defer t
-  :config
-  (setq char-menu '("–" "—" "„“" "‘’" "“”" "»«" "…"
-                    ("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
-                    ("Math" "≈" "≡" "≠" "∞" "×" "±" "∓" "÷" "√" "⊂" "⊃")
-                    ("Arrows" "←" "→" "↑" "↓" "⇐" "⇒" "⇑" "⇓")
-                    ("Greek" "α" "β" "Y" "δ" "ε" "ζ" "η" "θ" "ι" "κ" "λ" "μ" "ν" "ξ" "ο" "π" "ρ" "σ" "τ" "υ" "φ" "χ" "ψ" "ω")
-                    ("Other Languages" "Œ"))))
-#+end_src
-
-** key-chord
-#+begin_src emacs-lisp
-(use-package key-chord
-  :ensure t
-  :config
-  (progn
-    (setq key-chord-two-keys-delay 0.15)
-    (setq key-chord-one-key-delay 0.25)
-    (key-chord-mode 1)
-    (key-chord-define-global "jk" 'avy-goto-char-timer)
-    (key-chord-define-global "jl" 'avy-goto-line)
-    (key-chord-define-global "jf" 'ace-window)))
-#+end_src
-
-** ace-window
-#+begin_src emacs-lisp
-(use-package ace-window
-  :bind ("C-c k" . ace-delete-window)
-  :config
-  (progn
-    (setq aw-scope 'frame)
-    (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
-    (setq aw-dispatch-always nil)))
 #+end_src
 
 ** isearch
@@ -434,12 +348,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 )
 #+end_src
 
-** swiper
-#+BEGIN_SRC emacs-lisp
-(use-package swiper
-  :ensure t)
-#+END_SRC
-
 ** counsel
 #+begin_src emacs-lisp
 (use-package counsel
@@ -456,41 +364,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          ("C-c o" . counsel-outline)
          ("C-c n" . counsel-imenu)))
   #+end_src
-
-** smex
-#+begin_src emacs-lisp
-(use-package smex
-  :ensure t)
-#+end_src
-
-** which-key
-#+begin_src emacs-lisp
-(use-package which-key
-  :ensure t
-  :diminish which-key-mode
-  :config
-   (which-key-mode))
-#+end_src
-
-** avy
-*** avy-config
-#+begin_src emacs-lisp
-(use-package avy
-  :ensure t
-  :bind ("M-s" . avy-goto-char-timer)
-  :config
-   (progn
-    (setq avy-all-windows t)
-    (setq avy-keys '(?w ?e ?r ?u ?i ?o ?a ?s ?d ?f ?g ?h ?j ?k ?l ?ö ?v ?b ?n ?m))
-
-    (define-key input-decode-map (kbd "C-i") (kbd "H-i"))))
-#+end_src
-
-*** link-hint
-#+begin_src emacs-lisp
-(use-package link-hint
-  :bind ("C-c h" . link-hint-open-link))
-#+end_src
 
 ** shell
 #+begin_src emacs-lisp
@@ -510,20 +383,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 (setq eshell-visual-commands
 '("less" "tmux" "htop" "top" "bash" "zsh" "fish" "watch" "time" "sudo"))
 #+end_src
-
-** shell-pop
-#+begin_src emacs-lisp
-(use-package shell-pop
-  :bind (("C-c j" . shell-pop))
-  :config
-  (setq shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
-  (setq shell-pop-term-shell "/usr/bin/zsh")
-  (setq shell-pop-window-size 45)
-  ;; need to do this manually or not picked up by `shell-pop'
-  (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type)
-  )
-#+end_src
-
 
 * org-mode
 ** allgemein
@@ -1489,7 +1348,7 @@ http://doc.norang.ca/org-mode.org
 ** org-clock-csv
 #+begin_src emacs-lisp
   (use-package org-clock-csv
-    :pin manual
+    :ensure nil
     :config
       (defun my/org-clock-csv-calc ()
         "Ruft script auf und verarbeitet die "
@@ -1552,14 +1411,14 @@ http://doc.norang.ca/org-mode.org
 *** ox-extra
 #+begin_src emacs-lisp
 (use-package ox-extra
-  :pin manual
+  :ensure nil
   :config
   (ox-extras-activate '(latex-header-blocks ignore-headlines)))
 #+end_src
 *** org-contacts
 #+begin_src emacs-lisp
 (use-package org-contacts
-  :pin manual
+  :ensure nil
   :config
   (setq org-contacts-files '("~/Dropbox/db/contacts.org"))
   (setq org-contacts-icon-use-gravatar nil)
@@ -1569,19 +1428,19 @@ http://doc.norang.ca/org-mode.org
 *** org-checklist
 #+begin_src emacs-lisp
 (use-package org-checklist
-    :pin manual)
+    :ensure nil)
 #+end_src
 
 *** org-collector
 #+begin_src emacs-lisp
 (use-package org-collector
-  :pin manual)
+  :ensure nil)
 #+end_src
 
 *** org-indent
 #+begin_src emacs-lisp
 (use-package org-indent
-  :pin manual
+  :ensure nil
   :commands org-indent-mode
   :diminish org-indent-mode
   :init
@@ -2102,7 +1961,7 @@ abort completely with `C-g'."
 ** sdcv-mode
 #+begin_src emacs-lisp
 (use-package sdcv-mode
-  :pin manual
+  :ensure nil
   :bind (:map sdcv-mode-map
               ("<tab>" . sdcv-toggle-entry)))
 #+end_src
@@ -2206,7 +2065,7 @@ abort completely with `C-g'."
 ** gnus-dired
 #+begin_src emacs-lisp
 (use-package gnus-dired
-  :pin manual
+  :ensure nil
   :config
    (progn
      (defun gnus-dired-mail-buffers ()
@@ -2342,7 +2201,7 @@ rotate entire document."
 ** dired
 #+begin_src emacs-lisp
 (use-package dired
-  :pin manual
+  :ensure nil
   :bind (:map dired-mode-map
               ("C-m" . dired-find-file)
               (";" . dired-subtree-insert)
@@ -2435,7 +2294,7 @@ rotate entire document."
 ** abbrev-mode
 #+begin_src emacs-lisp
 (use-package abbrev
-  :pin manual
+  :ensure nil
   :diminish abbrev-mode
   :config
   (progn
@@ -2486,7 +2345,7 @@ rotate entire document."
 ** hippie-expand
 #+begin_src emacs-lisp
 (use-package hippie-expand
-  :pin manual
+  :ensure nil
   :bind ("M-<tab>" . hippie-expand)
   :init
    (setq hippie-expand-verbose t)
@@ -2567,7 +2426,7 @@ rotate entire document."
 ** epa-file
 #+begin_src emacs-lisp
 (use-package epa-file
-  :pin manual
+  :ensure nil
   :config
     (epa-file-enable)
     ;; Symmetric Encryption.
@@ -2886,7 +2745,7 @@ _y_: youtube      _bb_: bibtex
 ** zettelkasten
 #+begin_src emacs-lisp
 (use-package zettelkasten
-  :pin manual
+  :ensure nil
   :init
   (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
   (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
@@ -2919,7 +2778,7 @@ _y_: youtube      _bb_: bibtex
 ** Remembrance Agent
 #+begin_src emacs-lisp
 (use-package remem
-  :pin manual
+  :ensure nil
   :commands remem-toggle
   :config
    (setq remem-database-dir (job/custom-temp-file-name "ra-index"))
@@ -3032,9 +2891,9 @@ _y_: youtube      _bb_: bibtex
 #+begin_src emacs-lisp
 (defun zettelkasten-gitstats ()
   (interactive)
-  (sc (concat "cd ~/Dropbox/db/zk/zettel &&"
-              "gitstats .git gitstats &&"
-              "firefox 'gitstats/index.html'")))
+  (shell-command-to-string (concat "cd ~/Dropbox/db/zk/zettel &&"
+                                   "gitstats .git gitstats &&"
+                                   "firefox 'gitstats/index.html'")))
 #+end_src
 
 * defun
