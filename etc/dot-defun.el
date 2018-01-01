@@ -10,10 +10,47 @@
     (beginning-of-line)))
 
 ;;;###autoload
+(defun job/berlinantiquariat-bill-format ()
+  (interactive)
+  (goto-char (point-min))
+  (while (search-forward-regexp "\\\\textit" nil t)
+    (replace-match "" t nil))
+  (goto-char (point-min))
+  (while (search-forward-regexp "{\\[" nil t)
+    (replace-match "" t nil))
+  (goto-char (point-min))
+  (while (search-forward-regexp "\\]}" nil t)
+    (replace-match "" t nil))
+  (goto-char (point-min))
+  (while (search-forward-regexp "\"" nil t)
+    (replace-match "" t nil))
+  (goto-char (point-min))
+  (while (search-forward-regexp "€" nil t)
+    (replace-match "\\\\EURdig" t nil)))
+
+;; https://github.com/baron42bba/.emacs.d/blob/master/bba.org#copy-buffer-file-name-to-kill-ring
+;;;###autoload
+(defun job/buffer-file-name-to-kill-ring ()
+  (interactive)
+  (kill-new (buffer-file-name))
+  (message (format "stored '%s' in kill-ring" buffer-file-name)))
+
+;;;###autoload
 (defun job/capitalize-last-word ()
   (interactive)
   (left-word)
   (capitalize-word 1))
+
+;;;###autoload
+(defun job/clean-kill-emacs ()
+  (interactive)
+  (save-some-buffers)
+  (kill-matching-buffers "\.gpg$")
+  (kill-matching-buffers "\.tex$")
+  (kill-matching-buffers "\.pdf$")
+  (kill-matching-buffers "\.dat$")
+  (kill-matching-buffers "\.csv$")
+  (kill-emacs))
 
 ;;;###autoload
 (defun job/downcase-last-word ()
@@ -59,6 +96,38 @@
        (region-beginning)
        (region-end))
     (backward-kill-word arg)))
+
+;;;###autoload
+(defun job/just-one-space-in-region (beg end)
+  "replace all whitespace in the region with single spaces"
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region beg end)
+      (goto-char (point-min))
+      (while (re-search-forward "\\s-+" nil t)
+        (replace-match " ")))))
+
+;; https://www.emacswiki.org/emacs/SortWords
+;;;###autoload
+(defun sort-words (reverse beg end)
+ "Sort words in region alphabetically, in REVERSE if negative.
+  Prefixed with negative \\[universal-argument], sorts in reverse.
+
+  The variable `sort-fold-case' determines whether alphabetic case
+  affects the sort order.
+
+  See `sort-regexp-fields'."
+    (interactive "*P\nr")
+    (sort-regexp-fields reverse "\\w+" "\\&" beg end))
+
+;;;###autoload
+(defun sort-symbols (reverse beg end)
+  "Sort symbols in region alphabetically, in REVERSE if negative.
+See `sort-words'."
+  (interactive "*P\nr")
+  (sort-regexp-fields reverse "\\(\\sw\\|\\s_\\)+" "\\&" beg end))
+
 
 
 (provide 'dot-defun)

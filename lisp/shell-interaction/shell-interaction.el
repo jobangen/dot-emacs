@@ -218,5 +218,28 @@
     (shell-command (concat "pumount /dev/" name)))
   (mount-lsblk))
 
+;;; Gnuplot
+;;;###autoload
+(defun job/gnuplot-electricity ()
+  (interactive)
+  (shell-command-to-string "source ~/script/electricity-calc.sh")
+  (shell-command-to-string "gnuplot -persist ~/Dropbox/db/plot/electricity.plot"))
+
+;;;###autoload
+(defun job/gnuplot-org-entries ()
+  (interactive)
+  (my/org-clock-csv-write-calc)
+  (shell-command "gnuplot -persist ~/Dropbox/db/stats/org-entries.plot"))
+
+
 (provide 'shell-interaction)
 ;;; shell-interaction.el ends here
+
+
+
+
+
+
+
+
+

@@ -36,7 +36,6 @@
          ("C-c l" . org-store-link))
   :mode ("\\.txt\\'" . org-mode))
 
-;;;
 (org-babel-load-file "~/.emacs.d/myinit.org")
 
 ;;; Libraries
