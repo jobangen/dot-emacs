@@ -23,6 +23,14 @@
 (load custom-file)
 
 ;;;
+(use-package deft
+  :defer t
+  :config
+  (setq deft-directory "~/Dropbox/db/zk/zettel")
+  (bind-key "C-h" 'deft-filter-decrement deft-mode-map)
+  (bind-key "C-w" 'deft-filter-decrement-word deft-mode-map))
+
+;;;
 (use-package dot-exwm :ensure exwm)
 
 ;;;
@@ -154,12 +162,46 @@
          ("C-c C-<" . mc/mark-all-like-this))
   :diminish multiple-cursors)
 
+;;; O
+(use-package org-brain
+  :bind ("C-c v" . org-brain-visualize)
+  :config
+  (setq org-brain-path (expand-file-name zettel-dir "zettel"))
+  (setq org-brain-data-file (no-littering-expand-var-file-name "org/brain-data.el"))
+  (setq org-brain-files-extension "txt")
+  (setq org-brain-visualize-default-choices 'root)
+  (setq org-brain-show-resources t)
+  (setq org-brain-show-text t)
+  (bind-key "l" 'link-hint-open-link org-brain-visualize-mode-map))
+
+
 ;;; P
 (use-package paperless :defer t
   :config
   (bind-key "C-m" 'paperless-display paperless-mode-map)
   (setq paperless-capture-directory "~/texte/texteingang")
   (setq paperless-root-directory "~/"))
+
+;;; R
+(use-package remem
+  :ensure nil
+  :commands remem-toggle
+  :config
+  (setq remem-database-dir (job/custom-temp-file-name "ra-index"))
+  (setq remem-scopes-list '(("zettelkasten" 5 2 500)
+                            ("texte" 5 2 500)))
+  (setq remem-print-exact-relevance-p t)
+  (setq remem-load-original-suggestion t)
+  (setq remem-log-p t)
+  (setq remem-logfile (expand-file-name "~/.custom-temp/.remem-log-file"))
+
+  (setq remem-format-default
+        '((0 2 (field 0 mouse-face remem-hilite2) nil)        ; Number
+          (1 2 (face remem-even field 1) nil)                 ; sim
+          (9 3 (face remem-odd field 9 mouse-face remem-hilite) nil) ; person
+          (8 25 (face remem-even field 8 mouse-face remem-hilite) nil) ; subject
+          (28 50 (face remem-odd field 28 mouse-face remem-hilite) nil))) ; keywords
+  )
 
 ;;; S
 (use-package smart-mode-line
