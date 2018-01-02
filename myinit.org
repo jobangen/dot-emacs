@@ -577,6 +577,22 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                       (org-agenda-remove-tags t)))
           (todo "DONE"
                 ((org-agenda-overriding-header "Tasks to Archive:")
+                 (org-agenda-remove-tags t)))))
+        ("K" "Kanban"
+         ((tags "KBbacklog"
+                ((org-agenda-overriding-header "1. Backlog:")
+                 (org-agenda-remove-tags t)))
+          (tags "KBtodo"
+                ((org-agenda-overriding-header "2. Todo:")
+                 (org-agenda-remove-tags t)))
+          (tags "KBstarted"
+                ((org-agenda-overriding-header "3. Started:")
+                 (org-agenda-remove-tags t)))
+          (tags "KBblocked"
+                ((org-agenda-overriding-header "4. Blocked:")
+                 (org-agenda-remove-tags t)))
+          (tags "KBreview"
+                ((org-agenda-overriding-header "5. Review:")
                  (org-agenda-remove-tags t)))))))
 #+end_src
 
@@ -686,10 +702,11 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
         "TODO"))))
 
   (setq org-todo-state-tags-triggers
-        (quote ((done ("today"))
-                ("WAITING" ("today"))
-                ("HOLD" ("today"))
-                ("TODO" ("today")))))
+        (quote
+         ((done ("today") ("KBbacklog") ("KBtodo") ("KBstarted") ("KBblocked") ("KBreview"))
+          ("WAITING" ("today"))
+          ("HOLD" ("today") ("KBbacklog") ("KBtodo") ("KBstarted") ("KBblocked") ("KBreview"))
+          ("TODO" ("today")))))
 
 
   ;; Formatierung für TODO-tags
@@ -985,7 +1002,8 @@ Subject: [[%l][%:subject]]
 ** tags
 #+begin_src emacs-lisp
 ; Tags with fast selection keys
-(setq org-tags-exclude-from-inheritance '("txt"))
+(setq org-tags-exclude-from-inheritance
+      '("txt" "KBbacklog" "KBtodo" "KBstarted" "KBblocked" "KBreview"))
 
 (setq org-tag-alist '((:startgroup)
                        ("arbeit"    . ?a)
@@ -999,6 +1017,12 @@ Subject: [[%l][%:subject]]
                       (:startgroup)
                        ("today"     . ?t)
                        ("someday"   . ?s)(:endgroup)
+                      (:startgroup)
+                      ("KBbacklog"  . ?1)
+                      ("KBtodo"     . ?2)
+                      ("KBstarted"  . ?3)
+                      ("KBblocked"  . ?4)
+                      ("KBreview"   . ?5)(:endgroup)
                       ("computer"   . ?c)
                       ("verwaltung" . ?v)
                       ("lehre")
