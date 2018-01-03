@@ -139,7 +139,7 @@
       (if (string-match "zedat" gnus-newsgroup-name)
           (progn
             (gnus-summary-put-mark-as-unread nil)
-            (gnus-summary-move-article nil "nnimap+zedat:2017" nil)
+            (gnus-summary-move-article nil "nnimap+zedat:2018" nil)
             (gnus-summary-next-article))
         (if (string-match "gmail" gnus-newsgroup-name)
             (progn
@@ -167,7 +167,7 @@
 (define-key gnus-summary-mode-map "vi" 
   (lambda () (interactive)
     (gnus-summary-put-mark-as-unread nil)
-    (gnus-summary-move-article nil "nnimap+zedat:2017/17-irw" nil)
+    (gnus-summary-move-article nil "nnimap+zedat:2018/18-irw" nil)
     (gnus-summary-next-unread-article)))
 
 (define-key gnus-summary-mode-map "vg"
