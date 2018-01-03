@@ -232,6 +232,9 @@ müssen manuell deaktiviert werden
  ("C-S-z" . undo-tree-redo))
 
 (bind-keys*
+ ("C-c #" . job/calc-restart-and-trail))
+
+(bind-keys*
  ("C-x C-b" . ibuffer)
  ("C-x C-k" . kill-region))
 

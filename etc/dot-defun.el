@@ -128,7 +128,12 @@ See `sort-words'."
   (interactive "*P\nr")
   (sort-regexp-fields reverse "\\(\\sw\\|\\s_\\)+" "\\&" beg end))
 
-
+;;;###autoload
+(defun job/calc-restart-and-trail ()
+  (interactive)
+  (calc)
+  (call-interactively 'calc-reset)
+  (calc-trail-display t))
 
 (provide 'dot-defun)
 ;;; dot-defun.el ends here
