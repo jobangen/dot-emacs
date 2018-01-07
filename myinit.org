@@ -601,9 +601,9 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 
 *** agenda-hydra
 #+begin_src emacs-lisp
-  (add-hook 'org-agenda-mode-hook
-     (lambda ()
-        (bind-key "v" 'hydra-org-agenda-view/body org-agenda-mode-map)))
+(add-hook 'org-agenda-mode-hook
+          (lambda ()
+            (bind-key "v" 'hydra-org-agenda-view/body org-agenda-mode-map)))
 
 (defun org-agenda-cts ()
   (let ((args (get-text-property
@@ -950,7 +950,7 @@ Subject: [[%l][%:subject]]
  "%(org-read-date) * Unter den Eichen
     Expenses:Wohnung:Grundmiete               402,52€
     Expenses:Wohnung:Heizkosten                83,00€
-    Expenses:Wohnung:Betriebskosten           103,00€
+    Expenses:Wohnung:Betriebskosten            98,00€
     Assets:Giro"
  :immediate-finish t)
 
