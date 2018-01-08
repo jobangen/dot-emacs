@@ -1993,9 +1993,10 @@ abort completely with `C-g'."
 #+begin_src emacs-lisp
 (use-package sdcv-mode
   :ensure nil
-  :bind (:map sdcv-mode-map
-              ("<tab>" . sdcv-toggle-entry)))
-#+end_src
+  :commands sdcv-search
+  :config
+  (bind-key "<tab>" 'sdcv-toggle-entry sdcv-mode-map))
+ #+end_src
 
 * Versionskontrolle
 ** undo-tree
