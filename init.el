@@ -6,30 +6,19 @@
 (package-initialize)
 (setq package-enable-at-startup nil)
 
-;;;
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/use-package"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/etc"))
 
 ;;; use-package
 (eval-when-compile
   (require 'use-package))
-
 (setq use-package-always-ensure t)
 (require 'bind-key)
 (use-package diminish
   :ensure t)
 
-;;;
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
-
-;;;
-(use-package deft
-  :defer t
-  :config
-  (setq deft-directory "~/Dropbox/db/zk/zettel")
-  (bind-key "C-h" 'deft-filter-decrement deft-mode-map)
-  (bind-key "C-w" 'deft-filter-decrement-word deft-mode-map))
 
 ;;;
 (use-package dot-exwm :ensure exwm)
@@ -48,21 +37,22 @@
 (org-babel-load-file "~/.emacs.d/myinit.org")
 
 ;;; Libraries
-(use-package counsel-notmuch :defer t)
-(use-package dired-collapse :hook dired-mode)
-(use-package dired-subtree :commands dired-subtree-insert)
+(use-package counsel-notmuch      :defer t)
+(use-package dired-collapse       :hook dired-mode)
+(use-package dired-subtree        :commands dired-subtree-insert)
+(use-package ess                  :commands (R))
 (use-package flyspell-correct-ivy :after (flyspell-correct ivy))
 (use-package git-timemachine)
-(use-package gnuplot-mode :mode "\\.plot\\'")
-(use-package haskell-mode :defer t)
-(use-package ledger-mode :mode "\\.dat\\'")
-(use-package lispy :hook (emacs-lisp-mode . lispy-mode) :diminish lispy-mode)
-(use-package org-notmuch :ensure nil)
-(use-package peep-dired :defer t)
-(use-package pomodoro :defer t)
-(use-package shell-interaction :ensure nil)
+(use-package gnuplot-mode         :mode "\\.plot\\'")
+(use-package haskell-mode         :defer t)
+(use-package ledger-mode          :mode "\\.dat\\'")
+(use-package org-notmuch          :ensure nil)
+(use-package org-pdfview          :after (org pdf-tools))
+(use-package peep-dired           :defer t)
+(use-package pomodoro             :defer t)
+(use-package shell-interaction    :ensure nil)
 (use-package smex)
-(use-package rainbow-delimiters :hook (emacs-lisp-mode . rainbow-delimiters-mode))
+(use-package rainbow-delimiters   :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 
 ;;; A
 (use-package ace-window
@@ -85,6 +75,22 @@
 
 
 ;;; C
+(use-package calfw
+  :bind (("C-c f" . job/open-org-calendar))
+  :config
+  (setq calendar-week-start-day 1)
+
+  (defun job/open-org-calendar ()
+    (interactive)
+    (delete-other-windows)
+    (cfw:open-org-calendar)))
+
+(use-package calfw-org
+  :after (calfw)
+  :config
+  (setq cfw:org-agenda-schedule-args '(:sexp :timestamp)))
+
+
 (use-package char-menu
   :defer t
   :config
@@ -110,6 +116,13 @@
          (TeX-mode . variable-pitch-mode)
          (TeX-mode . linum-mode)
          (TeX-mode . LaTeX-math-mode)))
+
+(use-package deft
+  :defer t
+  :config
+  (setq deft-directory "~/Dropbox/db/zk/zettel")
+  (bind-key "C-h" 'deft-filter-decrement deft-mode-map)
+  (bind-key "C-w" 'deft-filter-decrement-word deft-mode-map))
 
 (use-package dot-defun
   :ensure nil
@@ -156,7 +169,17 @@
   :after (avy)
   :bind ("C-c h" . link-hint-open-link))
 
+(use-package lispy
+  :hook (emacs-lisp-mode . lispy-mode)
+  :diminish lispy-mode)
+
 ;;; M
+(use-package magit
+  :bind (("C-x g" . magit-status))
+  :config
+  (setq magit-last-seen-setup-instructions "1.4.0")
+  (setq magit-diff-refine-hunk 'all))
+
 (use-package multiple-cursors
   :bind (("C-S-c C-S-c" . mc/edit-lines)
          ("C-<" . mc/mark-next-like-this)
@@ -236,6 +259,17 @@
 (use-package swiper
   :load-path "site-lisp/swiper"
   :ensure nil)
+
+;;; U
+(use-package undo-tree
+  :bind (("C-x u" . undo-tree-visualize))
+  :diminish undo-tree-mode
+  :init
+  (global-undo-tree-mode 1)
+  :config
+  (progn
+    (setq undo-tree-visualizer-timestamps nil)
+    (setq undo-tree-visualizer-diff t)))
 
 ;;; V
 (use-package volatile-highlights

@@ -1998,37 +1998,6 @@ abort completely with `C-g'."
   (bind-key "<tab>" 'sdcv-toggle-entry sdcv-mode-map))
  #+end_src
 
-* Versionskontrolle
-** undo-tree
-#+begin_src emacs-lisp
-(use-package undo-tree
-  :bind (("C-x u" . undo-tree-visualize))
-  :diminish undo-tree-mode
-  :init
-  (global-undo-tree-mode 1)
-  :config
-  (progn
-    (setq undo-tree-visualizer-timestamps t)
-    (setq undo-tree-visualizer-diff t)))
-#+end_src
-
-** magit
-#+begin_src emacs-lisp
-(use-package magit
- :bind (("C-x g" . magit-status))
- :config
-   (setq magit-last-seen-setup-instructions "1.4.0")
-   (setq magit-diff-refine-hunk 'all)
-   (setq magit-repository-directories
-      `(("~/.xmonad")
-        (,zettel-dir)
-        (,user-emacs-directory)
-        ("~/Dropbox/diss")
-        ("~/Dropbox/db")
-        ))
-)
-#+end_src
-
 * Mail und Kontakte
 ** gnus
 #+begin_src emacs-lisp
@@ -2216,25 +2185,6 @@ rotate entire document."
                '("\\.pdf::\\([[:digit:]]+\\)\\'" . org-pdfview-open))
   (add-to-list 'org-file-apps
                '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open link)))))
-
-
-(use-package org-pdfview
-  :after (org pdf-tools))
-
-
-  (eval-after-load 'org '(require 'org-pdfview))
-
-#+end_src
-
-** ess
-#+begin_src emacs-lisp
-(use-package ess
-  :defer t
-  :commands (R))
-#+end_src
-
-** csv-mode
-#+begin_src emacs-lisp
 #+end_src
 
 ** dired
@@ -2304,29 +2254,6 @@ rotate entire document."
           ("png" ("eog" "gimp-2.8"))
           ;; Video
           ("mov" ("totem" "vlc")))))
-#+end_src
-
-** calfw
-#+begin_src emacs-lisp
-(use-package calfw
-  :ensure t
-  :config
-  (setq calendar-week-start-day 1))
-#+end_src
-*** calfw-org
-#+begin_src emacs-lisp
-(use-package calfw-org
-  :ensure t
-  :bind (("C-c f" . job/open-org-calendar))
-  :config
-  (setq cfw:org-agenda-schedule-args '(:sexp :timestamp))
-
-  (defun job/open-org-calendar ()
-    (interactive)
-    (delete-other-windows)
-    (cfw:open-org-calendar)
-    )
-  )
 #+end_src
 
 * Minor-modes
