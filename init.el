@@ -32,7 +32,7 @@
   (bind-key "C-w" 'deft-filter-decrement-word deft-mode-map))
 
 ;;;
-(use-package dot-exwm :demand t :ensure exwm)
+(use-package dot-exwm :ensure exwm)
 
 ;;;
 (use-package dot-org
