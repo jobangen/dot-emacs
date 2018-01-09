@@ -74,6 +74,27 @@
     (define-key input-decode-map (kbd "C-i") (kbd "H-i"))))
 
 
+;;; B
+(use-package bibtex-mode
+  :ensure nil
+  :defer t
+  :config
+  (setq bibtex-dialect 'biblatex)
+  (setq bibtex-maintain-sorted-entries t)
+  (setq bibtex-autokey-year-use-crossref-entry t
+        bibtex-autokey-year-length 10
+        bibtex-autokey-year-title-separator "-"
+        bibtex-autokey-titleword-separator "-"
+        bibtex-autokey-titlewords 3
+        bibtex-autokey-titleword-length 4)
+
+  (defun bibtex-autokey-get-year ()
+    "Return year field contents as a string obeying `bibtex-autokey-year-length'."
+    (let ((yearfield (bibtex-autokey-get-field "date")))
+      (substring yearfield (max 0 (- (length yearfield)
+                                     bibtex-autokey-year-length))))))
+
+
 ;;; C
 (use-package calfw
   :bind (("C-c f" . job/open-org-calendar))
@@ -142,6 +163,18 @@
 (use-package flyspell-correct
   :config
   (setq flyspell-correct-interface 'flyspell-correct-ivy))
+
+;;; G
+(use-package gscholar-bibtex
+  :commands gscholar-bibtex
+  :config
+  (setq gscholar-bibtex-database-file (expand-file-name (concat db-dir "biblio.bib")))
+  (setq gscholar-bibtex-default-source "Google Scholar")
+  (gscholar-bibtex-source-on-off :off "IEEE Xplore")
+  (gscholar-bibtex-source-on-off :off "DBLP")
+  (gscholar-bibtex-source-on-off :off "ACM Digital Library"))
+
+
 
 ;;; I
 (use-package ivy-hydra

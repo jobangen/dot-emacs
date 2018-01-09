@@ -1545,8 +1545,8 @@ http://doc.norang.ca/org-mode.org
 #+begin_src emacs-lisp
 (use-package reftex
   :defer t
-  :diminish reftex-mode
   :hook (TeX-mode . reftex-mode)
+  :diminish reftex-mode
   :config
   (progn
     (setq reftex-plug-into-AUCTeX t)
@@ -1571,35 +1571,12 @@ http://doc.norang.ca/org-mode.org
     (setq reftex-cite-cleanup-optional-arg t)))
 #+end_src
 
-** bibtex-mode
-http://www.jonathanleroux.org/bibtex-mode.html
-#+begin_src emacs-lisp
-(setq bibtex-dialect 'biblatex)
-(setq bibtex-maintain-sorted-entries t)
-(setq bibtex-autokey-year-use-crossref-entry t
-      bibtex-autokey-year-length 4
-      bibtex-autokey-year-title-separator "-"
-      bibtex-autokey-titleword-separator "-")
-
-(defun bibtex-autokey-get-year ()
-  "Return year field contents as a string obeying `bibtex-autokey-year-length'."
-  (let ((yearfield (bibtex-autokey-get-field "date")))
-    (substring yearfield (max 0 (- (length yearfield)
-                                   bibtex-autokey-year-length)))))
-#+end_src
-
 ** bibtex-utils
 #+begin_src emacs-lisp
 (use-package bibtex-utils
- :ensure t)
-#+end_src
-
-** gscholar-bibtex
-#+begin_src emacs-lisp
-(use-package gscholar-bibtex
- :config
- (setq gscholar-bibtex-database-file (expand-file-name db-dir "import.bib"))
- (setq gscholar-bibtex-default-source "Google Scholar"))
+  :after (bibtex)
+  :config
+  (setq bu-bibtex-fields-ignore-list '("")))
 #+end_src
 
 ** bibtex-completion
