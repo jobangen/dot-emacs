@@ -2157,7 +2157,6 @@ abort completely with `C-g'."
   :mode ("\\.pdf\\'" . pdf-view-mode)
   :config
   (pdf-tools-install)
-  (eval-after-load 'org '(require 'org-pdfview))
   (setq-default pdf-view-display-size 'fit-page)
   (setq pdf-annot-activate-created-annotations t)
   (setq pdf-view-resize-factor 1.1)
@@ -2217,6 +2216,14 @@ rotate entire document."
                '("\\.pdf::\\([[:digit:]]+\\)\\'" . org-pdfview-open))
   (add-to-list 'org-file-apps
                '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open link)))))
+
+
+(use-package org-pdfview
+  :after (org pdf-tools))
+
+
+  (eval-after-load 'org '(require 'org-pdfview))
+
 #+end_src
 
 ** ess
