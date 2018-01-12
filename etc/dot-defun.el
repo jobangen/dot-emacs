@@ -135,6 +135,19 @@ See `sort-words'."
   (call-interactively 'calc-reset)
   (calc-trail-display t))
 
+;;; Insert Credentials
+;;;###autoload
+(defun job/insert-credentials-postbank-giro-iban ()
+  (interactive)
+  (load-library "~/.password-store/.data/mycredentials.el.gpg")
+  (insert job/credentials-postbank-giro-iban))
+
+;;;###autoload
+(defun job/insert-credentials-postbank-giro-bic ()
+  (interactive)
+  (load-library "~/.password-store/.data/mycredentials.el.gpg")
+  (insert job/credentials-postbank-giro-bic))
+
 (provide 'dot-defun)
 ;;; dot-defun.el ends here
 
