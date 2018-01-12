@@ -14,8 +14,7 @@
   (require 'use-package))
 (setq use-package-always-ensure t)
 (require 'bind-key)
-(use-package diminish
-  :ensure t)
+(use-package diminish)
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
@@ -65,7 +64,6 @@
     (setq aw-dispatch-always nil)))
 
 (use-package avy
-  :ensure t
   :bind ("M-s" . avy-goto-char-timer)
   :config
   (progn
