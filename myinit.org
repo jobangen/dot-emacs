@@ -1812,17 +1812,6 @@ of a BibTeX field into the template. Fork."
 #+end_src
 
 * Schreiben und Stil
-** ispell
-#+begin_src emacs-lisp
-(use-package ispell
-  :config
-  (progn
-    (setq-default ispell-program-name "aspell")
-    (setq args (list "--sug-mode=ultra" "--lang=de_DE-neu"))
-    (setq ispell-parser 'use-mode-name)
-))
-#+end_src
-
 ** flyspell
 #+begin_src emacs-lisp
 (use-package flyspell
@@ -1957,13 +1946,6 @@ abort completely with `C-g'."
   (setq www-synonyms-key "gaGF6dLppnG6whJVPKFg")
   (setq www-synonyms-change-lang "de") ;; funktioniert nicht
 )
-#+end_src
-
-** define-word
-#+begin_src emacs-lisp
-(use-package define-word
-  :ensure t
-  :commands define-word define-word-at-point)
 #+end_src
 
 ** sdcv-mode

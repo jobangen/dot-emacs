@@ -37,11 +37,12 @@
 
 ;;; Libraries
 (use-package counsel-notmuch      :defer t)
+(use-package define-word          :commands define-word define-word-at-point)
 (use-package dired-collapse       :hook dired-mode)
 (use-package dired-subtree        :commands dired-subtree-insert)
-(use-package ess                  :commands (R))
+(use-package ess                  :commands R)
 (use-package flyspell-correct-ivy :after (flyspell-correct ivy))
-(use-package git-timemachine)
+(use-package git-timemachine      :defer t)
 (use-package gnuplot-mode         :mode "\\.plot\\'")
 (use-package haskell-mode         :defer t)
 (use-package ledger-mode          :mode "\\.dat\\'")
@@ -175,6 +176,13 @@
 
 
 ;;; I
+(use-package ispell
+  :config
+  (progn
+    (setq-default ispell-program-name "aspell")
+    (setq args (list "--sug-mode=ultra" "--lang=de_DE-neu"))
+    (setq ispell-parser 'use-mode-name)))
+
 (use-package ivy-hydra
   :after (ivy hydra))
 
