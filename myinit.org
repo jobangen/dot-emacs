@@ -903,7 +903,7 @@ Subject: [[%l][%:subject]]
 :END:")
 
 ("P" "Projekt" entry (file "inbox.org")
-"* PROJ %^{Projekt} :%^{Category|wiss|arbeit|pers}:
+"* PROJ %^{Projekt} :KBbacklog:%^{Category|wiss|arbeit|pers}:
 :PROPERTIES:
 :CREATED: %U
 :CATEGORY:  %\\2
