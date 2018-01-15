@@ -76,7 +76,7 @@
 ;;; B
 (use-package bibtex-mode
   :ensure nil
-  :defer t
+  :mode "\\.bib\\'"
   :config
   (setq bibtex-dialect 'biblatex)
   (setq bibtex-maintain-sorted-entries t)
