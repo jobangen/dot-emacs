@@ -2761,7 +2761,7 @@ _y_: youtube      _bb_: bibtex
 ("k" kill-this-buffer)
 ("K" projectile-kill-buffers)                           ;;proj
 ("q" zettelkasten-ag-query)                     ;;proj
-("Q" zettelkasten-ag-thing-at-point)                    ;;(proj)
+("Q" zettelkasten-ag-query-symbol-at-point)                    ;;(proj)
 ("v" hydra-brain-visualize/body :color blue) ;;brain
 ("x" zettelkasten-txt-query)               ;;var
 ("z" zettelkasten-new-zettel :color blue)    ;;proj
