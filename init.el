@@ -84,8 +84,8 @@
         bibtex-autokey-year-length 10
         bibtex-autokey-year-title-separator "-"
         bibtex-autokey-titleword-separator "-"
-        bibtex-autokey-titlewords 3
-        bibtex-autokey-titleword-length 4)
+        bibtex-autokey-titlewords 2
+        bibtex-autokey-titleword-length 3)
 
   (defun bibtex-autokey-get-year ()
     "Return year field contents as a string obeying `bibtex-autokey-year-length'."
