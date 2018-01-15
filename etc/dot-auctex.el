@@ -2,8 +2,10 @@
 (require 'tex-site)
 
 (setq TeX-auto-save t)
+(setq TeX-electric-escape t)
 (setq TeX-parse-self t)
 (setq TeX-PDF-mode t)
+
 
 ;; Use pdf-tools to open PDF files
 (setq TeX-view-program-selection '((output-pdf "PDF Tools"))
