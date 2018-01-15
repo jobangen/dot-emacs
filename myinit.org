@@ -1874,7 +1874,7 @@ of a BibTeX field into the template. Fork."
   :config
    (progn
     (setq writegood-weasel-words
-     '("wichtig" "wichtige" "vielleicht" "auch" "dabei" "sehr" "ziemlich" "möglicherweise" "wohl" "recht" "dann" "paar" "bisschen"))
+     '("TODO" "wichtig" "wichtige" "vielleicht" "auch" "dabei" "sehr" "ziemlich" "möglicherweise" "wohl" "recht" "dann" "paar" "bisschen"))
     (setq writegood-passive-voice-irregulars
      '("gemacht" "geworden" "vorgenommen" "durchgeführt"))))
 #+end_src
