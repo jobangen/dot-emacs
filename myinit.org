@@ -1958,13 +1958,6 @@ abort completely with `C-g'."
  #+end_src
 
 * Mail und Kontakte
-** gnus
-#+begin_src emacs-lisp
-(use-package gnus
-  :init
-  (setq gnus-init-file (no-littering-expand-etc-file-name "gnus-config.el")))
-#+end_src
-
 ** message-mode
 #+begin_src emacs-lisp
 (setq mail-user-agent 'gnus-user-agent)
@@ -2011,15 +2004,6 @@ abort completely with `C-g'."
   (message-goto-to))
 
 (bind-key "C-x m" 'job/message-mail)
-#+end_src
-
-** offlineimap
-#+begin_src emacs-lisp
-(use-package offlineimap
-  :init
-  (add-hook 'gnus-before-startup-hook 'offlineimap)
-  :config
-  (setq offlineimap-timestamp "%Y-%m-%d-%H:%M:%S "))
 #+end_src
 
 ** gnus-dired
@@ -2144,75 +2128,6 @@ rotate entire document."
                '("\\.pdf::\\([[:digit:]]+\\)\\'" . org-pdfview-open))
   (add-to-list 'org-file-apps
                '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open link)))))
-#+end_src
-
-** dired
-#+begin_src emacs-lisp
-(use-package dired
-  :ensure nil
-  :bind (:map dired-mode-map
-              ("C-m" . dired-find-file)
-              (";" . dired-subtree-insert)
-              ("i" . dired-subtree-remove)
-              ("P" . peep-dired))
-  :hook (dired-mode . dired-hide-details-mode)
-  :init
-  (setq dired-recursive-deletes 'always)
-  (setq dired-recursive-copies 'always)
-  (setq dired-dwim-target t)
-  (setq delete-by-moving-to-trash t
-        trash-directory "~/.local/share/Trash")
-  (setq dired-listing-switches "--group-directories-first -alh1v")
-  (put 'dired-find-alternate-file 'disabled nil)
-)
-#+end_src
-
-*** dired-filter
-#+begin_src emacs-lisp
-(use-package dired-filter
-  :config
-  (add-hook 'dired-mode-hook 'dired-filter-group-mode t)
-  (setq dired-filter-group-saved-groups
-        '(("default"
-           ("DIR"
-            (directory))
-           ("PDF"
-            (extension "pdf"))
-           ("LaTeX"
-            (extension "tex" "bib"))
-           ("Text & Data"
-            (extension "org" "txt" "doc" "docx" "csv" "odt"))
-           ("Media"
-            (extension "JPG" "jpg" "PNG" "png" "gif" "bmp"))
-           ("Archives"
-            (extension "zip" "rar" "gz" "bz2" "tar" "org_archive"))))))
-#+end_src
-
-*** dired-launch
-#+begin_src emacs-lisp
-(use-package dired-launch
-  :diminish dired-launch-mode
-  :init
-  (dired-launch-enable)
-  (setf dired-launch-extensions-map
-        '(;;Archives
-          ("gz" ("file-roller"))
-          ;; Office
-          ("odt" ("libreoffice"))
-          ("doc" ("libreoffice"))
-          ("docx" ("libreoffice"))
-          ("csv" ("libreoffice"))
-          ("ppt" ("libreoffice"))
-          ("pptx" ("libreoffice"))
-          ("pdf" ("evince" "gimp-2.8"))
-          ("PDF" ("evince ""gimp-2.8"))
-          ;; Web
-          ("html" ("firefox"))
-          ;; Pictures
-          ("jpg" ("eog" "gimp-2.8"))
-          ("png" ("eog" "gimp-2.8"))
-          ;; Video
-          ("mov" ("totem" "vlc")))))
 #+end_src
 
 * Minor-modes

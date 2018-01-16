@@ -129,6 +129,13 @@
 
 
 ;;; D
+(use-package deft
+  :defer t
+  :config
+  (setq deft-directory "~/Dropbox/db/zk/zettel")
+  (bind-key "C-h" 'deft-filter-decrement deft-mode-map)
+  (bind-key "C-w" 'deft-filter-decrement-word deft-mode-map))
+
 (use-package dot-auctex :ensure auctex
   :demand t
   :mode ("\\.tex$" . TeX-latex-mode)
@@ -136,13 +143,6 @@
          (TeX-mode . variable-pitch-mode)
          (TeX-mode . linum-mode)
          (TeX-mode . LaTeX-math-mode)))
-
-(use-package deft
-  :defer t
-  :config
-  (setq deft-directory "~/Dropbox/db/zk/zettel")
-  (bind-key "C-h" 'deft-filter-decrement deft-mode-map)
-  (bind-key "C-w" 'deft-filter-decrement-word deft-mode-map))
 
 (use-package dot-defun
   :ensure nil
@@ -154,6 +154,69 @@
          ("M-c" . job/capitalize-last-word)
          ("M-l" . job/downcase-last-word)))
 
+(use-package dired
+  :ensure nil
+  :bind (:map dired-mode-map
+              ("C-m" . dired-find-file)
+              (";" . dired-subtree-insert)
+              ("i" . dired-subtree-remove)
+              ("P" . peep-dired))
+  :init
+  (setq dired-recursive-deletes 'always)
+  (setq dired-recursive-copies 'always)
+  (setq dired-dwim-target t)
+  (setq delete-by-moving-to-trash t
+        trash-directory "~/.local/share/Trash")
+  (setq dired-listing-switches "--group-directories-first -alh1v")
+  (put 'dired-find-alternate-file 'disabled nil))
+
+
+(use-package dired-hide-details
+  :ensure nil
+  :hook (dired-mode .  dired-hide-details-mode))
+
+(use-package dired-filter
+  :hook (dired-mode . dired-filter-group-mode)
+  :config
+  (setq dired-filter-group-saved-groups
+        '(("default"
+           ("DIR"
+            (directory))
+           ("PDF"
+            (extension "pdf"))
+           ("LaTeX"
+            (extension "tex" "bib"))
+           ("Text & Data"
+            (extension "org" "txt" "doc" "docx" "csv" "odt"))
+           ("Media"
+            (extension "JPG" "jpg" "PNG" "png" "gif" "bmp"))
+           ("Archives"
+            (extension "zip" "rar" "gz" "bz2" "tar" "org_archive"))))))
+
+(use-package dired-launch
+  :hook (dired-mode . dired-launch-mode)
+  :diminish dired-launch-mode
+  :init
+  (setf dired-launch-extensions-map
+        '( ;;Archives
+          ("gz" ("file-roller"))
+          ;; Office
+          ("odt" ("libreoffice"))
+          ("doc" ("libreoffice"))
+          ("docx" ("libreoffice"))
+          ("csv" ("libreoffice"))
+          ("ppt" ("libreoffice"))
+          ("pptx" ("libreoffice"))
+          ("pdf" ("evince" "gimp-2.8"))
+          ("PDF" ("evince " "gimp-2.8"))
+          ;; Web
+          ("html" ("firefox"))
+          ;; Pictures
+          ("jpg" ("eog" "gimp-2.8"))
+          ("png" ("eog" "gimp-2.8"))
+          ;; Video
+          ("mov" ("totem" "vlc")))))
+
 ;;; E
 (use-package expand-region
   :bind (("C-c m" . er/expand-region)))
@@ -164,6 +227,11 @@
   (setq flyspell-correct-interface 'flyspell-correct-ivy))
 
 ;;; G
+(use-package gnus
+  :ensure nil
+  :init
+  (setq gnus-init-file (no-littering-expand-etc-file-name "gnus-config.el")))
+
 (use-package gscholar-bibtex
   :commands gscholar-bibtex
   :config
@@ -172,8 +240,6 @@
   (gscholar-bibtex-source-on-off :off "IEEE Xplore")
   (gscholar-bibtex-source-on-off :off "DBLP")
   (gscholar-bibtex-source-on-off :off "ACM Digital Library"))
-
-
 
 ;;; I
 (use-package ispell
@@ -226,6 +292,11 @@
   :diminish multiple-cursors)
 
 ;;; O
+(use-package offlineimap
+  :hook (gnus-before-startup . offlineimap)
+  :config
+  (setq offlineimap-timestamp "%Y-%m-%d-%H:%M:%S "))
+
 (use-package org-brain
   :bind ("C-c v" . org-brain-visualize)
   :config
