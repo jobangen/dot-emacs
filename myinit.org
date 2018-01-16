@@ -2224,36 +2224,9 @@ rotate entire document."
 #+end_src
 
 ** smartparens
-#+begin_src emacs-lisp
-(use-package smartparens
-  :ensure t
-  :diminish smartparens-mode
-  :config
-  (progn
-    (require 'smartparens-config)
-    (smartparens-global-mode t)
-    (show-smartparens-global-mode t)))
-(add-hook 'yas-before-expand-snippet-hook (lambda () (smartparens-mode -1)))
-(add-hook 'yas-after-exit-snippet-hook (lambda () (smartparens-mode 1)))
-
-(defvar sp-unicode-quotes-mode-map (make-keymap)
-"Use the \" key for “”.")
-
-(define-minor-mode sp-unicode-quotes-mode
-"A minor mode that remaps the quote key to sp-pair “”" nil " sp-quote" 'sp-unicode-quotes-mode-map
-
-(sp-pair "“" "”"))
-
-(define-key sp-unicode-quotes-mode-map (kbd "\"") (kbd "“"))
-
-(provide 'sp-unicode-quotes-mode)
-
-#+end_src
-
 ** yasnippet
 #+begin_src emacs-lisp
 (use-package yasnippet
-  :ensure t
   :diminish yas-minor-mode
   :config
   (progn

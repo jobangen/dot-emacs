@@ -355,6 +355,16 @@
   (add-to-list 'sml/replacer-regexp-list '("^~/Downloads/" ":DL:") t)
   (add-to-list 'sml/replacer-regexp-list '("^~/texte/" ":TXT:") t))
 
+(use-package smartparens-config
+  :ensure smartparens
+  :diminish smartparens-mode
+  :config
+  (smartparens-global-mode t)
+  (show-smartparens-global-mode t)
+  (add-hook 'yas-before-expand-snippet-hook (lambda () (smartparens-mode -1)))
+  (add-hook 'yas-after-exit-snippet-hook (lambda () (smartparens-mode 1))))
+
+
 (use-package shell-pop
   :bind (("C-c j" . shell-pop))
   :config
@@ -397,3 +407,11 @@
   :init
   (winner-mode))
 
+;;; Y
+(use-package yasnippet
+  :diminish yas-minor-mode
+  :config
+  (progn
+    (add-hook 'hippie-expand-try-functions-list 'yas-hippie-try-expand)
+    (yas-global-mode 1)
+    (setq require-final-newline nil)))
