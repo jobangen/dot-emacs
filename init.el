@@ -93,6 +93,12 @@
       (substring yearfield (max 0 (- (length yearfield)
                                      bibtex-autokey-year-length))))))
 
+(use-package bookmark+
+  :init
+  (setq bmkp-bmenu-state-file
+        (no-littering-expand-var-file-name "bmkp/bmenu-state.el"))
+  (setq bookmark-save-flag 1))
+
 
 ;;; C
 (use-package calfw

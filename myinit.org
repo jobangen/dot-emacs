@@ -229,7 +229,8 @@ müssen manuell deaktiviert werden
  ("C-h" . backward-delete-char)
  ("C-ß" . help)
  ("C-z" . undo)
- ("C-S-z" . undo-tree-redo))
+ ("C-S-z" . undo-tree-redo)
+ ("C-<menu>" . bookmark-jump))
 
 (bind-keys*
  ("C-c #" . job/calc-restart-and-trail))
@@ -2143,16 +2144,6 @@ rotate entire document."
     (setq-default abbrev-mode t)))
 #+end_src
 
-** bookmarks+
-#+begin_src emacs-lisp
-(use-package bookmark+
-  :ensure t
-  :bind ("C-<menu>" . bookmark-jump)
-  :init
-   (setq bmkp-bmenu-state-file (no-littering-expand-var-file-name "bmkp/bmenu-state.el"))
-   (setq bookmark-save-flag 1))
-#+end_src
-
 ** engine-mode
 #+begin_src emacs-lisp
 (use-package engine-mode
@@ -2223,19 +2214,6 @@ rotate entire document."
 (use-package counsel-projectile)
 #+end_src
 
-** smartparens
-** yasnippet
-#+begin_src emacs-lisp
-(use-package yasnippet
-  :diminish yas-minor-mode
-  :config
-  (progn
-    (add-hook 'hippie-expand-try-functions-list 'yas-hippie-try-expand)
-    (yas-global-mode 1)
-    (setq require-final-newline nil)
-;;    (bind-key "TAB" 'hippie-expand yas-minor-mode-map)
-))
-#+end_src
 ** epa-file
 #+begin_src emacs-lisp
 (use-package epa-file
