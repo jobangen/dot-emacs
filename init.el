@@ -46,6 +46,7 @@
 (use-package gnuplot-mode         :mode "\\.plot\\'")
 (use-package haskell-mode         :defer t)
 (use-package ledger-mode          :mode "\\.dat\\'")
+(use-package neato-graph-bar      :defer t)
 (use-package org-notmuch          :ensure nil)
 (use-package org-pdfview          :after (org pdf-tools))
 (use-package peep-dired           :defer t)
