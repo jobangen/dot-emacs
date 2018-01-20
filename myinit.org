@@ -17,7 +17,9 @@
   :ensure t
   :init
   (eval-after-load 'shell-interaction
-    `(make-directory ,(concat user-emacs-directory "var/shell-interaction") t)))
+    `(make-directory ,(concat user-emacs-directory "var/shell-interaction") t))
+  :config
+  (setq tramp-persistency-file-name (no-littering-expand-var-file-name "tramp-history.el")))
 #+end_src
 
 ** defalias
