@@ -153,6 +153,7 @@
 
 (use-package dot-defun
   :ensure nil
+  :demand t
   :bind (("C-a" . job/beginning-of-line-or-indentation)
          ("C-k" . job/kill-line)
          ("C-w" . job/kill-word-or-region)
