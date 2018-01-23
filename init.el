@@ -75,9 +75,9 @@
 
 
 ;;; B
-(use-package bibtex-mode
+(use-package bibtex
   :ensure nil
-  :mode "\\.bib\\'"
+  :mode ("\\.bib$". bibtex-mode)
   :config
   (setq bibtex-dialect 'biblatex)
   (setq bibtex-maintain-sorted-entries t)
