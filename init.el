@@ -41,6 +41,7 @@
 (use-package ess                  :commands R)
 (use-package flyspell-correct-ivy :after (flyspell-correct ivy))
 (use-package git-timemachine      :defer t)
+(use-package goldendict           :commands goldendict-dwim)
 (use-package gnuplot-mode         :mode "\\.plot\\'")
 (use-package haskell-mode         :defer t)
 (use-package hydra)
