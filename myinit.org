@@ -2134,18 +2134,6 @@ rotate entire document."
 #+end_src
 
 * Minor-modes
-** abbrev-mode
-#+begin_src emacs-lisp
-(use-package abbrev
-  :ensure nil
-  :diminish abbrev-mode
-  :config
-  (progn
-    (setq save-abbrevs 'silently)
-    (setq save-abbrevs t)
-    (setq-default abbrev-mode t)))
-#+end_src
-
 ** engine-mode
 #+begin_src emacs-lisp
 (use-package engine-mode
@@ -2274,12 +2262,6 @@ rotate entire document."
 #+end_src
 
 * hydra
-** hydra-setup
-#+begin_src emacs-lisp
-(use-package hydra
-   :ensure t)
-#+end_src
-
 ** hydra-time
 #+begin_src emacs-lisp
 (bind-key "<f11>" 'hydra-time/body)

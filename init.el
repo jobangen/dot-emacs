@@ -33,8 +33,6 @@
          ("C-c l" . org-store-link))
   :mode ("\\.txt\\'" . org-mode))
 
-(org-babel-load-file "~/.emacs.d/myinit.org")
-
 ;;; Libraries
 (use-package counsel-notmuch      :defer t)
 (use-package define-word          :commands define-word define-word-at-point)
@@ -45,6 +43,7 @@
 (use-package git-timemachine      :defer t)
 (use-package gnuplot-mode         :mode "\\.plot\\'")
 (use-package haskell-mode         :defer t)
+(use-package hydra)
 (use-package ledger-mode          :mode "\\.dat\\'")
 (use-package neato-graph-bar      :defer t)
 (use-package org-notmuch          :ensure nil)
@@ -55,7 +54,19 @@
 (use-package smex)
 (use-package rainbow-delimiters   :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 
+(org-babel-load-file "~/.emacs.d/myinit.org")
+
+
 ;;; A
+(use-package abbrev
+  :ensure nil
+  :diminish abbrev-mode
+  :config
+  (progn
+    (setq save-abbrevs 'silently)
+    (setq save-abbrevs t)
+    (setq-default abbrev-mode t)))
+
 (use-package ace-window
   :after (avy)
   :bind ("C-c k" . ace-delete-window)
@@ -159,8 +170,8 @@
          ("C-w" . job/kill-word-or-region)
          ("C-c d" . job/insert-date)
          ("C-x C-v" . job/find-file-as-sudo)
-         ("M-c" . job/capitalize-last-word)
-         ("M-l" . job/downcase-last-word)))
+         ("M-c" . capitalize-word)
+         ("M-l" . downcase-word)))
 
 (use-package dired
   :ensure nil
