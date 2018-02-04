@@ -1206,7 +1206,7 @@ http://doc.norang.ca/org-mode.org
             (bh/clock-in-default-task)))))))
 
 (defvar bh/organization-task-id "journal-month-id")
-(setq bh/organization-task-id "f694362a-5fef-4909-80f4-102519435662")
+(setq bh/organization-task-id "d63e8fc5-f965-421e-ac0e-dc1911714fd3")
 
 (defun bh/clock-in-organization-task-as-default ()
   (interactive)
@@ -2398,7 +2398,7 @@ _<left>_    _<right>_    _y_: split-vert     _s_: ace-swap      _g_: refresh    
 
 ** hydra-text
 #+begin_src emacs-lisp
-  (bind-key "C-c t" 'hydra-text/body)
+;;  (bind-key "C-c t" 'hydra-text/body)
   (defhydra hydra-text (:hint nil
                         :color red
                         :columns 2)
