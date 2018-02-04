@@ -1,6 +1,18 @@
 ;;gnus init und setup
 (gnus-demon-init)
 
+;; Registry
+
+(setq gnus-registry-max-entries 500000)
+(setq gnus-registry-ignored-groups '(("nntp" t)
+                                     ("spam" t)
+                                     ("yggdrasil" t)
+                                     ("geschkult" t)
+                                     ("hsozkult" t)))
+(setq gnus-registry-track-extra '(sender subject))
+(gnus-registry-initialize)
+
+
 (setq user-mail-address "jobangen@gmail.com"
       user-full-name "Jan Ole Bangen")
 (setq nndraft-directory "~/Mail/drafts")
@@ -9,17 +21,18 @@
 (setq gnus-select-method '(nnnil "")
       gnus-secondary-select-methods 
 	'((nnimap "gmail"
-		(nnimap-stream shell)
-		(nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/Mail/gmail:LAYOUT=fs")
-                (nnimap-inbox "INBOX")
-                (nnimap-split-methods default))
+                  (nnimap-stream shell)
+                  (nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/Mail/gmail:LAYOUT=fs")
+                  (nnimap-inbox "INBOX")
+                  (nnimap-split-methods default))
           (nnimap "zedat"
-		(nnimap-stream shell)
-		(nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/Mail/zedat:LAYOUT=fs"))
+                  (nnimap-stream shell)
+                  (nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/Mail/zedat:LAYOUT=fs"))
           (nnimap "zedatma"
-		(nnimap-stream shell)
-		(nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/Mail/zedatma:LAYOUT=fs"))
-          (nntp "news.gwene.org")))
+                  (nnimap-stream shell)
+                  (nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/Mail/zedatma:LAYOUT=fs"))
+          (nntp "news.gwene.org")
+          (nngnorb "Gnorb-Server")))
 
 (setq nnmail-split-methods
       '(("yggdrasill" "^[TC][oc]:.*yggdrasill@lists.Uni-Marburg.DE")
