@@ -33,6 +33,8 @@
          ("C-c l" . org-store-link))
   :mode ("\\.txt\\'" . org-mode))
 
+(org-babel-load-file "~/.emacs.d/myinit.org")
+
 ;;; Libraries
 (use-package counsel-notmuch      :defer t)
 (use-package define-word          :commands define-word define-word-at-point)
@@ -54,9 +56,6 @@
 (use-package shell-interaction    :ensure nil)
 (use-package smex)
 (use-package rainbow-delimiters   :hook (emacs-lisp-mode . rainbow-delimiters-mode))
-
-(org-babel-load-file "~/.emacs.d/myinit.org")
-
 
 ;;; A
 (use-package abbrev
@@ -129,6 +128,10 @@
   :config
   (setq cfw:org-agenda-schedule-args '(:sexp :timestamp)))
 
+(use-package centered-window
+  :diminish centered-window-mode
+  :init
+  (centered-window-mode t))
 
 (use-package char-menu
   :defer t
@@ -247,6 +250,52 @@
   (setq flyspell-correct-interface 'flyspell-correct-ivy))
 
 ;;; G
+(use-package gnorb
+  :init
+  (gnorb-tracking-initialize)
+  (setq gnorb-gnus-sent-groups '(("nnimap+gmail:sent")
+                                 ("nnimap+zedat:sent")
+                                 ("nnimap+zedatma:sent")))
+  :config
+  (global-set-key (kbd "C-c A") 'gnorb-restore-layout)
+
+  (eval-after-load "gnorb-org"
+    '(progn
+       (org-defkey org-mode-map (kbd "C-c t") #'gnorb-org-handle-mail)
+       (org-defkey org-mode-map (kbd "C-c v") #'gnorb-org-view)
+       (org-defkey org-mode-map (kbd "C-c E") #'gnorb-org-email-subtree)
+       (setq gnorb-org-agenda-popup-bbdb t)
+       (eval-after-load "org-agenda"
+         '(progn (org-defkey org-agenda-mode-map (kbd "C-c t") #'gnorb-org-handle-mail)
+                 (org-defkey org-agenda-mode-map (kbd "C-c v") #'gnorb-org-view)))))
+
+  (eval-after-load "gnorb-gnus"
+    '(progn
+       (define-key gnus-summary-mime-map "a" #'gnorb-gnus-article-org-attach)
+       (define-key gnus-summary-mode-map (kbd "C-c t") #'gnorb-gnus-incoming-do-todo)
+       (define-key gnus-summary-mode-map (kbd "C-c v") #'gnorb-gnus-view)
+       (define-key gnus-summary-mode-map (kbd "C-c C-t") #'gnorb-gnus-tag-message)
+       (define-key gnus-summary-limit-map (kbd "g") #'gnorb-gnus-insert-tagged-messages)
+       (define-key gnus-summary-limit-map (kbd "G") #'gnorb-gnus-insert-tracked-messages)
+       (setq gnorb-gnus-capture-always-attach t)
+       (push '("attach to org heading" . gnorb-gnus-mime-org-attach)
+             gnus-mime-action-alist)
+       ;; The only way to add mime button command keys is by redefining
+       ;; gnus-mime-button-map, possibly not ideal. Ideal would be a
+       ;; setter function in gnus itself.
+       (push '(gnorb-gnus-mime-org-attach "a" "Attach to Org heading")
+             gnus-mime-button-commands)
+       (setq gnus-mime-button-map
+             (let ((map (make-sparse-keymap)))
+               (dolist (c gnus-mime-button-commands)
+                 (define-key map (cadr c) (car c)))
+               map))))
+
+  (eval-after-load "message"
+    '(progn
+       (define-key message-mode-map (kbd "C-c t") #'gnorb-gnus-outgoing-do-todo))))
+
+
 (use-package gnus
   :ensure nil
   :init
@@ -318,7 +367,6 @@
   (setq offlineimap-timestamp "%Y-%m-%d-%H:%M:%S "))
 
 (use-package org-brain
-  :bind ("C-c v" . org-brain-visualize)
   :config
   (setq org-brain-path (expand-file-name zettel-dir "zettel"))
   (setq org-brain-data-file (no-littering-expand-var-file-name "org/brain-data.el"))
