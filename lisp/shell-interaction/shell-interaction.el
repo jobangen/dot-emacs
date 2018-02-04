@@ -234,12 +234,3 @@
 
 (provide 'shell-interaction)
 ;;; shell-interaction.el ends here
-
-
-
-
-
-
-
-
-
