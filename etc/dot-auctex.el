@@ -47,19 +47,30 @@
 ;;SyncTeX
 (setq TeX-source-correlate-mode 'synctex)
 
-(add-hook 'LaTeX-mode-hook
+(add-hook 'TeX-mode-hook
           (lambda ()
-            (TeX-add-symbols "enquote")
-            (TeX-add-symbols "enquote*")
-            (TeX-add-symbols "blockcquote")
-            (TeX-add-symbols "textquote")
-            (TeX-add-symbols "textcquote")))
+            (TeX-add-symbols
+             '("enquote")
+             '("enquote*")
+             '("textcquote" [ "pre-note" ] [ "post-note" ] TeX-arg-cite  [ "Punctuation" ] t ignore ignore)
+             '("blockcquote" [ "pre-note" ] [ "post-note" ] TeX-arg-cite  [ "Punctuation" ] t ignore ignore)
+             '("noindent" ignore)
+             '("fxnote" "Note")
+             '("fxwarning" "Note")
+             '("fxerror" "Note")
+             '("fxfatal" "Note")
+             '("fxnote*" t "Note")
+             '("fxwarning*" t "Note")
+             '("fxerror*" t "Note")
+             '("fxfatal*" t "Note")
+             '("test" "string" ignore))))
 
-;; upd pdf-buffer after comp: https://github.com/politza/pdf-tools
-(add-hook 'TeX-after-compilation-finished-functions 
-          #'TeX-revert-document-buffer)
 
-(add-hook 'LaTeX-mode-hook
+
+;;(add-hook 'TeX-after-compilation-finished-functions
+;;  #'TeX-revert-document-buffer)
+
+(add-hook 'TeX-mode-hook
           (lambda ()
             (add-to-list
              'TeX-command-list
@@ -68,7 +79,7 @@
             (setq TeX-save-query nil)
             (setq TeX-show-compilation t)))
 
-(add-hook 'LaTeX-mode-hook
+(add-hook 'TeX-mode-hook
           (lambda ()
             (add-to-list
              'TeX-command-list
@@ -77,7 +88,7 @@
             (setq TeX-save-query nil)
             (setq TeX-show-compilation t)))
 
-(add-hook 'LaTeX-mode-hook
+(add-hook 'TeX-mode-hook
           (lambda ()
             (add-to-list
              'TeX-command-list
