@@ -79,17 +79,17 @@
   "#+TITLE: %^{Title}
 #+DATE: %U
 
-+*+ Schlagwörter
+* Schlagwörter
 tags: %^{Type|§content|§index},
 
-+*+ Inhalt
+* Inhalt
 %?
 
-+*+ Literatur
+* Literatur
 
-+*+ Links & Files
+* Links & Files
 
-+*+ Data
+* Data
 ")
 
 (defun zettelkasten-rename-zettel-upd-links ()
