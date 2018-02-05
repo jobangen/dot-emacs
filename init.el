@@ -84,7 +84,6 @@
     (setq avy-keys '(?w ?e ?r ?u ?i ?o ?a ?s ?d ?f ?g ?h ?j ?k ?l ?ö ?v ?b ?n ?m))
     (define-key input-decode-map (kbd "C-i") (kbd "H-i"))))
 
-
 ;;; B
 (use-package bibtex
   :ensure nil
