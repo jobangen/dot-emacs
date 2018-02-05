@@ -51,6 +51,7 @@
   (kill-matching-buffers "\.dat$")
   (kill-matching-buffers "\.csv$")
   (kill-matching-buffers "\.synctex\.gz$")
+  (kill-matching-buffers "\.sh$")
   (kill-emacs))
 
 ;;;###autoload
