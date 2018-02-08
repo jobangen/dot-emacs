@@ -319,6 +319,7 @@
 ;;; K
 (use-package key-chord
   :after (avy ace-window)
+  :demand t
   :init
   (progn
     (setq key-chord-two-keys-delay 0.15)
