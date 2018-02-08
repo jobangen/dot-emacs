@@ -47,6 +47,7 @@
 (use-package gnuplot-mode         :mode "\\.plot\\'")
 (use-package haskell-mode         :defer t)
 (use-package hydra)
+(use-package iso-transl           :ensure nil)
 (use-package ledger-mode          :mode "\\.dat\\'")
 (use-package neato-graph-bar      :defer t)
 (use-package org-notmuch          :ensure nil)
