@@ -127,11 +127,6 @@
   :config
   (setq cfw:org-agenda-schedule-args '(:sexp :timestamp)))
 
-(use-package centered-window
-  :diminish centered-window-mode
-  :init
-  (centered-window-mode t))
-
 (use-package char-menu
   :defer t
   :config
