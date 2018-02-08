@@ -329,7 +329,6 @@
     (key-chord-define-global "jl" 'avy-goto-line)
     (key-chord-define-global "jf" 'ace-window)))
 
-
 ;;; L
 (use-package latex-extra
   :diminish latex-extra-mode
