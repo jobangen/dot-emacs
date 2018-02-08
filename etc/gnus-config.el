@@ -113,8 +113,7 @@
 (setq gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references)
 (setq gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date))
 
-(setq-default gnus-summary-line-format "%U%R %(%&user-date;  %-20,20f  %B%S%)\n"
-              gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M"))
+(setq-default gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M"))
               gnus-sum-thread-tree-indent " "
               gnus-sum-thread-tree-root "● "
               gnus-sum-thread-tree-false-root "● "
@@ -133,7 +132,7 @@
 
 
 (setq gnus-summary-line-format
-      (concat " "
+      (concat "%ug "
               "%U%R"
               "  "
               "%*%~(max-right 25)~(pad-right 25)n"
