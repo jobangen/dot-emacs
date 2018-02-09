@@ -236,6 +236,13 @@
           ("mov" ("totem" "vlc")))))
 
 ;;; E
+(use-package epa-file
+  :ensure nil
+  :config
+  (epa-file-enable)
+  ;; Symmetric Encryption.
+  (setq epa-file-select-keys nil))
+
 (use-package expand-region
   :bind (("C-c m" . er/expand-region)))
 
@@ -295,6 +302,23 @@
   :ensure nil
   :init
   (setq gnus-init-file (no-littering-expand-etc-file-name "gnus-config.el")))
+
+(use-package gnus-dired
+  :ensure nil
+  :config
+  (progn
+    (defun gnus-dired-mail-buffers ()
+      "Return a list of active message buffers."
+      (let (buffers)
+        (save-current-buffer
+          (dolist (buffer (buffer-list t))
+            (set-buffer buffer)
+            (when (and (derived-mode-p 'message-mode)
+                       (null message-sent-message-via))
+              (push (buffer-name buffer) buffers))))
+        (nreverse buffers)))
+    (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)))
+
 
 (use-package gscholar-bibtex
   :commands gscholar-bibtex
@@ -379,6 +403,87 @@
   (setq paperless-capture-directory "~/texte/texteingang")
   (setq paperless-root-directory "~/"))
 
+(use-package pdf-tools
+  :bind (:map pdf-view-mode-map
+              ("C-s" . isearch-forward)
+              ("am" . pdf-annot-add-markup-annotation)
+              ("al" . pdf-annot-list-annotations)
+              ("ad" . pdf-annot-delete)
+              ("d" . pdf-annot-delete)
+              ("ah" . pdf-annot-add-highlight-markup-annotation)
+              ("h" . pdf-annot-add-highlight-markup-annotation)
+              ("aq" . pdf-annot-add-squiggly-markup-annotation)
+              ("as" . pdf-annot-add-strikeout-markup-annotation)
+              ("at" . pdf-annot-add-text-annotation)
+              ("t" . pdf-annot-add-text-annotation)
+              ("au" . pdf-annot-add-underline-markup-annotation)
+              ("j" . pdf-view-goto-page)
+              ("sa" . pdf-view-auto-slice-minor-mode))
+  :mode ("\\.pdf\\'" . pdf-view-mode)
+  :config
+  (pdf-tools-install)
+  (setq-default pdf-view-display-size 'fit-page)
+  (setq pdf-annot-activate-created-annotations t)
+  (setq pdf-view-resize-factor 1.1)
+
+  (defun pdf-view--rotate (&optional counterclockwise-p page-p)
+    "Rotate PDF 90 degrees.  Requires pdftk to work.\n
+Clockwise rotation is the default; set COUNTERCLOCKWISE-P to
+non-nil for the other direction.  Rotate the whole document by
+default; set PAGE-P to non-nil to rotate only the current page.
+\nWARNING: overwrites the original file, so be careful!"
+    ;; error out when pdftk is not installed
+    (if (null (executable-find "pdftk"))
+        (error "Rotation requires pdftk")
+      ;; only rotate in pdf-view-mode
+      (when (eq major-mode 'pdf-view-mode)
+        (let* ((rotate (if counterclockwise-p "left" "right"))
+               (file (format "\"%s\"" (pdf-view-buffer-file-name)))
+               (page (pdf-view-current-page))
+               (pages (cond ((not page-p) ; whole doc?
+                             (format "1-end%s" rotate))
+                            ((= page 1) ; first page?
+                             (format "%d%s %d-end"
+                                     page rotate (1+ page)))
+                            ((= page (pdf-info-number-of-pages)) ; last page?
+                             (format "1-%d %d%s"
+                                     (1- page) page rotate))
+                            (t          ; interior page?
+                             (format "1-%d %d%s %d-end"
+                                     (1- page) page rotate (1+ page))))))
+          ;; empty string if it worked
+          (if (string= "" (shell-command-to-string
+                           (format (concat "pdftk %s cat %s "
+                                           "output %s.NEW "
+                                           "&& mv %s.NEW %s")
+                                   file pages file file file)))
+              (pdf-view-revert-buffer nil t)
+            (error "Rotation error!"))))))
+
+  (defun pdf-view-rotate-clockwise (&optional arg)
+    "Rotate PDF page 90 degrees clockwise.  With prefix ARG, rotate
+entire document."
+    (interactive "P")
+    (pdf-view--rotate nil (not arg)))
+
+  (defun pdf-view-rotate-counterclockwise (&optional arg)
+    "Rotate PDF page 90 degrees counterclockwise.  With prefix ARG,
+rotate entire document."
+    (interactive "P")
+    (pdf-view--rotate :counterclockwise (not arg)))
+
+  ;; http://pragmaticemacs.com/emacs/even-more-pdf-tools-tweaks/
+  (advice-add 'pdf-annot-edit-contents-commit :after 'job/save-buffer-no-args)
+
+  (add-to-list 'org-file-apps
+               '("\\.pdf\\'" . org-pdfview-open))
+  (add-to-list 'org-file-apps
+               '("\\.pdf::\\([[:digit:]]+\\)\\'" . org-pdfview-open))
+  (add-to-list 'org-file-apps
+               '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open link)))))
+
+
+
 ;;; R
 (use-package remem
   :ensure nil
@@ -401,6 +506,12 @@
   )
 
 ;;; S
+(use-package sdcv-mode
+  :ensure nil
+  :commands sdcv-search
+  :config
+  (bind-key "<tab>" 'sdcv-toggle-entry sdcv-mode-map))
+
 (use-package smart-mode-line
   :init
   (setq sml/theme 'dark)
@@ -469,6 +580,15 @@
 (use-package winner
   :init
   (winner-mode))
+
+(use-package writegood-mode
+  :defer t
+  :config
+   (progn
+    (setq writegood-weasel-words
+     '("TODO" "wichtig" "wichtige" "vielleicht" "auch" "dabei" "sehr" "ziemlich" "möglicherweise" "wohl" "recht" "dann" "paar" "bisschen"))
+    (setq writegood-passive-voice-irregulars
+     '("gemacht" "geworden" "vorgenommen" "durchgeführt"))))
 
 ;;; Y
 (use-package yasnippet
