@@ -117,7 +117,7 @@
   :bind (("C-c f" . job/open-org-calendar))
   :config
   (setq calendar-week-start-day 1)
-
+  ;;
   (defun job/open-org-calendar ()
     (interactive)
     (delete-other-windows)
@@ -138,6 +138,21 @@
           ("Arrows" "←" "→" "↑" "↓" "⇐" "⇒" "⇑" "⇓")
           ("Greek" "α" "β" "Y" "δ" "ε" "ζ" "η" "θ" "ι" "κ" "λ" "μ" "ν" "ξ" "ο" "π" "ρ" "σ" "τ" "υ" "φ" "χ" "ψ" "ω")
           ("Other Languages" "Œ"))))
+
+(use-package counsel
+  :load-path "site-lisp/swiper"
+  :ensure nil
+  :bind (("C-s" . counsel-grep-or-swiper)
+         ("C-c u" . counsel-linux-app)
+         ("C-M-s" . counsel-ag)
+         ("C-x l" . counsel-locate)
+         ("M-y" . counsel-yank-pop)
+         ("M-x" . counsel-M-x)
+         ("C-x C-m" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)
+         ("C-x C-SPC" . counsel-mark-ring)
+         ("C-c o" . counsel-outline)
+         ("C-c n" . counsel-imenu)))
 
 (use-package csv-mode :defer t
   :config
