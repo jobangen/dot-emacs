@@ -48,7 +48,6 @@
 (use-package haskell-mode         :defer t)
 (use-package hydra)
 (use-package iso-transl           :ensure nil)
-(use-package ledger-mode          :mode "\\.dat\\'")
 (use-package neato-graph-bar      :defer t)
 (use-package org-notmuch          :ensure nil)
 (use-package org-pdfview          :after (org pdf-tools))
@@ -372,6 +371,12 @@
 (use-package latex-extra
   :diminish latex-extra-mode
   :hook (TeX-mode . latex-extra-mode))
+
+(use-package ledger-mode
+  :mode "\\.dat\\'"
+  :config
+  (setq ledger-binary-path "~/ledger/ledger"))
+
 
 (use-package link-hint
   :after (avy)
