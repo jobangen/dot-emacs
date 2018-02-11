@@ -234,17 +234,17 @@
 ;;;###autoload
 (defun job/gnuplot-ledger-wealth ()
   (interactive)
-  (shell-command-to-string "bash ~/script/ledger-wealth.sh"))
+  (shell-command "bash ~/script/ledger-wealth.sh"))
 
 ;;;###autoload
 (defun job/gnuplot-ledger-monthly-income-expenses ()
   (interactive)
-  (shell-command-to-string "bash ~/script/ledger-monthly-income-expenses.sh"))
+  (shell-command "bash ~/script/ledger-monthly-income-expenses.sh"))
 
 ;;;###autoload
 (defun job/gnuplot-ledger-mega ()
   (interactive)
-  (shell-command-to-string "bash ~/script/ledger-mega-expenses.sh"))
+  (shell-command "bash ~/script/ledger-mega-expenses.sh"))
 
 
 (provide 'shell-interaction)
