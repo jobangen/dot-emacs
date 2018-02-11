@@ -810,6 +810,15 @@ SCHEDULED: %t
 :END:
 %?")
 
+("jc" "Code" entry (file+olp+datetree "journal-code.org")
+"* %^{Title} %^G
+:PROPERTIES:
+:CREATED: %U
+:CATEGORY: pers
+:END:"
+:immediate-finish t
+:jump-to-captured t)
+
 ("jl" "Literaturbearbeitung" entry (file+olp+datetree "journal.org")
  "* Literaturbearbeitung :wiss:
 :PROPERTIES:
