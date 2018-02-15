@@ -815,7 +815,13 @@ SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
 :CATEGORY: pers
-:END:"
+:END:
+
+[[%l][Source]]
+,#+begin_src %^{Language}
+%i
+,#+end_src
+%?"
 :immediate-finish t
 :jump-to-captured t)
 
