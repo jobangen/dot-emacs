@@ -2445,7 +2445,7 @@ _y_: youtube      _bb_: bibtex
  _d_: zk        _z_: zettel     _m_: mark tags     _v_: visualize   _s_: sort symbols
  _b_: bibtex    _q_: query      _t_: insert tags   _cp_: parent     _R_: remem
  _k_: kill b.   _K_: kill bfs   _f_: finish        _cc_: child      _x_: txt query
- ^ ^            ^ ^             ^ ^                _cf_: friend
+ ^ ^            ^ ^             ^ ^                _cf_: friend     _j_: join line
 "
 ;;General
 ("C-s" counsel-grep-or-swiper)
@@ -2469,6 +2469,7 @@ _y_: youtube      _bb_: bibtex
 ("m" zettelkasten-mark-tags)              ;zet
 ("R" remem-toggle)                             ;var
 ("s" sort-symbols)                      ;var
+("j" join-line)
 ("t" zettelkasten-insert-tags)                 ;zet
 )
 #+end_src
