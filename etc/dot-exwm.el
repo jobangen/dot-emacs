@@ -24,12 +24,13 @@
                          (interactive)
                          (exwm-workspace-switch-create ,i))))
 
-(exwm-input-set-key (kbd "s-<tab>") 'other-window)
+(exwm-input-set-key (kbd "s-<tab>") #'other-window)
 
 (exwm-input-set-key (kbd "s-f")
                     (lambda ()
                       (interactive)
                       (start-process-shell-command "firefox" nil "firefox")))
+(exwm-input-set-key (kbd "s-g") #'gnus)
 (exwm-input-set-key (kbd "s-m")
                     (lambda ()
                       (interactive)
@@ -39,9 +40,9 @@
                     (lambda ()
                       (interactive)
                       (start-process-shell-command "slock" nil "slock")))
-(exwm-input-set-key (kbd "s-x") 'counsel-linux-app)
+(exwm-input-set-key (kbd "s-x") #'counsel-linux-app)
 
-(exwm-input-set-key (kbd "s-+") 'exwm-layout-enlarge-window-horizontally)
+(exwm-input-set-key (kbd "s-+") #'exwm-layout-enlarge-window-horizontally)
 (exwm-input-set-key (kbd "s--") 'exwm-layout-shrink-window-horizontally)
 
 (exwm-input-set-key (kbd "<XF86AudioMute>")
@@ -77,7 +78,7 @@
                       (shell-command-to-string "xbacklight -inc 10")
                       (shell-command "xbacklight")))
 
-(exwm-input-set-key (kbd "<pause>") 'keyboard-quit)
+(exwm-input-set-key (kbd "<pause>") #'keyboard-quit)
 (exwm-input-set-key (kbd "<print>")
                     (lambda ()
                       (interactive)
@@ -90,7 +91,7 @@
    ([?\C-d] . delete)
    ([?\C-g] . escape)
    ([?\C-f] . right)
-   ([?\C-h] . backspace)
+   ;; ([?\C-h] . backspace)
    ([?\C-k] . (S-end delete))
    ([?\C-n] . down)
    ([?\C-m] . return)
