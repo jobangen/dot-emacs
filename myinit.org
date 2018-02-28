@@ -2387,6 +2387,9 @@ _y_: youtube      _bb_: bibtex
   :init
   (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
   (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
+  (setq zettelkasten-bibliography-file job/bibliography-file)
+  (setq zettelkasten-texts-directory "~/texte/")
+
 
   (defun zettelkasten-txt-query ()
     (interactive)
