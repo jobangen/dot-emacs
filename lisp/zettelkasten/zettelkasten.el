@@ -33,31 +33,36 @@
   (expand-file-name (convert-standard-filename "zettelkasten/") user-emacs-directory)
   "Path for main directory"
   :group 'zettelkasten
-  :type 'string)
+  :type '(string))
 
 (defcustom zettelkasten-zettel-directory
   (expand-file-name (convert-standard-filename "zettel/") zettelkasten-main-directory)
   "Path for Zettel"
   :group 'zettelkasten
-  :type 'string)
+  :type '(string))
 
 (defcustom zettelkasten-temp-directory
   (expand-file-name (convert-standard-filename "temp/") zettelkasten-main-directory)
   "Path for Zettel"
   :group 'zettelkasten
-  :type 'string)
+  :type '(string))
 
 (defcustom zettelkasten-tags-directory
   (expand-file-name (convert-standard-filename "tags/") zettelkasten-temp-directory)
   "Path for temporary files with tags"
   :group 'zettelkasten
-  :type 'string)
+  :type '(string))
 
 (defcustom zettelkasten-similarities-directory
   (expand-file-name (convert-standard-filename "similarities/") zettelkasten-temp-directory)
   "Path for files with lists of similarities"
   :group 'zettelkasten
-  :type 'string)
+  :type '(string))
+
+(defcustom zettelkasten-bibliography-file "~/biblio.bib"
+  "Path to bibfile"
+  :group 'zettelkasten
+  :type '(string))
 
 
 ;; Creation and (re)naming of zettel
@@ -80,7 +85,7 @@
 #+DATE: %U
 
 * Schlagwörter
-tags: %^{Type|§content|§index},
+tags: %^{Type|§index|§content|§proj},
 
 * Inhalt
 %?
@@ -122,8 +127,27 @@ tags: %^{Type|§content|§index},
     (bury-buffer)
     (save-some-buffers)))
 
+;;; Open from Zettel
+;;;###autoload
+(defun zettelkasten-zettel-open-bibkey ()
+  (interactive)
+  (org-open-link-from-string
+   (concat "file:" zettelkasten-bibliography-file "::" (file-name-base))))
+
+;;;###autoload
+(defun zettelkasten-zettel-open-files ()
+  (interactive)
+  (org-open-link-from-string
+   (concat "file:" zettelkasten-texts-directory (file-name-base) "*.pdf")))
+
+;;;###autoload
+(defun zettelkasten-zettel-open-similarities ()
+  (interactive)
+  (find-file
+   (concat zettelkasten-similarities-directory "sim-" (buffer-name))))
 
 ;; Dirs and Queries
+;;;###autoload
 (defun zettelkasten-open-dir ()
   (interactive)
   (find-file zettelkasten-zettel-directory))
