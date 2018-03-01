@@ -287,7 +287,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ** ivy
 #+begin_src emacs-lisp
 (use-package ivy
-  :ensure t
   :diminish ivy-mode
   :bind (("C-c C-r" . ivy-resume)
          :map ivy-minibuffer-map
@@ -1345,7 +1344,6 @@ http://doc.norang.ca/org-mode.org
 
 #+begin_src emacs-lisp
 (use-package org-ref
-  :ensure t
   :init
   (bind-key "C-c )" 'org-autocite-complete-link org-mode-map)
   (setq org-ref-completion-library 'org-ref-ivy-cite)
@@ -1362,7 +1360,6 @@ http://doc.norang.ca/org-mode.org
 ** org-clock-csv
 #+begin_src emacs-lisp
   (use-package org-clock-csv
-    :ensure nil
     :config
       (defun my/org-clock-csv-calc ()
         "Ruft script auf und verarbeitet die "
@@ -1425,14 +1422,16 @@ http://doc.norang.ca/org-mode.org
 *** ox-extra
 #+begin_src emacs-lisp
 (use-package ox-extra
-  :ensure nil
+  :straight org
+  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
   :config
   (ox-extras-activate '(latex-header-blocks ignore-headlines)))
 #+end_src
 *** org-contacts
 #+begin_src emacs-lisp
 (use-package org-contacts
-  :ensure nil
+  :straight org
+  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
   :config
   (setq org-contacts-files '("~/Dropbox/db/contacts.org"))
   (setq org-contacts-icon-use-gravatar nil)
@@ -1442,19 +1441,22 @@ http://doc.norang.ca/org-mode.org
 *** org-checklist
 #+begin_src emacs-lisp
 (use-package org-checklist
-    :ensure nil)
+  :straight org
+  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
 #+end_src
 
 *** org-collector
 #+begin_src emacs-lisp
 (use-package org-collector
-  :ensure nil)
+  :straight org
+  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
 #+end_src
 
 *** org-indent
 #+begin_src emacs-lisp
 (use-package org-indent
-  :ensure nil
+  :straight org
+  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
   :commands org-indent-mode
   :diminish org-indent-mode
   :init
@@ -1477,7 +1479,6 @@ http://doc.norang.ca/org-mode.org
 *** org-clock-convenience
 #+begin_src emacs-lisp
 (use-package org-clock-convenience
-  :ensure t
   :bind (:map org-agenda-mode-map
               ("<C-S-up>" . org-clock-convenience-timestamp-up)
               ("<C-S-down>" . org-clock-convenience-timestamp-down)
@@ -1488,6 +1489,7 @@ http://doc.norang.ca/org-mode.org
 *** scimax
 #+begin_src emacs-lisp
 (use-package contacts
+  :straight nil
   :load-path "~/.emacs.d/lisp/scimax"
   :bind (("C-c g" . ivy-contacts))
 
@@ -1565,7 +1567,7 @@ http://doc.norang.ca/org-mode.org
 ** bibtex-completion
 #+begin_src emacs-lisp
 (use-package bibtex-completion ;; in ivy-bibtex einbauen
-  :ensure nil
+  :straight ivy-bibtex
   :config
    (setq bibtex-completion-bibliography (expand-file-name job/bibliography-file))
    (setq bibtex-completion-library-path (expand-file-name texte-dir))
@@ -1772,7 +1774,6 @@ of a BibTeX field into the template. Fork."
 ** ivy-bibtex
 #+begin_src emacs-lisp
 (use-package ivy-bibtex
- :ensure t
  :bind (("C-." . ivy-bibtex)
         ("C-<f5>" . ivy-resume))
  :config
@@ -2010,7 +2011,6 @@ abort completely with `C-g'."
 ** engine-mode
 #+begin_src emacs-lisp
 (use-package engine-mode
-  :ensure t
   :config
   (engine-mode t)
   (defengine google
@@ -2039,7 +2039,7 @@ abort completely with `C-g'."
 ** hippie-expand
 #+begin_src emacs-lisp
 (use-package hippie-expand
-  :ensure nil
+  :straight nil
   :bind ("M-<tab>" . hippie-expand)
   :init
    (setq hippie-expand-verbose t)
@@ -2063,7 +2063,6 @@ abort completely with `C-g'."
 ** projectile
 #+begin_src emacs-lisp
 (use-package projectile
-  :ensure t
   :diminish projectile-mode
   :config
    (progn
@@ -2383,13 +2382,12 @@ _y_: youtube      _bb_: bibtex
 ** zettelkasten
 #+begin_src emacs-lisp
 (use-package zettelkasten
-  :ensure nil
+  :straight nil
   :init
   (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
   (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
   (setq zettelkasten-bibliography-file job/bibliography-file)
   (setq zettelkasten-texts-directory "~/texte/")
-
 
   (defun zettelkasten-txt-query ()
     (interactive)

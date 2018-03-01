@@ -46,19 +46,22 @@
 (use-package gnuplot-mode         :mode "\\.plot\\'")
 (use-package haskell-mode         :defer t)
 (use-package hydra)
-(use-package iso-transl           :ensure nil)
+(use-package iso-transl           :straight nil)
 (use-package neato-graph-bar      :defer t)
-(use-package org-notmuch          :ensure nil)
+(use-package org-notmuch          :straight org :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
 (use-package org-pdfview          :after (org pdf-tools))
 (use-package peep-dired           :defer t)
 (use-package pomodoro             :defer t)
-(use-package shell-interaction    :ensure nil)
+(use-package shell-interaction    :straight nil :load-path "~/.emacs.d/lisp/shell-interaction")
 (use-package smex)
 (use-package rainbow-delimiters   :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 
+(org-babel-load-file "~/.emacs.d/myinit.org")
+
+
 ;;; A
 (use-package abbrev
-  :ensure nil
+  :straight nil
   :diminish abbrev-mode
   :config
   (progn
@@ -85,7 +88,7 @@
 
 ;;; B
 (use-package bibtex
-  :ensure nil
+  :straight nil
   :mode ("\\.bib$". bibtex-mode)
   :config
   (setq bibtex-dialect 'biblatex)
@@ -138,8 +141,6 @@
           ("Other Languages" "Œ"))))
 
 (use-package counsel
-  :load-path "site-lisp/swiper"
-  :ensure nil
   :bind (("C-s" . counsel-grep-or-swiper)
          ("C-c u" . counsel-linux-app)
          ("C-M-s" . counsel-ag)
@@ -166,7 +167,7 @@
   (bind-key "C-h" 'deft-filter-decrement deft-mode-map)
   (bind-key "C-w" 'deft-filter-decrement-word deft-mode-map))
 
-(use-package dot-auctex :ensure auctex
+(use-package dot-auctex :straight auctex
   :demand t
   :mode ("\\.tex$" . TeX-latex-mode)
   :hook ((TeX-mode . TeX-fold-mode)
@@ -175,7 +176,7 @@
          (TeX-mode . LaTeX-math-mode)))
 
 (use-package dot-defun
-  :ensure nil
+  :straight nil
   :demand t
   :bind (("C-a" . job/beginning-of-line-or-indentation)
          ("C-k" . job/kill-line)
@@ -186,7 +187,7 @@
          ("M-l" . downcase-word)))
 
 (use-package dired
-  :ensure nil
+  :straight nil
   :bind (:map dired-mode-map
               ("C-m" . dired-find-file)
               (";" . dired-subtree-insert)
@@ -203,7 +204,7 @@
 
 
 (use-package dired-hide-details
-  :ensure nil
+  :straight nil
   :hook (dired-mode .  dired-hide-details-mode))
 
 (use-package dired-filter
@@ -250,7 +251,7 @@
 
 ;;; E
 (use-package epa-file
-  :ensure nil
+  :straight nil
   :config
   (epa-file-enable)
   ;; Symmetric Encryption.
@@ -312,12 +313,12 @@
 
 
 (use-package gnus
-  :ensure nil
+  :straight nil
   :init
   (setq gnus-init-file (no-littering-expand-etc-file-name "gnus-config.el")))
 
 (use-package gnus-dired
-  :ensure nil
+  :straight nil
   :config
   (progn
     (defun gnus-dired-mail-buffers ()
@@ -505,7 +506,6 @@ rotate entire document."
 
 ;;; R
 (use-package remem
-  :ensure nil
   :commands remem-toggle
   :config
   (setq remem-database-dir (job/custom-temp-file-name "ra-index"))
@@ -526,7 +526,9 @@ rotate entire document."
 
 ;;; S
 (use-package sdcv-mode
-  :ensure nil
+  :straight (sdcv-mode :type git
+                       :host github
+                       :repo "pluskid/sdcv-mode")
   :commands sdcv-search
   :config
   (bind-key "<tab>" 'sdcv-toggle-entry sdcv-mode-map))
@@ -548,15 +550,13 @@ rotate entire document."
   (add-to-list 'sml/replacer-regexp-list '("^~/Downloads/" ":DL:") t)
   (add-to-list 'sml/replacer-regexp-list '("^~/texte/" ":TXT:") t))
 
-(use-package smartparens-config
-  :ensure smartparens
+(use-package smartparens
   :diminish smartparens-mode
   :config
   (smartparens-global-mode t)
   (show-smartparens-global-mode t)
   (add-hook 'yas-before-expand-snippet-hook (lambda () (smartparens-mode -1)))
   (add-hook 'yas-after-exit-snippet-hook (lambda () (smartparens-mode 1))))
-
 
 (use-package shell-pop
   :bind (("C-c j" . shell-pop))
@@ -569,9 +569,7 @@ rotate entire document."
   ;; need to do this manually or not picked up by `shell-pop'
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 
-(use-package swiper
-  :load-path "site-lisp/swiper"
-  :ensure nil)
+(use-package swiper)
 
 ;;; U
 (use-package undo-tree
