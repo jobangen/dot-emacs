@@ -1,9 +1,0 @@
-[submodule "use-package"]
-	path = site-lisp/use-package
-	url = https://github.com/jwiegley/use-package
-[submodule "swiper"]
-	path = site-lisp/swiper
-	url = https://github.com/abo-abo/swiper
-[submodule "org-mode"]
-	path = site-lisp/org-mode
-	url = https://code.orgmode.org/bzg/org-mode.git
