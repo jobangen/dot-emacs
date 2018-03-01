@@ -1,39 +1,38 @@
-;;;
-(require 'package)
-(setq package-archives '(("gnu"       . "https://elpa.gnu.org/packages/")
-                         ("melpa"     . "https://melpa.org/packages/")
-                         ("org"       . "https://orgmode.org/elpa/")))
-(package-initialize)
+;(package-initialize)
 (setq package-enable-at-startup nil)
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/use-package"))
+(let ((bootstrap-file (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))
+      (bootstrap-version 3))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
+
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/etc"))
 
-;;; use-package
-(eval-when-compile
-  (require 'use-package))
-(setq use-package-always-ensure t)
-(require 'bind-key)
 (use-package diminish)
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-;;;
-(use-package dot-exwm :ensure exwm)
+(use-package dot-exwm :straight exwm)
 
 ;;;
 (use-package dot-org
-  :load-path ("site-lisp/org-mode/lisp"
-              "site-lisp/org-mode/contrib/lisp")
-  :ensure nil
+  :straight org
   :bind (("C-c a" . org-agenda)
          ("C-c c" . org-capture)
          ("C-c i" . org-clock-in)
          ("C-c l" . org-store-link))
   :mode ("\\.txt\\'" . org-mode))
 
-(org-babel-load-file "~/.emacs.d/myinit.org")
 
 ;;; Libraries
 (use-package counsel-notmuch      :defer t)
