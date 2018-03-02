@@ -88,7 +88,6 @@
 tags: %^{Type|§index|§content|§proj},
 
 * Inhalt
-%?
 
 * Literatur
 
