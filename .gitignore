@@ -1,7 +1,7 @@
 /autosave
 /backups/
-/elpa/
 /myinit.el
 /var/
 *.sh
 *.elc
+/lisp
