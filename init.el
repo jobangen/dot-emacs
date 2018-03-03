@@ -140,6 +140,14 @@
           ("Greek" "α" "β" "Y" "δ" "ε" "ζ" "η" "θ" "ι" "κ" "λ" "μ" "ν" "ξ" "ο" "π" "ρ" "σ" "τ" "υ" "φ" "χ" "ψ" "ω")
           ("Other Languages" "Œ"))))
 
+(use-package contacts
+  :straight (contacts :local-repo "~/.emacs.d/lisp/scimax"
+                      :files ("contacts.el"))
+  :bind (("C-c g" . ivy-contacts))
+  :config
+  (setq contacts-files '("~/Dropbox/db/contacts.org"))
+  (setq contacts-cache-file (no-littering-expand-var-file-name "contacts-cache.el")))
+
 (use-package counsel
   :bind (("C-s" . counsel-grep-or-swiper)
          ("C-c u" . counsel-linux-app)

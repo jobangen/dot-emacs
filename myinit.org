@@ -1488,14 +1488,6 @@ http://doc.norang.ca/org-mode.org
 
 *** scimax
 #+begin_src emacs-lisp
-(use-package contacts
-  :straight nil
-  :load-path "~/.emacs.d/lisp/scimax"
-  :bind (("C-c g" . ivy-contacts))
-
-  :config
-  (setq contacts-files '("~/Dropbox/db/contacts.org"))
-  (setq contacts-cache-file (no-littering-expand-var-file-name "contacts-cache.el")))
 
 (defun ivy-insert-org-entity ()
   "Insert an org-entity using ivy."
