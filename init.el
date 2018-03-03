@@ -628,3 +628,23 @@ rotate entire document."
     (add-hook 'hippie-expand-try-functions-list 'yas-hippie-try-expand)
     (yas-global-mode 1)
     (setq require-final-newline nil)))
+
+;;; Z
+(use-package zettelkasten
+  :straight (zettelkasten :local-repo "~/.emacs.d/lisp/zettelkasten")
+  :init
+  (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
+  (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
+  (setq zettelkasten-bibliography-file job/bibliography-file)
+  (setq zettelkasten-texts-directory "~/texte/")
+
+  (defun zettelkasten-txt-query ()
+    (interactive)
+    (counsel-ag nil "~/.custom-temp/pdfs-extracted" nil))
+
+  (defun job/open-at-point ()
+    (interactive)
+    (if (equal major-mode 'dired-mode)
+        (dired-find-file))
+    (if (equal major-mode 'org-mode)
+        (org-open-at-point))))
