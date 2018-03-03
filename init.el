@@ -632,6 +632,7 @@ rotate entire document."
 ;;; Z
 (use-package zettelkasten
   :straight (zettelkasten :local-repo "~/.emacs.d/lisp/zettelkasten")
+  :bind ("C-c z" . hydra-zettelkasten/body)
   :init
   (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
   (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
