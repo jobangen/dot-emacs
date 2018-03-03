@@ -50,11 +50,12 @@
 (use-package neato-graph-bar      :defer t)
 (use-package org-notmuch          :straight org :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
 (use-package org-pdfview          :after (org pdf-tools))
+(use-package pass)
 (use-package peep-dired           :defer t)
 (use-package pomodoro             :defer t)
-(use-package shell-interaction    :straight nil :load-path "~/.emacs.d/lisp/shell-interaction")
 (use-package smex)
 (use-package rainbow-delimiters   :hook (emacs-lisp-mode . rainbow-delimiters-mode))
+(use-package wgrep)
 
 (org-babel-load-file "~/.emacs.d/myinit.org")
 
@@ -540,6 +541,10 @@ rotate entire document."
   :commands sdcv-search
   :config
   (bind-key "<tab>" 'sdcv-toggle-entry sdcv-mode-map))
+
+(use-package shell-interaction
+  :straight (shell-interaction :local-repo "~/.emacs.d/lisp/shell-interaction"))
+
 
 (use-package smart-mode-line
   :init
