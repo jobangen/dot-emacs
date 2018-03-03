@@ -5,3 +5,4 @@
 *.sh
 *.elc
 /lisp
+/straight
