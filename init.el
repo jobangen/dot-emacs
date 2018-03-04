@@ -352,6 +352,27 @@
   (gscholar-bibtex-source-on-off :off "DBLP")
   (gscholar-bibtex-source-on-off :off "ACM Digital Library"))
 
+;;; H
+(use-package hippie-expand
+  :straight nil
+  :bind ("M-<tab>" . hippie-expand)
+  :init
+  (setq hippie-expand-verbose t)
+
+  (setq hippie-expand-try-functions-list
+        '(yas-hippie-try-expand
+          try-expand-dabbrev
+          try-expand-all-abbrevs
+          try-complete-file-name-partially
+          try-complete-file-name
+          ;; try-expand-dabbrev-from-kill
+          try-expand-dabbrev-all-buffers
+          ;; try-expand-list
+          ;; try-expand-line
+          ;; try-complete-lisp-symbol-partially
+          ;; try-complete-lisp-symbol
+          )))
+
 ;;; I
 (use-package ispell
   :config
