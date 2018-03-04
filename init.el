@@ -435,16 +435,13 @@
   :config
   (setq offlineimap-timestamp "%Y-%m-%d-%H:%M:%S "))
 
-(use-package org-brain
+(use-package org-gcal
   :config
-  (setq org-brain-path (expand-file-name zettel-dir "zettel"))
-  (setq org-brain-data-file (no-littering-expand-var-file-name "org/brain-data.el"))
-  (setq org-brain-files-extension "txt")
-  (setq org-brain-visualize-default-choices 'root)
-  (setq org-brain-show-resources t)
-  (setq org-brain-show-text t)
-  (bind-key "l" 'link-hint-open-link org-brain-visualize-mode-map))
-
+  (setq org-gcal-auto-archive t)
+  (setq org-gcal-down-days 365)
+  (setq org-gcal-client-id "553301842275-clecdgmr7i8741e3ck5iltlgfk3qf79r.apps.googleusercontent.com")
+  (setq org-gcal-client-secret "4zyEbm_F_BMuJsA7rZZmgFBm")
+  (setq org-gcal-file-alist '(("jobangen@googlemail.com" . "~/Dropbox/db/org/calender.org"))))
 
 ;;; P
 (use-package paperless :defer t
@@ -531,8 +528,6 @@ rotate entire document."
                '("\\.pdf::\\([[:digit:]]+\\)\\'" . org-pdfview-open))
   (add-to-list 'org-file-apps
                '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open link)))))
-
-
 
 ;;; R
 (use-package remem

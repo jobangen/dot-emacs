@@ -1984,21 +1984,6 @@ abort completely with `C-g'."
   (add-hook 'message-mode-hook 'messages-are-flowing-use-and-mark-hard-newlines))
 #+end_src
 
-* Major-modes
-** calendar
-*** org-gcal
-#+begin_src emacs-lisp
-(use-package org-gcal
-  :config
-  (setq org-gcal-auto-archive t)
-  (setq org-gcal-down-days 365)
-  (setq org-gcal-client-id "553301842275-clecdgmr7i8741e3ck5iltlgfk3qf79r.apps.googleusercontent.com")
-  (setq org-gcal-client-secret "4zyEbm_F_BMuJsA7rZZmgFBm")
-  (setq org-gcal-file-alist '(("jobangen@googlemail.com" . "~/Dropbox/db/org/calender.org")))
-)
-
-#+end_src
-
 * Minor-modes
 ** engine-mode
 #+begin_src emacs-lisp
