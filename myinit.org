@@ -245,15 +245,15 @@ müssen manuell deaktiviert werden
 
 (bind-keys*
  ;; windowmove
- ("H-a" . windmove-left)
- ("H-d" . windmove-right)
- ("H-w" . windmove-up)
- ("H-s" . windmove-down)
+ ("H-j" . windmove-left)
+ ("H-l" . windmove-right)
+ ("H-i" . windmove-up)
+ ("H-k" . windmove-down)
  ;; org-meta
- ("H-j" . org-metaleft)
- ("H-l" . org-metaright)
- ("H-i" . org-metaup)
- ("H-k" . org-metadown))
+ ("H-m" . org-metaleft)
+ ("H--" . org-metaright)
+ ("H-," . org-metaup)
+ ("H-." . org-metadown))
 
 #+end_src
 ** scrollen
