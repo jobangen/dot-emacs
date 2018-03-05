@@ -1978,12 +1978,6 @@ abort completely with `C-g'."
 (bind-key "C-x m" 'job/message-mail)
 #+end_src
 
-** messages-are-flowing
-#+begin_src emacs-lisp
-(with-eval-after-load "message"
-  (add-hook 'message-mode-hook 'messages-are-flowing-use-and-mark-hard-newlines))
-#+end_src
-
 * Minor-modes
 ** engine-mode
 #+begin_src emacs-lisp
@@ -2330,7 +2324,6 @@ _y_: youtube      _bb_: bibtex
   ("hsl" xrandr-hdmi-1366x768-left))
 
 #+end_src
-
 
 * defun
 ** my/html-to-german

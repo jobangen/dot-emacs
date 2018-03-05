@@ -423,6 +423,11 @@
   (setq magit-last-seen-setup-instructions "1.4.0")
   (setq magit-diff-refine-hunk 'all))
 
+(use-package messages-are-flowing
+  :init
+  (with-eval-after-load "message"
+    (add-hook 'message-mode-hook 'messages-are-flowing-use-and-mark-hard-newlines)))
+
 (use-package multiple-cursors
   :bind (("C-S-c C-S-c" . mc/edit-lines)
          ("C-<" . mc/mark-next-like-this)
