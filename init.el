@@ -73,6 +73,7 @@
 (use-package ace-window
   :after (avy)
   :bind ("C-c k" . ace-delete-window)
+  :demand t
   :config
   (progn
     (setq aw-scope 'frame)
@@ -387,7 +388,6 @@
 ;;; K
 (use-package key-chord
   :after (avy ace-window)
-  :demand t
   :init
   (progn
     (setq key-chord-two-keys-delay 0.15)
