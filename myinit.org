@@ -1919,16 +1919,6 @@ abort completely with `C-g'."
 )
 #+end_src
 
-** www-synonyms
-#+begin_src emacs-lisp
-(use-package www-synonyms
-  :commands www-synonyms-insert-synonym
-  :config
-  (setq www-synonyms-key "gaGF6dLppnG6whJVPKFg")
-  (setq www-synonyms-lang "de_DE") ;; funktioniert nicht
-)
-#+end_src
-
 * Mail und Kontakte
 ** message-mode
 #+begin_src emacs-lisp
@@ -2007,22 +1997,6 @@ abort completely with `C-g'."
 )
 #+end_src
 
-** projectile
-#+begin_src emacs-lisp
-(use-package projectile
-  :diminish projectile-mode
-  :config
-   (progn
-     (projectile-global-mode)
-     (setq projectile-completion-system 'ivy)
-     (setq projectile-enable-caching t)
-     (setq projectile-switch-project-action 'projectile-dired)))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package counsel-projectile)
-#+end_src
-
 ** keyfreq
 #+begin_src emacs-lisp
 (use-package keyfreq
@@ -2060,14 +2034,6 @@ abort completely with `C-g'."
           ivy-next-line
           ivy-previous-line
           magit-invoke-popup-action)))
-#+end_src
-
-** helpful
-#+begin_src emacs-lisp
-(use-package helpful
-  :bind (:map help-map
-              ("f" . helpful-callable)
-              ("v" . helpful-variable)))
 #+end_src
 
 * hydra

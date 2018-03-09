@@ -36,6 +36,7 @@
 
 ;;; Libraries
 (use-package counsel-notmuch      :defer t)
+(use-package counsel-projectile)
 (use-package define-word          :commands define-word define-word-at-point)
 (use-package dired-collapse       :hook dired-mode)
 (use-package dired-subtree        :commands dired-subtree-insert)
@@ -354,6 +355,11 @@
   (gscholar-bibtex-source-on-off :off "ACM Digital Library"))
 
 ;;; H
+(use-package helpful
+  :bind (:map help-map
+              ("f" . helpful-callable)
+              ("v" . helpful-variable)))
+
 (use-package hippie-expand
   :straight nil
   :bind ("M-<tab>" . hippie-expand)
@@ -534,6 +540,15 @@ rotate entire document."
   (add-to-list 'org-file-apps
                '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open link)))))
 
+(use-package projectile
+  :diminish projectile-mode
+  :config
+  (progn
+    (projectile-global-mode)
+    (setq projectile-completion-system 'ivy)
+    (setq projectile-enable-caching t)
+    (setq projectile-switch-project-action 'projectile-dired)))
+
 ;;; R
 (use-package remem
   :commands remem-toggle
@@ -640,6 +655,14 @@ rotate entire document."
      '("TODO" "wichtig" "wichtige" "vielleicht" "auch" "dabei" "sehr" "ziemlich" "möglicherweise" "wohl" "recht" "dann" "paar" "bisschen"))
     (setq writegood-passive-voice-irregulars
      '("gemacht" "geworden" "vorgenommen" "durchgeführt"))))
+
+(use-package www-synonyms
+  :commands www-synonyms-insert-synonym
+  :config
+  (setq www-synonyms-key "gaGF6dLppnG6whJVPKFg")
+  (setq www-synonyms-lang "de_DE"))
+
+
 
 ;;; Y
 (use-package yasnippet
