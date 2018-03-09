@@ -91,7 +91,7 @@
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 (setq gnus-group-line-format "%P%3y:%C%B\n")
 (setq gnus-topic-line-format "%i%2{%n - %A%}%v\n")
-(gnus-demon-add-handler 'gnus-group-get-new-news 5 nil)
+;; (gnus-demon-add-handler 'gnus-group-get-new-news 5 nil) ;; Lässt emacs manchmal einfrieren
 
 ;;;;;;;;; Summary ;;;;;;;;;
 (setq gnus-summary-sort-functions '(gnus-summary-sort-by-most-recent-date))
