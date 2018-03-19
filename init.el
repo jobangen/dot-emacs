@@ -637,9 +637,12 @@ rotate entire document."
   :config
   (bind-key "<tab>" 'sdcv-toggle-entry sdcv-mode-map))
 
+(use-package sensitive-mode
+  :straight (sensitive-mode :local-repo "~/.emacs.d/lisp/sensitive-mode")
+  :mode ("\\.gpg\\'" . sensitive-mode))
+
 (use-package shell-interaction
   :straight (shell-interaction :local-repo "~/.emacs.d/lisp/shell-interaction"))
-
 
 (use-package smart-mode-line
   :init
