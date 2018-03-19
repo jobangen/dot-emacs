@@ -677,8 +677,6 @@ rotate entire document."
   (setq www-synonyms-key "gaGF6dLppnG6whJVPKFg")
   (setq www-synonyms-lang "de_DE"))
 
-
-
 ;;; Y
 (use-package yasnippet
   :diminish yas-minor-mode
