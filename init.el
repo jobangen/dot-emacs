@@ -655,11 +655,21 @@ rotate entire document."
 (use-package writegood-mode
   :defer t
   :config
-   (progn
+  (progn
     (setq writegood-weasel-words
-     '("TODO" "wichtig" "wichtige" "vielleicht" "auch" "dabei" "sehr" "ziemlich" "möglicherweise" "wohl" "recht" "dann" "paar" "bisschen"))
+          '("Ding" "Sache" "auch" "bisschen" "dabei" "dann"
+            "einfache" "extrem" "gemacht" "halt" "hervorragend"
+            "immerhin" "man" "massenhaft" "möglicherweise" "paar" "recht" "schon"
+            "sehr" "unglaublich" "viel" "vielleicht" "wenig" "wichtig" "wichtige"
+            "wohl" "ziemlich" "überhaupt"))
     (setq writegood-passive-voice-irregulars
-     '("gemacht" "geworden" "vorgenommen" "durchgeführt"))))
+          '("gemacht" "geworden" "vorgenommen" "durchgeführt"))
+
+    (defun writegood-passive-voice-font-lock-keywords-regexp ()
+      "Generate font-lock keywords regexp for passive-voice"
+      (concat "\\b\\(wurde\\)\\b\\([[:space:]]\\|\\s<\\|\\s>\\)+\\(ge[[:word:]]+\\|"
+              (regexp-opt writegood-passive-voice-irregulars)
+              "\\)\\b"))))
 
 (use-package www-synonyms
   :commands www-synonyms-insert-synonym
