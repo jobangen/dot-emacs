@@ -848,7 +848,7 @@ SCHEDULED: %t
  :jump-to-captured t)
 
 ("je" "Electricity" plain (file (lambda () (expand-file-name (concat db-dir "plot/electricity.csv"))))
-"%(org-read-date), %?"
+"2017-10-02 20:52,39685.5,%(org-read-date),%?"
 :immediate-finish t
 :jump-to-captured t)
 
@@ -876,12 +876,12 @@ Subject: [[%l][%:subject]]
 :jump-to-captured t
 :empty-lines 1)
 
-("l" "Literatur" entry (file+headline "inbox.org" "Literatur")
+("l" "Literatur" entry (file "inbox-literatur.org")
  "* TODO %^{Author & Titel} :txt:wiss
 :PROPERTIES:
 :CREATED:   %U
 :CATEGORY:  wiss
-:BIBL:      %^{Bibl|ub|sozbib|cba|cbn|fmi}
+:BIBL:      %^{Bibliothek|ub|sozbib|cba|cbn|fmi}
 :SIGNATURE: %^{Signatur}
 :SOURCE:    %?
 :END:")
