@@ -71,6 +71,11 @@
     (setq save-abbrevs t)
     (setq-default abbrev-mode t)))
 
+(use-package academic-phrases
+  :straight (academic-phrases :type git
+                              :host github
+                              :repo "nashamri/academic-phrases"))
+
 (use-package ace-window
   :after (avy)
   :bind ("C-c k" . ace-delete-window)
