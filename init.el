@@ -408,6 +408,42 @@
     (key-chord-define-global "jl" 'avy-goto-line)
     (key-chord-define-global "jf" 'ace-window)))
 
+(use-package keyfreq
+  :init
+  (keyfreq-autosave-mode 1)
+  (keyfreq-mode 1)
+  (setq keyfreq-file (no-littering-expand-var-file-name "keyfreq.el"))
+  (setq keyfreq-file-lock (no-littering-expand-var-file-name "keyfreq.lock"))
+  (setq keyfreq-excluded-commands
+        '(backward-char
+          delete-backward-char
+          forward-char
+          handle-switch-frame
+          left-char
+          left-word
+          mouse-drag-region
+          mouse-set-point
+          mwheel-scroll
+          next-line
+          previous-line
+          right-char
+          right-word
+          self-insert-command
+          ;;isearch
+          isearch-printing-char
+          ;;org
+          org-self-insert-command
+          org-delete-backward-char
+          org-return
+          org-agenda-next-line
+          org-agenda-previous-line
+          org-ref-next-key
+          ;;Ivy
+          ivy-done
+          ivy-next-line
+          ivy-previous-line
+          magit-invoke-popup-action)))
+
 ;;; L
 (use-package latex-extra
   :diminish latex-extra-mode
@@ -451,6 +487,20 @@
   :config
   (setq offlineimap-timestamp "%Y-%m-%d-%H:%M:%S "))
 
+(use-package org-autolist
+  :commands org-autolist-mode
+  :diminish org-autolist-mode
+  :init
+  (progn
+    (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))))
+
+(use-package org-clock-convenience
+  :bind (:map org-agenda-mode-map
+              ("<C-S-up>" . org-clock-convenience-timestamp-up)
+              ("<C-S-down>" . org-clock-convenience-timestamp-down)
+              ("ö" . org-clock-convenience-fill-gap)
+              ("ä" . org-clock-convenience-fill-gap-both)))
+
 (use-package org-gcal
   :config
   (setq org-gcal-auto-archive t)
@@ -458,6 +508,10 @@
   (setq org-gcal-client-id "553301842275-clecdgmr7i8741e3ck5iltlgfk3qf79r.apps.googleusercontent.com")
   (setq org-gcal-client-secret "4zyEbm_F_BMuJsA7rZZmgFBm")
   (setq org-gcal-file-alist '(("jobangen@googlemail.com" . "~/Dropbox/db/org/calender.org"))))
+
+(use-package ox-reveal
+  :config
+  (setq org-reveal-root "file:///home/job/programme/reveal.js"))
 
 ;;; P
 (use-package paperless :defer t

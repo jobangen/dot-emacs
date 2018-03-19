@@ -1467,27 +1467,6 @@ http://doc.norang.ca/org-mode.org
 #+end_src
 
 ** additional packages
-*** org-autolist
-#+begin_src emacs-lisp
-;; autolist
-(use-package org-autolist
-  :commands org-autolist-mode
-  :diminish org-autolist-mode
-  :init
-  (progn
-    (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))))
-#+end_src
-
-*** org-clock-convenience
-#+begin_src emacs-lisp
-(use-package org-clock-convenience
-  :bind (:map org-agenda-mode-map
-              ("<C-S-up>" . org-clock-convenience-timestamp-up)
-              ("<C-S-down>" . org-clock-convenience-timestamp-down)
-              ("ö" . org-clock-convenience-fill-gap)
-              ("ä" . org-clock-convenience-fill-gap-both)))
-#+end_src
-
 *** scimax
 #+begin_src emacs-lisp
 
@@ -1510,13 +1489,6 @@ http://doc.norang.ca/org-mode.org
                       ("o" (lambda (element) (insert "\\" (cadr element))) "org-entity")
                       ("l" (lambda (element) (insert (nth 1 (cdr element)))) "latex")
                       ("h" (lambda (element) (insert (nth 3 (cdr element)))) "html"))))
-#+end_src
-
-*** ox-reveal
-#+begin_src emacs-lisp
-(use-package ox-reveal
-  :config
-  (setq org-reveal-root "file:///home/job/programme/reveal.js"))
 #+end_src
 
 * Latex und Bibtex
@@ -1997,45 +1969,6 @@ abort completely with `C-g'."
   (defengine wikipedia
    "http://www.wikipedia.org/search-redirect.php?language=de&go=Go&search=%s")
 )
-#+end_src
-
-** keyfreq
-#+begin_src emacs-lisp
-(use-package keyfreq
-  :init
-  (keyfreq-autosave-mode 1)
-  (keyfreq-mode 1)
-  (setq keyfreq-file (no-littering-expand-var-file-name "keyfreq.el"))
-  (setq keyfreq-file-lock (no-littering-expand-var-file-name "keyfreq.lock"))
-  (setq keyfreq-excluded-commands
-        '(backward-char
-          delete-backward-char
-          forward-char
-          handle-switch-frame
-          left-char
-          left-word
-          mouse-drag-region
-          mouse-set-point
-          mwheel-scroll
-          next-line
-          previous-line
-          right-char
-          right-word
-          self-insert-command
-          ;;isearch
-          isearch-printing-char
-          ;;org
-          org-self-insert-command
-          org-delete-backward-char
-          org-return
-          org-agenda-next-line
-          org-agenda-previous-line
-          org-ref-next-key
-          ;;Ivy
-          ivy-done
-          ivy-next-line
-          ivy-previous-line
-          magit-invoke-popup-action)))
 #+end_src
 
 * hydra
