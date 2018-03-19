@@ -85,7 +85,7 @@
                       (shell-command-to-string "gnome-screenshot")))
 
 ;;; Simulation Keys
-(exwm-input-set-simulation-keys
+(setq exwm-input-simulation-keys
  '(([?\C-b] . left)
    ([?\C-e] . (S-end))
    ([?\C-d] . delete)
