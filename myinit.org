@@ -381,6 +381,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 
     (eval-after-load "org"
       '(define-key org-mode-map (kbd "C-,") nil))
+    (eval-after-load "org"
+      '(define-key org-mode-map (kbd "M-<tab>") nil)) ;; hat hippie überschrieben mit pcomplete
 ))
 
 (defun my/fix-inline-images ()
