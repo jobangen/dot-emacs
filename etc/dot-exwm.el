@@ -13,76 +13,91 @@
             (exwm-workspace-rename-buffer exwm-class-name)))
 
 ;;; Key Bindings
-;; 's-r': Reset
-(exwm-input-set-key (kbd "s-r") #'exwm-reset)
-;; 's-w': Switch workspace
-(exwm-input-set-key (kbd "s-w") #'exwm-workspace-switch)
+;;; Functions
+;; http://pragmaticemacs.com/emacs/dont-kill-buffer-kill-this-buffer-instead/
+;;;###autoload
+(defun job/kill-current-buffer ()
+  (interactive)
+  (kill-buffer (current-buffer)))
+
+;;;###autoload
+(defun job/firefox ()
+  (interactive)
+  (start-process-shell-command "firefox" nil "firefox"))
+
+;;;###autoload
+(defun job/gnome-terminal ()
+  (interactive)
+  (start-process-shell-command
+   "gnome-terminal" nil "gnome-terminal"))
+
+;;;###autoload
+(defun job/slock ()
+  (interactive)
+  (start-process-shell-command "slock" nil "slock"))
+
+;;;###autoload
+(defun job/volume-mute ()
+  (interactive)
+  (shell-command-to-string "amixer -q -D pulse set Master mute")
+  (shell-command "amixer -D pulse sget Master | grep -m1 -P -o '\[[0-9]+%.*'"))
+
+;;;###autoload
+(defun job/volume-raise ()
+  (interactive)
+  (shell-command-to-string "amixer -q -D pulse set Master 2%+ unmute")
+  (shell-command "amixer -D pulse sget Master | grep -m1 -P -o '[\[0-9]+%.*'"))
+
+;;;###autoload
+(defun job/volume-lower ()
+  (interactive)
+  (shell-command-to-string "amixer -q -D pulse set Master 2%- unmute")
+  (shell-command "amixer -D pulse sget Master | grep -m1 -P -o '\[[0-9]+%.*'"))
+
+;;;###autoload
+(defun job/brightness-increase ()
+  (interactive)
+  (shell-command-to-string "xbacklight -dec 10")
+  (shell-command "xbacklight"))
+
+;;;###autoload
+(defun job/brightness-decrease ()
+  (interactive)
+  (shell-command-to-string "xbacklight -inc 10")
+  (shell-command "xbacklight"))
+
+;;;###autoload
+(defun job/gnome-screenshot ()
+  (interactive)
+  (shell-command-to-string "gnome-screenshot"))
+
+;; Sensibel bei der Formatierung. Lispy machts kaputt
+(setq exwm-input-global-keys
+      `(([?\s-c] . exwm-input-toggle-keyboard)
+        ([?\s-f] . job/firefox)
+        ([?\s-g] . gnus)
+        ([?\s-k] . job/kill-current-buffer)
+        ([?\s-m] . job/gnome-terminal)
+        ([?\s-r] . exwm-reset)
+        ([?\s-w] . exwm-workspace-switch)
+        ([?\s-x] . counsel-linux-app)
+        ([?\s-z] . job/slock)
+        ([?\s -<f11>] . job/brightness-increase)
+        ([?\s -<f12>] . job/brightness-decrease)
+        ([?\s -<tab>] . other-window)
+        ([?\s -+] . exwm-layout-enlarge-window-horizontally)
+        ([?\s --] . exwm-layout-shrink-window-horizontally)
+        ([<print>] . job/gnome-screenshot)
+        ([<XF86AudioMute>] . job/volume-mute)
+        ([<XF86AudioRaiseVolume>] . job/volume-raise)
+        ([<XF86AudioLowerVolume>] . job/volume-lower)))
+
 ;; 's-N': Switch to certain workspace
 (dotimes (i 10)
   (exwm-input-set-key (kbd (format "s-%d" i))
                       `(lambda ()
                          (interactive)
                          (exwm-workspace-switch-create ,i))))
-
-(exwm-input-set-key (kbd "s-<tab>") #'other-window)
-
-(exwm-input-set-key (kbd "s-f")
-                    (lambda ()
-                      (interactive)
-                      (start-process-shell-command "firefox" nil "firefox")))
-(exwm-input-set-key (kbd "s-g") #'gnus)
-(exwm-input-set-key (kbd "s-m")
-                    (lambda ()
-                      (interactive)
-                      (start-process-shell-command
-                       "gnome-terminal" nil "gnome-terminal")))
-(exwm-input-set-key (kbd "s-z")
-                    (lambda ()
-                      (interactive)
-                      (start-process-shell-command "slock" nil "slock")))
-(exwm-input-set-key (kbd "s-x") #'counsel-linux-app)
-
-(exwm-input-set-key (kbd "s-+") #'exwm-layout-enlarge-window-horizontally)
-(exwm-input-set-key (kbd "s--") 'exwm-layout-shrink-window-horizontally)
-
-(exwm-input-set-key (kbd "<XF86AudioMute>")
-                    (lambda ()
-                      (interactive)
-                      (shell-command-to-string
-                       "amixer -q -D pulse set Master toggle")
-                      (shell-command
-                       "amixer -D pulse sget Master | grep -m1 -P -o '\[[0-9]+%.*'")))
-(exwm-input-set-key (kbd "<XF86AudioRaiseVolume>")
-                    (lambda ()
-                      (interactive)
-                      (shell-command-to-string
-                       "amixer -q -D pulse set Master 2%+ unmute")
-                      (shell-command
-                       "amixer -D pulse sget Master | grep -m1 -P -o '[\[0-9]+%.*'")))
-(exwm-input-set-key (kbd "<XF86AudioLowerVolume>")
-                    (lambda ()
-                      (interactive)
-                      (shell-command-to-string
-                       "amixer -q -D pulse set Master 2%- unmute")
-                      (shell-command
-                       "amixer -D pulse sget Master | grep -m1 -P -o '\[[0-9]+%.*'")))
-
-(exwm-input-set-key (kbd "s-<f11>")
-                    (lambda ()
-                      (interactive)
-                      (shell-command-to-string "xbacklight -dec 10")
-                      (shell-command "xbacklight")))
-(exwm-input-set-key (kbd "s-<f12>")
-                    (lambda ()
-                      (interactive)
-                      (shell-command-to-string "xbacklight -inc 10")
-                      (shell-command "xbacklight")))
-
-(exwm-input-set-key (kbd "<pause>") #'keyboard-quit)
-(exwm-input-set-key (kbd "<print>")
-                    (lambda ()
-                      (interactive)
-                      (shell-command-to-string "gnome-screenshot")))
 
 ;;; Simulation Keys
 (setq exwm-input-simulation-keys
