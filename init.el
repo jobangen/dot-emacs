@@ -86,6 +86,10 @@
     (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
     (setq aw-dispatch-always nil)))
 
+(use-package auto-yasnippet
+  :bind (("H-w" . aya-create)
+         ("H-y" . aya-expand)))
+
 (use-package avy
   :bind ("M-s" . avy-goto-char-timer)
   :config
