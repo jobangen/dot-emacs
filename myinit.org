@@ -1594,6 +1594,14 @@ ${source},${=key=}
                  (-zip-with (lambda (f w) (truncate-string-to-width f w 0 ?\s))
                             fields (list 36 (- width 53) 4 1 1 7)))))
 
+  (defun bibtex-completion-insert-reference (keys)
+    "Insert a reference for each selected entry."
+    (let* ((refs (--map
+                  (s-word-wrap 10000
+                               (concat "\n- " (bibtex-completion-apa-format-reference it)))
+                  keys)))
+      (insert "\n" (s-join "\n" refs) "\n")))
+
   (defun bibtex-completion-apa-format-reference (key)
      "Returns a plain text reference in APA format for the publication specified by KEY."
      (let*
