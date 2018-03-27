@@ -112,7 +112,7 @@
    ([?\C-m] . return)
    ([?\C-p] . up)
    ([?\C-s] . ?\C-f)
-   ([?\C-w] . (C-backspace))
+   ([?\C-w] . ?\C-x)
    ([?\C-y] . ?\C-v)
    ([?\M-w] . ?\C-c)
    ([?\M-<] . home)
@@ -133,3 +133,4 @@
 
 (provide 'dot-exwm)
 ;;; dot-exwm.el ends here
+
