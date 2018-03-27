@@ -2,4 +2,4 @@
 # name: csv-semantik
 # key: csv
 # --
-${1:$$(yas-choose-value '("" "Autorität" "auctoritas"))},${2:$$(yas-choose-value '("" "Synonym" "Homoionym" "Antonym-Kontradiktorisches" "Antonym-Konträres" "Dualität" "Hyperonym" "Hyponym" "Kohyponym" "Meronym" "Holonym" "Inkompatibel" "Folgerungsrelation" "Kompatibel"))},${3:Begriff},xJahrx,xFachx,`(file-name-base)`,${6:Seite},cha:${7:$$(yas-choose-value '("Auctoritas" "Augustus" "Christen" "Streit" "Soziales" "Ansehensmacht" "Weber"))},${0:Kommentar}
+${1:$$(yas-choose-value '("" "Autorität" "auctoritas"))},${2:$$(yas-choose-value '("" "Synonym" "Homoionym" "Antonym-Kontradiktorisches" "Antonym-Konträres" "Dualität" "Hyperonym" "Hyponym" "Kohyponym" "Inkompatibel" "Folgerungsrelation" "Implikation" "Kompatibel" "Bedeutungsbeziehung-Wesenhafte"))},${3:Begriff},xJahrx,xFachx,`(file-name-base)`,${6:Seite},cha:${7:$$(yas-choose-value '("Auctoritas" "Augustus" "Christen" "Streit" "Soziales" "Ansehensmacht" "Weber"))},${0:Kommentar}

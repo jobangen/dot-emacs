@@ -2,8 +2,8 @@
 # name: snippet
 # key: s
 # --
-,# -*- mode: snippet -*-
-,# name: ${1:name}
-,# key: ${2:shortkey}
-,# --
-
+# -*- mode: snippet -*-
+# name: ${1:name}
+# key: ${2:shortkey}
+# --
+$0
