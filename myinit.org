@@ -1482,8 +1482,8 @@ http://doc.norang.ca/org-mode.org
                  (?y . "\\autocite*[][]{%l}")
                  (?n . "\\nocite{%l}")
                  (?f . "\\footcite[][]{%l}")
-                 (?T . "\\textcquote[][]{%l}[]{")
-                 (?B . "\\blockcquote[][]{%l}[]{")))))
+                 (?T . "\\textcquote[][]{%l}[]{}")
+                 (?B . "\\blockcquote[][]{%l}[]{}")))))
 
     (setq reftex-cite-prompt-optional-args t)
     (setq reftex-cite-cleanup-optional-arg t)))
