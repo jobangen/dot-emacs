@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: org
+# key: org
+# --
+#+TITLE: $1
+#+DATE: $2
+#+AUTHOR: Jan Ole Bangen
+
+* $0
