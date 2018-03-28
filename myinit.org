@@ -1511,6 +1511,9 @@ http://doc.norang.ca/org-mode.org
                                                       "date"
                                                       "keywords"))
 
+   (advice-add 'bibtex-completion-candidates
+               :filter-return 'reverse)
+
    (setq bibtex-completion-cite-default-command "autocite")
 
    (setq bibtex-completion-pdf-open-function
