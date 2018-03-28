@@ -14,6 +14,7 @@
 
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
+(setq use-package-verbose t)
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/etc"))
 
