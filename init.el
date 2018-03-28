@@ -171,7 +171,7 @@
          ("C-x C-f" . counsel-find-file)
          ("C-x C-SPC" . counsel-mark-ring)
          ("C-c o" . counsel-outline)
-         ("C-c n" . counsel-imenu)))
+         ("C-c n" . counsel-org-goto)))
 
 (use-package csv-mode :defer t
   :config
