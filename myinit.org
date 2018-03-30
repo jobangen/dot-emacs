@@ -30,7 +30,6 @@
 #+BEGIN_SRC emacs-lisp
 (setq split-width-threshold 110)
 (setq inhibit-splash-screen t) ;;Remove splash screen
-(desktop-save-mode 1) ;; Erinnert die zuletzt geöffneten Dateien
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq large-file-warning-threshold nil)
 (setq sentence-end-double-space nil)

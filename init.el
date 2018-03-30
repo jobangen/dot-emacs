@@ -769,3 +769,6 @@ rotate entire document."
         (dired-find-file))
     (if (equal major-mode 'org-mode)
         (org-open-at-point))))
+
+;;;
+(desktop-save-mode 1) ;; Erinnert die zuletzt geöffneten Dateien
