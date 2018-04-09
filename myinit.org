@@ -1153,7 +1153,7 @@ http://doc.norang.ca/org-mode.org
             (bh/clock-in-default-task)))))))
 
 (defvar bh/organization-task-id "journal-month-id")
-(setq bh/organization-task-id "68523780-7441-4027-b5fd-7b86f0306ff8")
+(setq bh/organization-task-id "ab4e610f-13be-4022-8ee6-6cfc32e08964")
 
 (defun bh/clock-in-organization-task-as-default ()
   (interactive)
