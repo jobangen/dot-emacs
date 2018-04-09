@@ -49,10 +49,13 @@
 (use-package haskell-mode         :defer t)
 (use-package hydra)
 (use-package iso-transl           :straight nil)
+(use-package ivy-hydra            :after (ivy hydra))
+(use-package ivy-pass             :defer t :after (ivy pass))
 (use-package neato-graph-bar      :defer t)
+(use-package neotree)
 (use-package org-notmuch          :straight org :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
 (use-package org-pdfview          :after (org pdf-tools))
-(use-package pass)
+(use-package pass                 :defer t)
 (use-package peep-dired           :defer t)
 (use-package pomodoro             :defer t)
 (use-package smex)
@@ -174,11 +177,10 @@
          ("C-c o" . counsel-outline)
          ("C-c n" . counsel-org-goto)))
 
-(use-package csv-mode :defer t
-  :config
-  (setq csv-separators '("," ";"))
+(use-package csv-mode
+  :defer t
+  :config (setq csv-separators '("," ";"))
   (setq csv-align-padding 2))
-
 
 ;;; D
 (use-package deft
@@ -397,9 +399,6 @@
     (setq-default ispell-program-name "aspell")
     (setq args (list "--sug-mode=ultra" "--lang=de_DE-neu"))
     (setq ispell-parser 'use-mode-name)))
-
-(use-package ivy-hydra
-  :after (ivy hydra))
 
 ;;; K
 (use-package key-chord
