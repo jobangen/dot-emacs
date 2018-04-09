@@ -1625,6 +1625,10 @@ ${source},${=key=}
                (s-format
                 "${editor} (Hg.) ${date}: ${title}. ${subtitle}. ${location}: ${publisher}. ([[file:${=key=}.txt][Zettel]])"
                 'bibtex-completion-apa-get-value entry))
+              ("mvcollection"
+               (s-format
+                "${editor} (Hg.) ${date}: ${title}. ${subtitle}. ${location}: ${publisher}. ([[file:${=key=}.txt][Zettel]])"
+                'bibtex-completion-apa-get-value entry))
               ("phdthesis"
                (s-format
                 "${author} ${year}: ${title}. ${subtitle}. (Doctoral dissertation). ${school}, ${location}. ([[file:${=key=}.txt][Zettel]])"
