@@ -18,6 +18,8 @@
       ("sidenote"))
      ("[fn]"
       ("footnote" "marginpar"))
+     ("[fx]"
+      ("fxwarning" "fxnote" "fxerror" "fxfatal"))
      ("[ac]"
       ("autocite" "avolcite"))
      ("[c]"
@@ -50,6 +52,10 @@
       ("chapname"))
      ("'{1}'"
       ("uneigtl"))
+     ("/{1}/"
+      ("begriff"))
+     ("/{1}/"
+      ("lang"))
      (1
       ("part" "part*" "chapter" "chapter*" "section" "section*" "subsection" "subsection*" "subsubsection" "subsubsection*" "paragraph" "paragraph*" "subparagraph" "subparagraph*" "emph" "textit" "textsl" "textmd" "textrm" "textsf" "texttt" "textbf" "textsc" "textup")))))
  '(bmkp-last-as-first-bookmark-file "~/.emacs.d/var/bmkp/current-bookmark.el")
