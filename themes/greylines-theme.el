@@ -66,7 +66,7 @@ more...")
    `(italic ((,class (:slant italic :foreground "#1A1A1A" :family "Ubuntu Mono"))))
    `(underline ((,class (:underline t))))
    `(cursor ((,class (:background "#0FB300"))))
-   `(variable-pitch ((,class (:foreground "gray12" :family "Sans Serif"))))
+   `(variable-pitch ((,class (:foreground "gray12" :family "Helvetica Neue LT Std"))))
    `(fixed-pitch ((,class (:family "Inconsolata"))))
    `(hl-sentence-face ((,class (:foreground "#gray12"))))
 
