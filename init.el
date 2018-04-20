@@ -57,7 +57,6 @@
 (use-package org-pdfview          :after (org pdf-tools))
 (use-package pass                 :defer t)
 (use-package peep-dired           :defer t)
-(use-package pomodoro             :defer t)
 (use-package smex)
 (use-package rainbow-delimiters   :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 (use-package wgrep)
@@ -602,6 +601,10 @@ rotate entire document."
                '("\\.pdf::\\([[:digit:]]+\\)\\'" . org-pdfview-open))
   (add-to-list 'org-file-apps
                '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open link)))))
+
+(use-package pomodoro
+  :defer t
+  :straight (pomodoro :local-repo "~/.emacs.d/lisp/pomodoro"))
 
 (use-package projectile
   :diminish projectile-mode
