@@ -21,6 +21,7 @@
  '(TeX-fold-macro-spec-list
    '(("[f]" ("sidenote"))
      ("[fn]" ("footnote" "marginpar"))
+     ("[fx]" ("fxwarning" "fxnote" "fxerror" "fxfatal"))
      ("[ac]" ("autocite" "avolcite")) ;; new
      ("[c]" ("cite"))
      ("[l]" ("label"))
@@ -37,6 +38,8 @@
      ("\"{2}\"" ("textcquote"))
      ("\"{1}\"" ("chapname"))
      ("'{1}'" ("uneigtl"))
+     ("/{1}/" ("begriff"))
+     ("/{1}/" ("lang"))
      (1 ("part" "part*" "chapter" "chapter*"
          "section" "section*" "subsection" "subsection*"
          "subsubsection" "subsubsection*"
