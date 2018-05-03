@@ -129,6 +129,12 @@
       (substring yearfield (max 0 (- (length yearfield)
                                      bibtex-autokey-year-length))))))
 
+(use-package bibtex-utils
+  :defer 2
+  :after (bibtex)
+  :config
+  (setq bu-bibtex-fields-ignore-list '("")))
+
 (use-package bookmark+
   :init
   (setq bmkp-bmenu-state-file
@@ -280,6 +286,31 @@
           ("mov" ("totem" "vlc")))))
 
 ;;; E
+(use-package engine-mode
+  :defer 2
+  :config
+  (engine-mode t)
+  (defengine google
+    "http://www.google.de/search?ie=utf-8&oe=utf-8&q=%s")
+  (defengine google-images
+    "http://www.google.de/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s")
+  (defengine google-scholar
+    "https://scholar.google.de/scholar?hl=de&q=%s")
+  (defengine duckduckgo
+    "https://duckduckgo.com/?q=%s")
+  (defengine fu-katalog
+    "http://aleph-www.ub.fu-berlin.de/F/?func=find-e&request=%s")
+  (defengine jstor
+    "http://www.jstor.org/action/doBasicSearch?acc=on&wc=on&fc=off&group=none&Query=%s")
+  (defengine sowiport
+    "http://sowiport.gesis.org/Search/Results?type=AllFields&lookfor=%s")
+  (defengine pons-de-en
+    "http://de.pons.com/übersetzung?l=deen&in=&lf=de&q=%s")
+  (defengine youtube
+    "http://www.youtube.com/results?aq=f&oq=&search_query=%s")
+  (defengine wikipedia
+    "http://www.wikipedia.org/search-redirect.php?language=de&go=Go&search=%s"))
+
 (use-package epa-file
   :straight nil
   :config
@@ -410,6 +441,235 @@
     (setq args (list "--sug-mode=ultra" "--lang=de_DE-neu"))
     (setq ispell-parser 'use-mode-name)))
 
+(use-package ivy-bibtex
+  :bind (("C-." . ivy-bibtex)
+         ("C-<f5>" . ivy-resume))
+  :config
+  (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
+
+  (ivy-bibtex-ivify-action bibtex-completion-edit-logs ivy-bibtex-edit-logs)
+  (ivy-add-actions
+   'ivy-bibtex
+   '(("E" ivy-bibtex-edit-logs "Edit log")))
+
+
+  (setq bibtex-completion-bibliography (expand-file-name job/bibliography-file))
+  (setq bibtex-completion-library-path (expand-file-name texte-dir))
+  (setq bibtex-completion-pdf-field "Files")
+  (setq bibtex-completion-notes-path (expand-file-name zettel-dir))
+  (setq bibtex-completion-notes-extension ".txt")
+  (setq bibtex-completion-additional-search-fields '("subtitle"
+                                                     "date"
+                                                     "keywords"))
+
+  (advice-add 'bibtex-completion-candidates
+              :filter-return 'reverse)
+
+  (setq bibtex-completion-cite-default-command "autocite")
+
+  (setq bibtex-completion-pdf-open-function
+        (lambda (fpath)
+          (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))
+
+  (setq bibtex-completion-notes-template-multiple-files
+        "#+TITLE: ${author} ${date}: ${title}
+#+DATE: [${timestamp}]
+
+* Schlagwörter
+tags: §${=key=}, §txt, ${keywords},
+
+* Inhalt
+
+* Literatur
+
+* Links & Files
+
+* Data
+** misc
+#+begin_src csv :tangle zettel-txt-references-path.csv :padline no
+${source},${=key=}
+#+end_src")
+
+  (setq bibtex-completion-format-citation-functions
+        '((org-mode      . bibtex-completion-format-citation-org-ref-autocite)
+          (latex-mode    . bibtex-completion-format-citation-cite)
+          (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+          (default       . bibtex-completion-format-citation-default)))
+
+  (defun bibtex-completion-format-citation-org-ref-autocite (keys)
+    "Formatter for org-ref references."
+    (let* ((prenote (if bibtex-completion-cite-prompt-for-optional-arguments
+                        (read-from-minibuffer "Prenote: ") ""))
+           (postnote (if bibtex-completion-cite-prompt-for-optional-arguments
+                         (read-from-minibuffer "Postnote: ") ""))
+           (prenote (if (string= "" prenote) "" (concat prenote "::")))
+           (notes (if (string= "" postnote) "" (concat "[" prenote postnote "]"))))
+      (format "[[autocite:%s]%s]" (s-join ", " keys) notes)))
+
+  (defun bibtex-completion-apa-get-value (field entry &optional default)
+    "Return FIELD or ENTRY formatted following the APA
+   guidelines.  Return DEFAULT if FIELD is not present in ENTRY."
+    (let ((value (bibtex-completion-get-value field entry))
+          (entry-type (bibtex-completion-get-value "=type=" entry)))
+      (if value
+          (pcase field
+            ;; https://owl.english.purdue.edu/owl/resource/560/06/
+            ("author" (bibtex-completion-apa-format-authors value))
+            ("editor"
+             (if (string= entry-type "proceedings")
+                 (bibtex-completion-apa-format-editors value)
+               (bibtex-completion-apa-format-editors value)))
+            ;; When referring to books, chapters, articles, or Web pages,
+            ;; capitalize only the first letter of the first word of a
+            ;; title and subtitle, the first word after a colon or a dash
+            ;; in the title, and proper nouns. Do not capitalize the first
+            ;; letter of the second word in a hyphenated compound word.
+            ("title" (replace-regexp-in-string ; remove braces
+                      "[{}]"
+                      "" value))
+            ("booktitle" value)
+            ;; Maintain the punctuation and capitalization that is used by
+            ;; the journal in its title.
+            ("pages" (s-join "--" (s-split "[^0-9]+" value t)))
+            ("doi" (s-concat " http://dx.doi.org/" value))
+            (_ value))
+        "")))
+
+  (defun bibtex-completion-format-entry (entry width)
+    "Formats a BibTeX entry for display in results list."
+    (let* ((fields (list (if (assoc-string "author" entry 'case-fold) "author" "editor")
+                         "title" "date" "=has-pdf=" "=has-note=" "=type="))
+           (fields (-map (lambda (it)
+                           (bibtex-completion-clean-string
+                            (bibtex-completion-get-value it entry " ")))
+                         fields))
+           (fields (-update-at 0 'bibtex-completion-shorten-authors fields)))
+      (s-format "$0 $1 $2 $3$4 $5" 'elt
+                (-zip-with (lambda (f w) (truncate-string-to-width f w 0 ?\s))
+                           fields (list 36 (- width 53) 4 1 1 7)))))
+
+  (defun bibtex-completion-insert-reference (keys)
+    "Insert a reference for each selected entry."
+    (let* ((refs (--map
+                  (s-word-wrap 10000
+                               (concat "\n- " (bibtex-completion-apa-format-reference it)))
+                  keys)))
+      (insert "\n" (s-join "\n" refs) "\n")))
+
+  (defun bibtex-completion-apa-format-reference (key)
+    "Returns a plain text reference in APA format for the publication specified by KEY."
+    (let*
+        ((entry (bibtex-completion-get-entry key))
+         (ref (pcase (downcase (bibtex-completion-get-value "=type=" entry))
+                ("article"
+                 (s-format
+                  "${author} ${date}: ${title}. ${subtitle}. In: ${journaltitle}, ${volume}(${number}), ${pages}. ([[file:${=key=}.txt][Zettel]])"
+                  'bibtex-completion-apa-get-value entry))
+                ("inproceedings"
+                 (s-format
+                  "${author} ${date}: ${title}. ${subtitle}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}. ([[file:${=key=}.txt][Zettel]])"
+                  'bibtex-completion-apa-get-value entry))
+                ("book"
+                 (s-format
+                  "${author} ${date}: ${title}. ${subtitle}. ${location}: ${publisher}. ([[file:${=key=}.txt][Zettel]])"
+                  'bibtex-completion-apa-get-value entry))
+                ("collection"
+                 (s-format
+                  "${editor} (Hg.) ${date}: ${title}. ${subtitle}. ${location}: ${publisher}. ([[file:${=key=}.txt][Zettel]])"
+                  'bibtex-completion-apa-get-value entry))
+                ("mvcollection"
+                 (s-format
+                  "${editor} (Hg.) ${date}: ${title}. ${subtitle}. ${location}: ${publisher}. ([[file:${=key=}.txt][Zettel]])"
+                  'bibtex-completion-apa-get-value entry))
+                ("phdthesis"
+                 (s-format
+                  "${author} ${year}: ${title}. ${subtitle}. (Doctoral dissertation). ${school}, ${location}. ([[file:${=key=}.txt][Zettel]])"
+                  'bibtex-completion-apa-get-value entry))
+                ("inbook"
+                 (s-format
+                  "${author} ${date}: ${title}. ${subtitle}. In: [${crossref}] ${location}: ${publisher}, ${pages}. ([[file:${=key=}.txt][Zettel]])"
+                  'bibtex-completion-apa-get-value entry))
+                ("incollection"
+                 (s-format
+                  "${author} ${date}: ${title}. ${subtitle}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}. ([[file:${=key=}.txt][Zettel]])"
+                  'bibtex-completion-apa-get-value entry))
+                ("proceedings"
+                 (s-format
+                  "${editor} (Hg.) ${date}: ${title}. ${location}: ${publisher}. ([[file:${=key=}.txt][Zettel]])"
+                  'bibtex-completion-apa-get-value entry))
+                ("unpublished"
+                 (s-format
+                  "${author} ${date}: ${title}. ${subtitle}. Unpublished manuscript. ([[file:${=key=}.txt][Zettel]])"
+                  'bibtex-completion-apa-get-value entry))
+                ("online"
+                 (s-format
+                  "${author} ${date}: ${title}. ${subtitle}. , ${url}. ([[file:${=key=}.txt][Zettel]])"
+                  'bibtex-completion-apa-get-value entry))
+                (_
+                 (s-format
+                  "${author} ${date}: ${title}. ${subtitle}. ([[file:${=key=}.txt][Zettel]])"
+                  'bibtex-completion-apa-get-value entry)))))
+      (replace-regexp-in-string "\\([ .?!]\\)\\." "\\1" ref))) ; Avoid sequences of punctuation marks.
+
+
+  ;; Eigene Aktion für Logs
+  (defcustom bibtex-completion-logs-extension "--log.txt"
+    "The extension of the files containing notes.  This is only
+used when `bibtex-completion-notes-path' is a directory (not a file)."
+    :group 'bibtex-completion
+    :type 'string)
+
+  (defcustom bibtex-completion-logs-template-multiple-files
+    "#+TITLE: Log: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n\n* ${author} ${date}: ${title}\n:PROPERTIES:\n:CATEGORY: wiss\n:END:\n[[autocite:${=key=}]]\n[[file:~/Dropbox/db/zk/zettel/${=key=}.txt][zettel]]\n"
+    "Template used to create a new log when each log is stored in
+a separate file.  '${field-name}' can be used to insert the value
+of a BibTeX field into the template. Fork."
+    :group 'bibtex-completion
+    :type 'string)
+
+  (defun bibtex-completion-edit-logs (keys)
+    "Open the log  associated with the selected entries using `find-file'. Fork from edit-notes"
+    (dolist (key keys)
+      (if (and bibtex-completion-notes-path
+               (f-directory? bibtex-completion-notes-path))
+                                        ; One log file per publication:
+          (let* ((path (f-join bibtex-completion-notes-path
+                               (s-concat key bibtex-completion-logs-extension))))
+            (find-file path)
+            (unless (f-exists? path)
+              (insert (s-format bibtex-completion-logs-template-multiple-files
+                                'bibtex-completion-apa-get-value
+                                (bibtex-completion-get-entry key)))))
+                                        ; One file for all logs:
+        (unless (and buffer-file-name
+                     (f-same? bibtex-completion-notes-path buffer-file-name))
+          (find-file-other-window bibtex-completion-notes-path))
+        (widen)
+        (show-all)
+        (goto-char (point-min))
+        (if (re-search-forward (format bibtex-completion-notes-key-pattern (regexp-quote key)) nil t)
+                                        ; Existing entry found:
+            (when (eq major-mode 'org-mode)
+              (org-narrow-to-subtree)
+              (re-search-backward "^\*+ " nil t)
+              (org-cycle-hide-drawers nil)
+              (bibtex-completion-notes-mode 1))
+                                        ; Create a new entry:
+          (let ((entry (bibtex-completion-get-entry key)))
+            (goto-char (point-max))
+            (insert (s-format bibtex-completion-notes-template-one-file
+                              'bibtex-completion-apa-get-value
+                              entry)))
+          (when (eq major-mode 'org-mode)
+            (org-narrow-to-subtree)
+            (re-search-backward "^\*+ " nil t)
+            (org-cycle-hide-drawers nil)
+            (goto-char (point-max))
+            (bibtex-completion-notes-mode 1))))))
+  )
+
+
+
 ;;; K
 (use-package key-chord
   :defer 2
@@ -536,12 +796,44 @@
   (progn
     (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))))
 
+(use-package org-checklist
+  :defer 2
+  :straight org
+  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
+
 (use-package org-clock-convenience
   :bind (:map org-agenda-mode-map
               ("<C-S-up>" . org-clock-convenience-timestamp-up)
               ("<C-S-down>" . org-clock-convenience-timestamp-down)
               ("ö" . org-clock-convenience-fill-gap)
               ("ä" . org-clock-convenience-fill-gap-both)))
+
+(use-package org-clock-csv
+  :defer 2
+  :config
+  (defun my/org-clock-csv-calc ()
+    "Ruft script auf und verarbeitet die "
+    (interactive)
+    (shell-command "source ~/script/clock-entries.sh"))
+
+  (defun my/org-clock-csv-write-calc ()
+    (interactive)
+    (org-clock-csv)
+    (my/org-clock-csv-calc)))
+
+(use-package org-collector
+  :defer 3
+  :straight org
+  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
+
+(use-package org-contacts
+  :defer 2
+  :straight org
+  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
+  :config
+  (setq org-contacts-files '("~/Dropbox/db/contacts.org"))
+  (setq org-contacts-icon-use-gravatar nil)
+  (setq org-contacts-birthday-format "%l (%y)"))
 
 (use-package org-gcal
   :defer 2
@@ -551,6 +843,36 @@
   (setq org-gcal-client-id "553301842275-clecdgmr7i8741e3ck5iltlgfk3qf79r.apps.googleusercontent.com")
   (setq org-gcal-client-secret "4zyEbm_F_BMuJsA7rZZmgFBm")
   (setq org-gcal-file-alist '(("jobangen@googlemail.com" . "~/Dropbox/db/org/calender.org"))))
+
+(use-package org-indent
+  :straight org
+  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
+  :commands org-indent-mode
+  :diminish org-indent-mode
+  :init
+  (progn
+    (setq org-indent-mode-turns-on-hiding-stars t)))
+
+(use-package org-ref
+  :defer 2
+  :init
+  (bind-key "C-c )" 'org-autocite-complete-link org-mode-map)
+  (setq org-ref-completion-library 'org-ref-ivy-cite)
+  :config
+  (progn
+    (require 'org-ref)
+    (setq org-ref-notes-directory (expand-file-name zettel-dir))
+    (setq org-ref-default-bibliography '("~/Dropbox/db/biblio.bib"))
+    (setq org-ref-pdf-directory (expand-file-name texte-dir))
+    (setq orhc-bibtex-cache-file (no-littering-expand-var-file-name "org/ref/bibtex-cache.el"))
+    (setq org-ref-default-citation-link "autocite")))
+
+(use-package ox-extra
+  :defer 3
+  :straight org
+  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
+  :config
+  (ox-extras-activate '(latex-header-blocks ignore-headlines)))
 
 (use-package ox-reveal
   :defer 2
@@ -659,6 +981,32 @@ rotate entire document."
     (setq projectile-switch-project-action 'projectile-dired)))
 
 ;;; R
+(use-package reftex
+  :hook (TeX-mode . reftex-mode)
+  :diminish reftex-mode
+  :config
+  (progn
+    (setq reftex-plug-into-AUCTeX t)
+    (setq reftex-sort-bibtex-matches "author")
+    (setq reftex-external-file-finders
+          '(("tex" . "kpsewhich -format=.tex %f")
+            ("bib" . "kpsewhich -format=.bib %f")))
+    (setq reftex-default-bibliography '("~/Dropbox/db/biblio.bib"))
+    (eval-after-load 'reftex-vars
+      '(progn
+         (setq reftex-cite-format
+               '((?\C-m . "\\autocite[][]{%l}")
+                 (?c . "\\cite[][]{%l}")
+                 (?t . "\\textcite[][]{%l}")
+                 (?y . "\\autocite*[][]{%l}")
+                 (?n . "\\nocite{%l}")
+                 (?f . "\\footcite[][]{%l}")
+                 (?T . "\\textcquote[][]{%l}[]{}")
+                 (?B . "\\blockcquote[][]{%l}[]{}")))))
+
+    (setq reftex-cite-prompt-optional-args t)
+    (setq reftex-cite-cleanup-optional-arg t)))
+
 (use-package remem
   :commands remem-toggle
   :config
