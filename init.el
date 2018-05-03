@@ -1,6 +1,47 @@
-;(package-initialize)
 (setq package-enable-at-startup nil)
 
+;;; Config
+(setq split-width-threshold 110)
+(setq inhibit-splash-screen t) ;;Remove splash screen
+(fset 'yes-or-no-p 'y-or-n-p)
+(setq large-file-warning-threshold nil)
+(setq sentence-end-double-space nil)
+(setq visible-bell t) ;; blinken bei error
+
+(transient-mark-mode nil) ;; No region when it is not highlighted
+(global-font-lock-mode 1) ;;syntax highlighting everywhere
+(global-visual-line-mode 1) ;;Add proper word wrapping
+(global-auto-revert-mode t) ;;aktualisiert buffer automatisch
+(setq auto-revert-interval 3) ;; Prüfinterval in Sek.
+(setq auto-revert-verbose nil)
+(set-language-environment "UTF-8")
+(set-terminal-coding-system 'utf-8) ;;UTF 8 by default
+(set-keyboard-coding-system 'utf-8) ;;(prefer-coding-system 'utf-8)
+(setq-default indent-tabs-mode nil ;; Insert tabs as spaces (not tabs)
+              indicate-buffer-boundaries 'left ;; Graphical gimmick
+              indicate-empty-lines t           ;; Graphical gimmick
+              )
+(setq next-line-add-newlines nil) ;; C-n erzeugt Absatz am Ender der Zeile
+(setq recenter-positions '(top middle bottom))
+
+;; Save whatever’s in the current (system) clipboard before
+;; replacing it with the Emacs’ text.
+;; https://github.com/dakrone/eos/blob/master/eos.org
+(setq save-interprogram-paste-before-kill t)
+
+(setq display-time-format "[%H:%M]"
+      display-time-default-load-average nil)
+(display-time-mode t)
+
+(setq time-stamp-active t
+      time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S"
+      time-stamp-start "#\\+DATE:[ \t]+\\\\?[\[\"<]+"
+      time-stamp-end "\\\\?[\]\">]")
+(add-hook 'write-file-hooks 'time-stamp)
+
+(setq reb-re-syntax 'rx)
+
+;;; Bootstrap
 (let ((bootstrap-file (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))
       (bootstrap-version 3))
   (unless (file-exists-p bootstrap-file)
@@ -40,6 +81,68 @@
          ("C-c i" . org-clock-in)
          ("C-c l" . org-store-link))
   :mode ("\\.txt\\'" . org-mode))
+
+;;; Setup
+;; https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
+(defun system-type-is-gnu ()
+  "Return true if system is GNU/Linux-based"
+  (interactive)
+  (string-equal system-type "gnu/linux"))
+
+(defun system-type-is-windows ()
+  "Return true if system is Windows-based"
+  (interactive)
+  (string-equal system-type "windows-nt"))
+
+;; Dir
+(defvar backup-dir
+   (expand-file-name (convert-standard-filename "backups/") user-emacs-directory))
+
+(defvar autosave-dir
+   (expand-file-name (convert-standard-filename "autosave/")  user-emacs-directory))
+
+(if (system-type-is-gnu)
+   (let ((default-directory  "~/.emacs.d/lisp/"))
+     (normal-top-level-add-subdirs-to-load-path)))
+
+(defvar custom-temp
+   (expand-file-name "~/.custom-temp/"))
+
+(defun job/custom-temp-file-name (file)
+    (expand-file-name (convert-standard-filename file) custom-temp))
+
+(defvar texte-dir
+   (expand-file-name "~/texte/"))
+
+(defvar dropbox-dir
+  (if (system-type-is-gnu)
+    (expand-file-name "~/Dropbox/"))
+  (if (system-type-is-windows)
+    (expand-file-name "C:/Users/job/Dropbox/")))
+
+(defvar db-dir
+  (expand-file-name (convert-standard-filename "db/") dropbox-dir))
+
+(setq org-directory
+      (expand-file-name (convert-standard-filename "db/org/") dropbox-dir))
+
+(defvar zettel-dir
+  (expand-file-name (convert-standard-filename "db/zk/zettel/") dropbox-dir))
+
+(defvar job/bibliography-file
+  (expand-file-name (convert-standard-filename "db/biblio.bib") dropbox-dir))
+
+;; Backup
+(setq backup-directory-alist
+      `(("." . ,backup-dir)))
+(setq delete-old-versions -1)
+(setq version-control t)
+(setq vc-make-backup-files t)
+(setq auto-save-list-file-prefix autosave-dir)
+(setq auto-save-file-name-transforms
+      `((".*" ,autosave-dir t)))
+
+
 
 
 ;;; Libraries
@@ -1154,6 +1257,10 @@ rotate entire document."
     (pdf-view--rotate :counterclockwise (not arg)))
 
   ;; http://pragmaticemacs.com/emacs/even-more-pdf-tools-tweaks/
+  (defun job/save-buffer-no-args ()
+  "Save buffer ignoring arguments"
+  (save-buffer))
+
   (advice-add 'pdf-annot-edit-contents-commit :after 'job/save-buffer-no-args)
 
   (add-to-list 'org-file-apps
@@ -1234,7 +1341,11 @@ rotate entire document."
 
 (use-package sensitive-mode
   :straight (sensitive-mode :local-repo "~/.emacs.d/lisp/sensitive-mode")
-  :mode ("\\.gpg\\'" . sensitive-mode))
+  :mode ("\\.gpg\\'" . sensitive-mode)
+  :config
+  (setq epg-gpg-program "gpg2")
+  ;; fragt in emacs nach pw; braucht "allow-loopback-pinentry" in gpg-agent.conf
+  (setq epa-pinentry-mode 'loopback))
 
 (use-package shell-interaction
   :defer 2
