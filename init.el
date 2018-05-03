@@ -25,6 +25,13 @@
 
 (use-package dot-exwm :straight exwm)
 
+(use-package no-littering
+  :init
+  (eval-after-load 'shell-interaction
+    `(make-directory ,(concat user-emacs-directory "var/shell-interaction") t))
+  :config
+  (setq tramp-persistency-file-name (no-littering-expand-var-file-name "tramp-history.el")))
+
 ;;;
 (use-package dot-org
   :straight org
@@ -61,7 +68,6 @@
 (use-package wgrep                :defer 3)
 
 (org-babel-load-file "~/.emacs.d/myinit.org")
-
 
 ;;; A
 (use-package abbrev
@@ -322,6 +328,56 @@
   :bind (("C-c m" . er/expand-region)))
 
 ;;; F
+(use-package flyspell
+  :diminish flyspell-mode
+  :bind (("C-," . my/flyspell-check-previous-highlighted-word))
+  :hook (text-mode . flyspell-mode)
+  :init
+  :config
+  (eval-after-load "flyspell"
+    '(define-key flyspell-mode-map (kbd "C-.") nil))
+  (eval-after-load "flyspell"
+    '(define-key flyspell-mode-map (kbd "C-,") nil))
+
+  (setq flyspell-tex-command-regexp "\\(\\(begin\\|end\\)[ \t]*{\\|\\(cite[.*]*\\|autocite[.*]*\\|label\\|ref\\|eqref\\|usepackage\\|documentclass\\|addbibresource\\|pagestyle\\|KOMAoptions\\|setkomafont\\|newclassic\\|printbibliography\\)[ \t]*\\(\\[[^]]*\\]\\)?{[^{}]*\\)")
+
+  (defun my/flyspell-check-previous-highlighted-word (&optional arg)
+    "Correct the closer misspelled word.
+    This function scans a mis-spelled word before the cursor. If it finds one
+    it proposes replacement for that word. With prefix arg, count that many
+    misspelled words backwards."
+    (interactive)
+    (let ((pos1 (point))
+          (pos (point))
+          (arg (if (or (not (numberp arg)) (< arg 1)) 1 arg))
+          ov ovs)
+      (if (catch 'exit
+            (while (and (setq pos (previous-overlay-change pos))
+                        (not (= pos pos1)))
+              (setq pos1 pos)
+              (if (> pos (point-min))
+                  (progn
+                    (setq ovs (overlays-at (1- pos)))
+                    (while (consp ovs)
+                      (setq ov (car ovs))
+                      (setq ovs (cdr ovs))
+                      (if (and (flyspell-overlay-p ov)
+                               (= 0 (setq arg (1- arg))))
+                          (throw 'exit t)))))))
+          (save-excursion
+            (goto-char pos)
+            (flyspell-correct-word-generic)
+            (setq flyspell-word-cache-word nil) ;; Force flyspell-word re-check
+            (flyspell-word))
+        (error "No word to correct before point"))))
+
+  (defun my/flyspell-check-next-highlighted-word ()
+    "Custom function to spell check next highlighted word"
+    (interactive)
+    (flyspell-goto-next-error)
+    (flyspell-correct-word-generic)
+    (setq flyspell-word-cache-word nil)))
+
 (use-package flyspell-correct
   :config
   (setq flyspell-correct-interface 'flyspell-correct-ivy))
@@ -373,7 +429,6 @@
     '(progn
        (define-key message-mode-map (kbd "C-c t") #'gnorb-gnus-outgoing-do-todo))))
 
-
 (use-package gnus
   :commands gnus
   :straight nil
@@ -397,6 +452,13 @@
         (nreverse buffers)))
     (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)))
 
+(use-package google-translate
+  :commands google-translate-smooth-translate
+  :config
+  (require 'google-translate-smooth-ui)
+  (setq google-translate-translation-directions-alist
+        '(("de" . "en") ("en" . "de") ("de" . "fr") ("fr" . "de")))
+  (setq google-translate-output-destination nil))
 
 (use-package gscholar-bibtex
   :commands gscholar-bibtex
@@ -440,6 +502,52 @@
     (setq-default ispell-program-name "aspell")
     (setq args (list "--sug-mode=ultra" "--lang=de_DE-neu"))
     (setq ispell-parser 'use-mode-name)))
+
+(use-package ivy
+  :diminish ivy-mode
+  :bind (("C-c C-r" . ivy-resume)
+         :map ivy-minibuffer-map
+         ("C-h" . backward-delete-char)
+         ("C-w" . backward-kill-word)
+         ("<menu>" . zettelkasten-name-of-the-file)
+         ("M-y" . ivy-next-line)
+         ("M-ü" . ivy-next-line))
+  :config
+  (ivy-mode 1)
+  (setq ivy-height 13)
+  ;;     (setq ivy-fixed-height-minibuffer t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq ivy-initial-inputs-alist nil)
+  (setq ivy-wrap t)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-display-style 'fancy)
+  (setq ivy-use-selectable-prompt t)
+  ;;     (setq ivy-re-builders-alist
+  ;;               '((counsel-ag . ivy--regex-ignore-order)
+  ;;                 (t . ivy--regex-plus)))
+
+  (setq ivy-switch-buffer-faces-alist
+        '((emacs-lisp-mode . swiper-match-face-1)
+          (dired-mode . ivy-subdir)
+          (org-mode . org-level-4)))
+
+  (setq ivy-views
+        '((",todo"
+           (horz
+            (buffer "*pomidor*")
+            (buffer "*Org Agenda*")))
+          (",mail"
+           (horz
+            (buffer "*Group*")
+            (buffer "*OfflineIMAP*")))
+          (",zettelkasten"
+           (horz
+            (file "~/Dropbox/db/zk/zettel")
+            (file "~/Dropbox/db/zk/zettel")))
+          (",refile"
+           (horz
+            (file "~/archiv/date-description/")
+            (file "~/Dropbox/scans/"))))))
 
 (use-package ivy-bibtex
   :bind (("C-." . ivy-bibtex)
@@ -720,6 +828,11 @@ of a BibTeX field into the template. Fork."
           magit-invoke-popup-action)))
 
 ;;; L
+(use-package langtool
+  :defer t
+  :init
+  (setq langtool-language-tool-jar "~/programme/LanguageTool-3.1/languagetool-commandline.jar"))
+
 (use-package latex-extra
   :diminish latex-extra-mode
   :hook (TeX-mode . latex-extra-mode))
@@ -873,6 +986,90 @@ of a BibTeX field into the template. Fork."
   :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
   :config
   (ox-extras-activate '(latex-header-blocks ignore-headlines)))
+
+(use-package ox-latex
+  :defer 2
+  :straight org
+  :config
+  (setq org-latex-listings t)
+  (add-to-list 'org-latex-packages-alist '("" "booktabs" t))
+  (add-to-list 'org-latex-packages-alist '("" "ellipsis" t))
+  (add-to-list 'org-latex-packages-alist '("" "csquotes" t))
+  (add-to-list 'org-latex-packages-alist '("" "lmodern" t))
+  (add-to-list 'org-latex-packages-alist '("onehalfspacing" "setspace" t))
+  (add-to-list 'org-latex-packages-alist '("" "microtype" t))
+  (add-to-list 'org-latex-packages-alist '("english, ngerman" "babel" t))
+  (add-to-list 'org-latex-packages-alist '("T1" "fontenc" t))
+  (add-to-list 'org-latex-packages-alist '("utf8" "inputenc" t))
+
+  (add-to-list 'org-latex-classes
+               '("scrartcl"
+                 "\\RequirePackage[l2tabu, orthodox]{nag}
+          \\documentclass[DIV12, a4paper, 12pt]{scrartcl}
+         [NO-DEFAULT-PACKAGES]
+         [PACKAGES]
+         [EXTRA]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+  (add-to-list 'org-latex-classes
+               '("scrbook"
+                 "\\RequirePackage[l2tabu, orthodox]{nag}
+          \\documentclass[DIV=12, a4paper, 12pt]{scrbook}
+         [NO-DEFAULT-PACKAGES]
+         [NO-PACKAGES]
+         [EXTRA]"
+                 ("\\part{%s}" . "\\part*{%s}")
+                 ("\\chapter{%s}" . "\\chapter*{%s}")
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+  (add-to-list 'org-latex-classes
+               '("abrechnung"
+                 "\\documentclass[DIV=12, a4paper, 12pt]{scrartcl}
+          \\usepackage{job-abrechnung-ba}
+         [NO-DEFAULT-PACKAGES]
+         [PACKAGES]
+         [EXTRA]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+  (add-to-list 'org-latex-classes
+               '("zettel"
+                 "\\documentclass[DIV=12, a4paper, 12pt, headings=normal]{scrartcl}
+          \\usepackage{enumitem}
+          \\setlist[itemize]{itemsep=-0.5ex}
+         \\makeatletter
+         \\def\\maketitle{{\\centering%
+         \\par{\\large\\bfseries\\@title\\par\\bigskip}%
+         \\noindent}}
+         \\makeatother
+         [NO-DEFAULT-PACKAGES]
+         [PACKAGES]
+         [EXTRA]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection*{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection*{%s}" . "\\subsubsection*{%s}")))
+
+  (setq org-latex-default-class "zettel")
+  (setq org-export-with-author t)
+  (setq org-export-with-date t)
+  (setq org-export-with-toc nil)
+  (setq org-latex-hyperref-template nil)
+  (setq org-latex-tables-booktabs t)
+  (setq org-export-default-language "en")
+  (setq org-export-with-smart-quotes t)
+  (add-to-list 'org-export-smart-quotes-alist
+               '("en"
+                 (opening-double-quote :utf-8 "“" :html "&ldquo;" :latex "\\enquote{" :texinfo "``")
+                 (closing-double-quote :utf-8 "”" :html "&rdquo;" :latex "}" :texinfo "''")
+                 (opening-single-quote :utf-8 "‘" :html "&lsquo;" :latex "\\enquote*{" :texinfo "`")
+                 (closing-single-quote :utf-8 "’" :html "&rsquo;" :latex "}" :texinfo "'")
+                 (apostrophe :utf-8 "’" :html "&rsquo;"))) ;; Export von "" und '' zu csquotes
+  )
+
 
 (use-package ox-reveal
   :defer 2
@@ -1072,6 +1269,8 @@ rotate entire document."
 (use-package shell-pop
   :bind (("C-c j" . shell-pop))
   :config
+  (setq shell-pop-universal-key "C-c j")
+  (setq shell-pop-default-directory "~/")
   (setq shell-pop-shell-type
         (quote ("ansi-term" "*ansi-term*"
                 (lambda nil (ansi-term shell-pop-term-shell)))))

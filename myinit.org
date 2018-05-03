@@ -11,16 +11,6 @@
 #+end_src
 
 * Grundeinstellungen
-** no-littering
-#+begin_src emacs-lisp
-(use-package no-littering
-  :init
-  (eval-after-load 'shell-interaction
-    `(make-directory ,(concat user-emacs-directory "var/shell-interaction") t))
-  :config
-  (setq tramp-persistency-file-name (no-littering-expand-var-file-name "tramp-history.el")))
-#+end_src
-
 ** defalias
 #+begin_src emacs-lisp
 (defalias 'sc 'shell-command-to-string)
@@ -248,57 +238,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 (define-key isearch-mode-map (kbd "C-h") 'isearch-delete-char)
 (define-key isearch-mode-map (kbd "C-c C-o") 'pdf-isearch-occur)
-#+end_src
-
-** ivy
-#+begin_src emacs-lisp
-(use-package ivy
-  :diminish ivy-mode
-  :bind (("C-c C-r" . ivy-resume)
-         :map ivy-minibuffer-map
-           ("C-h" . backward-delete-char)
-           ("C-w" . backward-kill-word)
-           ("<menu>" . zettelkasten-name-of-the-file)
-           ("M-y" . ivy-next-line)
-           ("M-ü" . ivy-next-line)
-        )
-  :config
-     (ivy-mode 1)
-     (setq ivy-height 13)
-;;     (setq ivy-fixed-height-minibuffer t)
-     (setq ivy-count-format "(%d/%d) ")
-     (setq ivy-initial-inputs-alist nil)
-     (setq ivy-wrap t)
-     (setq ivy-use-virtual-buffers t)
-     (setq ivy-display-style 'fancy)
-     (setq ivy-use-selectable-prompt t)
-;;     (setq ivy-re-builders-alist
-;;               '((counsel-ag . ivy--regex-ignore-order)
-;;                 (t . ivy--regex-plus)))
-
-     (setq ivy-switch-buffer-faces-alist
-           '((emacs-lisp-mode . swiper-match-face-1)
-             (dired-mode . ivy-subdir)
-             (org-mode . org-level-4)))
-
-     (setq ivy-views
-           '((",todo"
-               (horz
-                 (buffer "*pomidor*")
-                 (buffer "*Org Agenda*")))
-             (",mail"
-               (horz
-                 (buffer "*Group*")
-                 (buffer "*OfflineIMAP*")))
-             (",zettelkasten"
-               (horz
-                 (file "~/Dropbox/db/zk/zettel")
-                 (file "~/Dropbox/db/zk/zettel")))
-             (",refile"
-               (horz
-                 (file "~/archiv/date-description/")
-                 (file "~/Dropbox/scans/")))))
-)
 #+end_src
 
 ** shell
@@ -1214,96 +1153,6 @@ http://doc.norang.ca/org-mode.org
   :config
   (setq holiday-other-holidays holiday-german-holidays))
 #+end_src
-** export
-*** ox-pandoc
-#+begin_src emacs-lisp
-;;(use-package ox-pandoc
-;;  :defer t)
-#+end_src
-
-*** LaTeX-Export
-#+begin_src emacs-lisp
-(require 'ox-latex)
-(setq org-latex-listings t)
-(add-to-list 'org-latex-packages-alist '("" "booktabs" t))
-(add-to-list 'org-latex-packages-alist '("" "ellipsis" t))
-(add-to-list 'org-latex-packages-alist '("" "csquotes" t))
-(add-to-list 'org-latex-packages-alist '("" "lmodern" t))
-(add-to-list 'org-latex-packages-alist '("onehalfspacing" "setspace" t))
-(add-to-list 'org-latex-packages-alist '("" "microtype" t))
-(add-to-list 'org-latex-packages-alist '("english, ngerman" "babel" t))
-(add-to-list 'org-latex-packages-alist '("T1" "fontenc" t))
-(add-to-list 'org-latex-packages-alist '("utf8" "inputenc" t))
-
-
-(add-to-list 'org-latex-classes
-      '("scrartcl"
-         "\\RequirePackage[l2tabu, orthodox]{nag}
-          \\documentclass[DIV12, a4paper, 12pt]{scrartcl}
-         [NO-DEFAULT-PACKAGES]
-         [PACKAGES]
-         [EXTRA]"
-         ("\\section{%s}" . "\\section*{%s}")
-         ("\\subsection{%s}" . "\\subsection*{%s}")
-         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-(add-to-list 'org-latex-classes
-      '("scrbook"
-         "\\RequirePackage[l2tabu, orthodox]{nag}
-          \\documentclass[DIV=12, a4paper, 12pt]{scrbook}
-         [NO-DEFAULT-PACKAGES]
-         [NO-PACKAGES]
-         [EXTRA]"
-         ("\\part{%s}" . "\\part*{%s}")
-         ("\\chapter{%s}" . "\\chapter*{%s}")
-         ("\\section{%s}" . "\\section*{%s}")
-         ("\\subsection{%s}" . "\\subsection*{%s}")
-         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-         ("\\paragraph{%s}" . "\\paragraph*{%s}")
-         ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-(add-to-list 'org-latex-classes
-      '("abrechnung"
-         "\\documentclass[DIV=12, a4paper, 12pt]{scrartcl}
-          \\usepackage{job-abrechnung-ba}
-         [NO-DEFAULT-PACKAGES]
-         [PACKAGES]
-         [EXTRA]"
-         ("\\section{%s}" . "\\section*{%s}")
-         ("\\subsection{%s}" . "\\subsection*{%s}")
-         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-(add-to-list 'org-latex-classes
-      '("zettel"
-         "\\documentclass[DIV=12, a4paper, 12pt, headings=normal]{scrartcl}
-          \\usepackage{enumitem}
-          \\setlist[itemize]{itemsep=-0.5ex}
-         \\makeatletter
-         \\def\\maketitle{{\\centering%
-         \\par{\\large\\bfseries\\@title\\par\\bigskip}%
-         \\noindent}}
-         \\makeatother
-         [NO-DEFAULT-PACKAGES]
-         [PACKAGES]
-         [EXTRA]"
-         ("\\section{%s}" . "\\section*{%s}")
-         ("\\subsection*{%s}" . "\\subsection*{%s}")
-         ("\\subsubsection*{%s}" . "\\subsubsection*{%s}")))
-
-(setq org-latex-default-class "zettel")
-(setq org-export-with-author t)
-(setq org-export-with-date t)
-(setq org-export-with-toc nil)
-(setq org-latex-hyperref-template nil)
-(setq org-latex-tables-booktabs t)
-(setq org-export-default-language "en")
-(setq org-export-with-smart-quotes t)
-(add-to-list 'org-export-smart-quotes-alist
-             '("en"
-               (opening-double-quote :utf-8 "“" :html "&ldquo;" :latex "\\enquote{" :texinfo "``")
-               (closing-double-quote :utf-8 "”" :html "&rdquo;" :latex "}" :texinfo "''")
-               (opening-single-quote :utf-8 "‘" :html "&lsquo;" :latex "\\enquote*{" :texinfo "`")
-               (closing-single-quote :utf-8 "’" :html "&rsquo;" :latex "}" :texinfo "'")
-               (apostrophe :utf-8 "’" :html "&rsquo;")));; Export von "" und '' zu csquotes
-#+end_src
-
 ** org-present
 #+begin_src emacs-lisp
 (eval-after-load "org-present"
@@ -1402,69 +1251,6 @@ http://doc.norang.ca/org-mode.org
 #+end_src
 
 * Schreiben und Stil
-** flyspell
-#+begin_src emacs-lisp
-(use-package flyspell
-  :diminish flyspell-mode
-  :bind (("C-," . my/flyspell-check-previous-highlighted-word))
-  :hook (text-mode . flyspell-mode)
-  :init
-  :config
-  (eval-after-load "flyspell"
-    '(define-key flyspell-mode-map (kbd "C-.") nil))
-  (eval-after-load "flyspell"
-    '(define-key flyspell-mode-map (kbd "C-,") nil))
-
-  (setq flyspell-tex-command-regexp "\\(\\(begin\\|end\\)[ \t]*{\\|\\(cite[.*]*\\|autocite[.*]*\\|label\\|ref\\|eqref\\|usepackage\\|documentclass\\|addbibresource\\|pagestyle\\|KOMAoptions\\|setkomafont\\|newclassic\\|printbibliography\\)[ \t]*\\(\\[[^]]*\\]\\)?{[^{}]*\\)")
-
-  (defun my/flyspell-check-previous-highlighted-word (&optional arg)
-    "Correct the closer misspelled word.
-    This function scans a mis-spelled word before the cursor. If it finds one
-    it proposes replacement for that word. With prefix arg, count that many
-    misspelled words backwards."
-    (interactive)
-    (let ((pos1 (point))
-          (pos (point))
-          (arg (if (or (not (numberp arg)) (< arg 1)) 1 arg))
-          ov ovs)
-      (if (catch 'exit
-            (while (and (setq pos (previous-overlay-change pos))
-                        (not (= pos pos1)))
-              (setq pos1 pos)
-              (if (> pos (point-min))
-                  (progn
-                    (setq ovs (overlays-at (1- pos)))
-                    (while (consp ovs)
-                      (setq ov (car ovs))
-                      (setq ovs (cdr ovs))
-                      (if (and (flyspell-overlay-p ov)
-                               (= 0 (setq arg (1- arg))))
-                          (throw 'exit t)))))))
-          (save-excursion
-            (goto-char pos)
-            (flyspell-correct-word-generic)
-            (setq flyspell-word-cache-word nil) ;; Force flyspell-word re-check
-            (flyspell-word))
-        (error "No word to correct before point"))))
-
-
-  (defun my/flyspell-check-next-highlighted-word ()
-    "Custom function to spell check next highlighted word"
-    (interactive)
-    (flyspell-goto-next-error)
-    (flyspell-correct-word-generic)
-    (setq flyspell-word-cache-word nil))
-  )
-#+end_src
-
-** languagetool
-#+begin_src emacs-lisp
-(use-package langtool
-  :defer t
-  :init
-   (setq langtool-language-tool-jar "~/programme/LanguageTool-3.1/languagetool-commandline.jar"))
-#+end_src
-
 ** ispell-abbrev
 http://endlessparentheses.com/ispell-and-abbrev-the-perfect-auto-correct.html
 #+begin_src emacs-lisp
@@ -1502,18 +1288,6 @@ abort completely with `C-g'."
           (message "\"%s\" now expands to \"%s\" %sally"
                    bef aft (if p "loc" "glob")))
       (user-error "No typo at or before point"))))
-#+end_src
-
-** google-translate
-#+begin_src emacs-lisp
-(use-package google-translate
-  :commands google-translate-smooth-translate
-  :config
-   (require 'google-translate-smooth-ui)
-   (setq google-translate-translation-directions-alist
-         '(("de" . "en") ("en" . "de") ("de" . "fr") ("fr" . "de")))
-   (setq google-translate-output-destination nil)
-)
 #+end_src
 
 * Mail und Kontakte
