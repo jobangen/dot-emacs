@@ -37,7 +37,7 @@
 
 ;;; Libraries
 (use-package counsel-notmuch      :defer t)
-(use-package counsel-projectile)
+(use-package counsel-projectile   :defer 3)
 (use-package define-word          :commands define-word define-word-at-point)
 (use-package dired-collapse       :hook dired-mode)
 (use-package dired-subtree        :commands dired-subtree-insert)
@@ -46,26 +46,26 @@
 (use-package git-timemachine      :defer t)
 (use-package goldendict           :commands goldendict-dwim)
 (use-package gnuplot-mode         :mode "\\.plot\\'")
-(use-package haskell-mode         :defer t)
 (use-package hydra)
-(use-package iso-transl           :straight nil)
+(use-package iso-transl           :defer 2 :straight nil)
 (use-package ivy-hydra            :after (ivy hydra))
 (use-package ivy-pass             :defer t :after (ivy pass))
 (use-package neato-graph-bar      :defer t)
-(use-package neotree)
-(use-package org-notmuch          :straight org :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
+(use-package neotree              :defer 3)
+(use-package org-notmuch          :defer 3 :straight org :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
 (use-package org-pdfview          :after (org pdf-tools))
 (use-package pass                 :defer t)
 (use-package peep-dired           :defer t)
 (use-package smex)
 (use-package rainbow-delimiters   :hook (emacs-lisp-mode . rainbow-delimiters-mode))
-(use-package wgrep)
+(use-package wgrep                :defer 3)
 
 (org-babel-load-file "~/.emacs.d/myinit.org")
 
 
 ;;; A
 (use-package abbrev
+  :defer 2
   :straight nil
   :diminish abbrev-mode
   :config
@@ -75,6 +75,7 @@
     (setq-default abbrev-mode t)))
 
 (use-package academic-phrases
+  :defer 2
   :straight (academic-phrases :type git
                               :host github
                               :repo "nashamri/academic-phrases"))
@@ -102,6 +103,13 @@
     (define-key input-decode-map (kbd "C-i") (kbd "H-i"))))
 
 ;;; B
+(use-package beacon
+  :defer 2
+  :diminish beacon-mode
+  :config
+  (setq beacon-size 20)
+  (setq beacon-color "#ff0000"))
+
 (use-package bibtex
   :straight nil
   :mode ("\\.bib$". bibtex-mode)
@@ -199,7 +207,7 @@
 
 (use-package dot-defun
   :straight nil
-  :demand t
+  :defer 2
   :bind (("C-a" . job/beginning-of-line-or-indentation)
          ("C-k" . job/kill-line)
          ("C-w" . job/kill-word-or-region)
@@ -289,6 +297,7 @@
 
 ;;; G
 (use-package gnorb
+  :defer 2
   :init
   (gnorb-tracking-initialize)
   (setq gnorb-gnus-sent-groups '(("nnimap+gmail:sent")
@@ -335,11 +344,13 @@
 
 
 (use-package gnus
+  :commands gnus
   :straight nil
   :init
   (setq gnus-init-file (no-littering-expand-etc-file-name "gnus-config.el")))
 
 (use-package gnus-dired
+  :defer 2
   :straight nil
   :config
   (progn
@@ -401,6 +412,7 @@
 
 ;;; K
 (use-package key-chord
+  :defer 2
   :after (avy ace-window)
   :init
   (progn
@@ -478,6 +490,33 @@
   (with-eval-after-load "message"
     (add-hook 'message-mode-hook 'messages-are-flowing-use-and-mark-hard-newlines)))
 
+(use-package modalka
+  :bind ("<return>" . modalka-mode)
+  :config
+  (modalka-define-kbd "a" "C-a")
+  (modalka-define-kbd "b" "C-b")
+  (modalka-define-kbd "c m" "C-c m")
+  (modalka-define-kbd "d" "C-d")
+  (modalka-define-kbd "e" "C-e")
+  (modalka-define-kbd "f" "C-f")
+  (modalka-define-kbd "g" "C-g")
+  (modalka-define-kbd "h" "C-h")
+  (modalka-define-kbd "k" "C-k")
+  (modalka-define-kbd "l" "C-l")
+  (modalka-define-kbd "m" "C-m")
+  (modalka-define-kbd "n" "C-n")
+  (modalka-define-kbd "o" "C-o")
+  (modalka-define-kbd "p" "C-p")
+  (modalka-define-kbd "r" "M-r")
+  (modalka-define-kbd "s" "M-s")
+  (modalka-define-kbd "w" "C-w")
+  (modalka-define-kbd "y" "C-y")
+  (modalka-define-kbd "z" "C-z")
+  (modalka-define-kbd "W" "M-w")
+  (modalka-define-kbd "Y" "M-y")
+  (modalka-define-kbd "," "C-,")
+  (modalka-define-kbd "<SPC>" "C-<SPC>"))
+
 (use-package multiple-cursors
   :bind (("C-S-c C-S-c" . mc/edit-lines)
          ("C-<" . mc/mark-next-like-this)
@@ -505,6 +544,7 @@
               ("ä" . org-clock-convenience-fill-gap-both)))
 
 (use-package org-gcal
+  :defer 2
   :config
   (setq org-gcal-auto-archive t)
   (setq org-gcal-down-days 365)
@@ -513,11 +553,13 @@
   (setq org-gcal-file-alist '(("jobangen@googlemail.com" . "~/Dropbox/db/org/calender.org"))))
 
 (use-package ox-reveal
+  :defer 2
   :config
   (setq org-reveal-root "file:///home/job/programme/reveal.js"))
 
 ;;; P
-(use-package paperless :defer t
+(use-package paperless
+  :defer t
   :config
   (bind-key "C-m" 'paperless-display paperless-mode-map)
   (setq paperless-capture-directory "~/texte/texteingang")
@@ -607,6 +649,7 @@ rotate entire document."
   :straight (pomodoro :local-repo "~/.emacs.d/lisp/pomodoro"))
 
 (use-package projectile
+  :defer 2
   :diminish projectile-mode
   :config
   (progn
@@ -649,6 +692,7 @@ rotate entire document."
   :mode ("\\.gpg\\'" . sensitive-mode))
 
 (use-package shell-interaction
+  :defer 2
   :straight (shell-interaction :local-repo "~/.emacs.d/lisp/shell-interaction"))
 
 (use-package smart-mode-line
@@ -669,6 +713,7 @@ rotate entire document."
   (add-to-list 'sml/replacer-regexp-list '("^~/texte/" ":TXT:") t))
 
 (use-package smartparens
+  :defer 2
   :diminish smartparens-mode
   :config
   (smartparens-global-mode t)
@@ -754,7 +799,7 @@ rotate entire document."
 (use-package zettelkasten
   :straight (zettelkasten :local-repo "~/.emacs.d/lisp/zettelkasten")
   :bind ("C-c z" . hydra-zettelkasten/body)
-  :demand t
+  :defer 3
   :init
   (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
   (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
@@ -774,3 +819,5 @@ rotate entire document."
 
 ;;;
 (desktop-save-mode 1) ;; Erinnert die zuletzt geöffneten Dateien
+
+
