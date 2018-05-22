@@ -162,6 +162,7 @@
 (use-package ivy-pass             :defer t :after (ivy pass))
 (use-package neato-graph-bar      :defer t)
 (use-package neotree              :defer 3)
+(use-package nov                  :mode ("\\.epub\\'" . nov-mode))
 (use-package org-notmuch          :defer 3 :straight org :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
 (use-package org-pdfview          :after (org pdf-tools))
 (use-package pass                 :defer t)
