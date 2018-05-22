@@ -142,9 +142,6 @@
 (setq auto-save-file-name-transforms
       `((".*" ,autosave-dir t)))
 
-
-
-
 ;;; Libraries
 (use-package counsel-notmuch      :defer t)
 (use-package counsel-projectile   :defer 3)
