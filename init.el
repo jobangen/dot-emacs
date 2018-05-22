@@ -1463,14 +1463,12 @@ rotate entire document."
 ;;; Z
 (use-package zettelkasten
   :straight (zettelkasten :local-repo "~/.emacs.d/lisp/zettelkasten")
-  :bind ("C-c z" . hydra-zettelkasten/body)
-  :defer 3
   :init
   (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
   (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
   (setq zettelkasten-bibliography-file job/bibliography-file)
   (setq zettelkasten-texts-directory "~/texte/")
-
+  :config
   (defun zettelkasten-txt-query ()
     (interactive)
     (counsel-ag nil "~/.custom-temp/pdfs-extracted" nil))
@@ -1480,7 +1478,9 @@ rotate entire document."
     (if (equal major-mode 'dired-mode)
         (dired-find-file))
     (if (equal major-mode 'org-mode)
-        (org-open-at-point))))
+        (org-open-at-point)))
+
+  (bind-key "C-c z" 'hydra-zettelkasten/body))
 
 ;;;
 (desktop-save-mode 1) ;; Erinnert die zuletzt geöffneten Dateien
