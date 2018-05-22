@@ -396,6 +396,9 @@
           ("mov" ("totem" "vlc")))))
 
 ;;; E
+(use-package ediff
+  :config (set 'ediff-window-setup-function 'ediff-setup-windows-plain))
+
 (use-package engine-mode
   :defer 2
   :config
