@@ -1073,6 +1073,16 @@ of a BibTeX field into the template. Fork."
   (progn
     (setq org-indent-mode-turns-on-hiding-stars t)))
 
+(use-package org-listcruncher
+  :straight (org-listcruncher :type git
+                              :host github
+                              :repo "dfeich/org-listcruncher"))
+
+(use-package org-noter
+  :config
+  (setq org-noter-property-doc-file "INTERLEAVE_PDF")
+  (setq org-noter-property-note-location "INTERLEAVE_PAGE_NOTE"))
+
 (use-package org-ref
   :defer 2
   :init
