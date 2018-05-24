@@ -1489,6 +1489,18 @@ rotate entire document."
 
   (bind-key "C-c z" 'hydra-zettelkasten/body))
 
+;;; Hydras
+(defhydra hydra-system (:color red)
+  "System"
+  ("w" nmcli-show-short "nmcli-show-short")
+  ("t" wlan-toggle "wlan-toggle")
+  ("M" mount-lsblk "mount-lsblk")
+  ("m" mount-mount-device "mount-mount-device" :color blue)
+  ("u" mount-unmount-device "mount-unmount-device" :color blue)
+  ("n" neato-graph-bar "neato-graph-bar" :color blue)
+  ("q" nil "Quit" :color blue))
+(bind-key "<f1>" 'hydra-system/body)
+
 ;;;
 (desktop-save-mode 1) ;; Erinnert die zuletzt geöffneten Dateien
 
