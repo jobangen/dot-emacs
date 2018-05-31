@@ -1,7 +1,7 @@
 ;;gnus init und setup
 (gnus-demon-init)
 
-;; Registry
+;;; Registry
 (setq gnus-registry-max-entries 500000)
 (setq gnus-registry-ignored-groups '(("nntp" t)
                                      ("spam" t)
@@ -11,12 +11,12 @@
 (setq gnus-registry-track-extra '(sender subject))
 (gnus-registry-initialize)
 
-;; data
+;;; data
 (setq user-mail-address "jobangen@gmail.com"
       user-full-name "Jan Ole Bangen")
 (setq nndraft-directory "~/Mail/drafts")
 
-;; Server
+;;; Server
 (setq gnus-select-method '(nnnil "")
       gnus-secondary-select-methods 
 	'((nnimap "gmail"
@@ -33,7 +33,7 @@
           (nntp "news.gwene.org")
           (nngnorb "Gnorb-Server")))
 
-;; Split
+;;; Split
 (setq nnmail-split-methods
       '(("yggdrasill" "^[TC][oc]:.*yggdrasill@lists.Uni-Marburg.DE")
         ("fsi-religionsw" "^[TC][oc]:.*fsi-religionswissenschaft@lists.fu-berlin.de")
@@ -182,6 +182,17 @@
 (define-key gnus-summary-mode-map "v6" 
   (lambda () (interactive)
         (gnus-summary-move-article nil "nnimap+zedat:2016" nil)))
+
+;;; reading mail
+;; https://www.gnu.org/software/emacs/manual/html_node/gnus/FAQ-4_002d6.html#FAQ-4_002d6
+;; disable html
+(with-eval-after-load "mm-decode"
+  (add-to-list 'mm-discouraged-alternatives "text/html")
+  (add-to-list 'mm-discouraged-alternatives "text/richtext"))
+
+(setq mm-automatic-display (remove "text/html" mm-automatic-display))
+
+
 
 ;; Header, reply
 (setq message-citation-line-function 'message-insert-formatted-citation-line)
