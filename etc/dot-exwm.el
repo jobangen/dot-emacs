@@ -1,6 +1,10 @@
 ;;;_,EXWM
 (require 'exwm)
 
+(require 'exwm-randr)
+(setq exwm-randr-workspace-output-plist '(1 "DP1" 1 "HDMI1"))
+(exwm-randr-enable)
+
 ;;; Workspaces
 (setq exwm-workspace-number 4)
 
