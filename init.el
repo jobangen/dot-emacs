@@ -1492,7 +1492,8 @@ rotate entire document."
   (bind-key "C-c z" 'hydra-zettelkasten/body))
 
 ;;; Hydras
-(defhydra hydra-system (:color red)
+(defhydra hydra-system (:color red
+                               :columns 2)
   "System"
   ("w" nmcli-show-short "nmcli-show-short")
   ("t" wlan-toggle "wlan-toggle")
@@ -1500,6 +1501,9 @@ rotate entire document."
   ("m" mount-mount-device "mount-mount-device" :color blue)
   ("u" mount-unmount-device "mount-unmount-device" :color blue)
   ("n" neato-graph-bar "neato-graph-bar" :color blue)
+  ("S" job/clean-kill-emacs "job/clean-kill-emacs" :color blue)
+  ("v" vpn-zedat-shell "vpn-zedat" :color blue)
+  ("b" battery "battery")
   ("q" nil "Quit" :color blue))
 (bind-key "<f1>" 'hydra-system/body)
 
