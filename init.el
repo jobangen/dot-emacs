@@ -1187,11 +1187,10 @@ of a BibTeX field into the template. Fork."
                  (apostrophe :utf-8 "’" :html "&rsquo;"))) ;; Export von "" und '' zu csquotes
   )
 
-(use-package org-reveal
+(use-package ox-reveal
   :straight (org-reveal :type git
                         :host github
                         :repo "lechten/org-reveal")
-  :defer 2
   :config
   (setq org-reveal-root "file:///home/job/programme/reveal.js"))
 
