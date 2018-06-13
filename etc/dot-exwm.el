@@ -11,6 +11,11 @@
 (setq exwm-workspace-show-all-buffers t) ;; share exwm buffers in all workspaces, not just the workspace in which it was created in (the default behaviour)
 (setq exwm-layout-show-all-buffers t)
 
+(defun exwm-workspace-next ()
+  (interactive)
+  (let ((next-numb (mod (+ 1 exwm-workspace-current-index) exwm-workspace-number)))
+    (exwm-workspace-switch next-numb)))
+
 ;; Make class name the buffer name
 (add-hook 'exwm-update-class-hook
           (lambda ()
@@ -80,6 +85,7 @@
       `(([?\s-c] . exwm-input-toggle-keyboard)
         ([?\s-f] . job/firefox)
         ([?\s-g] . gnus)
+        ([?\s-j] . exwm-workspace-next)
         ([?\s-k] . job/kill-current-buffer)
         ([?\s-m] . job/gnome-terminal)
         ([?\s-r] . exwm-reset)
