@@ -139,6 +139,7 @@
       (scroll-bar-mode -1)
       (set-fringe-mode '(1 . 1))))
 
+(message "Enabling EXWM.")
 (exwm-enable)
 
 (provide 'dot-exwm)
