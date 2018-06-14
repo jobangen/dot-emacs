@@ -1508,5 +1508,7 @@ rotate entire document."
 
 ;;;
 (desktop-save-mode 1) ;; Erinnert die zuletzt geöffneten Dateien
-
+(setq desktop-restore-eager 15)
+(setq desktop-files-not-to-save "\\(^/[^/:]*:\\|(ftp)$\\|KILL\\)")
+(setq desktop-restore-frames nil)
 
