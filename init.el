@@ -857,7 +857,7 @@ of a BibTeX field into the template. Fork."
                      (f-same? bibtex-completion-notes-path buffer-file-name))
           (find-file-other-window bibtex-completion-notes-path))
         (widen)
-        (show-all)
+        (outline-show-all)
         (goto-char (point-min))
         (if (re-search-forward (format bibtex-completion-notes-key-pattern (regexp-quote key)) nil t)
                                         ; Existing entry found:
@@ -1294,7 +1294,7 @@ rotate entire document."
   :diminish projectile-mode
   :config
   (progn
-    (projectile-global-mode)
+    (projectile-mode)
     (setq projectile-completion-system 'ivy)
     (setq projectile-enable-caching t)
     (setq projectile-switch-project-action 'projectile-dired)))
