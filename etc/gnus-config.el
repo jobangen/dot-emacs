@@ -119,7 +119,7 @@
       (concat "%ug "
               "%U%R"
               "  "
-              "%*%~(max-right 25)~(pad-right 25)n"
+              "%*%~(max-right 25)~(pad-right 25)f"
               "  "
               "%B%~(max-right 85)~(pad-right 85)s"
               "  "
@@ -203,8 +203,12 @@
 
 ;; In Group "sent" wird der Empfänger angezeigt und nicht ich als Absender
 (setq gnus-ignored-from-addresses
-      "jobangen@googlemail.com\\|jobangen@gmail.com\\|jobangen@zedat.fu-berlin.de\\|j.o.bangen@web.de\\|job@zedat.fu-berlin.de")
-
+      (regexp-opt
+       '("jobangen@googlemail.com"
+         "jobangen@gmail.com"
+         "jobangen@zedat.fu-berlin.de"
+         "j.o.bangen@web.de"
+         "job@zedat.fu-berlin")))
 
 ;; Versteht auch die "internationalisierten" Versionen als Reply
 (setq message-subject-re-regexp
