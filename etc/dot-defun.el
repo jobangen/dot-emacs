@@ -232,6 +232,21 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
   (interactive "p")
   (increment-integer-at-point (- (or dec 1))))
 
+
+;;;###autoload
+(defun job/org-reveal-handout ()
+  (interactive)
+  (goto-char (point-min))
+  (while (search-forward "#+BEGIN_NOTES" nil t)
+    (replace-match "#+BEGIN_COMMENT" t nil))
+  (goto-char (point-min))
+  (while (search-forward "#+END_NOTES" nil t)
+    (replace-match "#+END_COMMENT" t nil))
+  (goto-char (point-min))
+  (while (search-forward "#+ATTR_REVEAL: :frag" nil t)
+    (beginning-of-line)
+    (kill-line)))
+
 (provide 'dot-defun)
 ;;; dot-defun.el ends here
 
