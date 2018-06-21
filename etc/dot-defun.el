@@ -52,6 +52,22 @@
   (kill-matching-buffers "\.csv$")
   (kill-matching-buffers "\.synctex\.gz$")
   (kill-matching-buffers "\.sh$")
+  (kill-matching-buffers "zettel-combined.txt")
+  (kill-emacs))
+
+;;;###autoload
+(defun job/clean-kill-emacs-shutdown ()
+  (interactive)
+  (save-some-buffers)
+  (add-hook 'kill-emacs-hook '(lambda () (shell-command "shutdown now")) t)
+  (kill-matching-buffers "\.gpg$")
+  (kill-matching-buffers "\.tex$")
+  (kill-matching-buffers "\.pdf$")
+  (kill-matching-buffers "\.dat$")
+  (kill-matching-buffers "\.csv$")
+  (kill-matching-buffers "\.synctex\.gz$")
+  (kill-matching-buffers "\.sh$")
+  (kill-matching-buffers "zettel-combined.txt")
   (kill-emacs))
 
 ;;;###autoload
