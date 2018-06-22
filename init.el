@@ -1500,7 +1500,7 @@ rotate entire document."
   ("m" mount-mount-device "mount-mount-device" :color blue)
   ("u" mount-unmount-device "mount-unmount-device" :color blue)
   ("n" neato-graph-bar "neato-graph-bar" :color blue)
-  ("S" job/clean-kill-emacs "job/clean-kill-emacs" :color blue)
+  ("S" job/clean-kill-emacs-shutdown "Shutdown" :color blue)
   ("v" vpn-zedat-shell "vpn-zedat" :color blue)
   ("b" battery "battery")
   ("q" nil "Quit" :color blue))
