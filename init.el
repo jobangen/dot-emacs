@@ -982,6 +982,7 @@ of a BibTeX field into the template. Fork."
   (modalka-define-kbd "c a" "C-c a")
   (modalka-define-kbd "c c" "C-c C-c")
   (modalka-define-kbd "c m" "C-c m")
+  (modalka-define-kbd "c z" "C-c z")
   (modalka-define-kbd "d" "C-d")
   (modalka-define-kbd "e" "C-e")
   (modalka-define-kbd "f" "C-f")
