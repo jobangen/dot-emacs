@@ -52,7 +52,7 @@
   (kill-matching-buffers "\.csv$")
   (kill-matching-buffers "\.synctex\.gz$")
   (kill-matching-buffers "\.sh$")
-  (kill-matching-buffers "zettel-combined.txt")
+  (kill-matching-buffers "zettel-combined\.txt$")
   (kill-emacs))
 
 ;;;###autoload
@@ -67,7 +67,7 @@
   (kill-matching-buffers "\.csv$")
   (kill-matching-buffers "\.synctex\.gz$")
   (kill-matching-buffers "\.sh$")
-  (kill-matching-buffers "zettel-combined.txt")
+  (kill-matching-buffers "zettel-combined\.txt$")
   (kill-emacs))
 
 ;;;###autoload
