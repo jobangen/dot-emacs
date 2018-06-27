@@ -1478,12 +1478,13 @@ rotate entire document."
 ;;; Z
 (use-package zettelkasten
   :straight (zettelkasten :local-repo "~/.emacs.d/lisp/zettelkasten")
-  :init
-  (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
-  (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
-  (setq zettelkasten-bibliography-file job/bibliography-file)
-  (setq zettelkasten-texts-directory "~/texte/")
-  :config
+  :custom
+  (zettelkasten-main-directory "~/Dropbox/db/zk/")
+  (zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
+  (zettelkasten-bibliography-file job/bibliography-file)
+  (zettelkasten-texts-directory "~/texte/")
+
+  :preface
   (defun zettelkasten-txt-query ()
     (interactive)
     (counsel-ag nil "~/.custom-temp/pdfs-extracted" nil))
@@ -1495,6 +1496,7 @@ rotate entire document."
     (if (equal major-mode 'org-mode)
         (org-open-at-point)))
 
+  :config
   (bind-key "C-c z" 'hydra-zettelkasten/body))
 
 ;;; Hydras
