@@ -962,10 +962,17 @@ of a BibTeX field into the template. Fork."
   (setq magit-last-seen-setup-instructions "1.4.0")
   (setq magit-diff-refine-hunk 'all))
 
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
 (use-package messages-are-flowing
-  :init
-  (with-eval-after-load "message"
-    (add-hook 'message-mode-hook 'messages-are-flowing-use-and-mark-hard-newlines)))
+  :commands (messages-are-flowing-use-and-mark-hard-newlines)
+  :after (message)
+  :hook (message-mode . messages-are-flowing-use-and-mark-hard-newlines))
 
 (use-package modalka
   :bind ("<return>" . modalka-mode)
