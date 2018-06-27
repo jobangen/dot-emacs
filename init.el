@@ -67,11 +67,11 @@
 (use-package dot-exwm :straight exwm)
 
 (use-package no-littering
+  :custom
+  (tramp-persistency-file-name (no-littering-expand-var-file-name "tramp-history.el")))
   :init
   (eval-after-load 'shell-interaction
     `(make-directory ,(concat user-emacs-directory "var/shell-interaction") t))
-  :config
-  (setq tramp-persistency-file-name (no-littering-expand-var-file-name "tramp-history.el")))
 
 ;;;
 (use-package dot-org
