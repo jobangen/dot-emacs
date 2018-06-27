@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: org-listcruncher 
+# key: olc
+# --
+#+NAME: ${1:tablename}
+#+HEADER: :var lname="$2" order='("description" "${3:...}")
+#+begin_src elisp :results value :exports results
+(org-listcruncher-to-table lname order)
+#+end_src

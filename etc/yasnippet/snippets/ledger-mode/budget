@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: budget
+# key: budget
+# --
+    [Assets:Budget:Ausbildung & Arbeit]   € ${1:0}
+    [Assets:Budget:Bargeld]               € ${2:0}
+    [Assets:Budget:Essen]                 € ${3:0}
+    [Assets:Budget:Geld]                  € ${4:0}
+    [Assets:Budget:Geschenk]              € ${5:0}
+    [Assets:Budget:Handy]                 € ${6:0}
+    [Assets:Budget:Kauf]                  € ${7:0}
+    [Assets:Budget:Körper]                € ${8:0}
+    [Assets:Budget:Mitgliedschaften]      € ${9:0}
+    [Assets:Budget:Reisen]                € ${10:0}
+    [Assets:Budget:Steuer]                € ${11:0}
+    [Assets:Budget:Unterhaltung]          € ${12:0}
+    [Assets:Budget:Versicherung]          € ${13:0}
+    [Assets:Budget:Wohnung]               € ${14:0}
+    [Equity:Budget]

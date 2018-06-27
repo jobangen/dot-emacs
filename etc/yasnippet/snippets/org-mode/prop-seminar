@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: prop-sem
+# key: sem
+# --
+:SEMINAR_ID: relsoz-wien-18
+:TEILN: $2
+:TEILN_N: $3
+:PAPER: $4
+:PAPER_N: $5
+:ESSAY:  $6
+:ESSAY_N: $0
