@@ -31,6 +31,7 @@
                   (nnimap-stream shell)
                   (nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/Mail/zedatma:LAYOUT=fs"))
           (nntp "news.gwene.org")
+          (nntp "news.gmane.org")
           (nngnorb "Gnorb-Server")))
 
 ;;; Split
