@@ -1487,6 +1487,8 @@ rotate entire document."
   (zettelkasten-texts-directory "~/texte/")
 
   :preface
+  ;; (add-hook 'after-init-hook 'zettelkasten-parse-values-combined)
+
   (defun zettelkasten-txt-query ()
     (interactive)
     (counsel-ag nil "~/.custom-temp/pdfs-extracted" nil))
