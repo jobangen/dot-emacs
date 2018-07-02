@@ -577,7 +577,8 @@
 (use-package helpful
   :bind (:map help-map
               ("f" . helpful-callable)
-              ("v" . helpful-variable)))
+              ("v" . helpful-variable)
+              ("k" . helpful-key)))
 
 (use-package hippie-expand
   :straight nil
