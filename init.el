@@ -66,12 +66,7 @@
 
 (use-package dot-exwm :straight exwm)
 
-(use-package no-littering
-  :init
-  (eval-after-load 'shell-interaction
-    `(make-directory ,(concat user-emacs-directory "var/shell-interaction") t))
-  :config
-  (setq tramp-persistency-file-name (no-littering-expand-var-file-name "tramp-history.el")))
+(use-package no-littering)
 
 ;;;
 (use-package dot-org
@@ -1373,7 +1368,11 @@ rotate entire document."
 
 (use-package shell-interaction
   :defer 2
-  :straight (shell-interaction :local-repo "~/.emacs.d/lisp/shell-interaction"))
+  :straight (shell-interaction :local-repo "~/.emacs.d/lisp/shell-interaction")
+  :init
+    (eval-after-load 'shell-interaction
+    `(make-directory ,(concat user-emacs-directory "var/shell-interaction") t))
+)
 
 (use-package smart-mode-line
   :init
@@ -1415,6 +1414,13 @@ rotate entire document."
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 
 (use-package swiper)
+
+;;; T
+(use-package tramp
+  :straight nil
+  :init
+  (setq tramp-persistency-file-name (no-littering-expand-var-file-name "tramp-history.el")))
+
 
 ;;; U
 (use-package undo-tree
