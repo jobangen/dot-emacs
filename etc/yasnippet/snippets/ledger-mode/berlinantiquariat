@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: bq
+# key: bq
+# --
+BerlinAntiquariat
+        Expenses:Bargeld    € $1
+        Income:Arbeit:BerlinAntiquariat
+        [Assets:Budget:Bargeld]     € $1
+        [Equity:Budget]  € -$1

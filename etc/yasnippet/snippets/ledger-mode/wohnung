@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: wohnung
+# key: wohnung
+# --
+Expenses:Wohnung:Grundmiete             € 402,52
+Expenses:Wohnung:Heizkosten              € 83,00
+Expenses:Wohnung:Betriebskosten          € 98,00
+Assets:Giro                            € -583,52
