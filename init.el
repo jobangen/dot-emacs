@@ -482,6 +482,11 @@
   (setq flyspell-correct-interface 'flyspell-correct-ivy))
 
 ;;; G
+(use-package german-holidays
+  :defer 2
+  :config
+  (setq holiday-other-holidays holiday-german-holidays))
+
 (use-package gnorb
   :defer 2
   :init

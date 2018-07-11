@@ -1013,12 +1013,6 @@ http://doc.norang.ca/org-mode.org
 (setq calendar-time-display-form '(24-hours ":" minutes))
 #+end_src
 
-*** german-holidays
-#+begin_src emacs-lisp
-(use-package german-holidays
-  :config
-  (setq holiday-other-holidays holiday-german-holidays))
-#+end_src
 ** org-present
 #+begin_src emacs-lisp
 (eval-after-load "org-present"
