@@ -128,44 +128,50 @@
  
 ;;moving Mail
 ;;Move to archive
-(define-key gnus-summary-mode-map "va"
-  (lambda () (interactive)
-    (if (string-match "zedatma" gnus-newsgroup-name)
+(defun job/gnus-summary-move-article-to-archive ()
+  "Move article to group-specific archive-folder"
+  (interactive)
+  (if (string-match "zedatma" gnus-newsgroup-name)
+      (progn
+        (gnus-summary-put-mark-as-read nil))
+    (if (string-match "zedat" gnus-newsgroup-name)
         (progn
-          (gnus-summary-put-mark-as-read))
-      (if (string-match "zedat" gnus-newsgroup-name)
+          (gnus-summary-put-mark-as-unread nil)
+          (gnus-summary-move-article nil "nnimap+zedat:2018" nil)
+          (gnus-summary-next-article))
+      (if (string-match "gmail" gnus-newsgroup-name)
           (progn
             (gnus-summary-put-mark-as-unread nil)
-            (gnus-summary-move-article nil "nnimap+zedat:2018" nil)
-            (gnus-summary-next-article))
-        (if (string-match "gmail" gnus-newsgroup-name)
-            (progn
-              (gnus-summary-put-mark-as-unread nil)
-              (gnus-summary-move-article nil "nnimap+gmail:arch" nil)
-              (gnus-summary-next-article)))))))
+            (gnus-summary-move-article nil "nnimap+gmail:arch" nil)
+            (gnus-summary-next-article))))))
+(define-key gnus-summary-mode-map (kbd "va") #'job/gnus-summary-move-article-to-archive)
 
-;; Move to group-specifictrash
-(define-key gnus-summary-mode-map "vd"
-  (lambda () (interactive)
-    (if (string-match "zedatma" gnus-newsgroup-name)
+
+(defun job/gnus-summary-move-article-to-trash ()
+  "Move article to group-specific trash-folder."
+  (interactive)
+  (if (string-match "zedatma" gnus-newsgroup-name)
+      (progn
+        (gnus-summary-put-mark-as-read nil))
+    (if (string-match "zedat" gnus-newsgroup-name)
         (progn
-          (gnus-summary-put-mark-as-read nil))
-      (if (string-match "zedat" gnus-newsgroup-name)
+          (gnus-summary-put-mark-as-read nil)
+          (gnus-summary-move-article nil "nnimap+zedat:Trash" nil)
+          (gnus-summary-next-article))
+      (if (string-match "gmail" gnus-newsgroup-name)
           (progn
             (gnus-summary-put-mark-as-read nil)
-            (gnus-summary-move-article nil "nnimap+zedat:Trash" nil)
-            (gnus-summary-next-article))
-        (if (string-match "gmail" gnus-newsgroup-name)
-            (progn
-              (gnus-summary-put-mark-as-read nil)
-              (gnus-summary-move-article nil "nnimap+gmail:trash" nil)
-              (gnus-summary-next-article)))))))
+            (gnus-summary-move-article nil "nnimap+gmail:trash" nil)
+            (gnus-summary-next-article))))))
+(define-key gnus-summary-mode-map (kbd "vd") #'job/gnus-summary-move-article-to-trash)
 
-(define-key gnus-summary-mode-map "vi" 
-  (lambda () (interactive)
-    (gnus-summary-put-mark-as-unread nil)
-    (gnus-summary-move-article nil "nnimap+zedat:2018/18-irw" nil)
-    (gnus-summary-next-unread-article)))
+(defun job/gnus-summary-move-article-to-irw ()
+  "Move article to irw-folder"
+  (interactive)
+  (gnus-summary-put-mark-as-unread nil)
+  (gnus-summary-move-article nil "nnimap+zedat:2018/18-irw" nil)
+  (gnus-summary-next-unread-article))
+(define-key gnus-summary-mode-map (kbd "vi") #'job/gnus-summary-move-article-to-irw)
 
 (define-key gnus-summary-mode-map "vg"
   (lambda () (interactive)
