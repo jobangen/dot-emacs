@@ -107,7 +107,7 @@
     (expand-file-name (convert-standard-filename file) custom-temp))
 
 (defvar texte-dir
-   (expand-file-name "~/texte/"))
+   (expand-file-name "~/archive/texts/"))
 
 (defvar dropbox-dir
   (if (system-type-is-gnu)
@@ -1215,7 +1215,7 @@ of a BibTeX field into the template. Fork."
   :defer t
   :config
   (bind-key "C-m" 'paperless-display paperless-mode-map)
-  (setq paperless-capture-directory "~/texte/texteingang")
+  (setq paperless-capture-directory "~/archive/texte/texteingang")
   (setq paperless-root-directory "~/"))
 
 (use-package pdf-tools
@@ -1400,8 +1400,7 @@ rotate entire document."
   (add-to-list 'sml/replacer-regexp-list '("^:ds:tx:p:part1/" ":ds:") t)
   (add-to-list 'sml/replacer-regexp-list '("^~/Dokumente/" ":Dok:") t)
   (add-to-list 'sml/replacer-regexp-list '("^~/archiv/" ":arch:") t)
-  (add-to-list 'sml/replacer-regexp-list '("^~/Downloads/" ":DL:") t)
-  (add-to-list 'sml/replacer-regexp-list '("^~/texte/" ":TXT:") t))
+  (add-to-list 'sml/replacer-regexp-list '("^~/archive/texts/" ":TXT:") t))
 
 (use-package smartparens
   :defer 2
@@ -1502,7 +1501,7 @@ rotate entire document."
   (zettelkasten-main-directory "~/Dropbox/db/zk/")
   (zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
   (zettelkasten-bibliography-file job/bibliography-file)
-  (zettelkasten-texts-directory "~/texte/")
+  (zettelkasten-texts-directory "~/archive/texts/")
 
   :preface
   ;; (add-hook 'after-init-hook 'zettelkasten-parse-values-combined)
