@@ -427,6 +427,13 @@
   :bind (("C-c m" . er/expand-region)))
 
 ;;; F
+(use-package filetags
+  :straight (filetags :type git
+                      :host github
+                      :repo "DerBeutlin/filetags.el")
+  :bind (:map dired-mode-map
+              ("#" . filetags-dired-update-tags)))
+
 (use-package flyspell
   :diminish flyspell-mode
   :bind (("C-," . my/flyspell-check-previous-highlighted-word))
