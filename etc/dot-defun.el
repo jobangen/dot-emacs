@@ -59,7 +59,8 @@
 (defun job/clean-kill-emacs-shutdown ()
   (interactive)
   (save-some-buffers)
-  (add-hook 'kill-emacs-hook '(lambda () (shell-command "shutdown now")) t)
+  (add-hook 'kill-emacs-hook
+            '(lambda () (shell-command "shutdown --poweroff now")) t)
   (kill-matching-buffers "\.gpg$")
   (kill-matching-buffers "\.tex$")
   (kill-matching-buffers "\.pdf$")
