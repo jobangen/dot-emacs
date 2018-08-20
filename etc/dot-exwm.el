@@ -40,6 +40,11 @@
   (start-process-shell-command
    "gnome-terminal" nil "gnome-terminal"))
 
+(defun job/geeqie ()
+  (interactive)
+  (start-process-shell-command
+   "geeqie" nil "geeqie"))
+
 ;;;###autoload
 (defun job/slock ()
   (interactive)
@@ -88,6 +93,7 @@
         ([?\s-j] . exwm-workspace-next)
         ([?\s-k] . job/kill-current-buffer)
         ([?\s-m] . job/gnome-terminal)
+        ([?\s-q] . job/geeqie)
         ([?\s-r] . exwm-reset)
         ([?\s-w] . exwm-workspace-switch)
         ([?\s-x] . counsel-linux-app)
