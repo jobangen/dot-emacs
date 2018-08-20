@@ -1290,7 +1290,6 @@ _q_: cancel     _r_: resolve    _tI_: insert item       ^ ^                   _p
   ("q"   nil "cancel" :color blue)
 )
 #+end_src
-
 ** hydra-window
 #+begin_src emacs-lisp
 (bind-key "C-c w" 'hydra-window/body)
@@ -1954,7 +1953,7 @@ http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
 ** my/pdfgrep
 #+begin_src emacs-lisp
 (defun pdfgrep-default-command ()
- "pdfgrep -i -H -n TERM  ~/texte/*.pdf")
+ "pdfgrep -i -H -n TERM  ~/archive/texts/*.pdf")
 
 (defun my/pdfgrep (command-args)
   ""
