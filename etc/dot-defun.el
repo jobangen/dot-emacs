@@ -248,6 +248,16 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
     (beginning-of-line)
     (kill-line)))
 
+;;;###autoload
+(defun job-dired-move2archive (&optional arg file-list)
+  (interactive
+   (let ((files (dired-get-marked-files t current-prefix-arg)))
+     (list
+      current-prefix-arg
+      files)))
+  (dired-do-shell-command "~/src/job-m2a-interactive-wrapper-with-gnome-terminal.sh" arg file-list)
+  (revert-buffer))
+
 (provide 'dot-defun)
 ;;; dot-defun.el ends here
 
