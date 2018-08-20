@@ -330,7 +330,8 @@
               ("C-m" . dired-find-file)
               (";" . dired-subtree-insert)
               ("i" . dired-subtree-remove)
-              ("P" . peep-dired))
+              ("P" . peep-dired)
+              ("," .  job-dired-move2archive))
   :init
   (setq dired-recursive-deletes 'always)
   (setq dired-recursive-copies 'always)
