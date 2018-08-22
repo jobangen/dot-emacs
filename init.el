@@ -433,7 +433,9 @@
                       :host github
                       :repo "DerBeutlin/filetags.el")
   :bind (:map dired-mode-map
-              ("#" . filetags-dired-update-tags)))
+              ("#" . filetags-dired-update-tags))
+  :init
+  (setq filetags-load-controlled-vocabulary-from-file t))
 
 (use-package flyspell
   :diminish flyspell-mode
