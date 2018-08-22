@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: notebook
+# key: notebook
+# --
+#+AUTHOR: Jan Ole Bangen
+#+DATE: $1
+#+TITLE: $2
+
+$0
