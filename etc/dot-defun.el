@@ -248,6 +248,7 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
     (beginning-of-line)
     (kill-line)))
 
+;;; dired
 ;;;###autoload
 (defun job-dired-move2archive (&optional arg file-list)
   (interactive
@@ -255,8 +256,41 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
      (list
       current-prefix-arg
       files)))
-  (dired-do-shell-command "~/src/job-m2a-interactive-wrapper-with-gnome-terminal.sh" arg file-list)
-  (revert-buffer))
+  (dired-do-shell-command "~/src/job-m2a-interactive-wrapper-with-gnome-terminal.sh" arg file-list))
+
+;;;###autoload
+(defun job-dired-move-files-to-refile-dir (&optional arg file-list)
+  (interactive
+   (let ((files (dired-get-marked-files t current-prefix-arg)))
+     (list
+      current-prefix-arg
+      files)))
+  (dired-do-shell-command "~/src/job-move-files-to-refile.sh" arg file-list))
+
+;;;###autoload
+(defun job-dired-copy-files-to-temp-dir (&optional arg file-list)
+  (interactive
+   (let ((files (dired-get-marked-files t current-prefix-arg)))
+     (list
+      current-prefix-arg
+      files)))
+  (dired-do-shell-command "~/src/job-copy-files-to-temp.sh" arg file-list))
+
+
+;;;###autoload
+(defun job-dired-cp-mv-files-to-destinations (&optional arg file-list)
+  (interactive)
+  (let ((destination
+         (completing-read "Choose action: "
+                          '(("Move to refile")
+                            ("Move to archive")
+                            ("Copy to temp")) nil t nil)))
+    (when (string-equal destination "Move to refile")
+      (call-interactively 'job-dired-move-files-to-refile-dir))
+    (when (string-equal destination "Move to archive")
+      (call-interactively 'job-dired-move2archive))
+    (when (string-equal destination "Copy to temp")
+      (call-interactively 'job-dired-copy-files-to-temp-dir))))
 
 (provide 'dot-defun)
 ;;; dot-defun.el ends here

@@ -331,7 +331,7 @@
               (";" . dired-subtree-insert)
               ("i" . dired-subtree-remove)
               ("P" . peep-dired)
-              ("," .  job-dired-move2archive))
+              ("," .  job-dired-cp-mv-files-to-destinations))
   :init
   (setq dired-recursive-deletes 'always)
   (setq dired-recursive-copies 'always)
