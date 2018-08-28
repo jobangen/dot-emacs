@@ -574,6 +574,17 @@
         '(("de" . "en") ("en" . "de") ("de" . "fr") ("fr" . "de")))
   (setq google-translate-output-destination nil))
 
+(use-package goto-addr
+  :straight nil
+  :hook ((compilation-mode . goto-address-mode)
+         (prog-mode . goto-address-prog-mode)
+         (eshell-mode . goto-address-mode)
+         (shell-mode . goto-address-mode))
+  :bind (:map goto-address-highlight-keymap
+              ("C-c C-o" . goto-address-at-point))
+  :commands (goto-address-prog-mode
+             goto-address-mode))
+
 (use-package gscholar-bibtex
   :commands gscholar-bibtex
   :config
