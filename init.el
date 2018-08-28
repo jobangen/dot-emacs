@@ -1085,15 +1085,6 @@ of a BibTeX field into the template. Fork."
   (setq org-contacts-icon-use-gravatar nil)
   (setq org-contacts-birthday-format "%l (%y)"))
 
-(use-package org-gcal
-  :defer 2
-  :config
-  (setq org-gcal-auto-archive t)
-  (setq org-gcal-down-days 365)
-  (setq org-gcal-client-id "553301842275-clecdgmr7i8741e3ck5iltlgfk3qf79r.apps.googleusercontent.com")
-  (setq org-gcal-client-secret "4zyEbm_F_BMuJsA7rZZmgFBm")
-  (setq org-gcal-file-alist '(("jobangen@googlemail.com" . "~/Dropbox/db/org/calender.org"))))
-
 (use-package org-indent
   :straight org
   :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
@@ -1102,6 +1093,18 @@ of a BibTeX field into the template. Fork."
   :init
   (progn
     (setq org-indent-mode-turns-on-hiding-stars t)))
+
+(use-package org-gcal
+  :straight (org-gcal :type git
+                    :host github
+                    :repo "kidd/org-gcal.el")
+  :defer 2
+  :config
+  (setq org-gcal-auto-archive t)
+  (setq org-gcal-down-days 365)
+  (setq org-gcal-client-id "553301842275-clecdgmr7i8741e3ck5iltlgfk3qf79r.apps.googleusercontent.com")
+  (setq org-gcal-client-secret "4zyEbm_F_BMuJsA7rZZmgFBm")
+  (setq org-gcal-file-alist '(("jobangen@googlemail.com" . "~/Dropbox/db/org/calender.org"))))
 
 (use-package org-listcruncher
   :straight (org-listcruncher :type git
