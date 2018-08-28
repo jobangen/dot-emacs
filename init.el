@@ -1202,6 +1202,26 @@ of a BibTeX field into the template. Fork."
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection*{%s}" . "\\subsection*{%s}")
                  ("\\subsubsection*{%s}" . "\\subsubsection*{%s}")))
+  (add-to-list 'org-latex-classes
+               '("beamer"
+                 "\\documentclass{beamer}\n
+\\usepackage{microtype}
+\\usepackage{lmodern}
+\\usepackage{csquotes}
+\\usepackage{ellipsis}
+\\usepackage{booktabs}\n
+\\usepackage[utf8]{inputenc}
+\\usepackage[T1]{fontenc}
+[NO-DEFAULT-PACKAGES]
+[NO-PACKAGES]
+[EXTRA]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\section{%s}")
+
+                 ("\\begin{frame}[fragile]\\frametitle{%s}"
+                  "\\end{frame}"
+                  "\\begin{frame}[fragile]\\frametitle{%s}"
+                  "\\end{frame}")))
 
   (setq org-latex-default-class "zettel")
   (setq org-export-with-author t)
