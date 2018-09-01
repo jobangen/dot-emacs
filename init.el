@@ -237,6 +237,13 @@
   :config
   (setq bu-bibtex-fields-ignore-list '("")))
 
+(use-package blimp
+  :straight (blimp :type git
+                   :host github
+                   :repo "walseb/blimp")
+  :hook (image-mode-hook . blimp-mode))
+
+
 (use-package bookmark+
   :init
   (setq bmkp-bmenu-state-file
