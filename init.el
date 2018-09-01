@@ -243,7 +243,6 @@
                    :repo "walseb/blimp")
   :hook (image-mode-hook . blimp-mode))
 
-
 (use-package bookmark+
   :init
   (setq bmkp-bmenu-state-file
@@ -973,7 +972,7 @@ of a BibTeX field into the template. Fork."
 (use-package ledger-mode
   :mode "\\.dat\\'"
   :config
-  (setq ledger-binary-path "~/ledger/ledger"))
+  (setq ledger-binary-path "~/src/ledger/ledger"))
 
 
 (use-package link-hint
