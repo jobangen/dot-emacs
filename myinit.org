@@ -1870,7 +1870,7 @@ http://pragmaticemacs.com/emacs/quickly-move-a-file-to-the-current-directory/
 (require 'swiper)
 
 ;; start directory
-(defvar my/move-file-here-start-dir (expand-file-name "~/Downloads"))
+(defvar my/move-file-here-start-dir (expand-file-name "~/tmp/2del"))
 
 (defun my/move-file-here ()
   "Move file from somewhere else to here.
