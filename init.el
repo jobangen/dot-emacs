@@ -1,4 +1,5 @@
 (setq package-enable-at-startup nil)
+(server-start)
 
 ;;; Config
 (setq split-width-threshold 110)
