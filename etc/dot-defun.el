@@ -268,6 +268,15 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
   (dired-do-shell-command "~/src/job-move-files-to-refile.sh" arg file-list))
 
 ;;;###autoload
+(defun job-dired-move-files-to-texts-dir (&optional arg file-list)
+  (interactive
+   (let ((files (dired-get-marked-files t current-prefix-arg)))
+     (list
+      current-prefix-arg
+      files)))
+  (dired-do-shell-command "~/src/job-move-files-to-texts.sh" arg file-list))
+
+;;;###autoload
 (defun job-dired-copy-files-to-temp-dir (&optional arg file-list)
   (interactive
    (let ((files (dired-get-marked-files t current-prefix-arg)))
@@ -282,15 +291,18 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
   (interactive)
   (let ((destination
          (completing-read "Choose action: "
-                          '(("Move to refile")
-                            ("Move to archive")
-                            ("Copy to temp")) nil t nil)))
-    (when (string-equal destination "Move to refile")
+                          '(("1. Move to archive")
+                            ("2. Copy to temp")
+                            ("3. Move to refile")
+                            ("4. Move to texts")) nil t nil)))
+    (when (string-equal destination "3. Move to refile")
       (call-interactively 'job-dired-move-files-to-refile-dir))
-    (when (string-equal destination "Move to archive")
+    (when (string-equal destination "1. Move to archive")
       (call-interactively 'job-dired-move2archive))
-    (when (string-equal destination "Copy to temp")
-      (call-interactively 'job-dired-copy-files-to-temp-dir))))
+    (when (string-equal destination "2. Copy to temp")
+      (call-interactively 'job-dired-copy-files-to-temp-dir))
+    (when (string-equal destination "4. Move to texts")
+      (call-interactively 'job-dired-move-files-to-texts-dir))))
 
 (provide 'dot-defun)
 ;;; dot-defun.el ends here
