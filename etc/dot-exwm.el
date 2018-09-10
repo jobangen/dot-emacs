@@ -35,6 +35,11 @@
   (start-process-shell-command "firefox" nil "firefox"))
 
 ;;;###autoload
+(defun job/qutebrowser ()
+  (interactive)
+  (start-process-shell-command "qutebrowser" nil "qutebrowser"))
+
+;;;###autoload
 (defun job/gnome-terminal ()
   (interactive)
   (start-process-shell-command
@@ -88,7 +93,7 @@
 ;; Sensibel bei der Formatierung. Lispy machts kaputt
 (setq exwm-input-global-keys
       `(([?\s-c] . exwm-input-toggle-keyboard)
-        ([?\s-f] . job/firefox)
+        ([?\s-f] . job/qutebrowser)
         ([?\s-g] . gnus)
         ([?\s-j] . exwm-workspace-next)
         ([?\s-k] . job/kill-current-buffer)
