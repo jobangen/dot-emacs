@@ -668,22 +668,17 @@
           (org-mode . org-level-4)))
 
   (setq ivy-views
-        '((",todo"
+        '((",archive"
            (horz
-            (buffer "*pomidor*")
-            (buffer "*Org Agenda*")))
+            (file "~/archive/")))
           (",mail"
            (horz
             (buffer "*Group*")
             (buffer "*OfflineIMAP*")))
-          (",zettelkasten"
+          (",todo"
            (horz
-            (file "~/Dropbox/db/zk/zettel")
-            (file "~/Dropbox/db/zk/zettel")))
-          (",refile"
-           (horz
-            (file "~/archiv/date-description/")
-            (file "~/Dropbox/scans/"))))))
+            (buffer "*pomidor*")
+            (buffer "*Org Agenda*"))))))
 
 (use-package ivy-bibtex
   :bind (("C-." . ivy-bibtex)
