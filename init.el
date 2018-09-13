@@ -670,7 +670,8 @@
   (setq ivy-views
         '((",archive"
            (horz
-            (file "~/archive/")))
+            (file "~/archive/")
+            (file "~/archive/.nav-date-description")))
           (",mail"
            (horz
             (buffer "*Group*")
