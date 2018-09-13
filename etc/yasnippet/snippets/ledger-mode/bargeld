@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: bargeld
+# key: bar
+# --
+`(format-time-string "%Y-%m-")`$1 //Bargeld
+    Expenses:$2   € $3
+    Expenses:Bargeld
