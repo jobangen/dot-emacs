@@ -45,6 +45,7 @@
 (defun job/clean-kill-emacs ()
   (interactive)
   (save-some-buffers)
+  (kill-dired-buffers)
   (kill-matching-buffers "\.gpg$")
   (kill-matching-buffers "\.tex$")
   (kill-matching-buffers "\.pdf$")
@@ -61,6 +62,7 @@
   (save-some-buffers)
   (add-hook 'kill-emacs-hook
             '(lambda () (shell-command "shutdown --poweroff now")) t)
+  (kill-dired-buffers)
   (kill-matching-buffers "\.gpg$")
   (kill-matching-buffers "\.tex$")
   (kill-matching-buffers "\.pdf$")
@@ -249,6 +251,15 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
     (kill-line)))
 
 ;;; dired
+
+;;;###autoload
+(defun kill-dired-buffers ()
+  (interactive)
+  (mapc (lambda (buffer)
+          (when (eq 'dired-mode (buffer-local-value 'major-mode buffer))
+            (kill-buffer buffer)))
+        (buffer-list)))
+
 ;;;###autoload
 (defun job-dired-move2archive (&optional arg file-list)
   (interactive
