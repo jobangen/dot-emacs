@@ -1041,7 +1041,7 @@ of a BibTeX field into the template. Fork."
 
 ;;; O
 (use-package offlineimap
-  :hook (gnus-before-startup . offlineimap)
+  ;; :hook (gnus-before-startup . offlineimap)
   :config
   (setq offlineimap-timestamp "%Y-%m-%d-%H:%M:%S "))
 
