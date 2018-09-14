@@ -267,7 +267,7 @@
 
 
 ;; don't ask how many emails to download
-;;(setq gnus-large-newsgroup 'nil)
+(setq gnus-large-newsgroup 300)
 
 ;; tells gnus to get new mail and also display all old mail
 (define-key gnus-summary-mode-map (kbd "C-c C-c")
