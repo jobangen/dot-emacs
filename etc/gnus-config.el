@@ -21,12 +21,12 @@
       gnus-secondary-select-methods 
 	'((nnimap "gmail"
                   (nnimap-stream shell)
-                  (nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/Mail/gmail:LAYOUT=fs")
+                  (nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/.mail/gmail:LAYOUT=fs:INBOX=$HOME/.mail/gmail/inbox")
                   (nnimap-inbox "INBOX")
                   (nnimap-split-methods default))
           (nnimap "zedat"
                   (nnimap-stream shell)
-                  (nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/Mail/zedat:LAYOUT=fs"))
+                  (nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/.mail/zedat:LAYOUT=fs:INBOX=$HOME/.mail/zedat/inbox"))
           (nnimap "zedatma"
                   (nnimap-stream shell)
                   (nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/Mail/zedatma:LAYOUT=fs"))
@@ -281,6 +281,11 @@
      (interactive)
      (shell-command "offlineimap&" "*offlineimap*" nil)))
 
+(define-key gnus-group-mode-map (kbd "vm")
+  '(lambda ()
+     (interactive)
+     (shell-command "mbsync -a && notmuch new &" "*mbsync*" nil)))
+
 ;; Notmuch searches usw
 (require 'notmuch)
 (add-hook 'gnus-group-mode-hook 'my/notmuch-shortcut)
@@ -297,7 +302,7 @@
 (defun notmuch-file-to-group (file)
   "Calculate the Gnus group name from the given file name."
   (let ((group (file-name-directory (directory-file-name (file-name-directory file)))))
-    (setq group (replace-regexp-in-string ".*/Mail/" "nnimap+" group))
+    (setq group (replace-regexp-in-string ".*/.mail/" "nnimap+" group))
     (setq group (replace-regexp-in-string "zedat/" "zedat:" group))
     (setq group (replace-regexp-in-string "zedatma/" "zedatma:" group))
     (setq group (replace-regexp-in-string "gmail/" "gmail:" group))
