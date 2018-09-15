@@ -35,11 +35,12 @@
           (nngnorb "Gnorb-Server")))
 
 ;;; Split
-(setq nnmail-split-methods
-      '(("yggdrasill" "^[TC][oc]:.*yggdrasill@lists.Uni-Marburg.de")
-        ("fsi-religionsw" "^[TC][oc]:.*fsi-religionswissenschaft@lists.fu-berlin.de")
-        ("hsozkult" "^From:.*hsk.mail@geschichte.hu-berlin.de")
-        ("INBOX" "")))
+;; (setq nnmail-split-methods
+;;       '(("yggdrasill" "^[TC][oc]:.*yggdrasill@lists.Uni-Marburg.de")
+;;         ("fsi-religionsw" "^[TC][oc]:.*fsi-religionswissenschaft@lists.fu-berlin.de")
+;;         ("hsozkult" "^From:.*hsk.mail@geschichte.hu-berlin.de")
+;;         ("INBOX" "")))
+;; Nach gmail verlagert wegen doppelter uid nach splitting
 
 ;; get rid of message
 (setq gnus-always-read-dribble-file t)
