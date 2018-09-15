@@ -23,7 +23,9 @@
      ("[fn]" ("footnote" "marginpar"))
      ("[fx]" ("fxwarning" "fxnote" "fxerror" "fxfatal"))
      ("[ac]" ("autocite" "avolcite")) ;; new
+     ("[acs]" ("autocites")) ;; new
      ("[c]" ("cite"))
+     ("[cs]" ("cites"))
      ("[l]" ("label"))
      ("[r]" ("ref" "pageref" "eqref"))
      ("[i]" ("index" "glossary"))
