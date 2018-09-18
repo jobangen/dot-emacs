@@ -22,8 +22,9 @@
 	'((nnimap "gmail"
                   (nnimap-stream shell)
                   (nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/.mail/gmail:LAYOUT=fs:INBOX=$HOME/.mail/gmail/inbox")
-                  (nnimap-inbox "INBOX")
-                  (nnimap-split-methods default))
+                  ;; (nnimap-inbox "INBOX")
+                  ;; (nnimap-split-methods default)
+                  )
           (nnimap "zedat"
                   (nnimap-stream shell)
                   (nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/.mail/zedat:LAYOUT=fs:INBOX=$HOME/.mail/zedat/inbox"))
