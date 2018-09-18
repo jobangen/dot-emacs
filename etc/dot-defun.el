@@ -315,6 +315,11 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
     (when (string-equal destination "4. Move to texts")
       (call-interactively 'job-dired-move-files-to-texts-dir))))
 
+;;;###autoload
+(defun crontab-e ()
+    (interactive)
+    (with-editor-async-shell-command "crontab -e"))
+
 (provide 'dot-defun)
 ;;; dot-defun.el ends here
 
