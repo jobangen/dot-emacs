@@ -320,6 +320,11 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
     (interactive)
     (with-editor-async-shell-command "crontab -e"))
 
+;;;###autoload
+(defun job-check-logs-for-errors ()
+  (interactive)
+  (counsel-ag "error" "~/tmp/logs" nil))
+
 (provide 'dot-defun)
 ;;; dot-defun.el ends here
 
