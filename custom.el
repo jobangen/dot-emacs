@@ -22,8 +22,12 @@
       ("fxwarning" "fxnote" "fxerror" "fxfatal"))
      ("[ac]"
       ("autocite" "avolcite"))
+     ("[acs]"
+      ("autocites"))
      ("[c]"
       ("cite"))
+     ("[cs]"
+      ("cites"))
      ("[l]"
       ("label"))
      ("[r]"
