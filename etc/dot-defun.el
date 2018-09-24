@@ -325,6 +325,48 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
   (interactive)
   (counsel-ag "error" "~/tmp/logs" nil))
 
+;;;###autoload
+(defun job-ledger-process-bargeld ()
+  (interactive)
+  (let ((year-month
+         (read-string "Year-Month: ")))
+    (find-file "~/Dropbox/org/ledger.org")
+    (goto-char (point-max))
+    (search-backward-regexp "*" nil t)
+    (search-forward-regexp "^x" nil t)
+    (beginning-of-line)
+    (kill-ring-save (point) (goto-char (point-max)))
+    (switch-to-buffer (make-temp-name "*ledger*"))
+    (yank)
+    (ledger-mode)
+    ;; insert date
+    (goto-char (point-min))
+    (while (search-forward-regexp "x" nil t)
+      (replace-match (concat year-month "-") t nil))
+    ;; fix Description
+    (goto-char (point-min))
+    (while (search-forward-regexp "^20" nil t)
+      (progn
+        (end-of-line)
+        (insert "\s* //Bargeld")))
+   ;; fix space around €
+    (goto-char (point-min))
+    (while (search-forward-regexp "\s€" nil t)
+      (replace-match "\s\s\s€\s" t nil))
+    ;; fix Accounts
+    (goto-char (point-min))
+    (while (search-forward-regexp "\s:" nil t)
+      (replace-match "\sExpenses:" t nil))
+    ;; fix Account
+    (goto-char (point-min))
+    (while (search-forward-regexp "€" nil t)
+      (progn
+        (end-of-line)
+        (insert "\n\sExpenses:Bargeld")))
+    ;; fix alignment
+    (ledger-post-align-postings (point-min) (point-max))))
+
+
 (provide 'dot-defun)
 ;;; dot-defun.el ends here
 
