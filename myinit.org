@@ -168,8 +168,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 #+begin_src emacs-lisp
 (bind-key "C-c 0" '(lambda ()
                      (interactive)
-                     (find-file
-                      (concat user-emacs-directory "myinit.org"))))
+                     (switch-to-buffer "*scratch*")))
 (bind-key "C-c 1" '(lambda ()
                      (interactive)
                      (find-file
