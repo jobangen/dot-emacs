@@ -1040,6 +1040,9 @@ of a BibTeX field into the template. Fork."
   :diminish multiple-cursors)
 
 ;;; O
+(use-package olivetti
+  :hook (TeX-mode . olivetti-mode))
+
 (use-package org-autolist
   :commands org-autolist-mode
   :diminish org-autolist-mode
