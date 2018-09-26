@@ -1040,11 +1040,6 @@ of a BibTeX field into the template. Fork."
   :diminish multiple-cursors)
 
 ;;; O
-(use-package offlineimap
-  ;; :hook (gnus-before-startup . offlineimap)
-  :config
-  (setq offlineimap-timestamp "%Y-%m-%d-%H:%M:%S "))
-
 (use-package org-autolist
   :commands org-autolist-mode
   :diminish org-autolist-mode
