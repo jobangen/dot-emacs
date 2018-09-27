@@ -1346,6 +1346,8 @@ rotate entire document."
   :defer t
   :straight (pomodoro :local-repo "~/.emacs.d/lisp/pomodoro"))
 
+(use-package pos-tip)                   ;for sdcv
+
 (use-package projectile
   :defer 2
   :diminish projectile-mode
@@ -1403,13 +1405,19 @@ rotate entire document."
   )
 
 ;;; S
-(use-package sdcv-mode
-  :straight (sdcv-mode :type git
-                       :host github
-                       :repo "pluskid/sdcv-mode")
-  :commands sdcv-search
+(use-package sdcv
+  :straight (sdcv :type git
+                  :host github
+                  :repo "stardiviner/sdcv.el")
+  :bind (:map sdcv-mode-map
+              ("M-p" . sdcv-previous-dictionary)
+              ("M-n" . sdcv-next-dictionary))
   :config
-  (bind-key "<tab>" 'sdcv-toggle-entry sdcv-mode-map))
+  (setq sdcv-dictionary-simple-list
+        '("Duden"
+          "German - English"
+          "English - German")))
+
 
 (use-package sensitive-mode
   :straight (sensitive-mode :local-repo "~/.emacs.d/lisp/sensitive-mode")
@@ -1426,6 +1434,8 @@ rotate entire document."
     (eval-after-load 'shell-interaction
     `(make-directory ,(concat user-emacs-directory "var/shell-interaction") t))
 )
+
+(use-package showtip)                   ; for sdcv
 
 (use-package smart-mode-line
   :init
