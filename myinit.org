@@ -618,7 +618,7 @@ SCHEDULED: %t
  :immediate-finish t)
 
 ("je" "Electricity" plain (file (lambda () (expand-file-name (concat db-dir "plot/electricity.csv"))))
-"2017-10-02 20:52,39685.5,%(org-read-date),%?"
+"2018-09-30 13:43,41224.2,%(org-read-date),%?"
 :immediate-finish t
 :jump-to-captured t)
 
