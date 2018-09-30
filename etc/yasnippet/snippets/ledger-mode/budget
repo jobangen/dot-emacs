@@ -2,18 +2,20 @@
 # name: budget
 # key: budget
 # --
-    [Assets:Budget:Ausbildung & Arbeit]   € ${1:0}
-    [Assets:Budget:Bargeld]               € ${2:0}
-    [Assets:Budget:Essen]                 € ${3:0}
-    [Assets:Budget:Geld]                  € ${4:0}
-    [Assets:Budget:Geschenk]              € ${5:0}
-    [Assets:Budget:Handy]                 € ${6:0}
-    [Assets:Budget:Kauf]                  € ${7:0}
-    [Assets:Budget:Körper]                € ${8:0}
-    [Assets:Budget:Mitgliedschaften]      € ${9:0}
-    [Assets:Budget:Reisen]                € ${10:0}
-    [Assets:Budget:Steuer]                € ${11:0}
-    [Assets:Budget:Unterhaltung]          € ${12:0}
-    [Assets:Budget:Versicherung]          € ${13:0}
-    [Assets:Budget:Wohnung]               € ${14:0}
-    [Equity:Budget]
+    [Assets:Budget:Ausbildung & Arbeit]   € ${2:0},00
+    [Assets:Budget:Bargeld]               € ${3:0},00
+    [Assets:Budget:Essen]                 € ${4:0},00
+    [Assets:Budget:Geld]                  € ${5:0},00
+    [Assets:Budget:Geschenk]              € ${6:0},00
+    [Assets:Budget:Handy]                 € ${7:0},00
+    [Assets:Budget:Kauf]                  € ${8:0},00
+    [Assets:Budget:Körper]                € ${9:0},00
+    [Assets:Budget:Mitgliedschaften]      € ${10:0},00
+    [Assets:Budget:Reisen]                € ${11:0},00
+    [Assets:Budget:Steuer]                € ${12:0},00
+    [Assets:Budget:Unterhaltung]          € ${13:0},00
+    [Assets:Budget:Versicherung]          € ${14:0},00
+    [Assets:Budget:Wohlfahrt]             € ${15:0},00
+    [Assets:Budget:Wohnung]               € ${16:0},00
+;;    [Assets:Savings]
+    [Equity:Budget]                      € -${1:0}
