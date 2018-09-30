@@ -341,7 +341,7 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
     (ledger-mode)
     ;; insert date
     (goto-char (point-min))
-    (while (search-forward-regexp "x" nil t)
+    (while (search-forward-regexp "X" nil t)
       (replace-match (concat year-month "-") t nil))
     ;; fix Description
     (goto-char (point-min))
