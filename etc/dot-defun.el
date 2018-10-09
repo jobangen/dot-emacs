@@ -368,6 +368,10 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
     ;; fix alignment
     (ledger-post-align-postings (point-min) (point-max))))
 
+(defun job/byte-compile-current-file ()
+  (interactive)
+  (byte-compile-file (buffer-file-name)))
+
 
 (provide 'dot-defun)
 ;;; dot-defun.el ends here
