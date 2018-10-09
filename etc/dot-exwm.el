@@ -35,20 +35,43 @@
   (start-process-shell-command "firefox" nil "firefox"))
 
 ;;;###autoload
-(defun job/qutebrowser ()
+(defun job/qutebrowser-ws-5 ()
   (interactive)
-  (start-process-shell-command "qutebrowser" nil "qutebrowser"))
+  (exwm-workspace-switch-create 5)
+  (if (get-buffer "qutebrowser")
+      (progn
+        (switch-to-buffer "qutebrowser")
+        (message "Workspace 5"))
+    (start-process-shell-command "qutebrowser" nil "qutebrowser")
+    (message "Workspace 5")))
 
 ;;;###autoload
-(defun job/gnome-terminal ()
+(defun job/gnome-terminal-ws-7 ()
   (interactive)
-  (start-process-shell-command
-   "gnome-terminal" nil "gnome-terminal"))
+  (exwm-workspace-switch-create 7)
+  (if (get-buffer "Gnome-terminal")
+      (progn
+        (switch-to-buffer "Gnome-terminal")
+        (message "Workspace 7"))
+    (start-process-shell-command
+     "gnome-terminal" nil "gnome-terminal")
+    (message "Workspace 7")))
 
+;;;###autoload
 (defun job/geeqie ()
   (interactive)
   (start-process-shell-command
    "geeqie" nil "geeqie"))
+
+;;;###autoload
+(defun job/gnus-ws-6 ()
+  (interactive)
+  (exwm-workspace-switch-create 6)
+  (if (get-buffer "*Group*")
+      (message "Workspace 6")
+    (delete-other-windows)
+    (gnus)
+    (message "workspace 6")))
 
 ;;;###autoload
 (defun job/slock ()
@@ -90,14 +113,24 @@
   (interactive)
   (shell-command-to-string "gnome-screenshot"))
 
+;;;###autoload
+(defun job/exwm-layout-enlarge-window-horizontally ()
+  (interactive)
+  (exwm-layout-enlarge-window-horizontally 68))
+
+;;;###autoload
+(defun job/exwm-layout-shrink-window-horizontally ()
+  (interactive)
+  (exwm-layout-shrink-window-horizontally 68))
+
 ;; Sensibel bei der Formatierung. Lispy machts kaputt
 (setq exwm-input-global-keys
       `(([?\s-c] . exwm-input-toggle-keyboard)
-        ([?\s-f] . job/qutebrowser)
-        ([?\s-g] . gnus)
+        ([?\s-f] . job/qutebrowser-ws-5)
+        ([?\s-g] . job/gnus-ws-6)
         ([?\s-j] . exwm-workspace-next)
         ([?\s-k] . job/kill-current-buffer)
-        ([?\s-m] . job/gnome-terminal)
+        ([?\s-m] . job/gnome-terminal-ws-7)
         ([?\s-q] . job/geeqie)
         ([?\s-r] . exwm-reset)
         ([?\s-w] . exwm-workspace-switch)
@@ -106,8 +139,8 @@
         ([s-f11] . job/brightness-increase)
         ([s-f12] . job/brightness-decrease)
         ([s-tab] . other-window)
-        ([?\s-+] . exwm-layout-enlarge-window-horizontally)
-        ([?\s--] . exwm-layout-shrink-window-horizontally)
+        ([?\s-+] . job/exwm-layout-enlarge-window-horizontally)
+        ([?\s--] . job/exwm-layout-shrink-window-horizontally)
         ([print] . job/gnome-screenshot)
         ([XF86AudioMute] . job/volume-mute)
         ([XF86AudioRaiseVolume] . job/volume-raise)
