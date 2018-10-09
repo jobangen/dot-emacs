@@ -1046,7 +1046,8 @@ http://doc.norang.ca/org-mode.org
  'org-babel-load-languages '((shell . t)
                              (dot . t)
                              (python . t)
-                             (R . t)))
+                             (R . t)
+                             (gnuplot . t)))
 
 (defun my-org-confirm-babel-evaluate (lang body)
   (not (string= lang "sh"))
