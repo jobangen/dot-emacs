@@ -142,7 +142,9 @@
       `((".*" ,autosave-dir t)))
 
 ;;; Libraries
-(use-package counsel-notmuch      :defer t)
+(use-package counsel-notmuch
+  :bind ("C-c t" . counsel-notmuch))
+
 (use-package counsel-projectile   :defer 3)
 (use-package define-word          :commands define-word define-word-at-point)
 (use-package dired-collapse       :hook dired-mode)
