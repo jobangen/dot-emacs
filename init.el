@@ -235,7 +235,255 @@
     "Return year field contents as a string obeying `bibtex-autokey-year-length'."
     (let ((yearfield (bibtex-autokey-get-field "date")))
       (substring yearfield (max 0 (- (length yearfield)
-                                     bibtex-autokey-year-length))))))
+                                     bibtex-autokey-year-length)))))
+
+  (setq bibtex-biblatex-entry-alist
+        '(("Article" "Article in Journal"
+           (("author") ("title")        ;rm ("journaltitle")
+            ("year" nil nil 0) ("date" nil nil 0))
+           nil
+           (("origdate")                ;add "origdate"
+            ("translator") ("annotator") ("commentator") ("subtitle") ("titleaddon")
+            ("editor") ("editora") ("editorb") ("editorc")
+            ("journaltitle") ("journalsubtitle") ("issuetitle") ("issuesubtitle")
+            ("language") ("origlanguage") ("series") ("volume") ("number") ("eid")
+            ("issue") ("month") ("pages") ("version") ("note") ("issn")
+            ("addendum") ("pubstate") ("doi") ("eprint") ("eprintclass")
+            ("eprinttype") ("url") ("urldate")))
+          ("Book" "Single-Volume Book"
+           (("author") ("title") ("year" nil nil 0) ("date" nil nil 0))
+           nil
+           (("editor") ("editora") ("editorb") ("editorc")
+            ("translator") ("annotator") ("commentator")
+            ("introduction") ("foreword") ("afterword") ("subtitle") ("titleaddon")
+            ("maintitle") ("mainsubtitle") ("maintitleaddon")
+            ("language") ("origlanguage") ("volume") ("part") ("edition") ("volumes")
+            ("series") ("number") ("note") ("publisher") ("location") ("isbn")
+            ("chapter") ("pages") ("pagetotal") ("addendum") ("pubstate") ("doi")
+            ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("MVBook" "Multi-Volume Book"
+           (("author") ("title") ("year" nil nil 0) ("date" nil nil 0))
+           nil
+           (("editor") ("editora") ("editorb") ("editorc")
+            ("translator") ("annotator") ("commentator")
+            ("introduction") ("foreword") ("afterword") ("subtitle")
+            ("titleaddon") ("language") ("origlanguage") ("edition") ("volumes")
+            ("series") ("number") ("note") ("publisher")
+            ("location") ("isbn") ("pagetotal") ("addendum") ("pubstate") ("doi")
+            ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("InBook" "Chapter or Pages in a Book"
+           (("title") ("year" nil nil 0) ("date" nil nil 0))
+           (("author") ("booktitle"))
+           (("bookauthor") ("editor") ("editora") ("editorb") ("editorc")
+            ("translator") ("annotator") ("commentator") ("introduction") ("foreword")
+            ("afterword") ("subtitle") ("titleaddon") ("maintitle") ("mainsubtitle")
+            ("maintitleaddon") ("booksubtitle") ("booktitleaddon")
+            ("language") ("origlanguage") ("volume") ("part") ("edition") ("volumes")
+            ("series") ("number") ("note") ("publisher") ("location") ("isbn")
+            ("chapter") ("pages") ("addendum") ("pubstate")
+            ("doi") ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("BookInBook" "Book in Collection" ; same as @inbook
+           (("title") ("year" nil nil 0) ("date" nil nil 0))
+           (("author") ("booktitle"))
+           (("bookauthor") ("editor") ("editora") ("editorb") ("editorc")
+            ("translator") ("annotator") ("commentator") ("introduction") ("foreword")
+            ("afterword") ("subtitle") ("titleaddon") ("maintitle") ("mainsubtitle")
+            ("maintitleaddon") ("booksubtitle") ("booktitleaddon")
+            ("language") ("origlanguage") ("volume") ("part") ("edition") ("volumes")
+            ("series") ("number") ("note") ("publisher") ("location") ("isbn")
+            ("chapter") ("pages") ("addendum") ("pubstate")
+            ("doi") ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("SuppBook" "Supplemental Material in a Book" ; same as @inbook
+           (("title") ("year" nil nil 0) ("date" nil nil 0))
+           (("author") ("booktitle"))
+           (("bookauthor") ("editor") ("editora") ("editorb") ("editorc")
+            ("translator") ("annotator") ("commentator") ("introduction") ("foreword")
+            ("afterword") ("subtitle") ("titleaddon") ("maintitle") ("mainsubtitle")
+            ("maintitleaddon") ("booksubtitle") ("booktitleaddon")
+            ("language") ("origlanguage") ("volume") ("part") ("edition") ("volumes")
+            ("series") ("number") ("note") ("publisher") ("location") ("isbn")
+            ("chapter") ("pages") ("addendum") ("pubstate")
+            ("doi") ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("Booklet" "Booklet (Bound, but no Publisher)"
+           (("author" nil nil 0) ("editor" nil nil 0) ("title")
+            ("year" nil nil 1) ("date" nil nil 1))
+           nil
+           (("subtitle") ("titleaddon") ("language") ("howpublished") ("type")
+            ("note") ("location") ("chapter") ("pages") ("pagetotal") ("addendum")
+            ("pubstate") ("doi") ("eprint") ("eprintclass") ("eprinttype")
+            ("url") ("urldate")))
+          ("Collection" "Single-Volume Collection"
+           (("editor") ("title") ("year" nil nil 0) ("date" nil nil 0))
+           nil
+           (("editora") ("editorb") ("editorc") ("translator") ("annotator")
+            ("commentator") ("introduction") ("foreword") ("afterword")
+            ("subtitle") ("titleaddon") ("maintitle") ("mainsubtitle")
+            ("maintitleaddon") ("language") ("origlanguage") ("volume")
+            ("part") ("edition") ("volumes") ("series") ("number") ("note")
+            ("publisher") ("location") ("isbn") ("chapter") ("pages") ("pagetotal")
+            ("addendum") ("pubstate") ("doi") ("eprint") ("eprintclass")
+            ("eprinttype") ("url") ("urldate")))
+          ("MVCollection" "Multi-Volume Collection"
+           (("editor") ("title") ("year" nil nil 0) ("date" nil nil 0))
+           nil
+           (("editora") ("editorb") ("editorc") ("translator") ("annotator")
+            ("commentator") ("introduction") ("foreword") ("afterword")
+            ("subtitle") ("titleaddon") ("language") ("origlanguage") ("edition")
+            ("volumes") ("series") ("number") ("note") ("publisher")
+            ("location") ("isbn") ("pagetotal") ("addendum") ("pubstate") ("doi")
+            ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("InCollection" "Article in a Collection"
+           (("author") ("title") ("year" nil nil 0) ("date" nil nil 0))
+           (("booktitle"))
+           (("editor") ("editora") ("editorb") ("editorc") ("translator") ("annotator")
+            ("commentator") ("introduction") ("foreword") ("afterword")
+            ("subtitle") ("titleaddon") ("maintitle") ("mainsubtitle")
+            ("maintitleaddon") ("booksubtitle") ("booktitleaddon")
+            ("language") ("origlanguage") ("volume") ("part") ("edition")
+            ("volumes") ("series") ("number") ("note") ("publisher") ("location")
+            ("isbn") ("chapter") ("pages") ("addendum") ("pubstate") ("doi")
+            ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("SuppCollection" "Supplemental Material in a Collection" ; same as @incollection
+           (("author") ("editor") ("title") ("year" nil nil 0) ("date" nil nil 0))
+           (("booktitle"))
+           (("editora") ("editorb") ("editorc") ("translator") ("annotator")
+            ("commentator") ("introduction") ("foreword") ("afterword")
+            ("subtitle") ("titleaddon") ("maintitle") ("mainsubtitle")
+            ("maintitleaddon") ("booksubtitle") ("booktitleaddon")
+            ("language") ("origlanguage") ("volume") ("part") ("edition")
+            ("volumes") ("series") ("number") ("note") ("publisher") ("location")
+            ("isbn") ("chapter") ("pages") ("addendum") ("pubstate") ("doi")
+            ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("Manual" "Technical Manual"
+           (("author" nil nil 0) ("editor" nil nil 0) ("title")
+            ("year" nil nil 1) ("date" nil nil 1))
+           nil
+           (("subtitle") ("titleaddon") ("language") ("edition")
+            ("type") ("series") ("number") ("version") ("note")
+            ("organization") ("publisher") ("location") ("isbn") ("chapter")
+            ("pages") ("pagetotal") ("addendum") ("pubstate")
+            ("doi") ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("Misc" "Miscellaneous"
+           (("author" nil nil 0) ("editor" nil nil 0) ("title")
+            ("year" nil nil 1) ("date" nil nil 1))
+           nil
+           (("subtitle") ("titleaddon") ("language") ("howpublished") ("type")
+            ("version") ("note") ("organization") ("location")
+            ("date") ("month") ("year") ("addendum") ("pubstate")
+            ("doi") ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("Online" "Online Resource"
+           (("author" nil nil 0) ("editor" nil nil 0) ("title")
+            ("year" nil nil 1) ("date" nil nil 1) ("url"))
+           nil
+           (("subtitle") ("titleaddon") ("language") ("version") ("note")
+            ("organization") ("date") ("month") ("year") ("addendum")
+            ("pubstate") ("urldate")))
+          ("Patent" "Patent"
+           (("author") ("title") ("number") ("year" nil nil 0) ("date" nil nil 0))
+           nil
+           (("holder") ("subtitle") ("titleaddon") ("type") ("version") ("location")
+            ("note") ("date") ("month") ("year") ("addendum") ("pubstate")
+            ("doi") ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("Periodical" "Complete Issue of a Periodical"
+           (("editor") ("title") ("year" nil nil 0) ("date" nil nil 0))
+           nil
+           (("editora") ("editorb") ("editorc") ("subtitle") ("issuetitle")
+            ("issuesubtitle") ("language") ("series") ("volume") ("number") ("issue")
+            ("date") ("month") ("year") ("note") ("issn") ("addendum") ("pubstate")
+            ("doi") ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("SuppPeriodical" "Supplemental Material in a Periodical" ; same as @article
+           (("author") ("title") ("journaltitle")
+            ("year" nil nil 0) ("date" nil nil 0))
+           nil
+           (("translator") ("annotator") ("commentator") ("subtitle") ("titleaddon")
+            ("editor") ("editora") ("editorb") ("editorc")
+            ("journalsubtitle") ("issuetitle") ("issuesubtitle")
+            ("language") ("origlanguage") ("series") ("volume") ("number") ("eid")
+            ("issue") ("month") ("pages") ("version") ("note") ("issn")
+            ("addendum") ("pubstate") ("doi") ("eprint") ("eprintclass")
+            ("eprinttype") ("url") ("urldate")))
+          ("Proceedings" "Single-Volume Conference Proceedings"
+           (("title") ("year" nil nil 0) ("date" nil nil 0))
+           nil
+           (("subtitle") ("titleaddon") ("maintitle") ("mainsubtitle")
+            ("maintitleaddon") ("eventtitle") ("eventdate") ("venue") ("language")
+            ("editor")
+            ("volume") ("part") ("volumes") ("series") ("number") ("note")
+            ("organization") ("publisher") ("location") ("month")
+            ("isbn") ("chapter") ("pages") ("pagetotal") ("addendum") ("pubstate")
+            ("doi") ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("MVProceedings" "Multi-Volume Conference Proceedings"
+           (("editor") ("title") ("year" nil nil 0) ("date" nil nil 0))
+           nil
+           (("subtitle") ("titleaddon") ("eventtitle") ("eventdate") ("venue")
+            ("language") ("volumes") ("series") ("number") ("note")
+            ("organization") ("publisher") ("location") ("month")
+            ("isbn") ("pagetotal") ("addendum") ("pubstate")
+            ("doi") ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("InProceedings" "Article in Conference Proceedings"
+           (("author") ("title") ("year" nil nil 0) ("date" nil nil 0))
+           (("booktitle"))
+           (("editor") ("subtitle") ("titleaddon") ("maintitle") ("mainsubtitle")
+            ("maintitleaddon") ("booksubtitle") ("booktitleaddon")
+            ("eventtitle") ("eventdate") ("venue") ("language")
+            ("volume") ("part") ("volumes") ("series") ("number") ("note")
+            ("organization") ("publisher") ("location") ("month") ("isbn")
+            ("chapter") ("pages") ("addendum") ("pubstate")
+            ("doi") ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("Reference" "Single-Volume Work of Reference" ; same as @collection
+           (("editor") ("title") ("year" nil nil 0) ("date" nil nil 0))
+           nil
+           (("editora") ("editorb") ("editorc") ("translator") ("annotator")
+            ("commentator") ("introduction") ("foreword") ("afterword")
+            ("subtitle") ("titleaddon") ("maintitle") ("mainsubtitle")
+            ("maintitleaddon") ("language") ("origlanguage") ("volume")
+            ("part") ("edition") ("volumes") ("series") ("number") ("note")
+            ("publisher") ("location") ("isbn") ("chapter") ("pages") ("pagetotal")
+            ("addendum") ("pubstate") ("doi") ("eprint") ("eprintclass")
+            ("eprinttype") ("url") ("urldate")))
+          ("MVReference" "Multi-Volume Work of Reference" ; same as @mvcollection
+           (("editor") ("title") ("year" nil nil 0) ("date" nil nil 0))
+           nil
+           (("editora") ("editorb") ("editorc") ("translator") ("annotator")
+            ("commentator") ("introduction") ("foreword") ("afterword")
+            ("subtitle") ("titleaddon") ("language") ("origlanguage") ("edition")
+            ("volumes") ("series") ("number") ("note") ("publisher")
+            ("location") ("isbn") ("pagetotal") ("addendum") ("pubstate") ("doi")
+            ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("InReference" "Article in a Work of Reference" ; same as @incollection
+           (("author") ("editor") ("title") ("year" nil nil 0) ("date" nil nil 0))
+           (("booktitle"))
+           (("editora") ("editorb") ("editorc") ("translator") ("annotator")
+            ("commentator") ("introduction") ("foreword") ("afterword")
+            ("subtitle") ("titleaddon") ("maintitle") ("mainsubtitle")
+            ("maintitleaddon") ("booksubtitle") ("booktitleaddon")
+            ("language") ("origlanguage") ("volume") ("part") ("edition")
+            ("volumes") ("series") ("number") ("note") ("publisher") ("location")
+            ("isbn") ("chapter") ("pages") ("addendum") ("pubstate") ("doi")
+            ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("Report" "Technical or Research Report"
+           (("author") ("title") ("type") ("institution")
+            ("year" nil nil 0) ("date" nil nil 0))
+           nil
+           (("subtitle") ("titleaddon") ("language") ("number") ("version") ("note")
+            ("location") ("month") ("isrn") ("chapter") ("pages") ("pagetotal")
+            ("addendum") ("pubstate")
+            ("doi") ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("Thesis" "PhD. or Master's Thesis"
+           (("author") ("title") ("type") ("institution")
+            ("year" nil nil 0) ("date" nil nil 0))
+           nil
+           (("subtitle") ("titleaddon") ("language") ("note") ("location")
+            ("month") ("isbn") ("chapter") ("pages") ("pagetotal")
+            ("addendum") ("pubstate")
+            ("doi") ("eprint") ("eprintclass") ("eprinttype") ("url") ("urldate")))
+          ("Unpublished" "Unpublished"
+           (("author") ("title") ("year" nil nil 0) ("date" nil nil 0))
+           nil
+           (("subtitle") ("titleaddon") ("language") ("howpublished")
+            ("note") ("location") ("isbn") ("date") ("month") ("year")
+            ("addendum") ("pubstate") ("url") ("urldate")))))
+  )
 
 (use-package bibtex-utils
   :defer 2
