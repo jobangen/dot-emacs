@@ -214,6 +214,7 @@
   :defer 2
   :diminish beacon-mode
   :config
+  (beacon-mode)
   (setq beacon-size 20)
   (setq beacon-color "#ff0000"))
 
