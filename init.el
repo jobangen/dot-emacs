@@ -655,6 +655,12 @@
 (use-package ediff
   :config (set 'ediff-window-setup-function 'ediff-setup-windows-plain))
 
+(use-package elmacro
+  :defer 2
+  :diminish elmacro-mode
+  :config
+  (elmacro-mode))
+
 (use-package engine-mode
   :defer 2
   :config
