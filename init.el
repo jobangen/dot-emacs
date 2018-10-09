@@ -153,7 +153,6 @@
 (use-package flyspell-correct-ivy :after (flyspell-correct ivy))
 (use-package git-timemachine      :defer t)
 (use-package goldendict           :commands goldendict-dwim)
-(use-package gnuplot-mode         :mode "\\.plot\\'")
 (use-package hydra)
 (use-package iso-transl           :defer 2 :straight nil)
 (use-package ivy-hydra            :after (ivy hydra))
@@ -557,6 +556,11 @@
   (eval-after-load "message"
     '(progn
        (define-key message-mode-map (kbd "C-c t") #'gnorb-gnus-outgoing-do-todo))))
+
+(use-package gnuplot
+  :straight (gnuplot :type git
+                     :host github
+                     :repo "bruceravel/gnuplot-mode"))
 
 (use-package gnus
   :commands gnus
