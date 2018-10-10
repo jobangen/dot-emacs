@@ -142,9 +142,6 @@
       `((".*" ,autosave-dir t)))
 
 ;;; Libraries
-(use-package counsel-notmuch
-  :bind ("C-c u" . counsel-notmuch))
-
 (use-package counsel-projectile   :defer 3)
 (use-package define-word          :commands define-word define-word-at-point)
 (use-package dired-collapse       :hook dired-mode)
@@ -550,6 +547,14 @@
          ("C-x C-SPC" . counsel-mark-ring)
          ("C-c o" . counsel-outline)
          ("C-c n" . counsel-org-goto)))
+
+(use-package counsel-notmuch
+  :bind ("C-c u" . counsel-notmuch))
+
+(use-package counsel-org-clock
+  :bind ("C-c C-x c" . counsel-org-clock-history)
+  :config
+  (setq counsel-org-clock-default-action 'counsel-org-clock-clock-dwim-action))
 
 (use-package csv-mode
   :defer t
