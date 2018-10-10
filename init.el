@@ -143,7 +143,7 @@
 
 ;;; Libraries
 (use-package counsel-notmuch
-  :bind ("C-c t" . counsel-notmuch))
+  :bind ("C-c u" . counsel-notmuch))
 
 (use-package counsel-projectile   :defer 3)
 (use-package define-word          :commands define-word define-word-at-point)
@@ -541,7 +541,6 @@
 
 (use-package counsel
   :bind (("C-s" . counsel-grep-or-swiper)
-         ("C-c u" . counsel-linux-app)
          ("C-M-s" . counsel-ag)
          ("C-x l" . counsel-locate)
          ("M-y" . counsel-yank-pop)
