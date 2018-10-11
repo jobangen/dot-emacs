@@ -743,10 +743,30 @@
          ))
 
   ;; run flyspell-buffer after saving dict
-  (defun flyspell-buffer-after-pdict-save (&rest _)
-    (flyspell-buffer))
+  ;; https://www.reddit.com/r/emacs/comments/4oc7pg/spellcheck_flyspellmode_underlines_disappear_when/
+  ;; läuft leider immer nach der Prüfung; auch wenn nicht gesichert wurde
+  ;; (defun flyspell-buffer-after-pdict-save (&rest _)
+  ;;   (flyspell-buffer))
 
-  (advice-add 'ispell-pdict-save :after #'flyspell-buffer-after-pdict-save))
+  ;; (advice-add 'ispell-pdict-save :after #'flyspell-buffer-after-pdict-save)
+
+  (defun ispell-pdict-save (&optional no-query force-save)
+    "Check to see if the personal dictionary has been modified.
+If so, ask if it needs to be saved."
+    (interactive (list ispell-silently-savep t))
+    (if (and ispell-pdict-modified-p (listp ispell-pdict-modified-p))
+        (setq ispell-pdict-modified-p (car ispell-pdict-modified-p)))
+    (when (and (or ispell-pdict-modified-p force-save)
+               (or no-query
+                   (y-or-n-p "Personal dictionary modified.  Save? ")))
+      (ispell-send-string "#\n")        ; save dictionary
+      (message "Personal dictionary saved.")
+      (when flyspell-mode
+        (flyspell-mode 0)
+        (flyspell-mode 1)
+        (flyspell-buffer)))
+    ;; unassert variable, even if not saved to avoid questioning.
+    (setq ispell-pdict-modified-p nil)))
 
 (use-package flyspell-correct
   :bind (("C-," . flyspell-correct-wrapper))
