@@ -2,7 +2,6 @@
 
 (require 'org)
 
-
 ;;; archive
 ;; https://fuco1.github.io/2017-04-20-Archive-subtrees-under-the-same-hierarchy-as-original-in-the-archive-files.html
 (defadvice org-archive-subtree (around fix-hierarchy activate)
@@ -51,8 +50,3 @@
 
 (provide 'dot-org)
 ;;; dot-org.el ends here
-
-
-
-
-
