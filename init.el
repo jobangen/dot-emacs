@@ -713,7 +713,6 @@
 
 (use-package flyspell
   :diminish flyspell-mode
-  :bind (("C-," . my/flyspell-check-previous-highlighted-word))
   :hook (text-mode . flyspell-mode)
   :init
   :config
@@ -722,46 +721,35 @@
   (eval-after-load "flyspell"
     '(define-key flyspell-mode-map (kbd "C-,") nil))
 
-  (setq flyspell-tex-command-regexp "\\(\\(begin\\|end\\)[ \t]*{\\|\\(cite[.*]*\\|autocite[.*]*\\|label\\|ref\\|eqref\\|usepackage\\|documentclass\\|addbibresource\\|pagestyle\\|KOMAoptions\\|setkomafont\\|newclassic\\|printbibliography\\)[ \t]*\\(\\[[^]]*\\]\\)?{[^{}]*\\)")
+  (setq flyspell-tex-command-regexp
+        (concat
+         "\\("                          ;1
+         "\\(begin\\|end\\)"
+         "[ \t]*{\\|"
+         "\\("                          ;2
+         "cite[.*]*\\|"
+         "autocite[.*]*\\|autocites[.*]*\\|"
+         "textcite[.*]*\\|textcites[.*]*\\|"
+         "label\\|ref\\|eqref\\|"
+         "documentclass\\|KOMAoptions\\|setkomafont\\|usepackage\\|"
+         "addbibresource\\|newclassic\\|"
+         "pagestyle\\|"
+         "printbibliography"
+         "\\)"                          ;2
+         "[ \t]*"
+         "\\(\\[[^]]*\\]\\)"
+         "?{[^{}]*"
+         "\\)"                          ;1
+         ))
 
-  (defun my/flyspell-check-previous-highlighted-word (&optional arg)
-    "Correct the closer misspelled word.
-    This function scans a mis-spelled word before the cursor. If it finds one
-    it proposes replacement for that word. With prefix arg, count that many
-    misspelled words backwards."
-    (interactive)
-    (let ((pos1 (point))
-          (pos (point))
-          (arg (if (or (not (numberp arg)) (< arg 1)) 1 arg))
-          ov ovs)
-      (if (catch 'exit
-            (while (and (setq pos (previous-overlay-change pos))
-                        (not (= pos pos1)))
-              (setq pos1 pos)
-              (if (> pos (point-min))
-                  (progn
-                    (setq ovs (overlays-at (1- pos)))
-                    (while (consp ovs)
-                      (setq ov (car ovs))
-                      (setq ovs (cdr ovs))
-                      (if (and (flyspell-overlay-p ov)
-                               (= 0 (setq arg (1- arg))))
-                          (throw 'exit t)))))))
-          (save-excursion
-            (goto-char pos)
-            (flyspell-correct-word-generic)
-            (setq flyspell-word-cache-word nil) ;; Force flyspell-word re-check
-            (flyspell-word))
-        (error "No word to correct before point"))))
+  ;; run flyspell-buffer after saving dict
+  (defun flyspell-buffer-after-pdict-save (&rest _)
+    (flyspell-buffer))
 
-  (defun my/flyspell-check-next-highlighted-word ()
-    "Custom function to spell check next highlighted word"
-    (interactive)
-    (flyspell-goto-next-error)
-    (flyspell-correct-word-generic)
-    (setq flyspell-word-cache-word nil)))
+  (advice-add 'ispell-pdict-save :after #'flyspell-buffer-after-pdict-save))
 
 (use-package flyspell-correct
+  :bind (("C-," . flyspell-correct-wrapper))
   :config
   (setq flyspell-correct-interface 'flyspell-correct-ivy))
 
