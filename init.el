@@ -575,7 +575,7 @@
   :mode ("\\.tex$" . TeX-latex-mode)
   :hook ((TeX-mode . TeX-fold-mode)
          (TeX-mode . variable-pitch-mode)
-         ;; (TeX-mode . linum-mode)
+         (TeX-mode . linum-mode)
          (TeX-mode . LaTeX-math-mode))
   :config
   (eval-after-load 'tex-mode
