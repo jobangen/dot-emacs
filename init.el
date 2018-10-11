@@ -1298,7 +1298,7 @@ of a BibTeX field into the template. Fork."
 
 ;;; O
 (use-package olivetti
-  :hook (TeX-mode . olivetti-mode))
+  :commands (olivetti-mode))
 
 (use-package org-autolist
   :commands org-autolist-mode
