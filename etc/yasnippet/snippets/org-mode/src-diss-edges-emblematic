@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: diss-edges-emblematic
+# key: diss
+# expand-env: ((yas-indent-line 'fixed))
+# --
+#+begin_src csv :tangle diss/edges-emblematic.csv  :padline no
+`(file-name-base)`,${1:reference},${4:page}
+csvr$0
+#+end_src

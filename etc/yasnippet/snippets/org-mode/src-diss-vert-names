@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: diss-vert-names
+# key: diss
+# expand-env: ((yas-indent-line 'fixed))
+# --
+#+begin_src csv :tangle diss/vert-names.csv :padline no
+`(file-name-base)`,,${2:discipline},${3:discipline+},,$0
+#+end_src

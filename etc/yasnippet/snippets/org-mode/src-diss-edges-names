@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: diss-edges-names
+# key: diss
+# expand-env: ((yas-indent-line 'fixed))
+# --
+#+begin_src csv :tangle diss/edges-names.csv  :padline no
+`(file-name-base)`,${1:reference},${0:2}
+csvr$0
+#+end_src

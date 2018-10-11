@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: diss-vert-bibkey
+# key: diss
+# expand-env: ((yas-indent-line 'fixed))
+# --
+#+begin_src csv :tangle diss/vert-bibkey.csv :padline no
+`(file-name-base)`,${1:year},${2:discipline},${3:discipline+},${4:Gattung},$0
+#+end_src
