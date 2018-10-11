@@ -368,9 +368,20 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
     ;; fix alignment
     (ledger-post-align-postings (point-min) (point-max))))
 
+;;;###autoload
 (defun job/byte-compile-current-file ()
   (interactive)
   (byte-compile-file (buffer-file-name)))
+
+;;;###autoload
+(defun job/writiting-mode ()
+  (interactive)
+  (text-scale-set 1)
+  (setq line-spacing 5)
+  (linum-mode 0)
+  (olivetti-mode)
+  (olivetti-toggle-hide-mode-line)
+  (olivetti-set-width '74))
 
 
 (provide 'dot-defun)
