@@ -74,6 +74,7 @@
 
 ;;;
 (use-package dot-org
+  :demand t
   :straight org
   :bind (("C-c a" . org-agenda)
          ("C-c c" . org-capture)
