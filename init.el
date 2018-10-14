@@ -826,7 +826,7 @@ If so, ask if it needs to be saved."
        (define-key message-mode-map (kbd "C-c t") #'gnorb-gnus-outgoing-do-todo))))
 
 (use-package gnuplot
-  :straight (gnuplot :type git
+  :straight (gnuplot-mode :type git
                      :host github
                      :repo "bruceravel/gnuplot-mode"))
 
