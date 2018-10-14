@@ -1247,9 +1247,17 @@ of a BibTeX field into the template. Fork."
   :hook (TeX-mode . latex-extra-mode))
 
 (use-package ledger-mode
-  :mode "\\.dat\\'"
+  :mode "\\.ledger\\'"
   :config
-  (setq ledger-binary-path "~/src/ledger/ledger"))
+  (setq ledger-binary-path "/home/job/src/ledger/ledger")
+  (setq ledger-reconcile-default-commodity "€")
+  (setq ledger-schedule-file "/home/job/proj/ledger-data/schedule.ledger")
+  (setq ledger-reports
+        '(("Budget" "%(binary) -f /home/job/proj/ledger-data/main.ledger -X € bal Assets:Budget Assets:Savings")
+          ("Assets vs. Expenses" "%(binary) -f /home/job/proj/ledger-data/main.ledger bal -X € --real Assets Liabilities ")
+          ("reg" "%(binary) -f %(ledger-file) reg")
+          ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
+          ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
 
 
 (use-package link-hint
