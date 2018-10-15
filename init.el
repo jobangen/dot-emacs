@@ -1254,11 +1254,11 @@ of a BibTeX field into the template. Fork."
   (setq ledger-schedule-file "/home/job/proj/ledger-data/schedule.ledger")
   (setq ledger-reports
         '(("Budget" "%(binary) -f /home/job/proj/ledger-data/main.ledger -X € bal Assets:Budget Assets:Savings")
-          ("Assets vs. Expenses" "%(binary) -f /home/job/proj/ledger-data/main.ledger bal -X € --real Assets Liabilities ")
-          ("reg" "%(binary) -f %(ledger-file) reg")
-          ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
-          ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
-
+          ("Assets vs. Liabilities" "%(binary) -f /home/job/proj/ledger-data/main.ledger bal -X € --real Assets Liabilities ")
+          ("Income vs. Expenses" "%(binary) -f /home/job/proj/ledger-data/main.ledger bal -X € --real Income Expenses ")
+          ("reg" "%(binary) -f %(ledger-file) -X € reg %(account)")
+          ("payee" "%(binary) -f %(ledger-file) -X € reg @%(payee)")
+          ("account" "%(binary) -f %(ledger-file) -X € reg %(account)"))))
 
 (use-package link-hint
   :after (avy)
