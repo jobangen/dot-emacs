@@ -6,7 +6,7 @@
 (exwm-randr-enable)
 
 ;;; Workspaces
-(setq exwm-workspace-number 5)
+(setq exwm-workspace-number 7)
 
 (setq exwm-workspace-show-all-buffers t) ;; share exwm buffers in all workspaces, not just the workspace in which it was created in (the default behaviour)
 (setq exwm-layout-show-all-buffers t)
