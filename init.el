@@ -1260,6 +1260,12 @@ of a BibTeX field into the template. Fork."
           ("payee" "%(binary) -f %(ledger-file) -X € reg @%(payee)")
           ("account" "%(binary) -f %(ledger-file) -X € reg %(account)"))))
 
+(use-package ledger-job
+  :straight (ledger-job :local-repo "~/.emacs.d/lisp/ledger-job")
+  :after (ledger-mode)
+  :bind (:map ledger-mode-map
+              ("C-c C-o C-n" . ledger-job-gnuplot-wrapper)))
+
 (use-package link-hint
   :after (avy)
   :bind ("C-c h" . link-hint-open-link))
