@@ -342,6 +342,31 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
   (olivetti-toggle-hide-mode-line)
   (olivetti-set-width '74))
 
+;;; pdf-tools
+;; https://www.reddit.com/r/emacs/comments/9p2yyq/marking_and_splitting_pdfs_with_pdfstools/
+(defvar selected-pages '())
+
+;;;###autoload
+(defun select-page ()
+  "Add current page to list of selected pages."
+  (interactive)
+  (add-to-list 'selected-pages (pdf-view-current-page) t))
+
+;;;###autoload
+(defun extract-selected-pages (file)
+  "Save selected pages to FILE."
+  (interactive "FSave as: ")
+  (setq selected-pages (sort selected-pages #'<))
+  (start-process "pdfjam" "*pdfjam*"
+                 "pdfjam"
+                 (buffer-file-name)
+                 (mapconcat #'number-to-string
+                            selected-pages
+                            ",")
+                 "-o"
+                 (expand-file-name file)))
+
+(define-key pdf-view-mode-map "S" #'select-page)
 
 (provide 'dot-defun)
 ;;; dot-defun.el ends here
