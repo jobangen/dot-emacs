@@ -1635,7 +1635,9 @@ rotate entire document."
 
 (use-package pomodoro
   :defer t
-  :straight (pomodoro :local-repo "~/.emacs.d/lisp/pomodoro"))
+  :straight (:type git
+                   :host github
+                   :repo "vderyagin/pomodoro.el"))
 
 (use-package pos-tip)                   ;for sdcv
 
