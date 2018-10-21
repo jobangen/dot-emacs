@@ -583,14 +583,17 @@
 
 (use-package dot-defun
   :straight nil
-  :defer 2
+  :after (dired)
+  :demand t
   :bind (("C-a" . job/beginning-of-line-or-indentation)
          ("C-k" . job/kill-line)
          ("C-w" . job/kill-word-or-region)
          ("C-c d" . job/insert-date)
          ("C-x C-v" . job/find-file-as-sudo)
          ("M-c" . capitalize-word)
-         ("M-l" . downcase-word)))
+         ("M-l" . downcase-word)
+         :map dired-mode-map
+         ("," . job-dired-cp-mv-files-to-destinations)))
 
 (use-package dired
   :straight nil
