@@ -44,8 +44,7 @@ müssen manuell deaktiviert werden
 
 
 (bind-keys
- ("<menu>" . switch-to-buffer)
- ("<f5>" . revert-buffer))
+ ("<menu>" . switch-to-buffer))
 
 (bind-keys*
  ("C-h" . backward-delete-char)

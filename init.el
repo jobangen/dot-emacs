@@ -169,6 +169,10 @@
 
 (org-babel-load-file "~/.emacs.d/myinit.org")
 
+;;; Keybindings
+(bind-keys
+ ("C-x C-r" . revert-buffer))
+
 ;;; A
 (use-package abbrev
   :defer 2
