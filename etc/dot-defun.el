@@ -315,6 +315,11 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
     (when (string-equal destination "4. Move to texts")
       (call-interactively 'job-dired-move-files-to-texts-dir))))
 
+;;;###autoload
+(defun job-navigate-date-description ()
+  (interactive)
+  (counsel-find-file "~/archive/.nav-date-description/"))
+
 ;;; crontab
 ;;;###autoload
 (defun crontab-e ()
