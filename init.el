@@ -1778,6 +1778,31 @@ rotate entire document."
 (use-package swiper)
 
 ;;; T
+(use-package tile
+  :bind ("C-c t" . imalison:hydra-tile/body)
+  :config
+  (progn
+    (defvar imalison:tall-tile-strategy (tile-split-n-tall 3))
+    (defvar imalison:wide-tile-strategy tile-wide)
+    (defvar imalison:master-tile-strategy (tile-argument-buffer-fetcher
+                                           :layout tile-master-left))
+    (require 'hydra)
+    (defhydra imalison:hydra-tile
+      nil
+      "tile"
+      ("t" (tile :strategy imalison:tall-tile-strategy))
+      ("w" (tile :strategy imalison:wide-tile-strategy))
+      ("m" (tile :strategy imalison:master-tile-strategy))
+      ("s" tile-select)
+      ("0" (tile :strategy tile-one))
+      ("n" tile)
+      ("l" winner-undo))
+    (setq tile-cycler
+          (tile-strategies :strategies
+                           (list imalison:tall-tile-strategy
+                                 imalison:master-tile-strategy
+                                 imalison:wide-tile-strategy
+                                 tile-one)))))
 (use-package tramp
   :straight nil
   :init
