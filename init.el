@@ -60,6 +60,7 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 (setq use-package-verbose t)
+(setq use-package-enable-imenu-support t)
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/etc"))
 
@@ -546,8 +547,7 @@
          ("C-x C-m" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
          ("C-x C-SPC" . counsel-mark-ring)
-         ("C-c o" . counsel-outline)
-         ("C-c n" . counsel-org-goto)))
+         ("C-x H-i" . counsel-imenu)))
 
 (use-package counsel-notmuch
   :bind ("C-c u" . counsel-notmuch))
