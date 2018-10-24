@@ -563,7 +563,8 @@
 
 (use-package csv-mode
   :defer t
-  :config (setq csv-separators '("," ";"))
+  :config
+  (setq csv-separators '("," ";"))
   (setq csv-align-padding 2))
 
 ;;; D
