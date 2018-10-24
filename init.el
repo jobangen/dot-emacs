@@ -1550,7 +1550,7 @@ of a BibTeX field into the template. Fork."
                         :host github
                         :repo "lechten/org-reveal")
   :config
-  (setq org-reveal-root "file:///home/job/programme/reveal.js"))
+  (setq org-reveal-root "file:///home/job/src/reveal.js"))
 
 ;;; P
 (use-package paperless
