@@ -836,8 +836,9 @@ If so, ask if it needs to be saved."
 
 (use-package gnuplot
   :straight (gnuplot-mode :type git
-                     :host github
-                     :repo "bruceravel/gnuplot-mode"))
+                          :host github
+                          :repo "bruceravel/gnuplot-mode")
+  :mode ("\\.plot\\'" . gnuplot-mode))
 
 (use-package gnus
   :commands gnus
