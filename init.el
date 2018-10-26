@@ -102,10 +102,6 @@
 (defvar autosave-dir
    (expand-file-name (convert-standard-filename "autosave/")  user-emacs-directory))
 
-(if (system-type-is-gnu)
-   (let ((default-directory  "~/.emacs.d/lisp/"))
-     (normal-top-level-add-subdirs-to-load-path)))
-
 (defvar custom-temp
    (expand-file-name "~/.custom-temp/"))
 
