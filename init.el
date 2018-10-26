@@ -531,8 +531,10 @@
           ("Other Languages" "Œ"))))
 
 (use-package contacts
-  :straight (contacts :local-repo "~/.emacs.d/lisp/scimax"
-                      :files ("contacts.el"))
+  :straight (scimax :type git
+                    :host github
+                    :repo "jkitchin/scimax"
+                    :files ("contacts.el"))
   :bind (("C-c g" . ivy-contacts))
   :config
   (setq contacts-files '("~/Dropbox/db/contacts.org"))
