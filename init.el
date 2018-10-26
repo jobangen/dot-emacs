@@ -970,6 +970,8 @@ If so, ask if it needs to be saved."
   :bind (("C-." . ivy-bibtex)
          ("C-<f5>" . ivy-resume))
   :config
+  (setq bibtex-completion-find-additional-pdfs t)
+  (setq bibtex-completion-pdf-extension '(".pdf" ".txt")) ;; Solution for listing add files in buffer
   (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 
   (ivy-bibtex-ivify-action bibtex-completion-edit-logs ivy-bibtex-edit-logs)
