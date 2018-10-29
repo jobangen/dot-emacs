@@ -30,6 +30,11 @@
   (kill-buffer-and-window))
 
 ;;;###autoload
+(defun job/open-buffer-other-window ()
+  (interactive)
+  (switch-to-buffer-other-window))
+
+;;;###autoload
 (defun job/firefox ()
   (interactive)
   (start-process-shell-command "firefox" nil "firefox"))
@@ -132,6 +137,7 @@
         ([?\s-j] . exwm-workspace-next)
         ([?\s-k] . job/kill-current-buffer)
         ([?\s-m] . job/gnome-terminal-ws-7)
+        ([?\s-o] . job/open-buffer-other-window)
         ([?\s-q] . job/geeqie)
         ([?\s-r] . exwm-reset)
         ([?\s-w] . exwm-workspace-switch)
