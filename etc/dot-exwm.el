@@ -27,7 +27,7 @@
 ;;;###autoload
 (defun job/kill-current-buffer ()
   (interactive)
-  (kill-buffer (current-buffer)))
+  (kill-buffer-and-window))
 
 ;;;###autoload
 (defun job/firefox ()
