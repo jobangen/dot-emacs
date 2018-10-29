@@ -60,6 +60,7 @@
 ;;;###autoload
 (defun job/geeqie ()
   (interactive)
+  (delete-other-windows)
   (start-process-shell-command
    "geeqie" nil "geeqie"))
 
