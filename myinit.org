@@ -1293,7 +1293,7 @@ _q_: cancel     _r_: resolve    _tI_: insert item       ^ ^                   _p
 #+end_src
 ** hydra-window
 #+begin_src emacs-lisp
-(bind-key "C-c w" 'hydra-window/body)
+;(bind-key "C-c w" 'hydra-window/body)
 (defhydra hydra-window (:hint nil
                         :color red)
  "
