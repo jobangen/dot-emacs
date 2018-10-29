@@ -338,11 +338,12 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
   (byte-compile-file (buffer-file-name)))
 
 ;;;###autoload
-(defun job/writiting-mode ()
+(defun job/writing-mode ()
   (interactive)
   (text-scale-set 1)
   (setq line-spacing 5)
   (linum-mode 0)
+  (writegood-mode)
   (olivetti-mode)
   (olivetti-toggle-hide-mode-line)
   (olivetti-set-width '74))
