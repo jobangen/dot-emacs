@@ -1782,7 +1782,7 @@ rotate entire document."
 
 ;;; T
 (use-package tile
-  :bind ("C-c t" . imalison:hydra-tile/body)
+  :bind ("C-c w" . imalison:hydra-tile/body)
   :config
   (progn
     (defvar imalison:tall-tile-strategy (tile-split-n-tall 3))
