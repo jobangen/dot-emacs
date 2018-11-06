@@ -1001,16 +1001,6 @@ http://doc.norang.ca/org-mode.org
 (setq org-columns-default-format "%50ITEM(Task) %6Effort(Effort){:} %6CLOCKSUM_T(Today) %6CLOCKSUM(Sum)")
 #+end_src
 
-** calendar
-*** config
-#+begin_src emacs-lisp
-(setq calendar-latitude 52.450894)
-(setq calendar-longitude 13.308570)
-(setq calendar-location-name "Berlin")
-
-(setq calendar-time-display-form '(24-hours ":" minutes))
-#+end_src
-
 ** org-present
 #+begin_src emacs-lisp
 (eval-after-load "org-present"

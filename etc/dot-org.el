@@ -45,8 +45,8 @@
 
 ;;; org-agenda
 
-(setq org-agenda-diary-file "journal.org")
-(setq org-agenda-include-diary nil)
+;; (setq org-agenda-diary-file "journal.org")
+(setq org-agenda-include-diary t)
 
 (provide 'dot-org)
 ;;; dot-org.el ends here

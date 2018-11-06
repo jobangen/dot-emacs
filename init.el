@@ -504,6 +504,23 @@
 
 
 ;;; C
+(use-package calendar
+  :bind (("C-c b" . calendar)
+         :map calendar-mode-map
+         ("i d" . job/diary-insert-entry))
+  :config
+  (setq calendar-date-style 'iso)
+  (setq calendar-set-date-style 'iso)
+  (setq calendar-time-display-form '(24-hours ":" minutes))
+  (setq calendar-mark-diary-entries-flag t) ;; markiert Tage mit Eintrag automatisch
+  (setq calendar-view-diary-initially-flag t) ;; Öffnet Diary-window automatisch
+  (setq calendar-week-start-day 1)
+  (setq calendar-latitude 52.450894)
+  (setq calendar-longitude 13.30857)
+  (setq calendar-location-name "Berlin")
+
+  (add-hook 'calendar-today-visible-hook 'calendar-mark-today))
+
 (use-package calfw
   :bind (("C-c f" . job/open-org-calendar))
   :config
@@ -566,6 +583,23 @@
   (setq csv-align-padding 2))
 
 ;;; D
+(use-package diary-lib
+  :config
+  (setq diary-file "~/Dropbox/db/diary")
+  (setq diary-date-forms diary-iso-date-forms)
+  (setq diary-list-include-blanks t)
+  (setq diary-number-of-entries [1 5 4 3 2 2 1])
+
+  (defun job/diary-insert-entry (arg)
+    "See `insert-diary-entry'."
+    (interactive "P")
+    (let ((calendar-date-display-form
+           '(year "-" month "-" day)))
+      (diary-make-entry (calendar-date-string (calendar-cursor-to-date t) t)
+                        arg)))
+
+  (add-hook 'diary-list-entries-hook 'diary-sort-entries t))
+
 (use-package deft
   :defer t
   :config
@@ -1964,3 +1998,5 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
   ("z"   projectile-cache-current-file)
   ("q"   nil :color blue))
 (bind-key* "C-c p" 'hydra-projectile/body)
+
+(calendar)
