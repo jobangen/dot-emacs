@@ -507,7 +507,11 @@
 (use-package calendar
   :bind (("C-c b" . calendar)
          :map calendar-mode-map
-         ("i d" . job/diary-insert-entry))
+         ("i d" . job/diary-insert-entry)
+         ("n" . calendar-forward-week)
+         ("p" . calendar-backward-week)
+         ("f" . calendar-forward-day)
+         ("b" . calendar-backward-day))
   :config
   (setq calendar-date-style 'iso)
   (setq calendar-set-date-style 'iso)
