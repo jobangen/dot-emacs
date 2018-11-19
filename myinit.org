@@ -626,7 +626,7 @@ SCHEDULED: %t
  :jump-to-captured t
  :immediate-finish t)
 
-("je" "Electricity" plain (file (lambda () (expand-file-name (concat db-dir "plot/electricity.csv"))))
+("je" "Electricity" plain (file "~/proj/electricity/electricity.csv")
 "2018-10-18 13:43,41307.6,%(org-read-date),%?"
 :immediate-finish t
 :jump-to-captured t)
