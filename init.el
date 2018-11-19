@@ -1480,6 +1480,11 @@ of a BibTeX field into the template. Fork."
   (setq org-noter-property-doc-file "INTERLEAVE_PDF")
   (setq org-noter-property-note-location "INTERLEAVE_PAGE_NOTE"))
 
+(use-package org-recoll
+  :straight (org-recoll :type git
+                    :host github
+                    :repo "alraban/org-recoll"))
+
 (use-package org-ref
   :defer 2
   :init
