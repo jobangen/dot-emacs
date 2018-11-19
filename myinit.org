@@ -1420,7 +1420,7 @@ _y_: youtube      _bb_: bibtex
   ("s" www-synonyms-insert-synonym "insert synonym")
   ("t" google-translate-smooth-translate "translate")
   ("ö" sdcv-search-pointer+ "sdcv")
-  ("Ö" sdcv-search-input "sdcv"))
+  ("C-ö" sdcv-search-input "sdcv"))
 #+end_src
 
 ** xrandr-hydra
