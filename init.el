@@ -504,26 +504,47 @@
 
 
 ;;; C
+;; (use-package calendar
+;;   :bind (("C-c b" . calendar)
+;;          :map calendar-mode-map
+;;          ("i d" . job/diary-insert-entry)
+;;          ("n" . calendar-forward-week)
+;;          ("p" . calendar-backward-week)
+;;          ("f" . calendar-forward-day)
+;;          ("b" . calendar-backward-day))
+;;   :config
+;;   (setq calendar-date-style 'iso)
+;;   (setq calendar-set-date-style 'iso)
+;;   (setq calendar-time-display-form '(24-hours ":" minutes))
+;;   (setq calendar-mark-diary-entries-flag t) ;; markiert Tage mit Eintrag automatisch
+;;   (setq calendar-view-diary-initially-flag t) ;; Öffnet Diary-window automatisch
+;;   (setq calendar-location-name "Berlin")
+
+;;   (add-hook 'calendar-today-visible-hook 'calendar-mark-today))
+
 (use-package calendar
-  :bind (("C-c b" . calendar)
-         :map calendar-mode-map
-         ("i d" . job/diary-insert-entry)
-         ("n" . calendar-forward-week)
-         ("p" . calendar-backward-week)
-         ("f" . calendar-forward-day)
-         ("b" . calendar-backward-day))
+  :bind (("C-c b" . calendar))
   :config
-  (setq calendar-date-style 'iso)
-  (setq calendar-set-date-style 'iso)
-  (setq calendar-time-display-form '(24-hours ":" minutes))
-  (setq calendar-mark-diary-entries-flag t) ;; markiert Tage mit Eintrag automatisch
-  (setq calendar-view-diary-initially-flag t) ;; Öffnet Diary-window automatisch
   (setq calendar-week-start-day 1)
   (setq calendar-latitude 52.450894)
   (setq calendar-longitude 13.30857)
   (setq calendar-location-name "Berlin")
-
   (add-hook 'calendar-today-visible-hook 'calendar-mark-today))
+
+
+(use-package org-journal
+  :init
+  (setq org-journal-dir "~/Dropbox/db/journal")
+  (setq org-journal-file-format "%Y-%m-%d.org")
+  (setq org-journal-date-format "%Y-%m-%d, %A")
+  (setq org-journal-enable-agenda-integration t)
+  :config
+  (set-face-attribute
+   'org-journal-calendar-entry-face nil :foreground "#dd0000" :slant 'italic)
+  (set-face-attribute
+   'org-journal-calendar-scheduled-face nil :foreground "#c40000" :slant 'italic))
+  
+
 
 (use-package calfw
   :bind (("C-c f" . job/open-org-calendar))
