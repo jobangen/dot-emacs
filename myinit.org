@@ -504,6 +504,14 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
               (format "CLOCK: [%s %s]--" date time-begin)
               (format "[%s %s] => %%?\n" date time-end)
               (format ":END:")))))
+
+(defun org-journal-find-location ()
+  ;; Open today's journal, but specify a non-nil prefix argument in order to
+  ;; inhibit inserting the heading; org-capture will insert the heading.
+  (org-journal-new-entry t)
+  ;; Position point on the journal's top-level heading so that org-capture
+  ;; will add the new entry as a child entry.
+  (goto-char (point-min)))
 #+end_src
 
 ** capture
@@ -560,14 +568,16 @@ SCHEDULED: %t
  :clock-resume t)
 
 ("j" "Journal")
-("jj" "Journal" entry (file+olp+datetree "journal.org")
- "* %^{Headline}  :%^{Category|wiss|arbeit|pers}:journal:
-%T%?
+
+("jj" "Journal entry" entry (function org-journal-find-location)
+                               "* %(format-time-string org-journal-time-format)%^{Title}%?
 :PROPERTIES:
 :CREATED: [%<%Y-%m-%d %a %H:%M>]
-:CATEGORY:  %\\2
-:END:"
- :time-prompt t)
+:END:
+%i"
+:immediate-finish t
+:jump-to-captured t
+)
 
 ("jt" "Journal todo" entry (file+olp+datetree "journal.org")
 "* TODO %^{Task} :pers:today:
