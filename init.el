@@ -2028,5 +2028,3 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
   ("z"   projectile-cache-current-file)
   ("q"   nil :color blue))
 (bind-key* "C-c p" 'hydra-projectile/body)
-
-(calendar)
