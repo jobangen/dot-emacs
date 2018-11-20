@@ -579,15 +579,17 @@ SCHEDULED: %t
 :jump-to-captured t
 )
 
-("jt" "Journal todo" entry (file+olp+datetree "journal.org")
-"* TODO %^{Task} :pers:today:
+("jt" "Journal todo" entry (function org-journal-find-location)
+"* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:%^G
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
-:CATEGORY:  pers
+:CATEGORY: %//2
 :EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
 :END:
-%?")
+%?"
+:immediate-finish t
+:jump-to-captured t)
 
 ("jc" "Code" entry (file+olp+datetree "journal-code.org")
 "* %^{Title} %^G
