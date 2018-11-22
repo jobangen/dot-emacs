@@ -638,8 +638,8 @@ SCHEDULED: %t
  :time-prompt t
  :jump-to-captured t)
 
-("m" "mail todo" entry (file+headline "inbox.org" "Mail")
- "* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:
+("m" "mail todo" entry (function org-journal-find-location)
+ "* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:@mail:
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
