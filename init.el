@@ -903,6 +903,15 @@ If so, ask if it needs to be saved."
   :init
   (setq gnus-init-file (no-littering-expand-etc-file-name "gnus-config.el")))
 
+(use-package gnus-recent
+  :after gnus
+  :straight (gnus-recent :type git
+                         :host github
+                         :repo "unhammer/gnus-recent")
+  :config
+  (define-key gnus-summary-mode-map (kbd "l") #'gnus-recent-goto-previous)
+  (define-key gnus-group-mode-map (kbd "C-c L") #'gnus-recent-goto-previous))
+
 (use-package gnus-dired
   :defer 2
   :straight nil
