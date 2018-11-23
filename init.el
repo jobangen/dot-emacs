@@ -547,7 +547,7 @@
 
 
 (use-package calfw
-  :bind (("C-c f" . job/open-org-calendar))
+  ;; :bind (("C-c f" . job/open-org-calendar))
   :config
   (setq calendar-week-start-day 1)
   ;;
@@ -651,6 +651,7 @@
          ("C-k" . job/kill-line)
          ("C-w" . job/kill-word-or-region)
          ("C-c d" . job/insert-date)
+         ("C-c f" . job-dired-goto-my-dirs)
          ("C-x C-v" . job/find-file-as-sudo)
          ("M-c" . capitalize-word)
          ("M-l" . downcase-word)

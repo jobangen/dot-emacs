@@ -261,6 +261,27 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
         (buffer-list)))
 
 ;;;###autoload
+(defun job-dired-goto-my-dirs ()
+  (interactive)
+  (let ((destination
+         (completing-read "Dir: "
+                          '(("proj")
+                            ("archive")
+                            ("Dropbox")
+                            ("emacs")
+                            ("home")) nil t nil)))
+    (when (string-equal destination "proj")
+      (counsel-find-file "~/proj/"))
+    (when (string-equal destination "archive")
+      (counsel-find-file "~/archive/"))
+    (when (string-equal destination "Dropbox")
+      (counsel-find-file "~/Dropbox/"))
+    (when (string-equal destination "emacs")
+      (counsel-find-file "~/.emacs.d/"))
+    (when (string-equal destination "home")
+      (counsel-find-file "~/"))))
+
+;;;###autoload
 (defun job-dired-move2archive (&optional arg file-list)
   (interactive
    (let ((files (dired-get-marked-files t current-prefix-arg)))
