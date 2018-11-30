@@ -77,7 +77,7 @@
 (use-package dot-org
   :demand t
   :straight org
-  :bind (("C-c a" . org-agenda)
+  :bind (("C-c a" . job/org-agenda)
          ("C-c c" . org-capture)
          ("C-c i" . org-clock-in)
          ("C-c l" . org-store-link))

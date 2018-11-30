@@ -35,6 +35,12 @@
   (switch-to-buffer-other-window))
 
 ;;;###autoload
+(defun job/org-agenda ()
+  (interactive)
+  (exwm-workspace-switch-create 0)
+  (org-agenda))
+
+;;;###autoload
 (defun job/firefox ()
   (interactive)
   (start-process-shell-command "firefox" nil "firefox"))
