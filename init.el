@@ -15,9 +15,14 @@
 (global-auto-revert-mode t) ;;aktualisiert buffer automatisch
 (setq auto-revert-interval 3) ;; Prüfinterval in Sek.
 (setq auto-revert-verbose nil)
+
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-selection-coding-system 'utf-8)
 (set-language-environment "UTF-8")
-(set-terminal-coding-system 'utf-8) ;;UTF 8 by default
-(set-keyboard-coding-system 'utf-8) ;;(prefer-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+
 (setq-default indent-tabs-mode nil ;; Insert tabs as spaces (not tabs)
               indicate-buffer-boundaries 'left ;; Graphical gimmick
               indicate-empty-lines t           ;; Graphical gimmick
