@@ -209,6 +209,10 @@
     (define-key input-decode-map (kbd "C-i") (kbd "H-i"))))
 
 ;;; B
+(use-package bash-completion
+  :init
+  (bash-completion-setup))
+
 (use-package beacon
   :defer 2
   :diminish beacon-mode
@@ -1803,6 +1807,17 @@ rotate entire document."
   (setq epg-gpg-program "gpg2")
   ;; fragt in emacs nach pw; braucht "allow-loopback-pinentry" in gpg-agent.conf
   (setq epa-pinentry-mode 'loopback))
+
+(use-package shell
+  :bind ("C-r" . counsel-shell-history)
+  :init
+  (defun job/goto-shell ()
+    (interactive)
+    (if (string= (buffer-name) "*shell*")
+        (shell (generate-new-buffer-name "*shell*"))
+      (if (get-buffer "*shell*")
+          (switch-to-buffer "*shell*")
+        (shell)))))
 
 (use-package shell-interaction
   :defer 2
