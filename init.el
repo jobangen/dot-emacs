@@ -634,6 +634,11 @@
 
   (add-hook 'diary-list-entries-hook 'diary-sort-entries t))
 
+(use-package deadgrep
+  :straight (:type git
+                   :host github
+                   :repo "Wilfred/deadgrep"))
+
 (use-package deft
   :defer t
   :config
