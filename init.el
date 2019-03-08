@@ -736,8 +736,15 @@
           ;; Pictures
           ("jpg" ("eog" "gimp-2.8"))
           ("png" ("eog" "gimp-2.8"))
+          ;; Audio
+          ("wav" ("rhythmbox"))
+          ("WAV" ("rhythmbox"))
+          ("mp3" ("rhythmbox"))
           ;; Video
-          ("mov" ("totem" "vlc")))))
+          ("mov" ("totem" "vlc"))
+          ;; Other
+          ("mm" ("freeplane"))
+          )))
 
 ;;; E
 (use-package ediff
