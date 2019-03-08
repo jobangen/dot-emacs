@@ -1982,6 +1982,27 @@ rotate entire document."
     (setq require-final-newline nil)))
 
 ;;; Z
+(use-package zetteldeft
+  :straight (zetteldeft :type git
+                        :host github
+                        :repo "EFLS/zetteldeft")
+  :config
+  (setq zd-tag-regex "[#@]+[A-Za-z0-9-]+")
+  (setq zd-string-after-title
+        (concat "\n#+date: [" (format-time-string "%Y-%m-%d-%H%M") "]
+
+* Schlagwörter
+tags:
+
+* Inhalt
+
+* Literatur
+
+* Links & Files
+
+* Data")
+        ))
+
 (use-package zettelkasten
   :straight (zettelkasten :local-repo "~/.emacs.d/lisp/zettelkasten")
   :custom
