@@ -1095,7 +1095,7 @@ If so, ask if it needs to be saved."
 #+DATE: [${timestamp}]
 
 * Schlagwörter
-tags: §${=key=}, §txt, ${keywords},
+tags: @${=key=}, @txt, ${keywords},
 
 * Inhalt
 
