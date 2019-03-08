@@ -642,7 +642,9 @@
 (use-package deft
   :defer t
   :config
-  (setq deft-directory "~/Dropbox/db/zk/zettel")
+  (setq deft-directory "/home/job/Dropbox/db/zk/zettel")
+  (setq deft-file-limit 200)
+  (setq deft-new-file-format "%Y-%m-%d-%H%M")
   (bind-key "C-h" 'deft-filter-decrement deft-mode-map)
   (bind-key "C-w" 'deft-filter-decrement-word deft-mode-map))
 
