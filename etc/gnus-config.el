@@ -139,7 +139,7 @@
     (if (string-match "zedat" gnus-newsgroup-name)
         (progn
           (gnus-summary-put-mark-as-unread nil)
-          (gnus-summary-move-article nil "nnimap+zedat:2018" nil)
+          (gnus-summary-move-article nil "nnimap+zedat:2019" nil)
           (gnus-summary-next-article))
       (if (string-match "gmail" gnus-newsgroup-name)
           (progn
