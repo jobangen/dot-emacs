@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: ISHARES TECDAX UCITS ETF
+# key: stock
+# expand-env: ((yas-indent-line 'fixed))
+# --
+${1:Datum} * Sparplan
+    Assets:DiBa:Direkt-Depot:ishares-tecdax-ucits-etf  ${2:Kurs} "ISHARES TECDAX UCITS ETF" ;Stück ${3:Stück} EUR
+    Assets:DiBa:Extra-Konto                 € -50,00
+    [Assets:Savings:3-ETF]    $2 "ISHARES TECDAX UCITS ETF" ;Stück $3 EUR
+    [Assets:Savings:2-Tagesgeld]            € -50,00

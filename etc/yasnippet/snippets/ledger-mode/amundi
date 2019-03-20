@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: AMUNDI ETF MSCI WLD X EMU
+# key: stock
+# expand-env: ((yas-indent-line 'fixed))
+# --
+${1:Datum} * Sparplan
+    Assets:DiBa:Direkt-Depot:amundi-etf-msci-wld-x-emu  ${2:Kurs} "AMUNDI ETF MSCI WLD X EMU" ; Stück ${3:Stück} EUR
+    Assets:DiBa:Extra-Konto                € -100,00
+    [Assets:Savings:3-ETF]  $2 "AMUNDI ETF MSCI WLD X EMU" ;Stück $3 EUR
+    [Assets:Savings:2-Tagesgeld]           € -100,00

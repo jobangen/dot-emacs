@@ -3,6 +3,6 @@
 # key: diss
 # expand-env: ((yas-indent-line 'fixed))
 # --
-#+begin_src csv :tangle diss/vert-emblematic.csv :padline no
-`(file-name-base)`,,${2:discipline},${3:discipline+},,$0
+#+begin_src csv :tangle diss/vert-aussagen-usw.csv :padline no
+$1,${2:$$(yas-choose-value '("Emblematisch" "Aussage" "Thema"))},`(file-name-base)`,${3:Beschreibung}
 #+end_src

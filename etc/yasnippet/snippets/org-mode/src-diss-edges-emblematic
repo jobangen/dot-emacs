@@ -3,7 +3,6 @@
 # key: diss
 # expand-env: ((yas-indent-line 'fixed))
 # --
-#+begin_src csv :tangle diss/edges-emblematic.csv  :padline no
-`(file-name-base)`,${1:reference},${4:page}
-csvr$0
+#+begin_src csv :tangle diss/edges-aussagen-usw.csv  :padline no
+embl
 #+end_src
