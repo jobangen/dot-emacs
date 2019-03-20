@@ -10,6 +10,23 @@
     (beginning-of-line)))
 
 ;;;###autoload
+(defun job/berlinantiquariat-billing ()
+  (interactive)
+  (let ((month
+         (read-string "Monat: ")))
+    (shell-command
+     (concat "mkdir -p /home/job/tmp/tools/rechnung-ba/ && cat /home/job/templates/org/ba-rechnung-collector.org ~/Dropbox/db/journal/" month "* > /home/job/tmp/tools/rechnung-ba/" month ".org"))
+    (find-file (concat "/home/job/tmp/tools/rechnung-ba/" month ".org"))
+    (goto-char (point-min))
+    (while (search-forward "year-month" nil t)
+      (replace-match month t nil))
+    (search-forward "#+BEGIN: propview" nil t)
+    (org-ctrl-c-ctrl-c)
+    (search-forward "#+TBLFM:" nil t)
+    (org-ctrl-c-ctrl-c)
+    (beginning-of-line)))
+
+;;;###autoload
 (defun job/berlinantiquariat-bill-format ()
   (interactive)
   (goto-char (point-min))
@@ -364,6 +381,7 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
   (text-scale-set 1)
   (setq line-spacing 5)
   (linum-mode 0)
+  (TeX-fold-buffer)
   (writegood-mode)
   (olivetti-mode)
   (olivetti-toggle-hide-mode-line)
@@ -377,18 +395,18 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
 (defun job/pdfview-select-page ()
   "Add current page to list of selected pages."
   (interactive)
-  (add-to-list 'selected-pages (pdf-view-current-page) t))
+  (add-to-list 'job/pdfview-selected-pages (pdf-view-current-page) t))
 
 ;;;###autoload
 (defun job/pdfview-extract-selected-pages (file)
   "Save selected pages to FILE."
   (interactive "FSave as: ")
-  (setq selected-pages (sort selected-pages #'<))
+  (setq job/pdfview-selected-pages (sort job/pdfview-selected-pages #'<))
   (start-process "pdfjam" "*pdfjam*"
                  "pdfjam"
                  (buffer-file-name)
                  (mapconcat #'number-to-string
-                            selected-pages
+                            job/pdfview-selected-pages
                             ",")
                  "-o"
                  (expand-file-name file)))
