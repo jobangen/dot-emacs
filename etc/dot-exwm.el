@@ -27,12 +27,17 @@
 ;;;###autoload
 (defun job/kill-current-buffer ()
   (interactive)
+  (kill-buffer (current-buffer)))
+
+;;;###autoload
+(defun job/kill-buffer-and-window ()
+  (interactive)
   (kill-buffer-and-window))
 
 ;;;###autoload
 (defun job/open-buffer-other-window ()
   (interactive)
-  (switch-to-buffer-other-window))
+  (switch-to-buffer-other-window nil))
 
 ;;;###autoload
 (defun job/org-agenda ()
@@ -142,7 +147,8 @@
         ([?\s-g] . job/gnus-ws-6)
         ([?\s-j] . exwm-workspace-next)
         ([?\s-k] . job/kill-current-buffer)
-        ([?\s-m] . job/gnome-terminal-ws-7)
+        ([?\s-K] . job/kill-buffer-and-window)
+        ([?\s-m] . job/goto-shell)
         ([?\s-o] . job/open-buffer-other-window)
         ([?\s-q] . job/geeqie)
         ([?\s-r] . exwm-reset)
