@@ -518,11 +518,6 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 #+begin_src emacs-lisp
 (setq org-capture-templates '(
 
-("a" "Appointment" entry (file "calender.org")
- "* %^{Description}
-<%(org-read-date)%?>
-\n")
-
 ("c" "Contact" entry (file (lambda () (expand-file-name (concat db-dir "contacts.org"))))
  "* %(org-contacts-template-name)
 :PROPERTIES:
@@ -530,15 +525,17 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 :END:"
 )
 
-("t" "todo" entry (file "inbox.org")
- "* TODO %^{Task} :%^{Category|arbeit|pers|wiss}:%^G
+("t" "Todo" entry (function org-journal-find-location)
+"* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:%^G
 SCHEDULED: %t
 :PROPERTIES:
-:CREATED:   %U
-:CATEGORY:  %\\2
+:CREATED: %U
+:CATEGORY: %\\2
 :EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
 :END:
-%?")
+%?"
+:immediate-finish t
+:jump-to-captured t)
 
 ("T" "todo at point" entry (clock)
  "* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:
@@ -567,31 +564,19 @@ SCHEDULED: %t
  :clock-in t
  :clock-resume t)
 
-("j" "Journal")
-
-("jj" "Journal entry" entry (function org-journal-find-location)
-                               "* %(format-time-string org-journal-time-format)%^{Title}%?
+("j" "Journal entry" entry (function org-journal-find-location)
+                               "* %(format-time-string org-journal-time-format)%^{Title}%? :journal:
 :PROPERTIES:
 :CREATED: [%<%Y-%m-%d %a %H:%M>]
+:CATEGORY: %^{Category|wiss|arbeit|pers}
 :END:
 %i"
 :immediate-finish t
 :jump-to-captured t
 )
 
-("jt" "Journal todo" entry (function org-journal-find-location)
-"* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:%^G
-SCHEDULED: %t
-:PROPERTIES:
-:CREATED: %U
-:CATEGORY: %\\2
-:EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
-:END:
-%?"
-:immediate-finish t
-:jump-to-captured t)
-
-("jc" "Code" entry (file+olp+datetree "journal-code.org")
+("J" "Journal")
+("Jc" "Code" entry (file+olp+datetree "journal-code.org")
 "* %^{Title} %^G
 :PROPERTIES:
 :CREATED: %U
@@ -606,37 +591,10 @@ SCHEDULED: %t
 :immediate-finish t
 :jump-to-captured t)
 
-("jl" "Literaturbearbeitung" entry (file+olp+datetree "journal.org")
- "* Literaturbearbeitung :wiss:
-:PROPERTIES:
-:CATEGORY: wiss
-:END:"
- :immediate-finish t
- :jump-to-captured t)
-
-("jm" "Mailbearbeitung" entry (file+olp+datetree "journal.org")
- "* Mailbearbeitung :wiss:
-:PROPERTIES:
-:CATEGORY: wiss
-:END:"
- :jump-to-captured t
- :immediate-finish t)
-
-("jb" "BerlinAntiquariat" entry (file+olp+datetree "journal.org")
- #'org-capture-berlinantiquariat
- :time-prompt t
- :jump-to-captured t
- :immediate-finish t)
-
-("je" "Electricity" plain (file "~/proj/electricity/electricity.csv")
+("Je" "Electricity" plain (file "~/proj/electricity/electricity.csv")
 "2018-10-18 13:43,41307.6,%(org-read-date),%?"
 :immediate-finish t
 :jump-to-captured t)
-
-("jw" "Wissenschaft" entry (file+olp+datetree "journal.org")
- #'org-capture-wiss
- :time-prompt t
- :jump-to-captured t)
 
 ("m" "mail todo" entry (function org-journal-find-location)
  "* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:@mail:
@@ -751,13 +709,13 @@ Subject: [[%l][%:subject]]
 ** refile
 #+begin_src emacs-lisp
 ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
-(setq org-refile-targets (quote ((("pers.org") :maxlevel . 3)
-                                 (("wiss.org") :maxlevel . 6)
-                                 (("irw.org") :maxlevel . 4)
+(setq org-refile-targets (quote ((("~/Dropbox/db/org/pers.org") :maxlevel . 3)
+                                 (("~/Dropbox/db/org/wiss.org") :maxlevel . 6)
+                                 (("~/Dropbox/db/org/irw.org") :maxlevel . 4)
                                  (("~/Dropbox/diss/diss.org") :maxlevel . 4)
-                                 (("antiq.org") :maxlevel . 2)
+                                 (("~/Dropbox/db/org/antiq.org") :maxlevel . 2)
                                  (("~/Dropbox/db/contacts.org") :maxlevel . 2)
-                                 (("goals.org") :maxlevel . 2))
+                                 (("~/Dropbox/db/org/goals.org") :maxlevel . 2))
 ))
 
 (setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
@@ -826,7 +784,7 @@ Subject: [[%l][%:subject]]
 ; global Effort estimate values
 ; global STYLE property values for completion
 (setq org-global-properties
-      (quote (("Effort_ALL" . "0:10 0:15 0:20 0:30 0:45 1:00 1:30 2:00 3:00 4:00 5:00 6:00 7:00 8:00")
+      (quote (("Effort_ALL" . "00:10 00:15 00:20 00:30 00:45 01:00 01:30 02:00 03:00 04:00 05:00 06:00 07:00 08:00 16:00 32:00 40:00 48:00")
               ("STYLE_ALL" . "habit"))))
 #+end_src
 ** clocking
@@ -1048,7 +1006,8 @@ http://doc.norang.ca/org-mode.org
                              (dot . t)
                              (python . t)
                              (R . t)
-                             (gnuplot . t)))
+                             (gnuplot . t)
+                             (sql . t)))
 
 (defun my-org-confirm-babel-evaluate (lang body)
   (not (string= lang "sh"))

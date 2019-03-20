@@ -160,8 +160,6 @@
 (use-package neato-graph-bar      :defer t)
 (use-package neotree              :defer 3)
 (use-package nov                  :mode ("\\.epub\\'" . nov-mode))
-(use-package org-notmuch          :defer 3 :straight org :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
-(use-package org-pdfview          :after (org pdf-tools))
 (use-package pass                 :defer t)
 (use-package peep-dired           :defer t)
 (use-package smex)
@@ -540,21 +538,6 @@
   (setq calendar-location-name "Berlin")
   (add-hook 'calendar-today-visible-hook 'calendar-mark-today))
 
-
-(use-package org-journal
-  :init
-  (setq org-journal-dir "~/Dropbox/db/journal")
-  (setq org-journal-file-format "%Y-%m-%d.org")
-  (setq org-journal-date-format "%Y-%m-%d, %A")
-  (setq org-journal-enable-agenda-integration t)
-  :config
-  (set-face-attribute
-   'org-journal-calendar-entry-face nil :foreground "#dd0000" :slant 'italic)
-  (set-face-attribute
-   'org-journal-calendar-scheduled-face nil :foreground "#c40000" :slant 'italic))
-  
-
-
 (use-package calfw
   ;; :bind (("C-c f" . job/open-org-calendar))
   :config
@@ -755,6 +738,27 @@
   :diminish elmacro-mode
   :config
   (elmacro-mode))
+
+(use-package elpy
+  :init
+  (elpy-enable)
+  (setq python-shell-interpreter "ipython3")
+  (setq python-shell-interpreter-args "-i --simple-prompt")
+  (setq elpy-rpc-backend "jedi")
+
+  (add-hook 'elpy-mode-hook 'linum-mode)
+
+  (use-package py-autopep8)
+  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+
+  (use-package flycheck)
+  (when (require 'flycheck nil t)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook 'flycheck-mode))
+
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous))
+
 
 (use-package engine-mode
   :defer 2
@@ -987,6 +991,15 @@ If so, ask if it needs to be saved."
               ("f" . helpful-callable)
               ("v" . helpful-variable)
               ("k" . helpful-key)))
+
+(use-package highlight-indentation
+  :init
+  (progn
+    (defun set-hl-indent-color ()
+      (set-face-background 'highlight-indentation-face "#e3e3d3")
+      (set-face-background 'highlight-indentation-current-column-face "#c3b3b3"))
+    (add-hook 'python-mode-hook 'highlight-indentation-mode)
+    (add-hook 'python-mode-hook 'set-hl-indent-color)))
 
 (use-package hippie-expand
   :straight nil
@@ -1436,227 +1449,7 @@ of a BibTeX field into the template. Fork."
 (use-package olivetti
   :commands (olivetti-mode))
 
-(use-package org-autolist
-  :commands org-autolist-mode
-  :diminish org-autolist-mode
-  :init
-  (progn
-    (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))))
-
-(use-package org-checklist
-  :defer 2
-  :straight org
-  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
-
-(use-package org-clock-convenience
-  :bind (:map org-agenda-mode-map
-              ("<C-S-up>" . org-clock-convenience-timestamp-up)
-              ("<C-S-down>" . org-clock-convenience-timestamp-down)
-              ("ö" . org-clock-convenience-fill-gap)
-              ("ä" . org-clock-convenience-fill-gap-both)))
-
-(use-package org-clock-csv
-  :defer 2
-  :config
-  (defun my/org-clock-csv-calc ()
-    "Ruft script auf und verarbeitet die "
-    (interactive)
-    (shell-command "source ~/script/clock-entries.sh"))
-
-  (defun my/org-clock-csv-write-calc ()
-    (interactive)
-    (org-clock-csv)
-    (my/org-clock-csv-calc)))
-
-(use-package org-collector
-  :defer 3
-  :straight org
-  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
-
-(use-package org-contacts
-  :defer 2
-  :straight org
-  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
-  :config
-  (setq org-contacts-files '("~/Dropbox/db/contacts.org"))
-  (setq org-contacts-icon-use-gravatar nil)
-  (setq org-contacts-birthday-format "%l (%y)"))
-
-(use-package org-indent
-  :straight org
-  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
-  :commands org-indent-mode
-  :diminish org-indent-mode
-  :init
-  (progn
-    (setq org-indent-mode-turns-on-hiding-stars t)))
-
-(use-package org-gcal
-  :straight (org-gcal :type git
-                    :host github
-                    :repo "kidd/org-gcal.el")
-  :defer 2
-  :config
-  (setq org-gcal-auto-archive t)
-  (setq org-gcal-down-days 365)
-  (setq org-gcal-client-id "553301842275-clecdgmr7i8741e3ck5iltlgfk3qf79r.apps.googleusercontent.com")
-  (setq org-gcal-client-secret "4zyEbm_F_BMuJsA7rZZmgFBm")
-  (setq org-gcal-file-alist '(("jobangen@googlemail.com" . "~/Dropbox/db/org/calender.org"))))
-
-(use-package org-listcruncher
-  :straight (org-listcruncher :type git
-                              :host github
-                              :repo "dfeich/org-listcruncher"))
-
-(use-package org-noter
-  :config
-  (setq org-noter-property-doc-file "INTERLEAVE_PDF")
-  (setq org-noter-property-note-location "INTERLEAVE_PAGE_NOTE"))
-
-(use-package org-recoll
-  :straight (org-recoll :type git
-                    :host github
-                    :repo "alraban/org-recoll"))
-
-(use-package org-ref
-  :defer 2
-  :init
-  (bind-key "C-c )" 'org-autocite-complete-link org-mode-map)
-  (setq org-ref-completion-library 'org-ref-ivy-cite)
-  :config
-  (progn
-    (require 'org-ref)
-    (setq org-ref-notes-directory (expand-file-name zettel-dir))
-    (setq org-ref-default-bibliography '("~/Dropbox/db/biblio.bib"))
-    (setq org-ref-pdf-directory (expand-file-name texte-dir))
-    (setq orhc-bibtex-cache-file (no-littering-expand-var-file-name "org/ref/bibtex-cache.el"))
-    (setq org-ref-default-citation-link "autocite")))
-
-(use-package ox-extra
-  :defer 3
-  :straight org
-  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
-  :config
-  (ox-extras-activate '(latex-header-blocks ignore-headlines)))
-
-(use-package ox-latex
-  :defer 2
-  :straight org
-  :config
-  (setq org-latex-listings t)
-  (add-to-list 'org-latex-packages-alist '("" "booktabs" t))
-  (add-to-list 'org-latex-packages-alist '("" "ellipsis" t))
-  (add-to-list 'org-latex-packages-alist '("" "csquotes" t))
-  (add-to-list 'org-latex-packages-alist '("" "lmodern" t))
-  (add-to-list 'org-latex-packages-alist '("onehalfspacing" "setspace" t))
-  (add-to-list 'org-latex-packages-alist '("" "microtype" t))
-  (add-to-list 'org-latex-packages-alist '("english, ngerman" "babel" t))
-  (add-to-list 'org-latex-packages-alist '("T1" "fontenc" t))
-  (add-to-list 'org-latex-packages-alist '("utf8" "inputenc" t))
-
-  (add-to-list 'org-latex-classes
-               '("scrartcl"
-                 "\\RequirePackage[l2tabu, orthodox]{nag}
-          \\documentclass[DIV12, a4paper, 12pt]{scrartcl}
-         [NO-DEFAULT-PACKAGES]
-         [PACKAGES]
-         [EXTRA]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-  (add-to-list 'org-latex-classes
-               '("scrbook"
-                 "\\RequirePackage[l2tabu, orthodox]{nag}
-          \\documentclass[DIV=12, a4paper, 12pt]{scrbook}
-         [NO-DEFAULT-PACKAGES]
-         [NO-PACKAGES]
-         [EXTRA]"
-                 ("\\part{%s}" . "\\part*{%s}")
-                 ("\\chapter{%s}" . "\\chapter*{%s}")
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-  (add-to-list 'org-latex-classes
-               '("abrechnung"
-                 "\\documentclass[DIV=12, a4paper, 12pt]{scrartcl}
-          \\usepackage{job-abrechnung-ba}
-         [NO-DEFAULT-PACKAGES]
-         [PACKAGES]
-         [EXTRA]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-  (add-to-list 'org-latex-classes
-               '("zettel"
-                 "\\documentclass[DIV=12, a4paper, 12pt, headings=normal]{scrartcl}
-          \\usepackage{enumitem}
-          \\setlist[itemize]{itemsep=-0.5ex}
-         \\makeatletter
-         \\def\\maketitle{{\\centering%
-         \\par{\\large\\bfseries\\@title\\par\\bigskip}%
-         \\noindent}}
-         \\makeatother
-         [NO-DEFAULT-PACKAGES]
-         [PACKAGES]
-         [EXTRA]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection*{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection*{%s}" . "\\subsubsection*{%s}")))
-  (add-to-list 'org-latex-classes
-               '("beamer"
-                 "\\documentclass{beamer}\n
-\\usepackage{microtype}
-\\usepackage{lmodern}
-\\usepackage{csquotes}
-\\usepackage{ellipsis}
-\\usepackage{booktabs}\n
-\\usepackage[utf8]{inputenc}
-\\usepackage[T1]{fontenc}
-[NO-DEFAULT-PACKAGES]
-[NO-PACKAGES]
-[EXTRA]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\section{%s}")
-
-                 ("\\begin{frame}[fragile]\\frametitle{%s}"
-                  "\\end{frame}"
-                  "\\begin{frame}[fragile]\\frametitle{%s}"
-                  "\\end{frame}")))
-
-  (setq org-latex-default-class "zettel")
-  (setq org-export-with-author t)
-  (setq org-export-with-date t)
-  (setq org-export-with-toc nil)
-  (setq org-latex-hyperref-template nil)
-  (setq org-latex-tables-booktabs t)
-  (setq org-export-default-language "en")
-  (setq org-export-with-smart-quotes t)
-  (add-to-list 'org-export-smart-quotes-alist
-               '("en"
-                 (opening-double-quote :utf-8 "“" :html "&ldquo;" :latex "\\enquote{" :texinfo "``")
-                 (closing-double-quote :utf-8 "”" :html "&rdquo;" :latex "}" :texinfo "''")
-                 (opening-single-quote :utf-8 "‘" :html "&lsquo;" :latex "\\enquote*{" :texinfo "`")
-                 (closing-single-quote :utf-8 "’" :html "&rsquo;" :latex "}" :texinfo "'")
-                 (apostrophe :utf-8 "’" :html "&rsquo;"))) ;; Export von "" und '' zu csquotes
-  )
-
-(use-package ox-reveal
-  :straight (org-reveal :type git
-                        :host github
-                        :repo "lechten/org-reveal")
-  :config
-  (setq org-reveal-root "file:///home/job/src/reveal.js"))
-
 ;;; P
-(use-package paperless
-  :defer t
-  :config
-  (bind-key "C-m" 'paperless-display paperless-mode-map)
-  (setq paperless-capture-directory "~/archive/texte/texteingang")
-  (setq paperless-root-directory "~/"))
-
 (use-package pdf-tools
   :bind (:map pdf-view-mode-map
               ("C-s" . isearch-forward)
@@ -2026,7 +1819,20 @@ tags:
         (org-open-at-point)))
 
   :config
-  (bind-key "C-c z" 'hydra-zettelkasten/body))
+  (bind-key "C-c z" 'hydra-zettelkasten/body)
+
+  (defhydra hydra-zd (:columns 2)
+    "Zetteldeft"
+    ("n" zd-new-file "new-file")
+    ("N" zd-new-file-and-link "new-file-and-link")
+    ("l" zd-find-file-id-insert "find-file-id-insert")
+    ("f" zd-find-file "find-file")
+    ("s" zd-deft-new-search "deft search")
+    ("t" zd-avy-tag-search "tag-avy" :color blue))
+
+  (bind-key "C-ä" 'hydra-zd/body)
+
+  )
 
 ;;; Hydras
 (defhydra hydra-system (:color red
