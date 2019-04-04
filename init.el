@@ -173,7 +173,10 @@
 
 ;;; Keybindings
 (bind-keys
- ("C-x C-r" . revert-buffer))
+ ("C-x C-r" . revert-buffer)
+ ("M-n" . forward-paragraph)
+ ("M-p" . backward-paragraph))
+
 
 ;;; A
 (use-package abbrev
