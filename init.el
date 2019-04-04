@@ -700,7 +700,7 @@
            ("Text & Data"
             (extension "org" "txt" "doc" "docx" "csv" "odt"))
            ("Media"
-            (extension "JPG" "jpg" "PNG" "png" "gif" "bmp"))
+            (extension "JPG" "jpg" "PNG" "png" "gif" "bmp" "svg"))
            ("Archives"
             (extension "zip" "rar" "gz" "bz2" "tar" "org_archive"))))))
 
@@ -724,7 +724,8 @@
           ("html" ("firefox"))
           ;; Pictures
           ("jpg" ("eog" "gimp-2.8"))
-          ("png" ("eog" "gimp-2.8"))
+          ("png" ("feh" "eog" "gimp-2.8"))
+          ("svg" ("eog" "gimp-2.8"))
           ;; Audio
           ("wav" ("rhythmbox"))
           ("WAV" ("rhythmbox"))
