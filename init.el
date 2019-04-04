@@ -152,7 +152,7 @@
 (use-package define-word          :commands define-word define-word-at-point)
 (use-package dired-collapse       :hook dired-mode)
 (use-package dired-subtree        :commands dired-subtree-insert)
-(use-package ess                  :commands R)
+;; (use-package ess                  :commands R)
 (use-package flyspell-correct-ivy :after (flyspell-correct ivy))
 (use-package git-timemachine      :defer t)
 (use-package goldendict           :commands goldendict-dwim)
