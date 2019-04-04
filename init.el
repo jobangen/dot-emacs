@@ -76,18 +76,6 @@
 
 (use-package dot-exwm :straight exwm)
 
-(use-package no-littering)
-
-;;;
-(use-package dot-org
-  :demand t
-  :straight org
-  :bind (("C-c a" . job/org-agenda)
-         ("C-c c" . org-capture)
-         ("C-c i" . org-clock-in)
-         ("C-c l" . org-store-link))
-  :mode ("\\.txt\\'" . org-mode))
-
 ;;; Setup
 ;; https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
 (defun system-type-is-gnu ()
@@ -133,6 +121,21 @@
 
 (defvar job/bibliography-file
   (expand-file-name (convert-standard-filename "db/biblio.bib") dropbox-dir))
+
+
+(use-package no-littering)
+
+
+;;;
+(use-package dot-org
+  :demand t
+  :straight org
+  :bind (("C-c a" . job/org-agenda)
+         ("C-c c" . org-capture)
+         ("C-c i" . org-clock-in)
+         ("C-c l" . org-store-link))
+  :mode ("\\.txt\\'" . org-mode))
+
 
 ;; Backup
 (setq backup-directory-alist
