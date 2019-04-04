@@ -1079,7 +1079,7 @@ If so, ask if it needs to be saved."
             (buffer "*Org Agenda*"))))))
 
 (use-package ivy-bibtex
-  :bind (("C-." . ivy-bibtex)
+  :bind (("C-." . job/ivy-bibtex-try-last-citation)
          ("C-<f5>" . ivy-resume))
   :config
   (setq bibtex-completion-find-additional-pdfs t)
@@ -1305,8 +1305,16 @@ of a BibTeX field into the template. Fork."
             (org-cycle-hide-drawers nil)
             (goto-char (point-max))
             (bibtex-completion-notes-mode 1))))))
-  )
 
+    (defun job/ivy-bibtex-try-last-citation ()
+      (interactive)
+      (save-excursion
+        (search-backward-regexp "autocite" nil t)
+        (search-forward "{" nil t)
+        (kill-ring-save (point) (search-forward-regexp "[a-z0-9-]*" nil t)))
+      (ivy-bibtex))
+
+  )
 
 
 ;;; K
