@@ -100,6 +100,31 @@
   (setq org-contacts-icon-use-gravatar nil)
   (setq org-contacts-birthday-format "%l (%y)"))
 
+(use-package org-drill
+  :straight org
+  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
+  :config
+  (setq org-drill-hide-item-headings-p t)
+  (setq org-drill-maximum-items-per-session 50)
+  (setq org-drill-maximum-duration 20)
+  (setq org-drill-spaced-repetition-algorithm 'sm5)
+  (setq org-drill-add-random-noise-to-intervals-p t)
+  (setq org-drill-adjust-intervals-for-early-and-late-repetitions-p t))
+
+(use-package org-gcal
+  :straight (org-gcal :type git
+                      :host github
+                      :repo "kidd/org-gcal.el")
+  :disable t
+  :defer 2
+  :config
+  (setq org-gcal-auto-archive t)
+  (setq org-gcal-down-days 365)
+  (setq org-gcal-client-id "553301842275-clecdgmr7i8741e3ck5iltlgfk3qf79r.apps.googleusercontent.com")
+  (setq org-gcal-client-secret "4zyEbm_F_BMuJsA7rZZmgFBm")
+  (setq org-gcal-file-alist '(("jobangen@googlemail.com" . "~/Dropbox/db/org/calender.org"))))
+
+
 (use-package org-indent
   :straight org
   :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
@@ -108,18 +133,6 @@
   :init
   (progn
     (setq org-indent-mode-turns-on-hiding-stars t)))
-
-(use-package org-gcal
-  :straight (org-gcal :type git
-                    :host github
-                    :repo "kidd/org-gcal.el")
-  :defer 2
-  :config
-  (setq org-gcal-auto-archive t)
-  (setq org-gcal-down-days 365)
-  (setq org-gcal-client-id "553301842275-clecdgmr7i8741e3ck5iltlgfk3qf79r.apps.googleusercontent.com")
-  (setq org-gcal-client-secret "4zyEbm_F_BMuJsA7rZZmgFBm")
-  (setq org-gcal-file-alist '(("jobangen@googlemail.com" . "~/Dropbox/db/org/calender.org"))))
 
 (use-package org-journal
   :init
@@ -171,14 +184,16 @@
     (setq org-ref-default-citation-link "autocite")))
 
 
-;; org-babel
+;;; org-babel
 (setq org-babel-python-command "python3")
 (org-babel-lob-ingest "/home/job/proj/2018-11-06 lilli-diss/org/variablen.org")
+(setq org-babel-default-header-args:python '((:noweb . "yes")
+                                             (:results . "output wrap")))
 
 (use-package ob-async)
 
 
-;; org-export
+;;; org-export
 (setq org-export-use-babel nil)
 
 (use-package org-mind-map
@@ -188,7 +203,18 @@
   ;;:ensure-system-package (gvgen . graphviz)
   :config
   (setq org-mind-map-engine "dot")      ; Default. Directed Graph
-  (setq org-mind-map-dot-output '("dot")))
+  (setq org-mind-map-dot-output '("png"))
+  (setq org-mind-map-include-text t)
+  (setq org-mind-map-default-node-attribs '(("shape" . "plain")))
+  (setq org-mind-map-default-graph-attribs '(("autosize" . "false")
+                                             ("size" . "10,30")
+                                             ("resolution" . "900")
+                                             ("nodesep" . "0.75")
+                                             ("ranksep" . "0.1")
+                                             ("overlap" . "false")
+                                             ("spline" . "true")
+                                             ("rankdir" . "LR")))
+  )
 
 (use-package ox-extra
   :defer 3
@@ -324,7 +350,7 @@
 
           ("innovati-static"
            :base-directory "/home/job/proj/2018-11-06 lilli-diss/org/"
-           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|csv\\|txt\\|sh\\|py"
+           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|eps\\|pdf\\|mp3\\|ogg\\|swf\\|csv\\|txt\\|sh\\|py"
            :publishing-directory "/home/job/proj/2018-11-06 lilli-diss/html/"
            :recursive t
            :publishing-function org-publish-attachment)
