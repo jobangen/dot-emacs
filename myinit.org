@@ -525,6 +525,8 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 :END:"
 )
 
+("d" "Daily Tasks" entry (function org-journal-find-location) (file "~/templates/org/daily.org") :immediate-finish t :jump-to-captured t)
+
 ("t" "Todo" entry (function org-journal-find-location)
 "* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:%^G
 SCHEDULED: %t
@@ -703,6 +705,20 @@ Subject: [[%l][%:subject]]
 
 ("Z" "Add Content to Zettel" plain (function org-brain-goto-end)
           (function zettelkasten-zettel-template) :empty-lines 1)
+("D" "Norsk" entry (file "~/proj/languages/norsk.org")
+"* %^{Titel}    :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+Übersetzen:
+\n** Norsk
+%?
+\n** Deutsch
+
+\n** Beispiel
+
+"
+)
 ))
 #+end_src
 
@@ -1007,7 +1023,8 @@ http://doc.norang.ca/org-mode.org
                              (python . t)
                              (R . t)
                              (gnuplot . t)
-                             (sql . t)))
+                             (sql . t)
+                             (ledger . t)))
 
 (defun my-org-confirm-babel-evaluate (lang body)
   (not (string= lang "sh"))
