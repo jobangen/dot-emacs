@@ -150,8 +150,6 @@
 ;;; Libraries
 (use-package counsel-projectile   :defer 3)
 (use-package define-word          :commands define-word define-word-at-point)
-(use-package dired-collapse       :hook dired-mode)
-(use-package dired-subtree        :commands dired-subtree-insert)
 ;; (use-package ess                  :commands R)
 (use-package flyspell-correct-ivy :after (flyspell-correct ivy))
 (use-package git-timemachine      :defer t)
@@ -581,8 +579,7 @@
   (setq contacts-cache-file (no-littering-expand-var-file-name "contacts-cache.el")))
 
 (use-package counsel
-  :bind (("C-s" . counsel-grep-or-swiper)
-         ("C-M-s" . counsel-ag)
+  :bind (("C-M-s" . counsel-ag)
          ("C-x l" . counsel-locate)
          ("M-y" . counsel-yank-pop)
          ("M-x" . counsel-M-x)
@@ -646,7 +643,20 @@
          (TeX-mode . LaTeX-math-mode))
   :config
   (eval-after-load 'tex-mode
-    '(bind-key "C-:" 'reftex-citation LaTeX-mode-map)))
+    '(bind-key "C-:" 'reftex-citation LaTeX-mode-map))
+
+    (defun job/latex-notes ()
+      (interactive)
+      (let ((note
+             (read-string "Notiz: ")))
+        (save-excursion
+          (search-forward-regexp "% # Stand" nil t)
+          (backward-paragraph)
+          (insert (concat note "%"))
+          (TeX-newline))))
+
+    (eval-after-load 'latex-mode
+      '(bind-key "C-c n" 'job/latex-notes latex-mode-map)))
 
 (use-package dot-defun
   :straight nil
@@ -681,31 +691,41 @@
   (setq dired-listing-switches "--group-directories-first -alh1v")
   (put 'dired-find-alternate-file 'disabled nil))
 
+(use-package dired-collapse
+  :hook (dired-mode . dired-collapse-mode))
+
 
 (use-package dired-hide-details
   :straight nil
   :hook (dired-mode .  dired-hide-details-mode))
 
-(use-package dired-filter
-  :hook (dired-mode . dired-filter-group-mode)
-  :config
-  (setq dired-filter-group-saved-groups
-        '(("default"
-           ("DIR"
-            (directory))
-           ("PDF"
-            (extension "pdf"))
-           ("LaTeX"
-            (extension "tex" "bib"))
-           ("Text & Data"
-            (extension "org" "txt" "doc" "docx" "csv" "odt"))
-           ("Media"
-            (extension "JPG" "jpg" "PNG" "png" "gif" "bmp" "svg"))
-           ("Archives"
-            (extension "zip" "rar" "gz" "bz2" "tar" "org_archive"))))))
+(use-package dired-narrow
+  :bind (:map dired-mode-map
+              ("C-s" . dired-narrow)))
+
+;; (use-package dired-
+;;   :hook (dired-mode . dired-filter-group-mode)
+;;   :config
+;;   (setq dired-filter-group-saved-groups
+;;         '(("default"
+;;            ("DIR"
+;;             (directory))
+;;            ("PDF"
+;;             (extension "pdf"))
+;;            ("LaTeX"
+;;             (extension "tex" "bib"))
+;;            ("Text & Data"
+;;             (extension "org" "txt" "doc" "docx" "csv" "odt"))
+;;            ("Media"
+;;             (extension "JPG" "jpg" "PNG" "png" "gif" "bmp" "svg"))
+;;            ("Archives"
+;;             (extension "zip" "rar" "gz" "bz2" "tar" "org_archive"))))))
 
 (use-package dired-launch
   :hook (dired-mode . dired-launch-mode)
+  :bind (:map dired-mode-map
+              ("J" . dired-launch-command)
+              ("K" . dired-launch-with-prompt-command))
   :diminish dired-launch-mode
   :init
   (setf dired-launch-extensions-map
@@ -733,10 +753,16 @@
           ;; Video
           ("mov" ("totem" "vlc"))
           ;; Other
-          ("mm" ("freeplane"))
-          )))
+          ("mm" ("freeplane")))))
+
+(use-package dired-subtree
+  :bind (:map dired-mode-map
+              ("TAB" . dired-subtree-toggle)
+              ("<tab>" . dired-subtree-toggle)))
 
 ;;; E
+(use-package edbi)
+
 (use-package ediff
   :config (set 'ediff-window-setup-function 'ediff-setup-windows-plain))
 
@@ -1383,12 +1409,14 @@ of a BibTeX field into the template. Fork."
   (setq ledger-reconcile-default-commodity "€")
   (setq ledger-schedule-file "/home/job/proj/ledger-data/schedule.ledger")
   (setq ledger-reports
-        '(("Budget" "%(binary) -f /home/job/proj/ledger-data/main.ledger --decimal-comma -X € bal Assets:Budget Assets:Savings")
-          ("Assets vs. Liabilities" "%(binary) -f /home/job/proj/ledger-data/main.ledger --decimal-comma  bal -X € --real Assets Liabilities ")
+        '(("Dashboard" "%(binary) python /home/job/proj/ledger-data/ledger-dashboard.py")
+          ("Budget" "%(binary) -f /home/job/proj/ledger-data/main.ledger --decimal-comma -X € bal ^Budget:Funds ^Budget:Savings")
+          ("Assets vs. Liabilities" "%(binary) -f /home/job/proj/ledger-data/main.ledger --decimal-comma  bal -X € --real -d \"l<=3\" Assets Liabilities ")
           ("Income vs. Expenses" "%(binary) -f /home/job/proj/ledger-data/main.ledger --decimal-comma bal -X € --real Income Expenses ")
-          ("reg" "%(binary) -f %(ledger-file) --decimal-comma -X € reg %(account)")
+          ("reg" "%(binary) -f /home/job/proj/ledger-data/main.ledger -p \"this year\" --decimal-comma -X € reg %(account)")
           ("payee" "%(binary) -f %(ledger-file) --decimal-comma -X € reg @%(payee)")
-          ("account" "%(binary) -f %(ledger-file) --decimal-comma -X € reg %(account)"))))
+          ("account" "%(binary) -f %(ledger-file) --decimal-comma -X € reg %(account)")
+          ("Budgeting" "%(binary) python /home/job/proj/ledger-data/ledger-budgeting.py"))))
 
 (use-package ledger-job
   :straight (ledger-job :local-repo "~/.emacs.d/lisp/ledger-job")
@@ -1694,7 +1722,8 @@ rotate entire document."
   ;; need to do this manually or not picked up by `shell-pop'
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 
-(use-package swiper)
+(use-package swiper
+  :bind ("C-s" . swiper-isearch))
 
 ;;; T
 (use-package tile
@@ -1838,6 +1867,7 @@ tags:
 
   (defhydra hydra-zd (:columns 2)
     "Zetteldeft"
+    ("d" (find-file zettelkasten-zettel-directory) "dir")
     ("n" zd-new-file "new-file")
     ("N" zd-new-file-and-link "new-file-and-link")
     ("l" zd-find-file-id-insert "find-file-id-insert")
