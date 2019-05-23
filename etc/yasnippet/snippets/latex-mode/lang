@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: lang
+# key: l
+# --
+\lang{${1:auctoritas}}$0

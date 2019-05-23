@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: uneigtl
+# key: u
+# --
+\uneigtl{${1:Autorität}}$0
