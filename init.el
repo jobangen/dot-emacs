@@ -555,7 +555,9 @@
 (use-package calfw-org
   :after (calfw)
   :config
-  (setq cfw:org-agenda-schedule-args '(:sexp :timestamp)))
+  (setq cfw:org-agenda-schedule-args '(:sexp :timestamp))
+  (setq cfw:render-line-breaker 'cfw:render-line-breaker-simple)
+  (setq cfw:render-line-breaker-none t))
 
 (use-package char-menu
   :defer t
@@ -604,6 +606,7 @@
 
 ;;; D
 (use-package diary-lib
+  :disable t
   :config
   (setq diary-file "~/Dropbox/db/diary")
   (setq diary-date-forms diary-iso-date-forms)
@@ -627,12 +630,13 @@
 
 (use-package deft
   :defer t
+  :bind (:map deft-mode-map
+              ("C-h" . deft-filter-decrement)
+              ("C-w" . deft-filter-decrement-word))
   :config
   (setq deft-directory "/home/job/Dropbox/db/zk/zettel")
   (setq deft-file-limit 200)
-  (setq deft-new-file-format "%Y-%m-%d-%H%M")
-  (bind-key "C-h" 'deft-filter-decrement deft-mode-map)
-  (bind-key "C-w" 'deft-filter-decrement-word deft-mode-map))
+  (setq deft-new-file-format "%Y-%m-%d-%H%M"))
 
 (use-package dot-auctex :straight auctex
   :demand t
