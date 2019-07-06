@@ -1443,6 +1443,10 @@ of a BibTeX field into the template. Fork."
   (setq magit-last-seen-setup-instructions "1.4.0")
   (setq magit-diff-refine-hunk 'all))
 
+(use-package magit-gitflow
+  :config
+  (add-hook 'magit-mode-hook 'turn-on-magit-gitflow))
+
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
