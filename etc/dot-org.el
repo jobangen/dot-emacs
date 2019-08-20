@@ -115,7 +115,7 @@
   :straight (org-gcal :type git
                       :host github
                       :repo "kidd/org-gcal.el")
-  :disable t
+  :disabled
   :defer 2
   :config
   (setq org-gcal-auto-archive t)
@@ -153,15 +153,27 @@
 
 (use-package org-noter
   :config
-  (setq org-noter-property-doc-file "INTERLEAVE_PDF")
-  (setq org-noter-property-note-location "INTERLEAVE_PAGE_NOTE"))
+  (setq org-noter-notes-search-path '("~/Dropbox/db/zk/zettel"))
+  (setq org-noter-arrow-delay 0.1)
+  (setq org-noter-property-doc-file "NOTER_DOCUMENT")
+  (setq org-noter-property-note-location "NOTER_PAGE")
+  (setq org-noter-doc-property-in-notes t))
 
 (use-package org-notmuch
   :defer 3
   :straight org
   :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
 
+
+(use-package org-pdftools
+  :straight (org-pdftools :type git
+                          :host github
+                          :repo "fuxialexander/org-pdftools")
+  :config
+  (setq org-pdftools-root-dir "~/archive/texts/"))
+
 (use-package org-pdfview
+  :disabled
   :after (pdf-tools))
 
 (use-package org-recoll
