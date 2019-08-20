@@ -829,6 +829,11 @@
   ;; Symmetric Encryption.
   (setq epa-file-select-keys nil))
 
+(use-package evil
+  :config
+  (setq evil-default-state 'emacs)
+  (evil-mode 1))
+
 (use-package expand-region
   :bind (("C-c m" . er/expand-region)))
 
