@@ -1437,6 +1437,20 @@ of a BibTeX field into the template. Fork."
   :after (avy)
   :bind ("C-c h" . link-hint-open-link))
 
+(use-package linkmarks
+  :straight (linkmarks :type git
+                       :host github
+                       :repo "dustinlacewell/linkmarks")
+  :config
+  (setq linkmarks-file "~/Dropbox/db/zk/zettel/index.org")
+
+  (defun job/linkmarks-capture ()
+    (interactive)
+    (let ((org-capture-entry '("t" "Zk Index" entry (file linkmarks-file)
+                               "* %?\n%a\nadded: %U\n\n" :kill-buffer t)))
+      (linkmarks--setup)
+      (org-capture))))
+
 (use-package lispy
   :hook (emacs-lisp-mode . lispy-mode)
   :diminish lispy-mode)
