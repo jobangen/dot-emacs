@@ -501,9 +501,12 @@
   :config
   (setq bu-bibtex-fields-ignore-list '("")))
 
+(use-package blacken)
+
 (use-package blimp
   :straight (blimp :type git
                    :host github
+                   :disabled
                    :repo "walseb/blimp")
   :hook (image-mode-hook . blimp-mode))
 
