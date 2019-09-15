@@ -1914,15 +1914,25 @@ tags:
   :config
   (bind-key "C-c z" 'hydra-zettelkasten/body)
 
-  (defhydra hydra-zd (:columns 2)
-    "Zetteldeft"
+  (defhydra hydra-zd (:columns 2 :color pink)
+    "Zettelkasten"
     ("d" (find-file zettelkasten-zettel-directory) "dir")
-    ("n" zd-new-file "new-file")
+    ("f" zd-follow-link "follow link")
+    ("n" zd-new-file "new file")
+    ("r" zd-file-rename "rename file")
     ("N" zd-new-file-and-link "new-file-and-link")
     ("l" zd-find-file-id-insert "find-file-id-insert")
-    ("f" zd-find-file "find-file")
-    ("s" zd-deft-new-search "deft search")
-    ("t" zd-avy-tag-search "tag-avy" :color blue))
+    ("sf" zd-avy-file-search "avy-file-search")
+    ("sl" zd-avy-link-search "avy-link-search")
+    ("sd" zd-deft-new-search "deft search" :color blue)
+    ("st" zd-avy-tag-search "tag-avy" :color blue)
+    ("on" org-noter "noter" :color blue)
+    ("ol" org-store-link "org-link")
+    ("oL" (org-insert-link nil nil nil) "org-link insert")
+    ("t" zettelkasten-insert-tags "insert tags")
+    ("i" job/linkmarks-select "index, select")
+    ("I" zettelkasten-add-to-index "index, add")
+    ("k" kill-this-buffer "kill"))
 
   (bind-key "C-ä" 'hydra-zd/body)
 
