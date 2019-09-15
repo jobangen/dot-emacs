@@ -1455,6 +1455,14 @@ of a BibTeX field into the template. Fork."
   :config
   (setq linkmarks-file "~/Dropbox/db/zk/zettel/index.org")
 
+  (cl-defun job/linkmarks-select ()
+  (interactive)
+  (-let* ((targets (linkmarks--in-file))
+          (choices (mapcar 'car targets))
+          (choice (completing-read "Entry: " choices))
+          ((_ link) (-first (lambda (i) (equal (car i) choice)) targets)))
+    (org-open-link-from-string link)))
+
   (defun job/linkmarks-capture ()
     (interactive)
     (let ((org-capture-entry '("t" "Zk Index" entry (file linkmarks-file)
