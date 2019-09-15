@@ -609,7 +609,6 @@
 
 ;;; D
 (use-package diary-lib
-  :disable t
   :config
   (setq diary-file "~/Dropbox/db/diary")
   (setq diary-date-forms diary-iso-date-forms)
@@ -700,7 +699,6 @@
 
 (use-package dired-collapse
   :hook (dired-mode . dired-collapse-mode))
-
 
 (use-package dired-hide-details
   :straight nil
