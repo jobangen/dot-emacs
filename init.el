@@ -1937,7 +1937,7 @@ tags:
   (defhydra hydra-zd (:columns 2 :color pink)
     "Zettelkasten"
     ("d" (find-file zettelkasten-zettel-directory) "dir")
-    ("f" zd-follow-link "follow link")
+    ("f" job/zd-follow-loop "follow link")
     ("n" zd-new-file "new file")
     ("r" zd-file-rename "rename file")
     ("N" zd-new-file-and-link "new-file-and-link")
@@ -1952,7 +1952,8 @@ tags:
     ("t" zettelkasten-insert-tags "insert tags")
     ("i" job/linkmarks-select "index, select")
     ("I" zettelkasten-add-to-index "index, add")
-    ("k" kill-this-buffer "kill"))
+    ("k" kill-this-buffer "kill")
+    ("q" nil "Quit"))
 
   (bind-key "C-ä" 'hydra-zd/body)
 
