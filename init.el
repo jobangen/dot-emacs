@@ -1888,7 +1888,7 @@ rotate entire document."
                         :host github
                         :repo "EFLS/zetteldeft")
   :config
-  (setq zd-tag-regex "[#@]+[A-Za-z0-9-]+")
+  (setq zd-tag-regex "[#@]+[A-Za-z0-9:>-]+")
   (setq zd-string-after-title
         (concat "\n#+date: [" (format-time-string "%Y-%m-%d-%H%M") "]
 
@@ -1906,8 +1906,9 @@ tags:
   (defun job/zd-follow-loop ()
     (interactive)
     (goto-char (point-min))
+    (ignore-errors
     (while t
-      (zd-follow-link))))
+      (zd-follow-link)))))
 
 (use-package zettelkasten
   :straight (zettelkasten :local-repo "~/.emacs.d/lisp/zettelkasten")
@@ -1942,7 +1943,6 @@ tags:
     ("r" zd-file-rename "rename file")
     ("N" zd-new-file-and-link "new-file-and-link")
     ("l" zd-find-file-id-insert "find-file-id-insert")
-    ("sf" zd-avy-file-search "avy-file-search")
     ("sl" zd-avy-link-search "avy-link-search")
     ("sd" zd-deft-new-search "deft search" :color blue)
     ("st" zd-avy-tag-search "tag-avy" :color blue)
