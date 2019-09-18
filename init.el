@@ -1167,6 +1167,7 @@ tags: @${=key=}, @txt, ${keywords},
 * Literatur
 
 * Links & Files
+- [[elisp:(counsel-ag \"@${=key=}\" . nil)][Bibkeysearch]]
 
 * Data
 ** misc
