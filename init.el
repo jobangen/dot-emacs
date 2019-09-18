@@ -1901,8 +1901,13 @@ tags:
 
 * Links & Files
 
-* Data")
-        ))
+* Data"))
+
+  (defun job/zd-follow-loop ()
+    (interactive)
+    (goto-char (point-min))
+    (while t
+      (zd-follow-link))))
 
 (use-package zettelkasten
   :straight (zettelkasten :local-repo "~/.emacs.d/lisp/zettelkasten")
