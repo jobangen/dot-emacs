@@ -136,6 +136,7 @@
 
 (use-package org-journal
   :init
+  (setq org-journal-file-type 'weekly)
   (setq org-journal-dir "~/Dropbox/db/journal")
   (setq org-journal-file-format "%Y-%m-%d.org")
   (setq org-journal-date-format "%Y-%m-%d, %A")
@@ -199,6 +200,7 @@
 ;;; org-babel
 (setq org-babel-python-command "python3")
 (org-babel-lob-ingest "/home/job/proj/2018-11-06 lilli-diss/org/variablen.org")
+(org-babel-lob-ingest "/home/job/proj/2018-11-06 lilli-diss/org/forschungsfragen.org")
 (setq org-babel-default-header-args:python '((:noweb . "yes")
                                              (:results . "output wrap")))
 
