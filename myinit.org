@@ -463,7 +463,7 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 (defun capture-report-date-file (path)
   (let ((name (read-string "Name: ")))
     (expand-file-name
-     (concat path name (format-time-string "-%Y-%m-%d-%H%M") ".txt"))))
+     (concat path (format-time-string "%Y-%m-%d-%H%M ") name ".txt"))))
 
 ;;http://stackoverflow.com/questions/24967910/org-mode-capture
 (defun org-capture-berlinantiquariat ()
