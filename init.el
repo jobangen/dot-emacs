@@ -504,9 +504,9 @@
 (use-package blacken)
 
 (use-package blimp
+  :disabled
   :straight (blimp :type git
                    :host github
-                   :disabled
                    :repo "walseb/blimp")
   :hook (image-mode-hook . blimp-mode))
 
@@ -806,7 +806,6 @@
 
   (define-key company-active-map (kbd "C-n") #'company-select-next)
   (define-key company-active-map (kbd "C-p") #'company-select-previous))
-
 
 (use-package engine-mode
   :defer 2
