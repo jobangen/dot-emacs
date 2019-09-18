@@ -1359,13 +1359,13 @@ of a BibTeX field into the template. Fork."
             (goto-char (point-max))
             (bibtex-completion-notes-mode 1))))))
 
-    (defun job/ivy-bibtex-try-last-citation ()
-      (interactive)
-      (save-excursion
-        (search-backward-regexp "autocite" nil t)
-        (search-forward "{" nil t)
-        (kill-ring-save (point) (search-forward-regexp "[a-z0-9-]*" nil t)))
-      (ivy-bibtex))
+  (defun job/ivy-bibtex-try-last-citation ()
+    (interactive)
+    (save-excursion
+      (search-backward-regexp "autocite" nil t)
+      (search-forward "{" nil t)
+      (kill-ring-save (point) (search-forward-regexp "[a-z0-9-]*" nil t)))
+    (ivy-bibtex))
 
   )
 
