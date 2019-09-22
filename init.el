@@ -1636,6 +1636,8 @@ rotate entire document."
 
 (use-package pos-tip)                   ;for sdcv
 
+(use-package posframe)
+
 (use-package projectile
   :defer 2
   :diminish projectile-mode
