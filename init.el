@@ -842,6 +842,8 @@
 (use-package evil
   :config
   (setq evil-default-state 'emacs)
+  (setq evil-insert-state-modes nil)
+  (setq evil-motion-state-modes nil)
   (evil-mode 1))
 
 (use-package expand-region
