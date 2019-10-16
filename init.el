@@ -163,7 +163,6 @@
 (use-package nov                  :mode ("\\.epub\\'" . nov-mode))
 (use-package pass                 :defer t)
 (use-package peep-dired           :defer t)
-(use-package smex)
 (use-package rainbow-delimiters   :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 (use-package wgrep                :defer 3)
 
