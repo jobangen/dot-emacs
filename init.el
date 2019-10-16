@@ -1372,6 +1372,10 @@ of a BibTeX field into the template. Fork."
 (use-package ivy-posframe
   :after (ivy posframe))
 
+(use-package ivy-prescient
+  :config
+  (ivy-prescient-mode)
+  (prescient-persist-mode))
 
 ;;; K
 (use-package key-chord
