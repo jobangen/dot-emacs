@@ -4,7 +4,7 @@
 # expand-env: ((yas-indent-line 'fixed))
 # --
 ${1:Datum} * Sparplan
-    Assets:DiBa:ish-msci-europe-sri:$1  ${2:Kurs} "iShares MSCI Europe SRI UCITS ETF" ;Stück ${3:Stück} EUR
+    Assets:Anlage:DiBa:ish-msci-europe-sri:$1  ${2:Anzahl} "iShares MSCI Europe SRI UCITS ETF" ;Stück ${3:Stück} EUR
     Assets:Tagesgeld:DiBa                 € -50,00
     [Assets:Savings:3-ETF]    $2 "iShares MSCI Europe SRI UCITS ETF" ;Stück $3 EUR
     [Assets:Savings:2-Tagesgeld]            € -50,00
