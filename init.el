@@ -1230,16 +1230,16 @@ ${source},${=key=}
 
   (defun bibtex-completion-format-entry (entry width)
     "Formats a BibTeX entry for display in results list."
-    (let* ((fields (list (if (assoc-string "author" entry 'case-fold) "author" "editor")
-                         "title" "date" "=has-pdf=" "=has-note=" "=type="))
+    (let* ((fields (list "=has-pdf=" (if (assoc-string "author" entry 'case-fold) "author" "editor")
+                         "date" "title" "=type=" "=has-note="))
            (fields (-map (lambda (it)
                            (bibtex-completion-clean-string
-                            (bibtex-completion-get-value it entry " ")))
+                            (bibtex-completion-get-value it entry "  ")))
                          fields))
-           (fields (-update-at 0 'bibtex-completion-shorten-authors fields)))
-      (s-format "$0 $1 $2 $3$4 $5" 'elt
+           (fields (-update-at 1 'bibtex-completion-shorten-authors fields)))
+      (s-format "$0 $1  $2  $3 $4 $5" 'elt
                 (-zip-with (lambda (f w) (truncate-string-to-width f w 0 ?\s))
-                           fields (list 36 (- width 53) 4 1 1 7)))))
+                           fields (list 1 25 4 (- width 46) 7 1)))))
 
   (defun bibtex-completion-insert-reference (keys)
     "Insert a reference for each selected entry."
