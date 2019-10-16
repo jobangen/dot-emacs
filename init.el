@@ -1820,11 +1820,16 @@ rotate entire document."
                                  imalison:master-tile-strategy
                                  imalison:wide-tile-strategy
                                  tile-one)))))
+
 (use-package tramp
   :straight nil
   :init
   (setq tramp-persistency-file-name (no-littering-expand-var-file-name "tramp-history.el")))
 
+(use-package ts
+  :straight (ts :type git
+                :host github
+                :repo "alphapapa/ts.el"))
 
 ;;; U
 (use-package undo-tree
