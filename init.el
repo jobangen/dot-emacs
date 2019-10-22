@@ -1370,7 +1370,47 @@ of a BibTeX field into the template. Fork."
   )
 
 (use-package ivy-posframe
-  :after (ivy posframe))
+  :after (ivy posframe)
+  :config
+  (setq ivy-posframe-display-functions-alist
+        '((swiper-isearch . nil)
+          (ivy-bibtex . nil)
+          (counsel-find-file . ivy-posframe-display-at-frame-center)
+          (counsel-ag . ivy-posframe-display-at-frame-center)
+          (counsel-M-x . ivy-posframe-display-at-frame-center)
+          (ivy-switch-buffer . ivy-posframe-display-at-frame-center)
+          (counsel-yank-pop . ivy-posframe-display-at-frame-center)
+          (counsel-locate . ivy-posframe-display-at-frame-center)
+          (counsel-linux-app . ivy-posframe-display-at-frame-center)
+          (gnus-mime-save-part . ivy-posframe-display-at-frame-center)
+          (t . ivy-posframe-display-at-point)))
+
+  (setq ivy-posframe-height-alist '((counsel-ag . 30)
+                                    (t . 20)))
+
+  (setq ivy-posframe-size-function 'ivy-posframe-get-size+)
+
+
+  (defun ivy-posframe-get-size+ ()
+    (if (eq ivy--display-function
+            'ivy-posframe-display-at-point)
+        (list
+         :height ivy-posframe-height
+         ;; FIXME: dynamically determine length: how to take completion
+         ;; annotations into account?
+         :width 1000
+         :min-height 10
+         :min-width 33)
+      (list
+       :height ivy-posframe-height
+       :width (+ 2 (frame-width))
+       :min-height (or ivy-posframe-min-height (+ ivy-height 1))
+       :min-width (or ivy-posframe-min-width (round (* (frame-width) 0.62))))))
+
+  (ivy-posframe-mode 1)
+
+  (set-face-attribute 'ivy-posframe nil :background "#f3f3f3" :foreground "#333333")
+  (set-face-attribute 'ivy-posframe-border nil :background "#000000"))
 
 (use-package ivy-prescient
   :config
