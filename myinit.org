@@ -333,7 +333,16 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                  (org-agenda-remove-tags t)))
           (tags "KBreview"
                 ((org-agenda-overriding-header "5. Review:")
-                 (org-agenda-remove-tags t)))))))
+                 (org-agenda-remove-tags t)))))
+        ("j" "TODO dowith and TASK with"
+         ((org-sec-with-view "TODO dowith")
+          (org-sec-where-view "TODO doat")
+          (org-sec-assigned-with-view "TASK with")
+          (org-sec-stuck-with-view "STUCK with")))
+
+
+
+))
 #+end_src
 
 *** agenda-hydra
