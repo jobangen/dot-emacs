@@ -1774,7 +1774,12 @@ rotate entire document."
         (shell (generate-new-buffer-name "*shell*"))
       (if (get-buffer "*shell*")
           (switch-to-buffer "*shell*")
-        (shell)))))
+        (shell))))
+
+  (defun my-shell-mode-hook ()
+    (setq comint-input-ring-file-name "~/.zsh_history") ;; or bash_history
+    (comint-read-input-ring t))
+  (add-hook 'shell-mode-hook 'my-shell-mode-hook))
 
 (use-package shell-interaction
   :defer 2
