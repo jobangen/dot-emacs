@@ -1413,6 +1413,7 @@ of a BibTeX field into the template. Fork."
   (set-face-attribute 'ivy-posframe-border nil :background "#000000"))
 
 (use-package ivy-prescient
+  :after (counsel)
   :config
   (ivy-prescient-mode)
   (prescient-persist-mode))
