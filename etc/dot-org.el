@@ -101,8 +101,6 @@
   (setq org-contacts-birthday-format "%l (%y)"))
 
 (use-package org-drill
-  :straight org
-  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
   :config
   (setq org-drill-hide-item-headings-p t)
   (setq org-drill-maximum-items-per-session 50)
