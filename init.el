@@ -510,6 +510,7 @@
   :hook (image-mode-hook . blimp-mode))
 
 (use-package bookmark+
+  :straight (bookmark-plus)
   :init
   (setq bmkp-bmenu-state-file
         (no-littering-expand-var-file-name "bmkp/bmenu-state.el"))
