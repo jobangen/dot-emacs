@@ -6,6 +6,16 @@
 (setq org-image-actual-width 900)
 (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
 
+;;; aesthetics
+(setq org-startup-folded nil)
+(setq org-startup-indented t)
+(setq org-ellipsis "⬎")
+
+
+(use-package org-bullets
+  :hook (org-mode . org-bullets-mode)
+  :config
+  (setq org-bullets-bullet-list '("●" "⚬" "∙" "∘" "∘" "∘" "∘" "∘" "∘")))
 
 ;;; archive
 ;; https://fuco1.github.io/2017-04-20-Archive-subtrees-under-the-same-hierarchy-as-original-in-the-archive-files.html
