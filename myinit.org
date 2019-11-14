@@ -144,10 +144,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
     ;; Don't allow editing of folded regions
     (setq org-catch-invisible-edits 'error)
 
-    (setq org-startup-folded nil)
-    (setq org-startup-indented t)
-    (setq org-ellipsis "…")
-
     (eval-after-load "org"
       '(define-key org-mode-map (kbd "C-,") nil))
     (eval-after-load "org"
@@ -977,18 +973,8 @@ http://doc.norang.ca/org-mode.org
 ** aufzählungszeichen
 #+begin_src emacs-lisp
 ;; Aufzählungszeichen wechseln durch
-(setq org-list-demote-modify-bullet '(("-" . "+")
-                                      ("+" . "-")
-                                      ("1." . "A.")
-                                      ("A." . "1.")
-                                      ("1)" . "-")
-                                      ("A)" . "-")
-                                      ("B)" . "-")
-                                      ("a)" . "-")
-                                      ("b)" . "-")
-                                      ("B." . "-")
-                                      ("a." . "-")
-                                      ("b." . "-")))
+(setq org-list-demote-modify-bullet '(("-" . "-")
+                                      ("1." . "1.")))
 #+end_src
 ** columns
 #+begin_src emacs-lisp
