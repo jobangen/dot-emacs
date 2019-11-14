@@ -111,6 +111,7 @@
   (setq org-contacts-birthday-format "%l (%y)"))
 
 (use-package org-drill
+  :disabled
   :config
   (setq org-drill-hide-item-headings-p t)
   (setq org-drill-maximum-items-per-session 50)
