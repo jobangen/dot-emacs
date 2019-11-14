@@ -52,6 +52,15 @@
 ;;SyncTeX
 (setq TeX-source-correlate-mode 'synctex)
 
+;; aus fixme.el kopiert
+(defun LaTeX-fixme-targeted-annotation-hack (optional)
+  "Hook for targeted FiXme annotations.
+This function inserts a first couple of braces and a second one,
+potentially with the active region's contents within it. The point is left
+inside the first couple of braces."
+  (TeX-argument-insert "" nil)
+  (TeX-parse-argument optional nil))
+
 (add-hook 'TeX-mode-hook
           (lambda ()
             (TeX-add-symbols
@@ -63,12 +72,14 @@
              '("fxnote" "Note")
              '("fxwarning" "Note")
              '("fxerror" "Note")
-             '("fxfatal" "Note")
-             '("fxnote*" t "Note")
-             '("fxwarning*" t "Note")
-             '("fxerror*" t "Note")
-             '("fxfatal*" t "Note")
-             '("test" "string" ignore))))
+             '("mwg" t ignore)
+             '("fxnote*" LaTeX-fixme-targeted-annotation-hack)
+             '("fxwarning*" LaTeX-fixme-targeted-annotation-hack)
+             '("fxerror*" LaTeX-fixme-targeted-annotation-hack)
+             '("clnote" "Note")
+             '("clwarning" "Note")
+             '("clnote*" LaTeX-fixme-targeted-annotation-hack)
+             '("clwarning*" LaTeX-fixme-targeted-annotation-hack))))
 
 
 
