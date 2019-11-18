@@ -10,12 +10,16 @@
 (setq org-startup-folded nil)
 (setq org-startup-indented t)
 (setq org-ellipsis "⬎")
+(setq org-hide-emphasis-markers t)
+(font-lock-add-keywords 'org-mode
+                        '(("^ *\\([-]\\) "
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode)
   :config
-  (setq org-bullets-bullet-list '("●" "⚬" "∙" "∘" "∘" "∘" "∘" "∘" "∘")))
+  (setq org-bullets-bullet-list '("᳃" "⚬" "∙" "∘" "∘" "∘" "∘" "∘" "∘")))
 
 ;;; archive
 ;; https://fuco1.github.io/2017-04-20-Archive-subtrees-under-the-same-hierarchy-as-original-in-the-archive-files.html
@@ -140,8 +144,7 @@
   :commands org-indent-mode
   :diminish org-indent-mode
   :init
-  (progn
-    (setq org-indent-mode-turns-on-hiding-stars t)))
+  (setq org-indent-mode-turns-on-hiding-stars t))
 
 (use-package org-journal
   :init
