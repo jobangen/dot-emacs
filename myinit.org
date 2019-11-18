@@ -22,7 +22,7 @@ müssen manuell deaktiviert werden
 ** Themes
 #+begin_src emacs-lisp
 (add-to-list 'custom-theme-load-path (concat user-emacs-directory "themes"))
-(load-theme 'greylines t)
+(load-theme 'tufte t)
 ;;(load-theme 'leuven t)
 #+end_src
 
