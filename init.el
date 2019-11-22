@@ -1969,7 +1969,7 @@ tags:
     (goto-char (point-min))
     (ignore-errors
     (while t
-      (zd-follow-link)))))
+      (zetteldeft-follow-link)))))
 
 (use-package zettelkasten
   :straight (zettelkasten :local-repo "~/.emacs.d/lisp/zettelkasten")
