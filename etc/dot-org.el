@@ -19,7 +19,8 @@
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode)
   :config
-  (setq org-bullets-bullet-list '("᳃" "⚬" "∙" "∘" "∘" "∘" "∘" "∘" "∘")))
+  (setq org-bullets-bullet-list '("◇" "◇" "◇" "◇" "◇" "◇" "◇" "◇" "◇" "◇")))
+;;  "◆" "᳃" "⚬" "∘" "∘" "∘" "∘" "∘" "∘" "▹"
 
 ;;; archive
 ;; https://fuco1.github.io/2017-04-20-Archive-subtrees-under-the-same-hierarchy-as-original-in-the-archive-files.html
