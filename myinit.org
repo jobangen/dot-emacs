@@ -204,9 +204,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 
 (setq org-agenda-ignore-drawer-properties '(category))
 
-(setq org-stuck-projects
-           '("+TODO={PROJ}" ("NEXT" "STARTED") ("longterm")))
-
 (add-hook 'org-agenda-mode-hook
    (lambda ()
       (bind-key "C-c i" 'org-agenda-clock-in org-agenda-mode-map)))

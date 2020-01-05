@@ -66,7 +66,7 @@
 
 ;;; tags
 (setq org-tags-exclude-from-inheritance
-      '("project " "txt"
+      '("project" "txt"
         "KBbacklog" "KBtodo" "KBstarted" "KBblocked" "KBreview"))
 
 ; Tags with fast selection keys
@@ -96,6 +96,10 @@
 
 ; Allow setting single tags without the menu
 (setq org-fast-tag-selection-single-key t)
+
+;;; Projects
+(setq org-stuck-projects
+           '("+project/-DONE" ("TODO" "NEXT" "STARTED") ("longterm")))
 
 
 ;;; org-agenda
