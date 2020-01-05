@@ -62,6 +62,41 @@
 ;;               (org-end-of-subtree t t)
 ;;               (org-paste-subtree level tree-text))))))))
 
+
+;;; tags
+(setq org-tags-exclude-from-inheritance
+      '("project " "txt"
+        "KBbacklog" "KBtodo" "KBstarted" "KBblocked" "KBreview"))
+
+; Tags with fast selection keys
+(setq org-tag-alist '((:startgroup)
+                       ("arbeit"    . ?a)
+                       ("pers"      . ?p)
+                       ("wiss"      . ?w)(:endgroup)
+                      (:startgroup)
+                       ("@home"     . ?h)
+                       ("@irw"      . ?i)
+                       ("@mail"     . ?m)
+                       ("@topoi"    . ?o)(:endgroup)
+                      (:startgroup)
+                       ("today"     . ?t)
+                       ("someday"   . ?s)(:endgroup)
+                      (:startgroup)
+                      ("KBbacklog"  . ?1)
+                      ("KBtodo"     . ?2)
+                      ("KBstarted"  . ?3)
+                      ("KBblocked"  . ?4)
+                      ("KBreview"   . ?5)(:endgroup)
+                      ("computer"   . ?c)
+                      ("verwaltung" . ?v)
+                      ("lehre")
+                      ("lesen")
+))
+
+; Allow setting single tags without the menu
+(setq org-fast-tag-selection-single-key t)
+
+
 ;;; org-agenda
 
 ;; (setq org-agenda-diary-file "journal.org")
