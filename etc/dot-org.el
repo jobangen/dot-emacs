@@ -241,7 +241,7 @@
   (setq org-ref-completion-library 'org-ref-ivy-cite)
   :config
   (progn
-    (require 'org-ref)
+    (setq org-ref-notes-function #'org-ref-notes-function-many-files)
     (setq org-ref-notes-directory (expand-file-name zettel-dir))
     (setq org-ref-default-bibliography '("~/Dropbox/db/biblio.bib"))
     (setq org-ref-pdf-directory (expand-file-name texte-dir))
