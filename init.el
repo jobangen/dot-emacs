@@ -1833,7 +1833,7 @@ rotate entire document."
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
 
 (use-package swiper
-  :bind ("C-s" . swiper-isearch))
+  :bind ("C-S-s" . swiper-isearch))
 
 ;;; T
 (use-package telephone-line
