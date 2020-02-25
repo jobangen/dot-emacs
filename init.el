@@ -161,6 +161,7 @@
 (use-package neato-graph-bar      :defer t)
 (use-package neotree              :defer 3)
 (use-package nov                  :mode ("\\.epub\\'" . nov-mode))
+(use-package orglink :hook (TeX-mode . orglink-mode))
 (use-package pass                 :defer t)
 (use-package peep-dired           :defer t)
 (use-package rainbow-delimiters   :hook (emacs-lisp-mode . rainbow-delimiters-mode))
