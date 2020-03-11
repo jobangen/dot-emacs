@@ -79,7 +79,11 @@ inside the first couple of braces."
              '("clnote" "Note")
              '("clwarning" "Note")
              '("clnote*" LaTeX-fixme-targeted-annotation-hack)
-             '("clwarning*" LaTeX-fixme-targeted-annotation-hack))))
+             '("clwarning*" LaTeX-fixme-targeted-annotation-hack)
+             '("abrnote" "Note")
+             '("abrwarning" "Note")
+             '("abrnote*" LaTeX-fixme-targeted-annotation-hack)
+             '("abrwarning*" LaTeX-fixme-targeted-annotation-hack))))
 
 
 
