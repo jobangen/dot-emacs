@@ -139,7 +139,7 @@
     (if (string-match "zedat" gnus-newsgroup-name)
         (progn
           (gnus-summary-put-mark-as-unread nil)
-          (gnus-summary-move-article nil "nnimap+zedat:2019" nil)
+          (gnus-summary-move-article nil "nnimap+zedat:2020" nil)
           (gnus-summary-next-article))
       (if (string-match "gmail" gnus-newsgroup-name)
           (progn
@@ -290,16 +290,17 @@
 
 ;; Notmuch searches usw
 (require 'notmuch)
-(add-hook 'gnus-group-mode-hook 'my/notmuch-shortcut)
 (require 'org-gnus)
 
 (setq notmuch-fcc-dirs nil) ;;Schaltet das FCC aus 
 
+(define-key gnus-group-mode-map (kbd "/")
+  '(lambda ()
+     (interactive)
+     (notmuch-tree)))
 
 (define-key notmuch-search-mode-map (kbd "/") 'notmuch-search-filter)
 
-(defun my/notmuch-shortcut ()
-  (define-key gnus-group-mode-map "/" 'notmuch-search))
 
 (defun notmuch-file-to-group (file)
   "Calculate the Gnus group name from the given file name."
