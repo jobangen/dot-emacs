@@ -164,6 +164,11 @@
   (setq org-drill-add-random-noise-to-intervals-p t)
   (setq org-drill-adjust-intervals-for-early-and-late-repetitions-p t))
 
+(use-package org-el-cache
+  :straight (org-el-cache :type git
+                    :host github
+                    :repo "l3kn/org-el-cache"))
+
 (use-package org-gcal
   :straight (org-gcal :type git
                       :host github
