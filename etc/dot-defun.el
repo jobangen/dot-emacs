@@ -381,11 +381,9 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
   (text-scale-set 1)
   (setq line-spacing 5)
   (linum-mode 0)
-  (TeX-fold-buffer)
   (writegood-mode)
   (olivetti-mode)
-  (olivetti-toggle-hide-mode-line)
-  (olivetti-set-width '74))
+  (olivetti-set-width '80))
 
 ;;; pdf-tools
 ;; https://www.reddit.com/r/emacs/comments/9p2yyq/marking_and_splitting_pdfs_with_pdfstools/
