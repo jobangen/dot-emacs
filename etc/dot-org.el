@@ -146,7 +146,6 @@
   :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
 
 (use-package org-contacts
-  :defer 2
   :straight org
   :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
   :config
