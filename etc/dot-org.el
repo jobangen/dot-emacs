@@ -3,7 +3,7 @@
 (require 'org)
 
 
-(setq org-image-actual-width 900)
+(setq org-image-actual-width 600)
 (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
 
 ;;; aesthetics
