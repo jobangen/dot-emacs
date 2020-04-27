@@ -193,7 +193,7 @@
 
 (use-package org-journal
   :init
-  (setq org-journal-file-type 'weekly)
+  (setq org-journal-file-type 'daily)
   (setq org-journal-dir "~/Dropbox/db/journal")
   (setq org-journal-file-format "%Y-%m-%d.org")
   (setq org-journal-date-format "%Y-%m-%d, %A")
@@ -202,7 +202,13 @@
   (set-face-attribute
    'org-journal-calendar-entry-face nil :foreground "#dd0000" :slant 'italic)
   (set-face-attribute
-   'org-journal-calendar-scheduled-face nil :foreground "#c40000" :slant 'italic))
+   'org-journal-calendar-scheduled-face nil :foreground "#c40000" :slant 'italic)
+
+
+  (org-link-set-parameters "jr" :follow #'job/org-journal-open)
+
+  (defun job/org-journal-open (path)
+    (find-file (concat org-journal-dir "/" path "*") t)))
 
 (use-package org-listcruncher
   :straight (org-listcruncher :type git
