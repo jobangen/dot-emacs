@@ -210,30 +210,50 @@
     (find-file (concat org-journal-dir "/" path "*") t)))
 
 (use-package org-listcruncher
+  :defer 3
   :straight (org-listcruncher :type git
                               :host github
                               :repo "dfeich/org-listcruncher"))
 
 (use-package org-noter
+  :hook (org-load . org-pdftools-setup-link)
   :config
   (setq org-noter-notes-search-path '("~/Dropbox/db/zk/zettel"))
   (setq org-noter-arrow-delay 0.1)
   (setq org-noter-property-doc-file "NOTER_DOCUMENT")
   (setq org-noter-property-note-location "NOTER_PAGE")
-  (setq org-noter-doc-property-in-notes t))
+  (setq org-noter-doc-property-in-notes t)
+  )
+
+(use-package org-noter-pdftools
+  :straight (org-noter-pdftools :type git
+                                :host github
+                                :repo "fuxialexander/org-pdftools")
+  :after org-noter
+  (with-eval-after-load 'pdf-annot
+    (add-hook pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 
 (use-package org-notmuch
   :defer 3
   :straight org
   :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
 
-
 (use-package org-pdftools
   :straight (org-pdftools :type git
                           :host github
                           :repo "fuxialexander/org-pdftools")
   :config
-  (setq org-pdftools-root-dir "~/archive/texts/"))
+  (setq org-pdftools-root-dir "~/archive/texts/"
+        org-pdftools-search-string-separator "??")
+
+  
+  (with-eval-after-load 'org
+    (org-link-set-parameters "pdftools"
+                             :follow #'org-pdftools-open
+                             :complete #'org-pdftools-complete-link
+                             :store #'org-pdftools-store-link
+                             :export #'org-pdftools-export)
+    (add-hook 'org-store-link-functions 'org-pdftools-store-link)))
 
 (use-package org-pdfview
   :disabled
