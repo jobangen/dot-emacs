@@ -608,6 +608,13 @@
   (setq csv-separators '("," ";"))
   (setq csv-align-padding 2))
 
+(use-package ctrlf
+  :straight (ctrlf :type git
+                   :host github
+                   :repo "raxod502/ctrlf")
+  :config
+  (ctrlf-mode 1))
+
 ;;; D
 (use-package diary-lib
   :config
