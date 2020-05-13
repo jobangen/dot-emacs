@@ -790,9 +790,10 @@
   :config (set 'ediff-window-setup-function 'ediff-setup-windows-plain))
 
 (use-package elfeed
+  :commands elfeed
   :config
   (setq elfeed-feeds
-        '("https://planet.emacslife.com/atom.xml" emacs)))
+        '(("https://planet.emacslife.com/atom.xml" emacs))))
 
 (use-package elmacro
   :defer 2
