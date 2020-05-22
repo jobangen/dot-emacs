@@ -81,14 +81,18 @@
    "geeqie" nil "geeqie"))
 
 ;;;###autoload
-(defun job/gnus-ws-6 ()
+(defun job/mu4e-ws-6 ()
   (interactive)
   (exwm-workspace-switch-create 6)
-  (if (get-buffer "*Group*")
-      (message "Workspace 6")
-    (delete-other-windows)
-    (gnus)
-    (message "workspace 6")))
+  (if (get-buffer "*mu4e-view*")
+      nil
+    (if (get-buffer "*mu4e-headers*")
+        nil
+      (if (get-buffer "*mu4e-main*")
+          nil
+        (delete-other-windows)
+        (mu4e))))
+  (message "Workspace 6"))
 
 ;;;###autoload
 (defun job/slock ()
@@ -144,7 +148,7 @@
 (setq exwm-input-global-keys
       `(([?\s-c] . exwm-input-toggle-keyboard)
         ([?\s-f] . job/qutebrowser-ws-5)
-        ([?\s-g] . job/gnus-ws-6)
+        ([?\s-g] . job/mu4e-ws-6)
         ([?\s-j] . exwm-workspace-next)
         ([?\s-k] . job/kill-current-buffer)
         ([?\s-K] . job/kill-buffer-and-window)
