@@ -387,29 +387,7 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
 
 ;;; pdf-tools
 ;; https://www.reddit.com/r/emacs/comments/9p2yyq/marking_and_splitting_pdfs_with_pdfstools/
-(defvar job/pdfview-selected-pages '())
 
-;;;###autoload
-(defun job/pdfview-select-page ()
-  "Add current page to list of selected pages."
-  (interactive)
-  (add-to-list 'job/pdfview-selected-pages (pdf-view-current-page) t))
-
-;;;###autoload
-(defun job/pdfview-extract-selected-pages (file)
-  "Save selected pages to FILE."
-  (interactive "FSave as: ")
-  (setq job/pdfview-selected-pages (sort job/pdfview-selected-pages #'<))
-  (start-process "pdfjam" "*pdfjam*"
-                 "pdfjam"
-                 (buffer-file-name)
-                 (mapconcat #'number-to-string
-                            job/pdfview-selected-pages
-                            ",")
-                 "-o"
-                 (expand-file-name file)))
-
-(define-key pdf-view-mode-map "S" #'job/pdfview-select-page)
 
 (provide 'dot-defun)
 ;;; dot-defun.el ends here

@@ -1680,10 +1680,30 @@ rotate entire document."
 
   ;; http://pragmaticemacs.com/emacs/even-more-pdf-tools-tweaks/
   (defun job/save-buffer-no-args ()
-  "Save buffer ignoring arguments"
-  (save-buffer))
+    "Save buffer ignoring arguments"
+    (save-buffer))
 
-  (advice-add 'pdf-annot-edit-contents-commit :after 'job/save-buffer-no-args)
+  (defvar job/pdfview-selected-pages '())
+
+  (defun job/pdfview-select-page ()
+    "Add current page to list of selected pages."
+    (interactive)
+    (add-to-list 'job/pdfview-selected-pages (pdf-view-current-page) t))
+
+  (defun job/pdfview-extract-selected-pages (file)
+    "Save selected pages to FILE."
+    (interactive "FSave as: ")
+    (setq job/pdfview-selected-pages (sort job/pdfview-selected-pages #'<))
+    (start-process "pdfjam" "*pdfjam*"
+                   "pdfjam"
+                   (buffer-file-name)
+                   (mapconcat #'number-to-string
+                              job/pdfview-selected-pages
+                              ",")
+                   "-o"
+                   (expand-file-name file)))
+
+  (define-key pdf-view-mode-map "S" #'job/pdfview-select-page)
 
   (add-to-list 'org-file-apps
                '("\\.pdf\\'" . org-pdfview-open))
