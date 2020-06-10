@@ -40,7 +40,7 @@
 (display-time-mode t)
 
 (setq time-stamp-active t
-      time-stamp-format "%04y-%02m-%02d %02H:%02M:%02S"
+      time-stamp-format "%Y-%02m-%02d %02H:%02M:%02S"
       time-stamp-start "#\\+DATE:[ \t]+\\\\?[\[\"<]+"
       time-stamp-end "\\\\?[\]\">]")
 (add-hook 'write-file-hooks 'time-stamp)
