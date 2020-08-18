@@ -94,7 +94,7 @@ inside the first couple of braces."
           (lambda ()
             (add-to-list
              'TeX-command-list
-             '("Latexmk" "%`latexmk -pdf %t"
+             '("Latexmk-f-pvc" "%`latexmk -f -pvc -pdf %t"
                TeX-run-TeX nil t))
             (setq TeX-save-query nil)
             (setq TeX-show-compilation t)))
