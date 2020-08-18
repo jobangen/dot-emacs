@@ -1,8 +1,10 @@
+;; -*- lexical-binding: t; -*-
 (setq package-enable-at-startup nil)
 (server-start)
 
 ;;; Config
 (setq split-width-threshold 110)
+(setq split-height-threshold nil)
 (setq inhibit-splash-screen t) ;;Remove splash screen
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq large-file-warning-threshold nil)
@@ -119,6 +121,9 @@
 (defvar zettel-dir
   (expand-file-name (convert-standard-filename "db/zk/zettel/") dropbox-dir))
 
+(defvar zettel-txt-dir
+  (expand-file-name (convert-standard-filename "db/zk/zettel/txt/") dropbox-dir))
+
 (defvar job/bibliography-file
   (expand-file-name (convert-standard-filename "db/biblio.bib") dropbox-dir))
 
@@ -126,7 +131,7 @@
 (use-package no-littering)
 
 
-;;;
+;;; org
 (use-package dot-org
   :demand t
   :straight org
@@ -134,8 +139,24 @@
          ("C-c c" . org-capture)
          ("C-c i" . org-clock-in)
          ("C-c l" . org-store-link))
-  :mode ("\\.txt\\'" . org-mode))
+  :init
+  (setq org-agenda-time-grid '((daily today require-timed)
+                               (800 1000 1200 1400 1600 1800 2000)
+                               "" "-------------"))
+  (setq org-agenda-current-time-string "<-------- now")
+  (setq org-agenda-block-separator "")
 
+  )
+
+(setq org-agenda-category-icon-alist
+      '(("mobile" "/home/job/.emacs.d/icons/arrow-right-hollow-12.png" nil nil :ascent center)
+        ("inbox" "/home/job/.emacs.d/icons/arrow-right-hollow-12.png" nil nil :ascent center)
+        ("appt" "/home/job/.emacs.d/icons/appt-16.png" nil nil :ascent center)
+        ("mail" "/home/job/.emacs.d/icons/mail-16.png" nil nil :ascent center)
+        ("diss" "/home/job/.emacs.d/icons/phd-16.png" nil nil :ascent center)
+        ("wiss" "/home/job/.emacs.d/icons/search.png" nil nil :ascent center)
+        ("pers" "/home/job/.emacs.d/icons/user-16.png" nil nil :ascent center)
+        ("zkt" "/home/job/.emacs.d/icons/network-16.png" nil nil :ascent center)))
 
 ;; Backup
 (setq backup-directory-alist
@@ -143,6 +164,7 @@
 (setq delete-old-versions -1)
 (setq version-control t)
 (setq vc-make-backup-files t)
+(setq vc-follow-symlinks t)
 (setq auto-save-list-file-prefix autosave-dir)
 (setq auto-save-file-name-transforms
       `((".*" ,autosave-dir t)))
@@ -565,9 +587,11 @@
 
 (use-package char-menu
   :defer t
+  :bind ("<f2>" . char-menu)
   :config
   (setq char-menu
-        '("–" "—" "„“" "‘’" "“”" "»«" "…"
+        '("–" "—" "„“" "‚‘" "“”" "‘’" "»«" "›‹" "«»" "‹ ›" "…"
+          ("deutsch" "„“" "»«" "…")
           ("Typography" "•" "©" "†" "‡" "°" "·" "§" "№" "★")
           ("Math" "≈" "≡" "≠" "∞" "×" "±" "∓" "÷" "√" "⊂" "⊃")
           ("Arrows" "←" "→" "↑" "↓" "⇐" "⇒" "⇑" "⇓")
@@ -585,7 +609,8 @@
   (setq contacts-cache-file (no-littering-expand-var-file-name "contacts-cache.el")))
 
 (use-package counsel
-  :bind (("C-M-s" . counsel-ag)
+  :bind (("C-c o" . counsel-outline)
+         ("C-M-s" . counsel-ag)
          ("C-x l" . counsel-locate)
          ("M-y" . counsel-yank-pop)
          ("M-x" . counsel-M-x)
@@ -595,6 +620,7 @@
          ("C-x H-i" . counsel-imenu)))
 
 (use-package counsel-notmuch
+  :disabled
   :bind ("C-c u" . counsel-notmuch))
 
 (use-package counsel-org-clock
@@ -684,9 +710,7 @@
          ("C-x C-v" . job/find-file-as-sudo)
          ("M-c" . capitalize-word)
          ("M-l" . downcase-word)
-         ("C-c n". job-navigate-date-description)
-         :map dired-mode-map
-         ("," . job-dired-cp-mv-files-to-destinations)))
+         ("C-c n". job-navigate-date-description)))
 
 (use-package dired
   :straight nil
@@ -706,6 +730,7 @@
   (put 'dired-find-alternate-file 'disabled nil))
 
 (use-package dired-collapse
+  :disabled
   :hook (dired-mode . dired-collapse-mode))
 
 (use-package dired-hide-details
@@ -790,10 +815,21 @@
   :config (set 'ediff-window-setup-function 'ediff-setup-windows-plain))
 
 (use-package elfeed
-  :commands elfeed
   :config
-  (setq elfeed-feeds
-        '(("https://planet.emacslife.com/atom.xml" emacs))))
+  ;; (setq elfeed-feeds
+  ;;       '(("https://planet.emacslife.com/atom.xml" emacs)
+  ;;         ("https://ir.lib.uwo.ca/sociologypub/recent.rss" Soziologie Wissenschaft)
+;;         ("https://journals.sagepub.com/action/showFeed?ui=0&mi=ehikzz&ai=2b4&jc=anna&type=etoc&feed=rss" Wissenschaft) ;;A. American Ac of Pol. and Social Science
+  ;;         ))
+  )
+
+
+(use-package elfeed-org
+  :after elfeed
+  :init
+  (elfeed-org)
+  (setq rmh-elfeed-org-files (list "~/.emacs.d/etc/elfeed.org")))
+
 
 (use-package elmacro
   :defer 2
@@ -1147,6 +1183,10 @@ If so, ask if it needs to be saved."
   (setq bibtex-completion-pdf-extension '(".pdf" ".txt")) ;; Solution for listing add files in buffer
   (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 
+  (setq ivy-re-builders-alist
+      '((ivy-bibtex . ivy--regex-ignore-order)
+        (t . ivy--regex-plus)))
+
   (ivy-bibtex-ivify-action bibtex-completion-edit-logs ivy-bibtex-edit-logs)
   (ivy-add-actions
    'ivy-bibtex
@@ -1156,8 +1196,8 @@ If so, ask if it needs to be saved."
   (setq bibtex-completion-bibliography (expand-file-name job/bibliography-file))
   (setq bibtex-completion-library-path (expand-file-name texte-dir))
   (setq bibtex-completion-pdf-field "Files")
-  (setq bibtex-completion-notes-path (expand-file-name zettel-dir))
-  (setq bibtex-completion-notes-extension ".txt")
+  (setq bibtex-completion-notes-path (expand-file-name zettel-txt-dir))
+  (setq bibtex-completion-notes-extension ".org")
   (setq bibtex-completion-additional-search-fields '("subtitle"
                                                      "date"
                                                      "keywords"))
@@ -1177,13 +1217,11 @@ If so, ask if it needs to be saved."
   (ivy-add-actions
    'ivy-bibtex
    '(("P" ivy-bibtex-open-pdf-external "Open PDF file in Evince")))
-
-  (setq bibtex-completion-notes-template-multiple-files
+(setq bibtex-completion-notes-template-multiple-files
         "#+TITLE: ${author} ${date}: ${title}
 #+DATE: [${timestamp}]
-
-* Schlagwörter
-tags: @${=key=}, @txt, ${keywords},
+#+COLLECTION: txt
+#+DESCRIPTOR: ${keywords} @${=key=} @txt
 
 * Inhalt
 
@@ -1270,64 +1308,64 @@ ${source},${=key=}
          (ref (pcase (downcase (bibtex-completion-get-value "=type=" entry))
                 ("article"
                  (s-format
-                  "${author} ${date}: ${title}. ${subtitle}. In: ${journaltitle}, ${volume}(${number}), ${pages}. ([[file:${=key=}.txt][Zettel]])"
+                  "${author} ${date}: ${title}. ${subtitle}. In: ${journaltitle}, ${volume}(${number}), ${pages}. [[zk:${=key=}][Zettel]]"
                   'bibtex-completion-apa-get-value entry))
                 ("inproceedings"
                  (s-format
-                  "${author} ${date}: ${title}. ${subtitle}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}. ([[file:${=key=}.txt][Zettel]])"
+                  "${author} ${date}: ${title}. ${subtitle}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}. [[zk:${=key=}][Zettel]]"
                   'bibtex-completion-apa-get-value entry))
                 ("book"
                  (s-format
-                  "${author} ${date}: ${title}. ${subtitle}. ${location}: ${publisher}. ([[file:${=key=}.txt][Zettel]])"
+                  "${author} ${date}: ${title}. ${subtitle}. ${location}: ${publisher}. [[zk:${=key=}][Zettel]]"
                   'bibtex-completion-apa-get-value entry))
                 ("collection"
                  (s-format
-                  "${editor} (Hg.) ${date}: ${title}. ${subtitle}. ${location}: ${publisher}. ([[file:${=key=}.txt][Zettel]])"
+                  "${editor} (Hg.) ${date}: ${title}. ${subtitle}. ${location}: ${publisher}. [[zk:${=key=}][Zettel]]"
                   'bibtex-completion-apa-get-value entry))
                 ("mvcollection"
                  (s-format
-                  "${editor} (Hg.) ${date}: ${title}. ${subtitle}. ${location}: ${publisher}. ([[file:${=key=}.txt][Zettel]])"
+                  "${editor} (Hg.) ${date}: ${title}. ${subtitle}. ${location}: ${publisher}. [[zk:${=key=}][Zettel]]"
                   'bibtex-completion-apa-get-value entry))
                 ("phdthesis"
                  (s-format
-                  "${author} ${year}: ${title}. ${subtitle}. (Doctoral dissertation). ${school}, ${location}. ([[file:${=key=}.txt][Zettel]])"
+                  "${author} ${year}: ${title}. ${subtitle}. (Doctoral dissertation). ${school}, ${location}. [[zk:${=key=}][Zettel]]"
                   'bibtex-completion-apa-get-value entry))
                 ("inbook"
                  (s-format
-                  "${author} ${date}: ${title}. ${subtitle}. In: [${crossref}] ${location}: ${publisher}, ${pages}. ([[file:${=key=}.txt][Zettel]])"
+                  "${author} ${date}: ${title}. ${subtitle}. In: [${crossref}] ${location}: ${publisher}, ${pages}. [[zk:${=key=}][Zettel]]"
                   'bibtex-completion-apa-get-value entry))
                 ("incollection"
                  (s-format
-                  "${author} ${date}: ${title}. ${subtitle}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}. ([[file:${=key=}.txt][Zettel]])"
+                  "${author} ${date}: ${title}. ${subtitle}. In: ${editor} (Hg.): [${crossref}] ${location}: ${publisher}, ${pages}. [[zk:${=key=}][Zettel]]"
                   'bibtex-completion-apa-get-value entry))
                 ("proceedings"
                  (s-format
-                  "${editor} (Hg.) ${date}: ${title}. ${location}: ${publisher}. ([[file:${=key=}.txt][Zettel]])"
+                  "${editor} (Hg.) ${date}: ${title}. ${location}: ${publisher}. [[zk:${=key=}][Zettel]]"
                   'bibtex-completion-apa-get-value entry))
                 ("unpublished"
                  (s-format
-                  "${author} ${date}: ${title}. ${subtitle}. Unpublished manuscript. ([[file:${=key=}.txt][Zettel]])"
+                  "${author} ${date}: ${title}. ${subtitle}. Unpublished manuscript. [[zk:${=key=}][Zettel]]"
                   'bibtex-completion-apa-get-value entry))
                 ("online"
                  (s-format
-                  "${author} ${date}: ${title}. ${subtitle}. , ${url}. ([[file:${=key=}.txt][Zettel]])"
+                  "${author} ${date}: ${title}. ${subtitle}. , ${url}. [[zk:${=key=}][Zettel]]"
                   'bibtex-completion-apa-get-value entry))
                 (_
                  (s-format
-                  "${author} ${date}: ${title}. ${subtitle}. ([[file:${=key=}.txt][Zettel]])"
+                  "${author} ${date}: ${title}. ${subtitle}. [[zk:${=key=}][Zettel]]"
                   'bibtex-completion-apa-get-value entry)))))
       (replace-regexp-in-string "\\([ .?!]\\)\\." "\\1" ref))) ; Avoid sequences of punctuation marks.
 
 
   ;; Eigene Aktion für Logs
-  (defcustom bibtex-completion-logs-extension "--log.txt"
+  (defcustom bibtex-completion-logs-extension "--log.org"
     "The extension of the files containing notes.  This is only
 used when `bibtex-completion-notes-path' is a directory (not a file)."
     :group 'bibtex-completion
     :type 'string)
 
   (defcustom bibtex-completion-logs-template-multiple-files
-    "#+TITLE: Log: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n\n* ${author} ${date}: ${title}\n:PROPERTIES:\n:CATEGORY: wiss\n:END:\n[[autocite:${=key=}]]\n[[file:~/Dropbox/db/zk/zettel/${=key=}.txt][zettel]]\n"
+    "#+TITLE: Log: ${author} ${date}: ${title}\n#+DATE: [${timestamp}]\n\n* ${author} ${date}: ${title}\n:PROPERTIES:\n:CATEGORY: wiss\n:END:\n[[autocite:${=key=}]]\n[[file:~/Dropbox/db/zk/zettel/${=key=}.org][zettel]]\n"
     "Template used to create a new log when each log is stored in
 a separate file.  '${field-name}' can be used to insert the value
 of a BibTeX field into the template. Fork."
@@ -1389,16 +1427,9 @@ of a BibTeX field into the template. Fork."
   :config
   (setq ivy-posframe-display-functions-alist
         '((swiper-isearch . nil)
-          (ivy-bibtex . nil)
-          (counsel-find-file . ivy-posframe-display-at-frame-center)
-          (counsel-ag . ivy-posframe-display-at-frame-center)
-          (counsel-M-x . ivy-posframe-display-at-frame-center)
-          (ivy-switch-buffer . ivy-posframe-display-at-frame-center)
-          (counsel-yank-pop . ivy-posframe-display-at-frame-center)
-          (counsel-locate . ivy-posframe-display-at-frame-center)
-          (counsel-linux-app . ivy-posframe-display-at-frame-center)
-          (gnus-mime-save-part . ivy-posframe-display-at-frame-center)
-          (t . ivy-posframe-display-at-point)))
+          (flyspell-correct-ivy . ivy-posframe-display-at-point)
+          (zettelkasten-zettel-add-descriptor . ivy-posframe-display-at-point)
+          (t . ivy-posframe-display-at-frame-center)))
 
   (setq ivy-posframe-height-alist '((counsel-ag . 30)
                                     (t . 20)))
@@ -1432,6 +1463,27 @@ of a BibTeX field into the template. Fork."
   :config
   (ivy-prescient-mode)
   (prescient-persist-mode))
+
+
+(use-package ivy-rich
+  :init (ivy-rich-mode 1))
+
+(use-package all-the-icons-ivy-rich
+  :disabled
+  :straight (all-the-icons-ivy-rich :type git
+                                    :host github
+                                    :repo "seagle0128/all-the-icons-ivy-rich"
+                                    )
+  :init
+  (all-the-icons-ivy-rich-mode 1))
+
+(use-package all-the-icons)
+
+(use-package all-the-icons-dired
+  :config
+  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+
+
 
 ;;; K
 (use-package key-chord
@@ -1506,7 +1558,9 @@ of a BibTeX field into the template. Fork."
           ("reg" "%(binary) -f /home/job/proj/ledger-data/main.ledger -p \"this year\" --decimal-comma -X € reg %(account)")
           ("payee" "%(binary) -f %(ledger-file) --decimal-comma -X € reg @%(payee)")
           ("account" "%(binary) -f %(ledger-file) --decimal-comma -X € reg %(account)")
-          ("Budgeting" "%(binary) python /home/job/proj/ledger-data/ledger-budgeting.py"))))
+          ("Budgeting" "%(binary) python /home/job/proj/ledger-data/ledger-budgeting.py")
+          ("Tag: Location" "%(binary) -f /home/job/proj/ledger-data/main.ledger --decimal-comma bal -X € --limit 'tag(\"Location\")' '--account=tag(\"Location\")' --real -d \"l<=2\" Expenses Income")))
+  )
 
 (use-package ledger-job
   :straight (ledger-job :local-repo "~/.emacs.d/lisp/ledger-job")
@@ -1523,7 +1577,7 @@ of a BibTeX field into the template. Fork."
                        :host github
                        :repo "dustinlacewell/linkmarks")
   :config
-  (setq linkmarks-file "~/Dropbox/db/zk/zettel/index.org")
+  (setq linkmarks-file "~/Dropbox/db/zk/zettel/zettelkasten-index.org")
 
   (cl-defun job/linkmarks-select ()
   (interactive)
@@ -1568,6 +1622,7 @@ of a BibTeX field into the template. Fork."
   :hook (message-mode . messages-are-flowing-use-and-mark-hard-newlines))
 
 (use-package modalka
+  :disabled
   :bind ("<return>" . modalka-mode)
   :config
   (modalka-define-kbd "a" "C-a")
@@ -1597,6 +1652,116 @@ of a BibTeX field into the template. Fork."
   (modalka-define-kbd "Y" "M-y")
   (modalka-define-kbd "," "C-,")
   (modalka-define-kbd "<SPC>" "C-<SPC>"))
+
+(use-package mu4e
+  :straight (mu4e :type git
+                  :host github
+                  :repo "djcb/mu"
+                  :files ("mu4e/*.el"))
+  :config
+  (require 'smtpmail)
+  (require 'org-mu4e)
+  (setq org-mu4e-link-query-in-headers-mode nil)
+
+  (setq user-full-name "Jan Ole Bangen")
+  (setq mail-user-agent 'mu4e-user-agent)
+  (setq mu4e-root-maildir "/home/job/.mail/")
+  (setq mu4e-get-mail-command "mbsync -a")
+  (setq mu4e-update-interval 600)
+  (setq mu4e-completing-read-function 'completing-read)
+  (setq mu4e-use-fancy-chars nil)
+  (setq mu4e-context-policy 'pick-first)
+  (setq mu4e-compose-context-policy nil)
+  (setq mu4e-compose-format-flowed t)
+  ;; (add-hook 'mu4e-compose-mode-hook 'visual-clean)
+  (add-hook 'mu4e-compose-mode-hook 'flyspell-mode)
+  (setq mu4e-confirm-quit nil)
+  (setq mu4e-attachment-dir "~/tmp/2del")
+  (setq mu4e-change-filenames-when-moving t)
+  (setq mu4e-headers-include-related nil)
+  (setq mu4e-view-show-addresses 't)
+  (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
+  (setq message-kill-buffer-on-exit t)
+  (setq mu4e-headers-results-limit 100)
+  (setq mu4e-view-show-images t
+        mu4e-show-images t
+        mu4e-view-image-max-width 800)
+  (setq mu4e-user-mail-address-list '("jobangen@gmail.com"
+                                      "jobangen@zedat.fu-berlin.de"))
+
+  (setq send-mail-function 'smtpmail-send-it
+        message-send-mail-function 'smtpmail-send-it)
+
+  (setq mu4e-compose-complete-only-after (format-time-string
+                                          "%Y-%m-%d"
+                                          (time-subtract
+                                           (current-time) (days-to-time 365))))
+
+  (setq mu4e-index-cleanup nil)
+  (setq mu4e-index-lazy-check t)
+
+  (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+  (add-to-list 'mu4e-view-actions '("attachmentActions" . mu4e-view-attachment-action) t)
+
+  (setq mu4e-contexts
+        `(,(make-mu4e-context
+            :name "gmail"
+            :match-func
+            (lambda (msg)
+              (when msg
+                (string-prefix-p "/gmail" (mu4e-message-field msg :maildir))))
+            :vars '((mu4e-drafts-folder . "/gmail/drafts")
+                    (mu4e-sent-folder . "/gmail/sent")
+                    (mu4e-trash-folder . "/gmail/trash")
+                    (mu4e-refile-folder . "/gmail/arch")
+                    (mu4e-sent-messages-behavior . delete)
+                    (user-mail-address . "jobangen@gmail.com")
+                    (smtpmail-smtp-server . "smtp.gmail.com")
+                    (smtpmail-smtp-service . 587)))
+          ,(make-mu4e-context
+            :name "zedat"
+            :match-func
+            (lambda (msg)
+              (when msg
+                (string-prefix-p "/zedat" (mu4e-message-field msg :maildir))))
+            :vars '((mu4e-drafts-folder . "/zedat/drafts")
+                    (mu4e-sent-folder . "/zedat/sent")
+                    (mu4e-trash-folder . "/zedat/Trash")
+                    (mu4e-refile-folder . "/zedat/2020")
+                    (mu4e-sent-messages-behavior . sent)
+                    (user-mail-address . "jobangen@zedat.fu-berlin.de")
+                    (smtpmail-smtp-server . "mail.zedat.fu-berlin.de")
+                    (smtpmail-smtp-service . 587)))))
+
+  (setq mu4e-bookmarks
+        `(,(make-mu4e-bookmark
+            :name "Inboxes"
+            :query "maildir:/gmail/inbox OR maildir:/zedat/inbox"
+            :key ?i)
+          ,(make-mu4e-bookmark
+            :name "Unread messages"
+            :query "flag:unread AND NOT flag:trashed"
+            :key ?u)
+          ,(make-mu4e-bookmark
+            :name "Flagged messages"
+            :query "flag:flagged"
+            :key ?f)
+          ,(make-mu4e-bookmark
+            :name "Today's messages"
+            :query "date:today..now AND NOT flag:trashed"
+            :key ?t)
+          ,(make-mu4e-bookmark
+            :name "Yesterday's messages"
+            :query (lambda ()
+                     (concat "NOT flag:trashed AND date:"
+                             (format-time-string
+                              "%Y%m%d"
+                              (subtract-time (current-time) (days-to-time 1)))))
+            :key ?y)
+          ,(make-mu4e-bookmark
+            :name "Last 7 days"
+            :query "date:7d..now AND NOT flag:trashed"
+            :key ?w))))
 
 (use-package multiple-cursors
   :bind (("C-S-c C-S-c" . mc/edit-lines)
@@ -1705,12 +1870,8 @@ rotate entire document."
 
   (define-key pdf-view-mode-map "S" #'job/pdfview-select-page)
 
-  (add-to-list 'org-file-apps
-               '("\\.pdf\\'" . org-pdfview-open))
-  (add-to-list 'org-file-apps
-               '("\\.pdf::\\([[:digit:]]+\\)\\'" . org-pdfview-open))
-  (add-to-list 'org-file-apps
-               '("\\.pdf\\'" . (lambda (file link) (org-pdfview-open link)))))
+
+  (advice-add 'pdf-annot-edit-contents-commit :after 'job/save-buffer-no-args))
 
 (use-package pomodoro
   :defer t
@@ -1802,7 +1963,8 @@ rotate entire document."
   (setq epa-pinentry-mode 'loopback))
 
 (use-package shell
-  :bind ("C-r" . counsel-shell-history)
+  :bind (:map shell-mode-map
+              ("C-r" . counsel-shell-history))
   :init
   (defun job/goto-shell ()
     (interactive)
@@ -2007,15 +2169,16 @@ tags:
 
 (use-package zettelkasten
   :straight (zettelkasten :local-repo "~/.emacs.d/lisp/zettelkasten")
-  :custom
-  (zettelkasten-main-directory "~/Dropbox/db/zk/")
-  (zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
-  (zettelkasten-bibliography-file job/bibliography-file)
-  (zettelkasten-texts-directory "~/archive/texts/")
+  :bind ("C-ä" . hydra-zettelkasten/body)
+  :init
+  (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
+  (setq zettelkasten-zettel-directory "/home/job/Dropbox/db/zk/zettel/")
+  (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
+  (setq zettelkasten-bibliography-file job/bibliography-file)
+  (setq zettelkasten-texts-directory "~/archive/texts/")
+  (setq zettelkasten-org-agenda-integration t)
 
-  :preface
-  ;; (add-hook 'after-init-hook 'zettelkasten-parse-values-combined)
-
+  (add-hook 'after-save-hook 'zettelkasten-update-org-agenda-files nil t)
   (defun zettelkasten-txt-query ()
     (interactive)
     (counsel-ag nil "~/.custom-temp/pdfs-extracted" nil))
@@ -2025,30 +2188,7 @@ tags:
     (if (equal major-mode 'dired-mode)
         (dired-find-file))
     (if (equal major-mode 'org-mode)
-        (org-open-at-point)))
-
-  :config
-  (bind-key "C-c z" 'hydra-zettelkasten/body)
-
-  (defhydra hydra-zd (:columns 2 :color pink)
-    "Zettelkasten"
-    ("d" (find-file zettelkasten-zettel-directory) "dir")
-    ("f" job/zd-follow-loop "follow link")
-    ("z" zettelkasten-create-zettel-insert-link-at-point "Link new Zettel" :color blue)
-    ("l" zettelkasten-insert-link "Insert Link" :color blue)
-    ("sl" zetteldeft-avy-link-search "search link" :color blue)
-    ("sf" zetteldeft-search-current-id "seach current file" :color blue)
-    ("sd" zetteldeft-deft-new-search "search deft " :color blue)
-    ("st" zetteldeft-avy-tag-search "search tag" :color blue)
-    ("o" org-noter "noter" :color blue)
-    ("t" zettelkasten-insert-tags "insert tags")
-    ("i" job/linkmarks-select "index, select")
-    ("k" kill-this-buffer "kill")
-    ("q" nil "Quit"))
-
-  (bind-key "C-ä" 'hydra-zd/body)
-
-  )
+        (org-open-at-point))))
 
 ;;; Hydras
 (defhydra hydra-system (:color red
@@ -2115,3 +2255,12 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
   ("z"   projectile-cache-current-file)
   ("q"   nil :color blue))
 (bind-key* "C-c p" 'hydra-projectile/body)
+
+(setq initial-buffer-choice
+      (lambda ()
+        (delete-other-windows)
+        (org-journal-new-entry t)
+        (split-window-right)
+        (other-window 1)
+        (org-agenda-list 7)
+        (get-buffer "*Org Agenda*")))
