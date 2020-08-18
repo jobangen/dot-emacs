@@ -193,21 +193,20 @@
 (use-package org-journal
   :init
   (setq org-journal-file-type 'daily)
-  (setq org-journal-dir "~/Dropbox/db/journal")
+  (setq org-journal-dir "/home/job/Dropbox/db/zk/zettel/jr/")
   (setq org-journal-file-format "%Y-%m-%d.org")
   (setq org-journal-date-format "%Y-%m-%d, %A")
   (setq org-journal-enable-agenda-integration t)
+  (setq org-journal-carryover-items "")
+  (setq org-journal-date-prefix "* ")
+  (setq org-journal-file-header "#+TITLE: Journal: %A, %d. %B %Y (%Y-%m-%d, W%W)\n#+COLLECTION: journal\n#+DESCRIPTOR: @journal\n\n")
+  (setq org-journal-time-prefix "** ")
   :config
   (set-face-attribute
    'org-journal-calendar-entry-face nil :foreground "#dd0000" :slant 'italic)
   (set-face-attribute
    'org-journal-calendar-scheduled-face nil :foreground "#c40000" :slant 'italic)
-
-
-  (org-link-set-parameters "jr" :follow #'job/org-journal-open)
-
-  (defun job/org-journal-open (path)
-    (find-file (concat org-journal-dir "/" path "*") t)))
+)
 
 (use-package org-listcruncher
   :defer 3
@@ -216,7 +215,6 @@
                               :repo "dfeich/org-listcruncher"))
 
 (use-package org-noter
-  :hook (org-load . org-pdftools-setup-link)
   :config
   (setq org-noter-notes-search-path '("~/Dropbox/db/zk/zettel"))
   (setq org-noter-arrow-delay 0.1)
@@ -230,8 +228,9 @@
                                 :host github
                                 :repo "fuxialexander/org-pdftools")
   :after org-noter
+  :config
   (with-eval-after-load 'pdf-annot
-    (add-hook pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
+    (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 
 (use-package org-notmuch
   :defer 3
@@ -242,22 +241,12 @@
   :straight (org-pdftools :type git
                           :host github
                           :repo "fuxialexander/org-pdftools")
+  :init
+  (add-hook 'org-store-link-functions 'org-pdftools-store-link)
   :config
-  (setq org-pdftools-root-dir "~/archive/texts/"
-        org-pdftools-search-string-separator "??")
-
-  
   (with-eval-after-load 'org
-    (org-link-set-parameters "pdftools"
-                             :follow #'org-pdftools-open
-                             :complete #'org-pdftools-complete-link
-                             :store #'org-pdftools-store-link
-                             :export #'org-pdftools-export)
-    (add-hook 'org-store-link-functions 'org-pdftools-store-link)))
-
-(use-package org-pdfview
-  :disabled
-  :after (pdf-tools))
+    (org-pdftools-setup-link))
+  (setq org-pdftools-link-prefix "pdf"))
 
 (use-package org-recoll
   :straight (org-recoll :type git
@@ -395,7 +384,8 @@
 \\usepackage{lmodern}
 \\usepackage{csquotes}
 \\usepackage{ellipsis}
-\\usepackage{booktabs}\n
+\\usepackage{booktabs}
+\\usepackage{graphicx}\n
 \\usepackage[utf8]{inputenc}
 \\usepackage[T1]{fontenc}
 [NO-DEFAULT-PACKAGES]
@@ -424,6 +414,7 @@
                  (opening-single-quote :utf-8 "‘" :html "&lsquo;" :latex "\\enquote*{" :texinfo "`")
                  (closing-single-quote :utf-8 "’" :html "&rsquo;" :latex "}" :texinfo "'")
                  (apostrophe :utf-8 "’" :html "&rsquo;"))) ;; Export von "" und '' zu csquotes
+  
   )
 
 (use-package ox-reveal
@@ -455,6 +446,10 @@
            :recursive t
            :publishing-function org-publish-attachment)
           ("innovati" :components ("innovati-notes" "innovati-static")))))
+
+
+
+
 
 (provide 'dot-org)
 ;;; dot-org.el ends here
