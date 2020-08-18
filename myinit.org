@@ -244,7 +244,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                 ((org-agenda-overriding-header "Postponed Tasks:")
                  (org-agenda-remove-tags t)))))
         ("t" "Today"
-         ((tags-todo "today"
+         ((tags-todo (format-time-string "%Y:%m:%d")
                      ((org-agenda-overriding-header "Today's Tasks:")
                       (org-agenda-remove-tags t)))
           (todo "STARTED"
@@ -268,9 +268,20 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                       (org-agenda-sorting-strategy
                        '(category-up))))))
         ("z" "Zettelkasten"
-         ((tags-todo "zk"
-                     ((org-agenda-overriding-header "Zettelkasten")
-                      (org-agenda-remove-tags t)))))
+         ((tags-todo "zkt:refile"
+                     ((org-agenda-overriding-header "Refile")
+                      (org-agenda-remove-tags t))                     )
+          (tags-todo "zkt:followup"
+                     ((org-agenda-overriding-header "Followup")
+                      (org-agenda-remove-tags t))                     )
+          (tags-todo "zkt:self"
+                     ((org-agenda-overriding-header "Self")
+                      (org-agenda-remove-tags t)))
+          (tags-todo "+zkt-refile-followup-self"
+                     ((org-agenda-overriding-header "Misc")
+                      (org-agenda-remove-tags t))
+                     )
+))
         ("l" "Literatur"
          ((tags-todo "literature"
                      ((org-agenda-overriding-header "Texts & Tasks")
@@ -332,8 +343,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
           (org-sec-where-view "TODO doat")
           (org-sec-assigned-with-view "TASK with")
           (org-sec-stuck-with-view "STUCK with")))
-
-
 
 ))
 #+end_src
@@ -462,11 +471,6 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 
 ** capture-functions
 #+begin_src emacs-lisp
-(defun capture-report-date-file (path)
-  (let ((name (read-string "Name: ")))
-    (expand-file-name
-     (concat path (format-time-string "%Y-%m-%d-%H%M ") name ".txt"))))
-
 ;;http://stackoverflow.com/questions/24967910/org-mode-capture
 (defun org-capture-berlinantiquariat ()
   "Capture a class template for org-capture."
@@ -513,7 +517,7 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
   (org-journal-new-entry t)
   ;; Position point on the journal's top-level heading so that org-capture
   ;; will add the new entry as a child entry.
-  (goto-char (point-min)))
+  (org-metaright))
 #+end_src
 
 ** capture
@@ -529,17 +533,13 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 
 ("d" "Daily Tasks" entry (function org-journal-find-location) (file "~/templates/org/daily.org") :immediate-finish t :jump-to-captured t)
 
-("t" "Todo" entry (function org-journal-find-location)
-"* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:%^G
+("t" "Todo" entry (file "inbox.org")
+"* TODO %^{Task} :%^G
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
-:CATEGORY: %\\2
-:EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
 :END:
-%?"
-:immediate-finish t
-:jump-to-captured t)
+%?")
 
 ("T" "todo at point" entry (clock)
  "* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:
@@ -569,7 +569,7 @@ SCHEDULED: %t
  :clock-resume t)
 
 ("j" "Journal entry" entry (function org-journal-find-location)
-                               "* %(format-time-string org-journal-time-format)%^{Title}%? :journal:
+"* %(format-time-string org-journal-time-format)%? :journal:
 :PROPERTIES:
 :CREATED: [%<%Y-%m-%d %a %H:%M>]
 :CATEGORY: %^{Category|wiss|arbeit|pers}
@@ -600,7 +600,7 @@ SCHEDULED: %t
 :immediate-finish t
 :jump-to-captured t)
 
-("m" "mail todo" entry (function org-journal-find-location)
+("m" "mail todo" entry (file "inbox.org")
  "* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:@mail:
 SCHEDULED: %t
 :PROPERTIES:
@@ -636,77 +636,6 @@ Subject: [[%l][%:subject]]
 :CATEGORY:  %\\2
 :END:")
 
-("g" "Geld - Ledger entries")
-("gb" "Bargeld" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
- "%(org-read-date) * Kartenverfügung
-    Expenses:Bargeld                           %^{Amount}€
-    Assets:Giro"
- :immediate-finish t)
-
-("ge" "Essen" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
- "%(org-read-date) * %^{Payee| |Mensa|Penny|Rewe}
-    Expenses:Essen    %^{Amount}€
-    Assets:Giro"
- :immediate-finish t)
-
-("gg" "Giro" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
- "%(org-read-date) * %^{Payee| |Deutsche Bahn}
-    Expenses:%^{Expenses|Kauf:|Geschenk:|Reisen:}%^{Expenses}    %^{Amount}€
-    Assets:Giro"
- :immediate-finish t)
-
-("gh" "Handy" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
- "%(org-read-date) * Congstar
-    Expenses:Handy:%^{Expenses|Paket:|Verbrauch}%                         8,00€
-    Assets:Congstar-Guthaben"
- :immediate-finish t)
-
-("gi" "Internet+Telefon" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
- "%(org-read-date) * Kabel Deutschland
-    Expenses:Wohnung:Internet+Telefon          %^{Amount|19,90}€
-    Assets:Giro"
- :immediate-finish t)
-
-("gk" "Krankenkasse" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
- "%(org-read-date) * Techniker Krankenkasse
-    Expenses:Versicherung:Krankenkasse        238,95€
-    Assets:Giro"
- :immediate-finish t)
-
-("gm" "Miete" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
- "%(org-read-date) * Unter den Eichen
-    Expenses:Wohnung:Grundmiete               402,52€
-    Expenses:Wohnung:Heizkosten                83,00€
-    Expenses:Wohnung:Betriebskosten            98,00€
-    Assets:Giro"
- :immediate-finish t)
-
-("gn" "Netflix" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
- "%(org-read-date) * Netflix
-    Expenses:Unterhaltung:Netflix               3,50€
-    Assets:Giro"
- :immediate-finish t)
-
-("gu" "Untermiete" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
- "%(org-read-date) * Sabine und Hartmut (%^{Monat})
-    Assets:Giro                               100,00€
-    Income:Wohnung"
- :immediate-finish t)
-
-("gs" "Strom" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
- "%(org-read-date) * Stadtwerke
-    Expenses:Wohnung:Strom                     %^{Amount|50,00}€
-    Assets:Giro"
- :immediate-finish t)
-
-("gt" "Topoi Stipendium" plain (file (lambda () (expand-file-name (concat db-dir "money.dat"))))
- "%(org-read-date) * Stipendium Topoi
-    Assets:Giro                              %^{Amount|1350,00}€
-    Income:Stipendium:Topoi"
- :immediate-finish t)
-
-("Z" "Add Content to Zettel" plain (function org-brain-goto-end)
-          (function zettelkasten-zettel-template) :empty-lines 1)
 ("D" "Norsk" entry (file "~/proj/languages/norsk.org")
 "* %^{Titel}    :drill:
 :PROPERTIES:
@@ -730,7 +659,7 @@ Subject: [[%l][%:subject]]
 (setq org-refile-targets (quote ((("~/Dropbox/db/org/pers.org") :maxlevel . 3)
                                  (("~/Dropbox/db/org/wiss.org") :maxlevel . 6)
                                  (("~/Dropbox/db/org/irw.org") :maxlevel . 4)
-                                 (("~/Dropbox/diss/diss.org") :maxlevel . 4)
+                                 (("~/proj/diss/diss.org") :maxlevel . 4)
                                  (("~/Dropbox/db/org/antiq.org") :maxlevel . 2)
                                  (("~/Dropbox/db/contacts.org") :maxlevel . 2)
                                  (("~/Dropbox/db/org/goals.org") :maxlevel . 2))
@@ -983,7 +912,8 @@ http://doc.norang.ca/org-mode.org
                              (R . t)
                              (gnuplot . t)
                              (sql . t)
-                             (ledger . t)))
+                             (ledger . t)
+                             (latex . t)))
 
 (defun my-org-confirm-babel-evaluate (lang body)
   (not (string= lang "sh"))
