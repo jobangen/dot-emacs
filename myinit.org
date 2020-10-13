@@ -653,25 +653,6 @@ Subject: [[%l][%:subject]]
 ))
 #+end_src
 
-** refile
-#+begin_src emacs-lisp
-;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
-(setq org-refile-targets (quote ((("~/Dropbox/db/org/pers.org") :maxlevel . 3)
-                                 (("~/Dropbox/db/org/wiss.org") :maxlevel . 6)
-                                 (("~/Dropbox/db/org/irw.org") :maxlevel . 4)
-                                 (("~/proj/diss/diss.org") :maxlevel . 4)
-                                 (("~/Dropbox/db/org/antiq.org") :maxlevel . 2)
-                                 (("~/Dropbox/db/contacts.org") :maxlevel . 2)
-                                 (("~/Dropbox/db/org/goals.org") :maxlevel . 2))
-))
-
-(setq org-outline-path-complete-in-steps nil)         ; Refile in a single go
-(setq org-refile-use-outline-path t)                  ; Show full paths for refiling
-
-; Allow refile to create parent tasks with confirmation
-(setq org-refile-allow-creating-parent-nodes (quote confirm))
-#+end_src
-
 ** dependencies
 #+begin_src emacs-lisp
 (setq org-enforce-todo-dependencies t)

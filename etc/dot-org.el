@@ -22,6 +22,22 @@
   (setq org-bullets-bullet-list '("◇" "◇" "◇" "◇" "◇" "◇" "◇" "◇" "◇" "◇")))
 ;;  "◆" "᳃" "⚬" "∘" "∘" "∘" "∘" "∘" "∘" "▹"
 
+;;; refile
+(setq org-outline-path-complete-in-steps nil)
+(setq org-refile-use-outline-path 'file)
+(setq org-refile-use-outline-path t)
+(setq org-refile-allow-creating-parent-nodes (quote confirm))
+(setq org-refile-targets
+      '((("~/Dropbox/db/org/pers.org") :maxlevel . 3)
+        (("~/Dropbox/db/org/wiss.org") :maxlevel . 6)
+        (("~/Dropbox/db/org/irw.org") :maxlevel . 4)
+        (("~/proj/diss/diss.org") :maxlevel . 4)
+        (("~/Dropbox/db/org/antiq.org") :maxlevel . 2)
+        (("~/Dropbox/db/contacts.org") :maxlevel . 2)
+        (("~/Dropbox/db/org/goals.org") :maxlevel . 2)
+        (("~/Dropbox/db/org/projects.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
+
+
 ;;; archive
 ;; https://fuco1.github.io/2017-04-20-Archive-subtrees-under-the-same-hierarchy-as-original-in-the-archive-files.html
 ;; (defadvice org-archive-subtree (around fix-hierarchy activate)
