@@ -1253,7 +1253,7 @@ _y_: youtube      _bb_: bibtex
 ("y" engine/search-youtube)
 ("p" engine/search-pons-de-en)
 ("s" www-synonyms-insert-synonym)
-("t" google-translate-smooth-translate)
+("t" go-translate)
 ("w" engine/search-wikipedia)
 )
 #+end_src
@@ -1266,7 +1266,7 @@ _y_: youtube      _bb_: bibtex
   "Operaten on word"
   ("d" define-word-at-point "define-word")
   ("s" www-synonyms-insert-synonym "insert synonym")
-  ("t" google-translate-smooth-translate "translate")
+  ("t" go-translate "translate")
   ("ö" sdcv-search-pointer+ "sdcv")
   ("C-ö" sdcv-search-input "sdcv"))
 #+end_src

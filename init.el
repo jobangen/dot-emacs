@@ -1061,13 +1061,12 @@ If so, ask if it needs to be saved."
         (nreverse buffers)))
     (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)))
 
-(use-package google-translate
-  :commands google-translate-smooth-translate
+(use-package go-translate
   :config
-  (require 'google-translate-smooth-ui)
-  (setq google-translate-translation-directions-alist
-        '(("de" . "en") ("en" . "de") ("de" . "fr") ("fr" . "de")))
-  (setq google-translate-output-destination nil))
+  (setq go-translate-buffer-follow-p t)
+  (setq go-translate-local-language "de")
+  (setq go-translate-target-language "en")
+  (setq go-translate-extra-directions '(("de" . "no") ("en" . "no"))))
 
 (use-package goto-addr
   :straight nil
