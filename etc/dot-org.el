@@ -215,14 +215,14 @@
   (setq org-journal-enable-agenda-integration t)
   (setq org-journal-carryover-items "")
   (setq org-journal-date-prefix "* ")
-  (setq org-journal-file-header "#+TITLE: Journal: %A, %d. %B %Y (%Y-%m-%d, W%W)\n#+COLLECTION: journal\n#+DESCRIPTOR: @journal\n\n")
+  (setq org-journal-file-header "#+TITLE: jr: %Y-%m-%d, %A, W%W \n#+COLLECTION: journal\n#+DESCRIPTOR: @journal\n\n")
   (setq org-journal-time-prefix "** ")
   :config
   (set-face-attribute
    'org-journal-calendar-entry-face nil :foreground "#dd0000" :slant 'italic)
   (set-face-attribute
    'org-journal-calendar-scheduled-face nil :foreground "#c40000" :slant 'italic)
-)
+  )
 
 (use-package org-listcruncher
   :defer 3
