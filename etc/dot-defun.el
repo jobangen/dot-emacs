@@ -283,10 +283,12 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
   (let ((destination
          (completing-read "Dir: "
                           '(("proj")
-                            ("archive")
                             ("Dropbox")
                             ("emacs")
-                            ("home")) nil t nil)))
+                            ("home")
+                            ("archive")
+                            ("archive: nav")
+                            ("archive: current year")) nil t nil)))
     (when (string-equal destination "proj")
       (counsel-find-file "~/proj/"))
     (when (string-equal destination "archive")
@@ -296,7 +298,11 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
     (when (string-equal destination "emacs")
       (counsel-find-file "~/.emacs.d/"))
     (when (string-equal destination "home")
-      (counsel-find-file "~/"))))
+      (counsel-find-file "~/"))
+    (when (string-equal destination "archive: nav")
+      (counsel-find-file "/home/job/archive/.nav-date-description/"))
+    (when (string-equal destination "archive: current year")
+      (counsel-find-file "/home/job/archive/date-description/2020/"))))
 
 ;;;###autoload
 (defun job-dired-move2archive (&optional arg file-list)
@@ -384,6 +390,14 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
   (writegood-mode)
   (olivetti-mode)
   (olivetti-set-width '80))
+
+
+(org-link-set-parameters "arch" :follow #'myarchive-open)
+
+(defun myarchive-open (path)
+  (let* ((year (s-left 4 path))
+         (fname (concat "/home/job/archive/date-description/" year "/" path "*")))
+    (find-file-other-window fname t)))
 
 ;;; pdf-tools
 ;; https://www.reddit.com/r/emacs/comments/9p2yyq/marking_and_splitting_pdfs_with_pdfstools/
