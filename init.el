@@ -832,6 +832,7 @@
 
 
 (use-package elmacro
+  :disabled
   :defer 2
   :diminish elmacro-mode
   :config
@@ -1045,6 +1046,7 @@ If so, ask if it needs to be saved."
   (define-key gnus-group-mode-map (kbd "C-c L") #'gnus-recent-goto-previous))
 
 (use-package gnus-dired
+  :disabled
   :defer 2
   :straight nil
   :config
@@ -1459,6 +1461,7 @@ of a BibTeX field into the template. Fork."
   (set-face-attribute 'ivy-posframe-border nil :background "#000000"))
 
 (use-package ivy-prescient
+  ;; :disabled
   :after (counsel)
   :config
   (ivy-prescient-mode)
