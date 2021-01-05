@@ -1066,7 +1066,8 @@ If so, ask if it needs to be saved."
   (setq go-translate-buffer-follow-p t)
   (setq go-translate-local-language "de")
   (setq go-translate-target-language "en")
-  (setq go-translate-extra-directions '(("de" . "no") ("en" . "no"))))
+  (setq go-translate-extra-directions '(("de" . "no") ("en" . "no")))
+  (setq go-translate-token-current (cons 430675 2721866130)))
 
 (use-package goto-addr
   :straight nil
