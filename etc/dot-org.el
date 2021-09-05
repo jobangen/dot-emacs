@@ -5,27 +5,31 @@
 
 (setq org-image-actual-width 600)
 (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
+(setq org-id-method 'ts)
 
 ;;; aesthetics
 (setq org-startup-folded nil)
 (setq org-startup-indented t)
 (setq org-ellipsis "⬎")
+(setq org-hidden-keywords '(title))
 (setq org-hide-emphasis-markers t)
 (font-lock-add-keywords 'org-mode
                         '(("^ *\\([-]\\) "
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 
-(use-package org-bullets
-  :hook (org-mode . org-bullets-mode)
+(use-package org-superstar
+  :hook (org-mode . org-superstar-mode)
   :config
-  (setq org-bullets-bullet-list '("◇" "◇" "◇" "◇" "◇" "◇" "◇" "◇" "◇" "◇")))
-;;  "◆" "᳃" "⚬" "∘" "∘" "∘" "∘" "∘" "∘" "▹"
+  (setq org-superstar-headline-bullets-list '("" ""))
+  (setq org-superstar-cycle-headline-bullets nil)
+  (setq org-superstar-leading-bullet "..")
+)
+
 
 ;;; refile
 (setq org-outline-path-complete-in-steps nil)
 (setq org-refile-use-outline-path 'file)
-(setq org-refile-use-outline-path t)
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
 (setq org-refile-targets
       '((("~/Dropbox/db/org/pers.org") :maxlevel . 3)
@@ -80,6 +84,14 @@
 ;;               (org-paste-subtree level tree-text))))))))
 
 
+;;; priorities
+(use-package org-fancy-priorities
+  :diminish
+  :hook (org-mode . org-fancy-priorities-mode)
+  :config
+  (setq org-fancy-priorities-list '("𝍠" "𝍡" "𝍢" "𝍣" "𝍤")))
+
+
 ;;; tags
 (setq org-tags-exclude-from-inheritance
       '("project" "txt"
@@ -119,12 +131,32 @@
 
 
 ;;; org-agenda
+(defun job/org-agenda-add-tags-today ()
+  (interactive)
+  (org-agenda-goto)
+  (job/org-add-tags-today)
+  (other-window 1))
+
+(defun job/org-add-tags-today ()
+  (interactive)
+  (org-back-to-heading)
+  (let* ((current-tags (org-get-at-bol 'tags))
+         (add-tags (list (format-time-string "%d")
+                         (format-time-string "%Y")
+                         (format-time-string "%m")))
+         (tags (-distinct (append add-tags current-tags))))
+    (org-set-tags tags)))
+
+
 
 ;; (setq org-agenda-diary-file "journal.org")
 (setq org-agenda-include-diary t)
 
+;; (setq org-agenda-files '())
+
 
 (use-package org-autolist
+  :defer 2
   :commands org-autolist-mode
   :diminish org-autolist-mode
   :init
@@ -132,7 +164,7 @@
     (add-hook 'org-mode-hook (lambda () (org-autolist-mode)))))
 
 (use-package org-checklist
-  :defer 2
+  :disabled
   :straight org
   :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
 
@@ -180,9 +212,10 @@
   (setq org-drill-adjust-intervals-for-early-and-late-repetitions-p t))
 
 (use-package org-el-cache
+  :disabled
   :straight (org-el-cache :type git
-                    :host github
-                    :repo "l3kn/org-el-cache"))
+                          :host github
+                          :repo "l3kn/org-el-cache"))
 
 (use-package org-gcal
   :straight (org-gcal :type git
@@ -198,13 +231,18 @@
   (setq org-gcal-file-alist '(("jobangen@googlemail.com" . "~/Dropbox/db/org/calender.org"))))
 
 
-(use-package org-indent
-  :straight org
-  :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
-  :commands org-indent-mode
-  :diminish org-indent-mode
-  :init
-  (setq org-indent-mode-turns-on-hiding-stars t))
+ (use-package org-indent
+   :straight org
+   :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
+   :commands org-indent-mode
+   :diminish org-indent-mode
+   :init
+   (setq org-indent-indentation-per-level 1)
+   (setq org-indent-mode-turns-on-hiding-stars nil))
+
+(use-package org-inlinetask
+  :straight nil)
+
 
 (use-package org-journal
   :init
@@ -215,7 +253,13 @@
   (setq org-journal-enable-agenda-integration t)
   (setq org-journal-carryover-items "")
   (setq org-journal-date-prefix "* ")
-  (setq org-journal-file-header "#+TITLE: jr: %Y-%m-%d, %A, W%W \n#+COLLECTION: journal\n#+DESCRIPTOR: @journal\n\n")
+  (setq org-journal-file-header "#+TITLE: jr: %Y-%m-%d, %a, W%W:
+#+RDF_TYPE: time:DateTimeInterval
+
+* Meta
+[[zk:time:intervalDuring::%Y-w%W][Week]] [[zk:time:hasDateTimeDescription::dtd-%Y-%m-%d][DTD]]
+
+")
   (setq org-journal-time-prefix "** ")
   :config
   (set-face-attribute
@@ -497,11 +541,15 @@ With a prefix ARG, remove start location."
            :publishing-directory "/home/job/proj/2018-11-06 lilli-diss/html/"
            :recursive t
            :publishing-function org-publish-attachment)
-          ("innovati" :components ("innovati-notes" "innovati-static")))))
-
-
-
-
+          ("innovati" :components ("innovati-notes" "innovati-static"))
+          ("zettelkasten"
+           :base-directory "/home/job/Dropbox/db/zk/zettel/"
+           :base-extension "org"
+           :publishing-directory "/home/job/tmp/zettelkasten/"
+           :recursive t
+           :publishing-function org-html-publish-to-html
+           :headline-levels 5
+           :auto-preamble t))))
 
 (provide 'dot-org)
 ;;; dot-org.el ends here
