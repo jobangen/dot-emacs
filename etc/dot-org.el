@@ -236,33 +236,68 @@
   (setq org-noter-arrow-delay 0.1)
   (setq org-noter-property-doc-file "NOTER_DOCUMENT")
   (setq org-noter-property-note-location "NOTER_PAGE")
+  (setq org-noter-always-create-frame nil)
+  (setq org-noter-kill-frame-at-session-end nil)
   (setq org-noter-doc-property-in-notes t)
+  (add-hook 'org-noter-insert-heading-hook #'zettelkasten-heading-to-node)
   )
 
 (use-package org-noter-pdftools
-  :straight (org-noter-pdftools :type git
-                                :host github
-                                :repo "fuxialexander/org-pdftools")
+  ;; :disabled ;; funktioniert nicht, warten?
   :after org-noter
+  :straight
+  (org-noter-pdftools :type git
+                      :host github
+                      :repo "fuxialexander/org-pdftools")
+
   :config
   (with-eval-after-load 'pdf-annot
     (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 
 (use-package org-notmuch
-  :defer 3
+  :disabled
   :straight org
   :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
 
 (use-package org-pdftools
-  :straight (org-pdftools :type git
-                          :host github
-                          :repo "fuxialexander/org-pdftools")
-  :init
-  (add-hook 'org-store-link-functions 'org-pdftools-store-link)
+  ;; :hook (org-load . org-pdftools-setup-link)
+  ;; :init
+  ;; (add-hook 'org-store-link-functions 'org-pdftools-store-link)
   :config
   (with-eval-after-load 'org
     (org-pdftools-setup-link))
-  (setq org-pdftools-link-prefix "pdf"))
+  (setq org-pdftools-link-prefix "pdf")
+  (setq org-pdftools-use-freepointer-annot t) 
+  (setq org-pdftools-use-isearch-link nil)
+
+  (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
+    (interactive "P")
+    (org-noter--with-valid-session
+     (let ((org-noter-insert-note-no-questions (if toggle-no-questions
+                                                   (not org-noter-insert-note-no-questions)
+                                                 org-noter-insert-note-no-questions))
+           (org-pdftools-use-isearch-link t)
+           (org-pdftools-use-freestyle-annot t))
+       (org-noter-insert-note (org-noter--get-precise-info)))))
+
+  ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
+  (defun org-noter-set-start-location (&optional arg)
+    "When opening a session with this document, go to the current location.
+With a prefix ARG, remove start location."
+    (interactive "P")
+    (org-noter--with-valid-session
+     (let ((inhibit-read-only t)
+           (ast (org-noter--parse-root))
+           (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
+       (with-current-buffer (org-noter--session-notes-buffer session)
+         (org-with-wide-buffer
+          (goto-char (org-element-property :begin ast))
+          (if arg
+              (org-entry-delete nil org-noter-property-note-location)
+            (org-entry-put nil org-noter-property-note-location
+                           (org-noter--pretty-print-location location))))))))
+  (with-eval-after-load 'pdf-annot
+    (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 
 (use-package org-recoll
   :straight (org-recoll :type git
