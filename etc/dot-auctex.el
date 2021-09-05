@@ -103,6 +103,16 @@ inside the first couple of braces."
           (lambda ()
             (add-to-list
              'TeX-command-list
+             '("Latexmk-custom-sync" "%`latexmk -new-viewer- -file-line-error -interaction=nonstopmode -shell-escape --synctex=1 -pvc -pdf %t"
+               TeX-run-TeX nil t))
+            (setq TeX-save-query nil)
+            (setq TeX-show-compilation t)))
+
+
+(add-hook 'TeX-mode-hook
+          (lambda ()
+            (add-to-list
+             'TeX-command-list
              '("Latex -se" "%`pdflatex --synctex=1 -shell-escape %t"
                TeX-run-TeX nil t))
             (setq TeX-save-query nil)
