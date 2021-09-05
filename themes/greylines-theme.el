@@ -193,7 +193,7 @@ more...")
 
    
 ;   ;; Highlighting faces.
-   `(fringe ((,class (:foreground "#9B9B9B" :background "#EDEDED" :inherit ))))
+   `(fringe ((,class (:weight normal :foreground "#9B9B9B" :background "#EDEDED"))))
 ;   `(highlight ((,class ,volatile-highlight)))
 ;   `(region ((,class ,region)))
 ;   `(secondary-selection ((,class ,match))) ; used by Org-mode for highlighting matched entries and keywords
