@@ -48,7 +48,12 @@
 ;;;###autoload
 (defun job/firefox ()
   (interactive)
-  (start-process-shell-command "firefox" nil "firefox"))
+  (exwm-workspace-switch-create 5)
+  (if (get-buffer "Firefox")
+      (progn
+        (switch-to-buffer "Firefox")
+        (message "Workspace 5"))
+    (start-process-shell-command "firefox" nil "firefox")))
 
 ;;;###autoload
 (defun job/qutebrowser-ws-5 ()
@@ -147,7 +152,7 @@
 ;; Sensibel bei der Formatierung. Lispy machts kaputt
 (setq exwm-input-global-keys
       `(([?\s-c] . exwm-input-toggle-keyboard)
-        ([?\s-f] . job/qutebrowser-ws-5)
+        ([?\s-f] . job/firefox)
         ([?\s-g] . job/mu4e-ws-6)
         ([?\s-j] . exwm-workspace-next)
         ([?\s-k] . job/kill-current-buffer)
