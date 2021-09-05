@@ -335,6 +335,7 @@ With a prefix ARG, remove start location."
 
 ;;; org-export
 (setq org-export-use-babel nil)
+(setq org-export-with-properties '("DESCRIPTOR" "COLLECTION"))
 
 (use-package org-mind-map
   :init
