@@ -50,7 +50,7 @@
 (setq reb-re-syntax 'rx)
 
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "qutebrowser")
+      browse-url-generic-program "firefox")
 
 ;;; Bootstrap
 (let ((bootstrap-file (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))
