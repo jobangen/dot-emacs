@@ -156,7 +156,8 @@
         ("diss" "/home/job/.emacs.d/icons/phd-16.png" nil nil :ascent center)
         ("wiss" "/home/job/.emacs.d/icons/search.png" nil nil :ascent center)
         ("pers" "/home/job/.emacs.d/icons/user-16.png" nil nil :ascent center)
-        ("zkt" "/home/job/.emacs.d/icons/network-16.png" nil nil :ascent center)))
+        ("zkt" "/home/job/.emacs.d/icons/network-16.png" nil nil :ascent center)
+        ("arbeit" "/home/job/.emacs.d/icons/briefcase-16.png" nil nil :ascent center)))
 
 ;; Backup
 (setq backup-directory-alist
