@@ -570,6 +570,19 @@
   (setq calendar-latitude 52.450894)
   (setq calendar-longitude 13.30857)
   (setq calendar-location-name "Berlin")
+  (setq calendar-week-start-day 1
+        calendar-day-name-array ["Sonntag" "Montag" "Dienstag" "Mittwoch"
+                                 "Donnerstag" "Freitag" "Samstag"]
+        calendar-month-name-array ["Januar" "Februar" "März" "April" "Mai"
+                                   "Juni" "Juli" "August" "September"
+                                   "Oktober" "November" "Dezember"]
+        calendar-intermonth-text
+        '(propertize
+          (format "%2d"
+                  (car
+                   (calendar-iso-from-absolute
+                    (calendar-absolute-from-gregorian (list month day year)))))
+          'font-lock-face 'font-lock-function-name-face))
   (add-hook 'calendar-today-visible-hook 'calendar-mark-today))
 
 (use-package calfw
