@@ -174,6 +174,8 @@
 (use-package counsel-projectile   :defer 3)
 (use-package define-word          :commands define-word define-word-at-point)
 ;; (use-package ess                  :commands R)
+(use-package emacsql)
+(use-package emacsql-sqlite)
 (use-package flyspell-correct-ivy :after (flyspell-correct ivy))
 (use-package git-timemachine      :defer t)
 (use-package goldendict           :commands goldendict-dwim)
