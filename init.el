@@ -247,6 +247,7 @@
 
 (use-package beacon
   :defer 2
+  :disabled
   :diminish beacon-mode
   :config
   (beacon-mode)
