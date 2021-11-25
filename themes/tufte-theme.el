@@ -210,7 +210,7 @@ more...")
 ;;; Highlighting faces.
   `(fringe ((,class (:foreground "#9B9B9B" :background "#EDEDED" :inherit ))))
                                         ;   `(highlight ((,class ,volatile-highlight)))
-                                        ;   `(region ((,class ,region)))
+  `(region ((,class ,region)))
                                         ;   `(secondary-selection ((,class ,match))) ; used by Org-mode for highlighting matched entries and keywords
                                         ;   `(isearch ((,class (:weight bold :underline "#FF9632" :foreground nil :background "#FDBD33"))))
                                         ;   `(isearch-fail ((,class (:weight bold :foreground "black" :background "#FF9999"))))
