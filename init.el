@@ -1925,6 +1925,12 @@ rotate entire document."
     (setq projectile-enable-caching t)
     (setq projectile-switch-project-action 'projectile-dired)))
 
+(use-package pyvenv
+  :config
+   ;; (setq pyvenv-workon "emacs")  ; Default venv
+    (pyvenv-tracking-mode 1)
+  )
+
 ;;; R
 (use-package reftex
   :hook (TeX-mode . reftex-mode)
