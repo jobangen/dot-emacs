@@ -1352,7 +1352,7 @@ If so, ask if it needs to be saved."
 
   (setq bibtex-completion-bibliography (expand-file-name job/bibliography-file))
   (setq bibtex-completion-library-path (expand-file-name texte-dir))
-  (setq bibtex-completion-pdf-field "Files")
+  (setq bibtex-completion-pdf-field "File")
   (setq bibtex-completion-notes-path (expand-file-name zettel-txt-dir))
   (setq bibtex-completion-notes-extension ".org")
   (setq bibtex-completion-additional-search-fields '("subtitle"
@@ -1375,22 +1375,21 @@ If so, ask if it needs to be saved."
    'ivy-bibtex
    '(("P" ivy-bibtex-open-pdf-external "Open PDF file in Evince")))
 (setq bibtex-completion-notes-template-multiple-files
-        "#+TITLE: ${author} ${date}: ${title}
+      "#+TITLE: ${author} ${date}: ${title}
 #+DATE: [${timestamp}]
-#+COLLECTION: txt
-#+DESCRIPTOR: ${keywords} @${=key=} @txt
+#+RDF_TYPE: zktb:${=type=}
+#+DESCRIPTOR: ${keywords}
+
+* Meta
+- Auth:
+- Date: [[zk:dct:issued::${date}][${date}]]
+- Lang: [[zk:dct:language::${language}][${language}]]
 
 * Inhalt
 
 * Literatur
 
-* Links & Files
-
-* Data
-** misc
-#+begin_src csv :tangle zettel-txt-references-path.csv :padline no
-${source},${=key=}
-#+end_src")
+* Links & Files")
 
   (setq bibtex-completion-format-citation-functions
         '((org-mode      . bibtex-completion-format-citation-org-ref-autocite)
