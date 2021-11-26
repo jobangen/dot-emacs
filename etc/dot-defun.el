@@ -399,7 +399,8 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
   (linum-mode 0)
   (writegood-mode)
   (olivetti-mode)
-  (olivetti-set-width '80))
+  (olivetti-set-width '70))
+
 ;;;###autoload
 (defun job/current-timezone-offset-hours ()
   (concat
@@ -577,4 +578,3 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
 
 (provide 'dot-defun)
 ;;; dot-defun.el ends here
-
