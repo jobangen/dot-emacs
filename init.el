@@ -850,13 +850,106 @@
   :config (set 'ediff-window-setup-function 'ediff-setup-windows-plain))
 
 (use-package elfeed
+  :bind (:map elfeed-show-mode-map
+              ("z" . zettelkasten-elfeed-new-zettel)
+              ("d" . doi-utils-add-entry-from-elfeed-entry)
+              ("n" . zettelkasten-elfeed-skip))
+
+
+  :init
+;;; from scimax
+  (defun doi-utils-add-entry-from-elfeed-entry ()
+    "Add elfeed entry to bibtex."
+    (interactive)
+    (require 'org-ref)
+    (let* ((title (elfeed-entry-title elfeed-show-entry))
+           (url (elfeed-entry-link elfeed-show-entry))
+           (content (elfeed-deref (elfeed-entry-content elfeed-show-entry)))
+           (entry-id (elfeed-entry-id elfeed-show-entry))
+           (entry-link (elfeed-entry-link elfeed-show-entry))
+           (entry-id-str (concat (car entry-id)
+                                 "|"
+                                 (cdr entry-id)
+                                 "|"
+                                 url)))
+      (if (string-match "DOI: \\(.*\\)$" content)
+          (doi-add-bibtex-entry (match-string 1 content)
+                                (ido-completing-read
+                                 "Bibfile: "
+                                 (append (f-entries "." (lambda (f)
+                                                          (and (not (string-match "#" f))
+                                                               (f-ext? f "bib"))))
+                                         org-ref-default-bibliography)))
+        (let ((dois (org-ref-url-scrape-dois url)))
+          (cond
+           ;; One doi found. Assume it is what we want.
+           ((= 1 (length dois))
+            (doi-utils-add-bibtex-entry-from-doi
+             (car dois)
+             (ido-completing-read
+              "Bibfile: "
+              (append (f-entries "." (lambda (f)
+                                       (and (not (string-match "#" f))
+                                            (f-ext? f "bib"))))
+                      org-ref-default-bibliography)))
+            action)
+           ;; Multiple DOIs found
+           ((> (length dois) 1)
+            (ivy-read "Select a DOI" (let ((dois '()))
+                                       (with-current-buffer (url-retrieve-synchronously url)
+                                         (loop for doi-pattern in org-ref-doi-regexps
+                                               do
+                                               (goto-char (point-min))
+                                               (while (re-search-forward doi-pattern nil t)
+                                                 (pushnew
+                                                  ;; Cut off the doi, sometimes
+                                                  ;; false matches are long.
+                                                  (cons (format "%40s | %s"
+                                                                (substring
+                                                                 (match-string 1)
+                                                                 0 (min
+                                                                    (length (match-string 1))
+                                                                    40))
+                                                                doi-pattern)
+                                                        (match-string 1))
+                                                  dois
+                                                  :test #'equal)))
+                                         (reverse dois)))
+                      :action
+                      (lambda (x)
+                        (let ((bibfile (car org-ref-default-bibliography))
+                              (doi (cdr x)))
+                          (ignore-errors
+                            (doi-utils-add-bibtex-entry-from-doi
+                             doi
+                             bibfile)
+                            ;; this removes two blank lines before each entry.
+                            (bibtex-beginning-of-entry)
+                            (delete-char -2))
+                          ;; edit entry
+                          (delete-other-windows)
+                          (split-window-horizontally)
+                          (other-window 1 nil)
+                          (find-file bibfile)
+                          (goto-char (point-max))
+                          (bibtex-beginning-of-entry)
+                          (when (search-forward "year" nil t)
+                            (replace-match "date"))
+                          (bibtex-clean-entry t)
+                          ;; (save-buffer)
+                          ;; (org-ref-open-bibtex-notes)
+                          ))))))))))
+
+(use-package elfeed-score
   :config
-  ;; (setq elfeed-feeds
-  ;;       '(("https://planet.emacslife.com/atom.xml" emacs)
-  ;;         ("https://ir.lib.uwo.ca/sociologypub/recent.rss" Soziologie Wissenschaft)
-;;         ("https://journals.sagepub.com/action/showFeed?ui=0&mi=ehikzz&ai=2b4&jc=anna&type=etoc&feed=rss" Wissenschaft) ;;A. American Ac of Pol. and Social Science
-  ;;         ))
-  )
+  (progn
+    (elfeed-score-enable)
+    (setq elfeed-use-curl t)
+    (setq elfeed-curl-max-connections 8)
+    (setq elfeed-curl-timeout 20)
+    (define-key elfeed-search-mode-map "=" elfeed-score-map)
+    (setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
+    (setq elfeed-score-serde-score-file (no-littering-expand-var-file-name "elfeed/elfeed-score"))))
 
 
 (use-package elfeed-org
