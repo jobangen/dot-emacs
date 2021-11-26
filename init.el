@@ -731,7 +731,7 @@
 
 (use-package dot-defun
   :straight nil
-  :after (dired counsel)
+  :after (pdf-tools)
   :demand t
   :bind (("C-a" . job/beginning-of-line-or-indentation)
          ("C-k" . job/kill-line)
