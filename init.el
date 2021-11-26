@@ -2221,18 +2221,24 @@ tags:
         (org-open-at-point))))
 
 ;;; Hydras
-(defhydra hydra-system (:color red
-                               :columns 2)
-  "System"
-  ("w" nmcli-show-short "nmcli-show-short")
+(defhydra hydra-system (:color red)
+
+  ("w" nmcli-show-short "nmcli-show-short" :column "Wlan")
   ("t" wlan-toggle "wlan-toggle")
-  ("M" mount-lsblk "mount-lsblk")
+
+  ("M" mount-lsblk "mount-lsblk" :column "Mount")
   ("m" mount-mount-device "mount-mount-device" :color blue)
   ("u" mount-unmount-device "mount-unmount-device" :color blue)
-  ("n" neato-graph-bar "neato-graph-bar" :color blue)
-  ("S" job/clean-kill-emacs-shutdown "Shutdown" :color blue)
-  ("v" vpn-zedat-shell "vpn-zedat" :color blue)
+
+  ("v" vpn-zedat-shell "vpn-zedat" :color blue :column "Programs")
+  ("e" elfeed "elfeed" :color blue)
+  ("p" pass "pass" :color blue)
+
+  ("n" neato-graph-bar "neato-graph-bar" :color blue :column "System")
+  ("x" job/xrandr "xrandr")
   ("b" battery "battery")
+  ("S" job/clean-kill-emacs-shutdown "Shutdown" :color blue)
+
   ("q" nil "Quit" :color blue))
 (bind-key "<f1>" 'hydra-system/body)
 
