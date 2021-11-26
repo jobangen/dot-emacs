@@ -269,8 +269,8 @@
   (setq org-noter-always-create-frame nil)
   (setq org-noter-kill-frame-at-session-end nil)
   (setq org-noter-doc-property-in-notes t)
-  (add-hook 'org-noter-insert-heading-hook #'zettelkasten-heading-to-node)
-  )
+  (add-hook 'org-noter-insert-heading-hook
+            #'zettelkasten-heading-to-docpart))
 
 (use-package org-noter-pdftools
   ;; :disabled ;; funktioniert nicht, warten?
