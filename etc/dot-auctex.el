@@ -168,6 +168,10 @@ inside the first couple of braces."
   '(define-key TeX-mode-map "\""
      'job/enquote-wrapper))
 
+(defun job/latex-occur-fixme ()
+  (interactive)
+  (occur "\\fx[a-z*]+{.*\\($\\|}\\)"))
+
 ;; https://florian.adamsky.it/2018/03/09/emacs-add-acronyms.html
 ;;;###autoload
 (defun fa/add-latex-acronym (region-beg region-end)
