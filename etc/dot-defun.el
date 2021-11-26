@@ -312,7 +312,7 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
     (when (string-equal destination "archive: nav")
       (counsel-find-file "/home/job/archive/.nav-date-description/"))
     (when (string-equal destination "archive: current year")
-      (counsel-find-file "/home/job/archive/date-description/2020/"))))
+      (counsel-find-file "/home/job/archive/date-description/2021/"))))
 
 ;;;###autoload
 (defun job-dired-move2archive (&optional arg file-list)
