@@ -179,7 +179,7 @@
 ;; (use-package ess                  :commands R)
 (use-package emacsql)
 (use-package emacsql-sqlite)
-(use-package flyspell-correct-ivy :after (flyspell-correct ivy))
+(use-package flyspell-correct-ivy :after (flyspell-correct ivy flyspell))
 (use-package git-timemachine      :defer t)
 (use-package goldendict           :commands goldendict-dwim)
 (use-package hydra)
@@ -624,7 +624,10 @@
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 2)
   (setq company-selection-wrap-around t)
-  (setq company-show-numbers 't))
+  (setq company-show-numbers 't)
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous)
+  )
 
 (use-package contacts
   :straight (scimax :type git
@@ -967,8 +970,9 @@
   (elmacro-mode))
 
 (use-package elpy
+  :disabled
   :init
-  (elpy-enable)
+  ;; (elpy-enable)
   (setq python-shell-interpreter "ipython3")
   (setq python-shell-interpreter-args "-i --simple-prompt")
   (setq elpy-rpc-backend "jedi")
@@ -979,12 +983,11 @@
   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
   (use-package flycheck)
-;  (when (require 'flycheck nil t)
-;    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-;    (add-hook 'elpy-mode-hook 'flycheck-mode))
+                                        ;  (when (require 'flycheck nil t)
+                                        ;    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+                                        ;    (add-hook 'elpy-mode-hook 'flycheck-mode))
 
-  (define-key company-active-map (kbd "C-n") #'company-select-next)
-  (define-key company-active-map (kbd "C-p") #'company-select-previous))
+)
 
 (use-package engine-mode
   :defer 2
@@ -1037,6 +1040,19 @@
               ("#" . filetags-dired-update-tags))
   :init
   (setq filetags-load-controlled-vocabulary-from-file t))
+
+(use-package flycheck
+  :defer 2
+  :diminish
+  :init (global-flycheck-mode)
+  :custom
+  (flycheck-display-errors-delay .3)
+  (custom-set-variables
+   '(flycheck-python-flake8-executable "python3")
+   '(flycheck-python-pycompile-executable "python3")
+   '(flycheck-python-pylint-executable "python3"))
+  (add-hook 'flycheck-mode-hook #'flycheck-virtualenv-setup))
+
 
 (use-package flyspell
   :diminish flyspell-mode
@@ -1725,19 +1741,50 @@ of a BibTeX field into the template. Fork."
       (linkmarks--setup)
       (org-capture))))
 
+(use-package linum
+  :straight nil
+  :hook (python-mode . linum-mode))
+
 (use-package lispy
   :hook (emacs-lisp-mode . lispy-mode)
   :diminish lispy-mode)
 
 (use-package lsp-mode
-  :hook (python-mode . lsp)
-  :commands lsp)
+  :hook ((python-mode . lsp)
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp
+  :config
+  (setq lsp-pyls-plugins-flake8-enabled t
+        lsp-headerline-breadcrumb-enable t
+        lsp-modeline-diagnostics-enable t
+        lsp-diagnostic-clean-after-change t)
+
+  (lsp-register-custom-settings
+   '(("pyls.plugins.pyls_mypy.enabled" t t)
+     ("pyls.plugins.pyls_mypy.live_mode" nil t)
+     ("pyls.plugins.pyls_black.enabled" t t)
+     ("pyls.plugins.pyls_isort.enabled" t t)
+
+     ;; disable the following: dublicates by flake8
+     ("pyls.plugins.pycodestyle.enabled" nil t)
+     ("pyls.plugins.mccabe.enabled" nil t)
+     ("pyls.plugins.pyflakes.enabled" nil t)
+     ))
+  )
 
 (use-package lsp-ui
+  :commands lsp-ui-mode
   :config
-  (setq lsp-ui-doc-enable nil)
-  (setq lsp-headerline-breadcrumb-enable t)
-  (setq lsp-modeline-diagnostics-enable nil))
+  (setq lsp-ui-sideline-show-hover t
+        lsp-ui-sideline-delay 0.5
+        lsp-ui-doc-enable t
+        lsp-ui-sideline-ignore-duplicate nil
+        lsp-ui-doc-delay 5
+        lsp-ui-doc-position 'bottom
+        lsp-ui-doc-alignment 'frame
+        lsp-ui-doc-header nil
+        lsp-ui-doc-include-signature t
+        lsp-ui-doc-use-childframe t))
 
 ;;; M
 (use-package magit
@@ -2082,10 +2129,21 @@ rotate entire document."
     (setq projectile-enable-caching t)
     (setq projectile-switch-project-action 'projectile-dired)))
 
+(use-package py-autopep8
+  :config
+  (setq py-autopep8-options '("--max-line-length=79"))
+  ;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+  )
+
+(use-package python
+  :config
+  (setq python-shell-interpreter "ipython3")
+  (setq python-shell-interpreter-args "-i --simple-prompt"))
+
 (use-package pyvenv
   :config
-   ;; (setq pyvenv-workon "emacs")  ; Default venv
-    (pyvenv-tracking-mode 1)
+  ;; (setq pyvenv-workon "emacs")  ; Default venv
+  (pyvenv-tracking-mode 1)
   )
 
 ;;; R
