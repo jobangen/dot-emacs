@@ -1,0 +1,5 @@
+yas# -*- mode: snippet -*-
+# name: elisp-ag
+# key: tag
+# --
+[[elisp:(counsel-ag \"${1:$$(yas-auto-next(yas-choose-value '("#" "@")))}${2:tag}\" . nil)][$2]$0

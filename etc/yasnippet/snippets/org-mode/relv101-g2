@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: RELV101-g2
+# key: ev
+# --
+** 12:00-14:00 RELV101: Group 2
+:PROPERTIES:
+:CUSTOM_ID: zk-`(file-name-base)`-relv101-g2
+:RDF_TYPE: zkt:Sitzung
+:END:
+<`(file-name-base)` Fr>
+
+isPartOf: [[zk:zk-`(file-name-base)`-relv101-g2::dct:isPartOf::relv101-2021-g2][RELV101 Group 2]]

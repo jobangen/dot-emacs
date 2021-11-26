@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: location
+# key: ;
+# expand-env: ((yas-indent-line 'fixed))
+# --
+    ; Location: 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: zk-link
+# key: zk
+# expand-env: ((yas-indent-line 'fixed))
+# --

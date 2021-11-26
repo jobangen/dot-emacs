@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Assets
+# key: Assets:
+# expand-env: ((yas-indent-line 'fixed))
+# --
+${1:$$(yas-choose-value '("Assets:Giro:Postbank" "Assets:Giro:DKB" "Assets:Kreditkarte:DKB" "Assets:Tagesgeld:DiBa"  "Assets:Anlage:DiBa:"))}

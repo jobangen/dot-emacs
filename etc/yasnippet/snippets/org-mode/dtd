@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: time:DateTimeDescription
+# key: dtd
+# --
+:PROPERTIES:
+:RDF_TYPE: time:DateTimeDescription
+:CUSTOM_ID: dtd-`(file-name-base)`
+:END:
+- [[zk:dtd-`(file-name-base)`::time:year::`(car (split-string (file-name-base) "-"))`][`(car (split-string (file-name-base) "-"))`]]-[[zk:dtd-`(file-name-base)`::time:month::`(cadr (split-string (file-name-base) "-"))`][`(cadr (split-string (file-name-base) "-")))`]]-[[zk:dtd-`(file-name-base)`::time:day::`(caddr (split-string (file-name-base) "-"))`][`(caddr (split-string (file-name-base) "-"))`]]
+- [[zk:dtd-`(file-name-base)`::time:week::`(car (calendar-iso-from-absolute (calendar-absolute-from-gregorian (org-date-to-gregorian (file-name-base)))))`][W`(car (calendar-iso-from-absolute (calendar-absolute-from-gregorian (org-date-to-gregorian (file-name-base)))))`]]
+- [[zk:dtd-`(file-name-base)`::time:dayOfWeek::`(calendar-day-name (org-date-to-gregorian (file-name-base)))`][`(calendar-day-name (org-date-to-gregorian (file-name-base)))`]]

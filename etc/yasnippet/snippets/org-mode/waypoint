@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: Waypoint
+# key: wp
+# --
+*** ${1:time} Wp: $2
+:PROPERTIES:
+:CUSTOM_ID: zk-`(file-name-base)`-wp-$3
+:RDF_TYPE: zkt:Waypoint
+:TURTLE: dct:isPartOf::`(zettelkasten-get-id-of-parent)`
+:END:
+<`(file-name-base)`>
+- atTime: [[zk:zk-`(file-name-base)`-wp-$3::prov:atTime::`(file-name-base)`T$1:00+`(job/current-timezone-offset-hours)`][$1:00]]
+- atLocation: $0

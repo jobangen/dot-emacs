@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: Letter
+# key: no
+# --
+** ${1:Description}
+:PROPERTIES:
+:CUSTOM_ID: zk-`(file-name-base)`-${2:ID}
+:RDF_TYPE: zkt:Letter
+:TURTLE: dct:issued::`(file-name-base)`
+:END:
+- auth: $0
+- wasGenBy: 
+- Addressee: [[zk:2020-10-06-ifb-zahl::zkt:addressee::@me][Bangen, Jan Ole]]

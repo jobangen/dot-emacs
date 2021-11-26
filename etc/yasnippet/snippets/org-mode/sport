@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: sport
+# key: sp
+# expand-env: ((yas-indent-line 'fixed))
+# --
+** Sport
+:PROPERTIES:
+:DESCRIPTOR: @Sport
+:END:
+*** 

@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: Wandern
+# key: no
+# --
+** ${1:time} Wandern$2 ${3:distance}km ${4:min}min
+:PROPERTIES:
+:CUSTOM_ID: zk-`(file-name-base)`-wandern
+:RDF_TYPE: zkt:Event
+:TURTLE: zkt:distanceKM::$3 time:minutes::$4 zkt:wasPerformedBy::@me
+:END:
+<`(file-name-base)`>
+- [[zk:zk-`(file-name-base)`-wandern::zkt:wasReferedToBy::Wandern][Wandern]]
+$0

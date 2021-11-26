@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: Übungen
+# key: no
+# --
+** ${1:start}-${2:end} Übungen ${3:min}min
+:PROPERTIES:
+:CUSTOM_ID: zk-`(file-name-base)`-uebungen
+:RDF_TYPE: zkt:Event
+:STARTED_AT: `(file-name-base)`T$1:00+`(job/current-timezone-offset-hours)`
+:ENDED_AT: `(file-name-base)`T$2:00+`(job/current-timezone-offset-hours)`
+:TURTLE:  time:minutes::$3 zkt:wasPerformedBy::@me
+:END:
+<`(file-name-base)`>
+- [[zk:zk-`(file-name-base)`-uebungen::zkt:wasReferedToBy::Übungen{job}][Übungen{job}]]

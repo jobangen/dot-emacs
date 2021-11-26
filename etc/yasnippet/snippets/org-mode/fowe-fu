@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: FoWe FU
+# key: fowe
+# expand-env: ((yas-indent-line 'fixed))
+# --
+
+** 16:00-20:00 Forschungswerkstatt FU
+:PROPERTIES:
+:CUSTOM_ID: zk-`(file-name-base)`-fowe-fu
+:RDF_TYPE: zkt:Sitzung
+:END:
+<`(file-name-base)` Mi>
+
+isPartOf [[zk:zk-`(file-name-base)`-fowe-fu::dct:isPartOf::fowe-fu-2021][FoWe FU]]

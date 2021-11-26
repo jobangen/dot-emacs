@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: zettel
+# key: zet
+# --
+@zettel{$1,
+title = {$2$1},
+keywords = {$0}}
