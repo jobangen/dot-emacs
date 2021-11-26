@@ -2162,6 +2162,11 @@ rotate entire document."
               (regexp-opt writegood-passive-voice-irregulars)
               "\\)\\b"))))
 
+(use-package wwg
+  :straight (wwg :type git
+                    :host github
+                    :repo "ag91/writer-word-goals"))
+
 (use-package www-synonyms
   :commands www-synonyms-insert-synonym
   :config
