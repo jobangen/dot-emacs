@@ -233,7 +233,7 @@
          ("H-y" . aya-expand)))
 
 (use-package avy
-  :bind ("M-s" . avy-goto-char-timer)
+  :bind ("M-s" . avy-goto-word-1)
   :config
   (progn
     (setq avy-all-windows t)
