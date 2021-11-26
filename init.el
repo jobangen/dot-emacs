@@ -1123,6 +1123,7 @@ If so, ask if it needs to be saved."
   (setq holiday-other-holidays holiday-german-holidays))
 
 (use-package gnorb
+  :disabled
   :defer 2
   :init
   (gnorb-tracking-initialize)
