@@ -756,9 +756,11 @@
   (setq dired-recursive-copies 'always)
   (setq dired-dwim-target t)
   (setq delete-by-moving-to-trash t
-        trash-directory "~/.local/share/Trash")
+        trash-directory "~/.local/share/Trash/files")
   (setq dired-listing-switches "--group-directories-first -alh1v")
-  (put 'dired-find-alternate-file 'disabled nil))
+  (put 'dired-find-alternate-file 'disabled nil)
+  (add-hook 'dired-after-readin-hook 'hl-line-mode)
+  )
 
 (use-package dired-collapse
   :disabled
