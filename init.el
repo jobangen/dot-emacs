@@ -809,20 +809,22 @@
           ("csv" ("libreoffice"))
           ("ppt" ("libreoffice"))
           ("pptx" ("libreoffice"))
-          ("pdf" ("evince" "gimp-2.8"))
-          ("PDF" ("evince " "gimp-2.8"))
+          ("pdf" ("evince" "gimp-2.10"))
+          ("PDF" ("evince " "gimp-2.10"))
           ;; Web
           ("html" ("firefox"))
           ;; Pictures
-          ("jpg" ("eog" "gimp-2.8"))
-          ("png" ("feh" "eog" "gimp-2.8"))
-          ("svg" ("eog" "gimp-2.8"))
+          ("jpg" ("eog" "gimp-2.10"))
+          ("png" ("feh" "eog" "gimp-2.10"))
+          ("svg" ("eog" "gimp-2.10"))
           ;; Audio
           ("wav" ("rhythmbox"))
           ("WAV" ("rhythmbox"))
           ("mp3" ("rhythmbox"))
           ;; Video
           ("mov" ("totem" "vlc"))
+          ;; gpx
+          ("gpx" ("viking"))
           ;; Other
           ("mm" ("freeplane")))))
 
