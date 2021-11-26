@@ -11,7 +11,7 @@
 (setq sentence-end-double-space nil)
 (setq visible-bell t) ;; blinken bei error
 
-(transient-mark-mode nil) ;; No region when it is not highlighted
+(transient-mark-mode 1) ;; No region when it is not highlighted
 (global-font-lock-mode 1) ;;syntax highlighting everywhere
 (global-visual-line-mode 1) ;;Add proper word wrapping
 (global-auto-revert-mode t) ;;aktualisiert buffer automatisch
