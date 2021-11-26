@@ -1805,6 +1805,7 @@ of a BibTeX field into the template. Fork."
 
 ;;; P
 (use-package pdf-tools
+  :demand t
   :bind (:map pdf-view-mode-map
               ("C-s" . isearch-forward)
               ("am" . pdf-annot-add-markup-annotation)
@@ -1824,8 +1825,9 @@ of a BibTeX field into the template. Fork."
   :config
   (pdf-tools-install)
   (setq-default pdf-view-display-size 'fit-page)
-  (setq pdf-annot-activate-created-annotations t)
+  (setq pdf-annot-activate-created-annotations nil) ;problem with org-pdftools
   (setq pdf-view-resize-factor 1.1)
+  (add-hook 'pdf-isearch-minor-mode-hook (lambda () (ctrlf-local-mode -1)))
 
   (defun pdf-view--rotate (&optional counterclockwise-p page-p)
     "Rotate PDF 90 degrees.  Requires pdftk to work.\n
