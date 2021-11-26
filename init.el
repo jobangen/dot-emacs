@@ -1727,7 +1727,8 @@ of a BibTeX field into the template. Fork."
 
 (use-package link-hint
   :after (avy)
-  :bind ("C-c h" . link-hint-open-link))
+  :bind (("C-c h" . link-hint-open-link)
+         ("C-<" . link-hint-open-link)))
 
 (use-package linkmarks
   :straight (linkmarks :type git
