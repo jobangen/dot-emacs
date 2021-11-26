@@ -1,5 +1,15 @@
 ;;;_,dot-defun
 
+;;;###autoload
+(defun job/update-zoom ()
+  (interactive)
+  (with-temp-buffer
+    (let ((filename "/home/job/tmp/var/zoom_amd64.deb"))
+      (url-copy-file "https://zoom.us/client/latest/zoom_amd64.deb" filename)
+      (async-shell-command (concat
+                            "cd /home/job/tmp/var/ && "
+                            "sudo apt install ./zoom_amd64.deb && "
+                            "rm -f zoom_amd64.deb")))))
 
 ;;;###autoload
 (defun job/beginning-of-line-or-indentation ()
