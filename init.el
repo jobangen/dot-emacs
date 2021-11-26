@@ -979,9 +979,9 @@
   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
   (use-package flycheck)
-  (when (require 'flycheck nil t)
-    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-    (add-hook 'elpy-mode-hook 'flycheck-mode))
+;  (when (require 'flycheck nil t)
+;    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+;    (add-hook 'elpy-mode-hook 'flycheck-mode))
 
   (define-key company-active-map (kbd "C-n") #'company-select-next)
   (define-key company-active-map (kbd "C-p") #'company-select-previous))
