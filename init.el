@@ -615,6 +615,13 @@
           ("Greek" "α" "β" "Y" "δ" "ε" "ζ" "η" "θ" "ι" "κ" "λ" "μ" "ν" "ξ" "ο" "π" "ρ" "σ" "τ" "υ" "φ" "χ" "ψ" "ω")
           ("Other Languages" "Œ"))))
 
+(use-package company
+  :config
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 2)
+  (setq company-selection-wrap-around t)
+  (setq company-show-numbers 't))
+
 (use-package contacts
   :straight (scimax :type git
                     :host github
