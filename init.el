@@ -138,7 +138,10 @@
   :bind (("C-c a" . job/org-agenda)
          ("C-c c" . org-capture)
          ("C-c i" . org-clock-in)
-         ("C-c l" . org-store-link))
+         ("C-c l" . org-store-link)
+         ("C-c C-j" . org-journal-new-entry)
+         :map org-agenda-mode-map
+         ("C-c d" . job/org-agenda-add-tags-today))
   :init
   (setq org-agenda-time-grid '((daily today require-timed)
                                (800 1000 1200 1400 1600 1800 2000)
