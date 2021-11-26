@@ -335,18 +335,24 @@ With a prefix ARG, remove start location."
                     :repo "alraban/org-recoll"))
 
 (use-package org-ref
-  :defer 2
   :init
   (bind-key "C-c )" 'org-autocite-complete-link org-mode-map)
   (setq org-ref-completion-library 'org-ref-ivy-cite)
   :config
   (progn
+    (require 'org-ref-url-utils)
+    (require 'doi-utils)
+    (require 'org-ref-bibtex)
+    ;; (require 'org-ref-latex)
+
+    (setq org-ref-notes-directory (expand-file-name zettel-txt-dir))
     (setq org-ref-notes-function #'org-ref-notes-function-many-files)
-    (setq org-ref-notes-directory (expand-file-name zettel-dir))
-    (setq org-ref-default-bibliography '("~/Dropbox/db/biblio.bib"))
-    (setq org-ref-pdf-directory (expand-file-name texte-dir))
     (setq orhc-bibtex-cache-file (no-littering-expand-var-file-name "org/ref/bibtex-cache.el"))
-    (setq org-ref-default-citation-link "autocite")))
+    (setq org-ref-default-bibliography "~/Dropbox/db/biblio.bib")
+    (setq org-ref-default-citation-link "autocite")
+    (setq bibtex-completion-bibliography "~/Dropbox/db/biblio.bib"
+          bibtex-completion-library-path (expand-file-name texte-dir)
+          bibtex-completion-notes-path (expand-file-name zettel-txt-dir))))
 
 (use-package org-secretary
   :straight (org-secretary :local-repo "~/.emacs.d/lisp/org-secretary/"))
