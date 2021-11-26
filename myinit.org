@@ -87,6 +87,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 
 (setq mouse-wheel-follow-mouse 't)
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+(setq mouse-wheel-progressive-speed nil)
 
 (global-set-key (kbd "M-n") (kbd "C-u 1 C-v"))
 (global-set-key (kbd "M-p") (kbd "C-u 1 M-v"))
@@ -218,9 +219,11 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
          ((agenda ""
                   ((org-agenda-span 1)
                    (org-agenda-remove-tags t)
-                   (org-agenda-show-all-dates t)))
+                   (org-agenda-prefix-format " %i       %?-12t% s")
+                   ))
           (tags "INBOX"
                 ((org-agenda-overriding-header "Inbox:")
+                 (org-agenda-prefix-format " %i       %?-12t% s")
                  (org-agenda-remove-tags t)))
           (todo "PROJ|TODO"
                 ((org-agenda-overriding-header "Projects & Tasks:")
@@ -244,9 +247,10 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                 ((org-agenda-overriding-header "Postponed Tasks:")
                  (org-agenda-remove-tags t)))))
         ("t" "Today"
-         ((tags-todo (format-time-string "%Y:%m:%d")
+         ((tags (format-time-string "+%Y+%m+%d")
                      ((org-agenda-overriding-header "Today's Tasks:")
-                      (org-agenda-remove-tags t)))
+                      (org-agenda-remove-tags t)
+                      (org-agenda-prefix-format " %i       %?-12t% s [%e] ")))
           (todo "STARTED"
                 ((org-agenda-overriding-header "Started:")
                  (org-agenda-remove-tags t)
@@ -260,7 +264,32 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                   '(org-agenda-skip-entry-if
                     'regexp ":today:"))))))
         ("d" "Dissertation"
-         ((tags-todo "diss"
+         ((tags-todo "+diss+einleitung"
+                     ((org-agenda-overriding-header "Kapitel: Einleitung")
+                      (org-agenda-remove-tags t)
+                      (org-tags-match-list-sublevels
+                       'indented)))
+          (tags-todo "+diss+auctoritas"
+                     ((org-agenda-overriding-header "Kapitel: Auctoritas")
+                      (org-agenda-remove-tags t)
+                      (org-tags-match-list-sublevels
+                       'indented)))
+          (tags-todo "+diss+ansehensmacht"
+           ((org-agenda-overriding-header "Kapitel: Ansehensmacht")
+                      (org-agenda-remove-tags t)
+                      (org-tags-match-list-sublevels
+                       'indented)))
+          (tags-todo "+diss+weber"
+           ((org-agenda-overriding-header "Kapitel: Weber")
+                      (org-agenda-remove-tags t)
+                      (org-tags-match-list-sublevels
+                       'indented)))
+          (tags-todo "+diss+schluss"
+           ((org-agenda-overriding-header "Kapitel: Schluss")
+                      (org-agenda-remove-tags t)
+                      (org-tags-match-list-sublevels
+                       'indented)))
+          (tags-todo "diss"
                      ((org-agenda-overriding-header "Dissertation")
                       (org-agenda-remove-tags t)
                       (org-tags-match-list-sublevels
@@ -268,20 +297,21 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                       (org-agenda-sorting-strategy
                        '(category-up))))))
         ("z" "Zettelkasten"
-         ((tags-todo "zkt:refile"
-                     ((org-agenda-overriding-header "Refile")
-                      (org-agenda-remove-tags t))                     )
-          (tags-todo "zkt:followup"
+         ((tags-todo "+zkt+followup"
                      ((org-agenda-overriding-header "Followup")
-                      (org-agenda-remove-tags t))                     )
-          (tags-todo "zkt:self"
+                      (org-agenda-remove-tags t)))
+          (tags-todo "+zkt+refile-inbox"
+                     ((org-agenda-overriding-header "Refile")
+                      (org-agenda-remove-tags t)))
+          (tags-todo "+zkt+inbox"
+                     ((org-agenda-overriding-header "Inbox")
+                      (org-agenda-remove-tags t)))
+          (tags-todo "+zkt+self"
                      ((org-agenda-overriding-header "Self")
                       (org-agenda-remove-tags t)))
           (tags-todo "+zkt-refile-followup-self"
                      ((org-agenda-overriding-header "Misc")
-                      (org-agenda-remove-tags t))
-                     )
-))
+                      (org-agenda-remove-tags t)))))
         ("l" "Literatur"
          ((tags-todo "literature"
                      ((org-agenda-overriding-header "Texts & Tasks")
@@ -323,27 +353,29 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                 ((org-agenda-overriding-header "Tasks to Archive:")
                  (org-agenda-remove-tags t)))))
         ("K" "Kanban"
-         ((tags "KBbacklog"
-                ((org-agenda-overriding-header "1. Backlog:")
+         ((tags-todo "+KBtodo"
+                ((org-agenda-overriding-header "1. Todo:")
                  (org-agenda-remove-tags t)))
-          (tags "KBtodo"
-                ((org-agenda-overriding-header "2. Todo:")
+          (tags-todo "+KBstarted"
+                ((org-agenda-overriding-header "2. Started:")
                  (org-agenda-remove-tags t)))
-          (tags "KBstarted"
-                ((org-agenda-overriding-header "3. Started:")
+          (tags-todo "+KBblocked"
+                ((org-agenda-overriding-header "3. Blocked:")
                  (org-agenda-remove-tags t)))
-          (tags "KBblocked"
-                ((org-agenda-overriding-header "4. Blocked:")
+          (tags-todo "+KBreview"
+                ((org-agenda-overriding-header "4. Review:")
                  (org-agenda-remove-tags t)))
-          (tags "KBreview"
-                ((org-agenda-overriding-header "5. Review:")
-                 (org-agenda-remove-tags t)))))
+          (tags "TODO=\"PROJ\"-KBreview-KBblocked-KBstarted-KBtodo-longterm"
+                ((org-agenda-overriding-header "Backlog:")
+                 (org-agenda-remove-tags t)))
+          )
+
+         )
         ("j" "TODO dowith and TASK with"
          ((org-sec-with-view "TODO dowith")
           (org-sec-where-view "TODO doat")
           (org-sec-assigned-with-view "TASK with")
           (org-sec-stuck-with-view "STUCK with")))
-
 ))
 #+end_src
 
@@ -434,7 +466,7 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
   ;; Ein "@" bedeutet Notiz
   (setq org-todo-keywords
         (quote ((sequence "TODO(t)" "NEXT(n!)" "STARTED(s!)" "|" "DONE(d)")
-                (sequence "APPT(a)" "PROJ(p)" "WAITING(w@/!)" "HOLD(h@/!)" "|"  "DELEGATED(D@/!)" "CANCELLED(c@/!)")
+                (sequence "AREA(a)" "PROJ(p)" "WAITING(w@/!)" "HOLD(h@/!)" "|"  "DELEGATED(D@/!)" "CANCELLED(c@/!)")
                 (sequence "|" "IDEE(i)" "ENTWURF(e)"))))
 
   (setq org-clock-in-switch-to-state 'bh/clock-in-to-next)
@@ -456,13 +488,14 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
         (quote
          ((done ("today") ("KBbacklog") ("KBtodo") ("KBstarted") ("KBblocked") ("KBreview"))
           ("WAITING" ("today"))
-          ("HOLD" ("today") ("KBbacklog") ("KBtodo") ("KBstarted") ("KBblocked") ("KBreview"))
+          ("HOLD" ("KBbacklog") ("KBtodo") ("KBstarted") ("KBblocked") ("KBreview"))
           ("TODO" ("today")))))
 
 
   ;; Formatierung für TODO-tags
   (setq org-todo-keyword-faces ;; in theme!
-        (quote (("PROJ" :foreground "dark red" :weight semi-bold)
+        (quote (("AREA" :foreground "blue" :weight semi-bold)
+                ("PROJ" :foreground "dark red" :weight semi-bold)
                 ("NEXT" :foreground "blue" :weight semi-bold)
                 ("STARTED" :foreground "blue" :weight semi-bold)
                 ("WAITING" :foreground "orange" :weight semi-bold)
@@ -568,13 +601,9 @@ SCHEDULED: %t
  :clock-in t
  :clock-resume t)
 
-("j" "Journal entry" entry (function org-journal-find-location)
-"* %(format-time-string org-journal-time-format)%? :journal:
-:PROPERTIES:
-:CREATED: [%<%Y-%m-%d %a %H:%M>]
-:CATEGORY: %^{Category|wiss|arbeit|pers}
-:END:
-%i"
+("j" "Journal entry" plain (function org-journal-find-location)
+"
+%?"
 :immediate-finish t
 :jump-to-captured t
 )
@@ -601,11 +630,10 @@ SCHEDULED: %t
 :jump-to-captured t)
 
 ("m" "mail todo" entry (file "inbox.org")
- "* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:@mail:
+ "* TODO %^{Task}  :@mail:
 SCHEDULED: %t
 :PROPERTIES:
 :CREATED: %U
-:CATEGORY:  %\\2
 :END:
 %:fromname wrote on %:date-timestamp-inactive:
 Subject: [[%l][%:subject]]
@@ -630,11 +658,12 @@ Subject: [[%l][%:subject]]
 :END:")
 
 ("P" "Projekt" entry (file "inbox.org")
-"* PROJ %^{Projekt} :KBbacklog:%^{Category|wiss|arbeit|pers}:
+"* PROJ %^{Projekt}   :KBbacklog:
 :PROPERTIES:
 :CREATED: %U
-:CATEGORY:  %\\2
-:END:")
+:CATEGORY:  %^{Category|wiss|arbeit|pers}
+:END:\n** Information\n** Notes\n** Tasks"
+)
 
 ("D" "Norsk" entry (file "~/proj/languages/norsk.org")
 "* %^{Titel}    :drill:
@@ -880,32 +909,35 @@ http://doc.norang.ca/org-mode.org
 ** org-attach
 #+begin_src emacs-lisp
 (setq org-attach-directory "~/Dropbox/db/data/")
-(setq org-attach-expert t)
+(setq org-attach-expert nil)
 (setq org-attach-method 'lns)
+(setq org-attach-preferred-new-method 'dir)
 #+end_src
 
 ** org-babel
 #+begin_src emacs-lisp
-(org-babel-do-load-languages
- 'org-babel-load-languages '((shell . t)
-                             (dot . t)
-                             (python . t)
-                             (R . t)
-                             (gnuplot . t)
-                             (sql . t)
-                             (ledger . t)
-                             (latex . t)))
+  (org-babel-do-load-languages
+   'org-babel-load-languages '((shell . t)
+                               (dot . t)
+                               (python . t)
+                               (R . t)
+                               (gnuplot . t)
+                               (sql . t)
+                               (ledger . t)
+                               (latex . t)
+                               ;(restclient . t)
+                               ))
 
-(defun my-org-confirm-babel-evaluate (lang body)
-  (not (string= lang "sh"))
-  (not (string= lang "dot")))  ; don't ask
-(setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+  (defun my-org-confirm-babel-evaluate (lang body)
+    (not (string= lang "sh"))
+    (not (string= lang "dot")))  ; don't ask
+  (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
 
-(setq org-src-fontify-natively t
-      org-src-window-setup 'current-window
-      org-src-strip-leading-and-trailing-blank-lines t
-      org-src-preserve-indentation t
-      org-src-tab-acts-natively t)
+  (setq org-src-fontify-natively t
+        org-src-window-setup 'current-window
+        org-src-strip-leading-and-trailing-blank-lines t
+        org-src-preserve-indentation t
+        org-src-tab-acts-natively t)
 #+end_src
 
 ** additional packages
