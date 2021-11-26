@@ -1628,6 +1628,16 @@ of a BibTeX field into the template. Fork."
   :hook (emacs-lisp-mode . lispy-mode)
   :diminish lispy-mode)
 
+(use-package lsp-mode
+  :hook (python-mode . lsp)
+  :commands lsp)
+
+(use-package lsp-ui
+  :config
+  (setq lsp-ui-doc-enable nil)
+  (setq lsp-headerline-breadcrumb-enable t)
+  (setq lsp-modeline-diagnostics-enable nil))
+
 ;;; M
 (use-package magit
   :bind (("C-x g" . magit-status))
