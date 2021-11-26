@@ -711,19 +711,20 @@
   :config
   (eval-after-load 'tex-mode
     '(bind-key "C-:" 'reftex-citation LaTeX-mode-map))
+  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
 
-    (defun job/latex-notes ()
-      (interactive)
-      (let ((note
-             (read-string "Notiz: ")))
-        (save-excursion
-          (search-forward-regexp "% # Stand" nil t)
-          (backward-paragraph)
-          (insert (concat note "%"))
-          (TeX-newline))))
+  (defun job/latex-notes ()
+    (interactive)
+    (let ((note
+           (read-string "Notiz: ")))
+      (save-excursion
+        (search-forward-regexp "% # Stand" nil t)
+        (backward-paragraph)
+        (insert (concat note "%"))
+        (TeX-newline))))
 
-    (eval-after-load 'latex-mode
-      '(bind-key "C-c n" 'job/latex-notes latex-mode-map)))
+  (eval-after-load 'latex-mode
+    '(bind-key "C-c n" 'job/latex-notes latex-mode-map)))
 
 (use-package dot-defun
   :straight nil
