@@ -1243,6 +1243,16 @@ If so, ask if it needs to be saved."
               ("v" . helpful-variable)
               ("k" . helpful-key)))
 
+(use-package hl-line+
+  :hook
+  (focus-in . hl-line-flash)
+  :custom
+  (global-hl-line-mode nil)
+  (hl-line-flash-show-period 0.5)
+  (hl-line-inhibit-highlighting-for-modes '(dired-mode))
+  (hl-line-overlay-priority -100) ;; sadly, seems not observed by diredfl
+  )
+
 (use-package highlight-indentation
   :init
   (progn
