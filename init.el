@@ -190,6 +190,7 @@
 (use-package pass                 :defer t)
 (use-package peep-dired           :defer t)
 (use-package rainbow-delimiters   :hook (emacs-lisp-mode . rainbow-delimiters-mode))
+(use-package ttl-mode             :defer t)
 (use-package wgrep                :defer 3)
 
 (org-babel-load-file "~/.emacs.d/myinit.org")
