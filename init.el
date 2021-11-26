@@ -1697,19 +1697,22 @@ of a BibTeX field into the template. Fork."
   (setq mail-user-agent 'mu4e-user-agent)
   (setq mu4e-root-maildir "/home/job/.mail/")
   (setq mu4e-get-mail-command "mbsync -a")
-  (setq mu4e-update-interval 600)
+  (setq mu4e-update-interval 1200)
   (setq mu4e-completing-read-function 'completing-read)
   (setq mu4e-use-fancy-chars nil)
+
   (setq mu4e-context-policy 'pick-first)
   (setq mu4e-compose-context-policy nil)
   (setq mu4e-compose-format-flowed t)
   ;; (add-hook 'mu4e-compose-mode-hook 'visual-clean)
   (add-hook 'mu4e-compose-mode-hook 'flyspell-mode)
+  ;; (add-hook 'mu4e-compose-mode-hook (lambda () (use-hard-newlines 1)))
   (setq mu4e-confirm-quit nil)
   (setq mu4e-attachment-dir "~/tmp/2del")
   (setq mu4e-change-filenames-when-moving t)
   (setq mu4e-headers-include-related nil)
   (setq mu4e-view-show-addresses 't)
+  (setq mu4e-view-use-gnus t)
   (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
   (setq message-kill-buffer-on-exit t)
   (setq mu4e-headers-results-limit 100)
@@ -1727,8 +1730,8 @@ of a BibTeX field into the template. Fork."
                                           (time-subtract
                                            (current-time) (days-to-time 365))))
 
-  (setq mu4e-index-cleanup nil)
-  (setq mu4e-index-lazy-check t)
+  (setq mu4e-index-cleanup nil)  ;; nil speeds up
+  (setq mu4e-index-lazy-check t) ;; t speeds up
 
   (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
   (add-to-list 'mu4e-view-actions '("attachmentActions" . mu4e-view-attachment-action) t)
@@ -1757,7 +1760,7 @@ of a BibTeX field into the template. Fork."
             :vars '((mu4e-drafts-folder . "/zedat/drafts")
                     (mu4e-sent-folder . "/zedat/sent")
                     (mu4e-trash-folder . "/zedat/Trash")
-                    (mu4e-refile-folder . "/zedat/2020")
+                    (mu4e-refile-folder . "/zedat/2021")
                     (mu4e-sent-messages-behavior . sent)
                     (user-mail-address . "jobangen@zedat.fu-berlin.de")
                     (smtpmail-smtp-server . "mail.zedat.fu-berlin.de")
@@ -1791,7 +1794,50 @@ of a BibTeX field into the template. Fork."
           ,(make-mu4e-bookmark
             :name "Last 7 days"
             :query "date:7d..now AND NOT flag:trashed"
-            :key ?w))))
+            :key ?w)))
+
+  ;; https://github.com/sje30/emacs/blob/master/mu4e-view-save-all-attachments.el
+  (defvar bulk-saved-attachments-dir (expand-file-name "~/tmp/2del"))
+
+  (defun cleanse-subject (sub)
+    (replace-regexp-in-string
+     "[^A-Z0-9]+"
+     "-"
+     (downcase sub)))
+
+  (defun mu4e-view-save-all-attachments (&optional arg)
+    "Save all MIME parts from current mu4e gnus view buffer."
+    ;; Copied from mu4e-view-save-attachments
+    (interactive "P")
+    (cl-assert (and (eq major-mode 'mu4e-view-mode)
+                    (derived-mode-p 'gnus-article-mode)))
+    (let* ((msg (mu4e-message-at-point))
+           (id (cleanse-subject (mu4e-message-field msg :subject)))
+           (attachdir (concat bulk-saved-attachments-dir "/" id))
+	   (parts (mu4e~view-gather-mime-parts))
+           (handles '())
+           (files '())
+           dir)
+      (mkdir attachdir t)
+      (dolist (part parts)
+        (let ((fname (or
+		      (cdr (assoc 'filename (assoc "attachment" (cdr part))))
+                      (seq-find #'stringp
+                                (mapcar (lambda (item) (cdr (assoc 'name item)))
+                                        (seq-filter 'listp (cdr part)))))))
+          (when fname
+            (push `(,fname . ,(cdr part)) handles)
+            (push fname files))))
+      (if files
+          (progn
+            (setq dir
+		  (if arg (read-directory-name "Save to directory: ")
+		    attachdir))
+            (cl-loop for (f . h) in handles
+                     when (member f files)
+                     do (mm-save-part-to-file h (expand-file-name f dir))))
+        (mu4e-message "No attached files found"))))
+  )
 
 (use-package multiple-cursors
   :bind (("C-S-c C-S-c" . mc/edit-lines)
