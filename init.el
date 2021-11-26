@@ -663,6 +663,8 @@
                    :host github
                    :repo "raxod502/ctrlf")
   :config
+  (setq ctrlf-mode-bindings '(("C-s" . ctrlf-forward-literal)
+                              ("C-r" . ctrlf-backward-literal)))
   (ctrlf-mode 1))
 
 ;;; D
