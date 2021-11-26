@@ -400,6 +400,7 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
   (writegood-mode)
   (olivetti-mode)
   (olivetti-set-width '80))
+;;;###autoload
 (defun job/current-timezone-offset-hours ()
   (concat
    (s-pad-left 2 "0" (int-to-string (/ (car (current-time-zone)) 3600)))
