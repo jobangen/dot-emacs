@@ -2199,16 +2199,328 @@ tags:
 
 (use-package zettelkasten
   :straight (zettelkasten :local-repo "~/.emacs.d/lisp/zettelkasten")
-  :bind ("C-ä" . hydra-zettelkasten/body)
+  :bind (("C->" . zettelkasten-open-backlink)
+         :map org-mode-map
+         ("C-c C-w" . zettelkasten-org-refile-wrapper))
   :init
+  (defun zettelkasten-org-refile-wrapper (&optional arg)
+    (interactive "P")
+    (if (s-starts-with?
+         zettelkasten-zettel-directory
+         (buffer-file-name))
+        (zettelkasten-refile arg)
+      (org-refile arg)))
+
   (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
   (setq zettelkasten-zettel-directory "/home/job/Dropbox/db/zk/zettel/")
   (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
   (setq zettelkasten-bibliography-file job/bibliography-file)
   (setq zettelkasten-texts-directory "~/archive/texts/")
+  (setq zettelkasten-db-update-method 'when-idle)
   (setq zettelkasten-org-agenda-integration t)
 
-  (add-hook 'after-save-hook 'zettelkasten-update-org-agenda-files nil t)
+  (setq zettelkasten-filename-to-id-func 'job/zettelkasten-fname-to-id)
+
+
+  (defun job/zettelkasten-fname-to-id (filename)
+    (cond ((s-prefix? "txt" filename)
+           (s-chop-prefix "txt/" filename))
+          ((s-prefix? "jr" filename)
+           (s-chop-prefix "jr/" filename))
+          ((s-prefix? "rdf" filename)
+           (s-chop-prefix "rdf/" filename))
+          ((s-prefix? "eph" filename)
+           (s-left 15 (s-chop-prefix "eph/" filename)))
+          (t (s-left
+              (length (format-time-string zettelkasten-file-id-format))
+              filename))))
+
+  (setq zettelkasten-classes
+        '("owl:Class"
+          ;; Event, Procedure, Relationship
+          ("prov:Activity"
+           ("zkt:Event"
+            ("zkt:Sitzung")
+            ("zkt:Seminar")
+            ("zkt:Experience"))
+           ("zkt:Procedure"
+            ("zkt:ApplicationProcedure")
+            ("zkt:Project"
+             ("zkt:PhD")))
+           ("zkt:Relationship"
+            ("zkt:ContractualRelationship"
+             ("zkt:Employment")))
+
+           (("zktm:HealthcareActivity"
+             ("zktm:Treatment"
+              ("zktm:Vaccination"))
+             ("zktm:Diagnostics"))
+            ("zkt:SpatialMovement")))
+          ;;
+          ("prov:Entity"
+           ("zkt:LinguisticForm")
+           ("skos:Concept")
+           ("prov:Collection")
+           ("prov:Plan"
+            ("dct:LinguisticSystem")
+            ("skos:Concept prov:Plan")
+            ("zkt:Rezept")
+            ("zktm:Vaccine"))
+           ("zkt:RealObject"
+            ("dct:Software")
+            ("dct:BibliographicResource"
+             ("zktb:ProperBibliographicResource"
+              ("zktb:Article"
+               ("zktb:Review"))
+              ("zktb:Book")
+              ("zktb:InBook")
+              ("zktb:Collection")
+              ("zktb:Lexikon")
+              ("zktb:InCollection")
+              ("zktb:Journal")
+              ("zktb:Issue")
+              ("zktb:Thesis")
+              ("zktb:ClassicalText")
+              ("zktb:Report"))
+             ("zkt:BibliographicEphemera"
+              ("zkt:DocumentPart"         ;; paragraph etc
+               ("zkt:FormalDocumentPart") ;; with headline? Section, Chapter
+               ("zkt:Quote") ;; cites other text, is part of document
+               ("zkt:JobPosting")
+               ("zkt:CoverLetter"))
+              ("zkt:Draft")
+              ("zkt:SlideShow")
+              ("zkt:Excerpt")
+              ("zkt:Letter")
+              ("zkt:Contract")
+              ("zkt:Mitschrift")
+              ("zkt:Note")))))
+          ;;
+          ("prov:Agent"
+           ("foaf:Agent"
+            ("foaf:Person")
+            ("foaf:Organization"))
+           ("prov:Person"
+            ("foaf:Person")
+            ("prov:Person foaf:Person"))
+           ("prov:SoftwareAgent")
+           ("prov:Organization"
+            ("foaf:Group")
+            ("foaf:Organization")))
+          ;;
+          ("prov:InstantaneousEvent"
+           ("zkt:Waypoint"))
+          ;;
+          ("prov:Location"
+           ("zkt:RealObject prov:Location geo:Point"
+            ("zkt:TrainStation")
+            ("zkt:Airport")))
+          ("time:ProperInterval")
+          ("time:DateTimeInterval")
+          ("time:DateTimeDescription")
+          ("dct:Collection")
+          ("dct:PhysicalResource")
+          ("skos:ConceptScheme")
+          ("skos:Collection")
+          ("prov:Influence"
+           ("zkt:SemanticRelation")
+           ("prov:EntityInfluence"
+            ("prov:Usage")
+            ("zkt:Perception")))
+          "value"))
+
+  (setq zettelkasten-predicates
+        '(nil ("rdf:type")
+              (("prov:wasInfluencedBy"
+                ("zkt:symbolizes")      ;word-concept
+                ("zkt:wasSymbolizedBy")
+                ("zkt:refersTo")        ;concept-thing
+                ("zkt:wasReferedToBy")  ;concept-thing
+                ("zkt:standsFor")       ;word-thing
+                ("prov:wasAttributedTo" ;; entity to agent
+                 ("zktb:wasAuthoredBy")
+                 ("zktb:wasEditedBy")
+                 ("zktb:introductionBy")
+                 ("zktb:wasTranslatedBy")
+                 ("zkt:wasAnnotatedBy")
+                 ("zkt:wasCoinedBy"))
+
+                ("prov:wasAssociatedWith" ;; activity with agent
+                 ("zkt:hadParticipant"    ;; event -- agent
+                  ("zkt:wasPerformedBy"   ;; part of, active
+                   ("zkt:wasLedBy"))
+                  ("zkt:wasPerformedWith" ;; part of, passive?
+                   ("zktm:wasPerformedOn")))
+                 ("zkt:hadNonParticipant"
+                  ("zkt:wasOrganizedBy")
+                  ("zkt:wasDirectedAt"))
+                 ("zkt:hadActiveAssociate"
+                  ("zkt:wasPerformedBy" ;; part of, active
+                   ("zkt:wasLedBy"))
+                  ("zkt:wasOrganizedBy"))
+                 ("zkt:hadPassiveAssociate"
+                  ("zkt:wasPerformedWith" ;; part of, passive?
+                   ("zktm:wasPerformedOn"))
+                  ("zkt:wasDirectedAt"))
+                 ("zkt:hadResponsibleParty") ;; activity -- agent
+                 ("zkt:applicant")
+                 ("zkt:employer")
+                 ("zkt:employee")
+                 ("zkt:sentBy")
+                 ("zkt:sentTo"))
+
+                ("prov:wasDerivedFrom" ;;entity -- entity
+                 ("prov:hadPrimarySource")
+                 ("prov:wasQuotedFrom")
+                 ("prov:wasRevisionOf"))
+                ("prov:wasGeneratedBy") ;;entity by activity
+                ("prov:wasInvalidatedBy")
+                ("prov:used"
+                 ("zkt:perceptionOf"))
+                ("prov:actedOnBehalfOf")
+                ("prov:wasInformedBy") ;;activity by activity
+                ("prov:wasStartedBy")
+                ("prov:wasEndedBy"))
+               ("prov:alternateOf"
+                ("prov:specializationOf" ;;entity -- entity
+                 ))
+               ("prov:hadMember")
+               ("prov:memberOf")
+               ("prov:atLocation"
+                ("zkt:startedAtLocation")
+                ("zkt:endedAtLocation")) ;; ... at Location
+               ("prov:generatedAtTime")  ;; entity at instant
+               ("prov:qualifiedInfluence"
+                ("prov:qualifiedUsage"
+                 ("zkt:qualifiedPerception")))
+               ("skos:semanticRelation"
+                ("skos:related"
+                 ("skos:relatedMatch"))
+                ("skos:broaderTransitive"
+                 ("skos:broader"
+                  ("skos:broadMatch"))
+                 ("zkt:isTypeOf")) ;;
+                ("skos:narrowerTransitive"
+                 ("skos:narrower"
+                  ("skos:narrowMatch"))
+                 ("zkt:hasType"))
+                ("skos:mappingRelation"
+                 ("skos:closeMatch"
+                  ("skos:exactMatch")
+                  ("skos:relatedMatch")
+                  ("skos:broadMatch")
+                  ("skos:narrowMatch")))))
+
+              ;; SKOS
+              (
+               ("skos:subject"
+                ("skos:primarySubject"))
+               ("skos:isSubjectOf"
+                ("skos:isPrimarySubjectOf"))
+               ("skos:member")
+               ("skos:memberOf")
+               ("skos:inScheme")
+               ("skos:definition"))
+              ("time:intervalStartedBy" "time:intervalStarts"
+               "time:intervalFinishedBy" "time:intervalFinishes"
+               "time:after" "time:before"
+               "time:intervalMetBy" "time:intervalMeets"
+               "time:intervalContains" "time:intervalDuring"
+               "time:minutes"
+               "time:hours"
+               "time:days"
+               "time:hasDateTimeDescription")
+              (("dct:issued")
+               ("dct:date")
+               ("dct:hasPart")
+               ("dct:isPartOf")
+               ("dct:language"))
+              "zkt:addressee" ;; addressee of entity, letter etc
+              ;; descriptive meta data
+              ("zkt:distanceKM")
+              ("zkt:wasEvidencedBy") ;; Concept -- ...
+              ("zkt:result")
+              ("foaf:member") ("foaf:memberOf")
+
+
+              ("zktb:wasDedicatedTo")
+
+              ("zktm:atBodilyLocation")
+              ("zkt:hadQualia")
+              ("zkt:dosage")
+              ("prov:entity")))
+
+  (setq zettelkasten-predicate-domain-range
+        '(("zkt:symbolizes" ("zkt:LinguisticForm" ("skos:Concept")))
+          ("zkt:wasSymbolizedBy" ("skos:Concept" ("zkt:LinguisticForm")))
+          ("zkt:refersTo" ("skos:Concept" ("owl:Class")))
+          ("zkt:wasReferedToBy" ("owl:Class" ("skos:Concept")))
+          ("zkt:standsFor" ("zkt:LinguisticForm" ("owl:Class")))
+          ("prov:wasAttributedTo" ("prov:Entity" ("prov:Agent")))
+          ("zktb:wasAuthoredBy" ("prov:Entity" ("prov:Agent")))
+          ("zktb:wasEditedBy" ("prov:Entity" ("prov:Agent")))
+          ("zkt:wasCoinedBy" ("prov:Entity" ("prov:Agent")))
+          ;;
+          ("prov:wasAssociatedWith" ("prov:Activity" ("prov:Agent")))
+          ;;
+          ("zkt:hadParticipant" ("zkt:Event" ("prov:Agent")))
+          ("zkt:hadNonParticipant" ("zkt:Event" ("prov:Agent")))
+          ("zkt:hadActiveAssociate" ("zkt:Event" ("prov:Agent")))
+          ("zkt:hadPassiveAssociate" ("zkt:Event" ("prov:Agent")))
+          ;;
+          ("zkt:wasPerformedBy" ("zkt:Event" ("prov:Agent")))
+          ("zkt:wasPerformedWith" ("zkt:Event" ("prov:Agent")))
+          ("zkt:wasOrganizedBy" ("zkt:Event" ("prov:Agent")))
+          ("zkt:wasDirectedAt" ("zkt:Event" ("prov:Agent")))
+          ;;
+          ("zkt:wasLedBy" ("zkt:Event" ("prov:Agent")))
+          ("zkt:wasPerformedOn" ("zkt:Event" ("prov:Agent")))
+          ;;
+          ("prov:wasGeneratedBy" ("prov:Entity" ("prov:Activity")))
+          ;;
+          ("prov:used" ("prov:Activity" ("prov:Entity")))
+          ;;
+          ("prov:wasInformedBy" ("prov:Activity" ("prov:Activity")))
+          ;;
+          ("prov:wasDerivedFrom" ("prov:Entity" ("prov:Entity")))
+          ("prov:wasRevisionOf" ("prov:Entity" ("prov:Entity")))
+          ("prov:hadPrimarySource" ("prov:Entity" ("prov:Entity")))
+          ;;
+          ("prov:atLocation" ("owl:Class" ("prov:Location")))
+
+          ("prov:memberOf" ("prov:Entity" ("prov:Collection")))
+          ;;
+          ("skos:broaderTransitive" ("skos:Concept" ("skos:Concept")))
+          ("skos:broader" ("skos:Concept" ("skos:Concept")))
+          ("skos:narrowerTransitive" ("skos:Concept" ("skos:Concept")))
+          ("skos:narrower" ("skos:Concept" ("skos:Concept")))
+          ("skos:narrowMatch" ("skos:Concept" ("skos:Concept")))
+          ("skos:broadMatch" ("skos:Concept" ("skos:Concept")))
+          ("skos:related" ("skos:Concept" ("skos:Concept")))
+          ("skos:subject" ("owl:Class" ("owl:Class")))
+          ("skos:primarySubject" ("owl:Class" ("owl:Class")))
+          ("skos:isSubjectOf" ("owl:Class" ("owl:Class")))
+          ("skos:isPrimarySubjectOf" ("owl:Class" ("owl:Class")))
+          ;;
+          ("dct:issued" ("prov:Entity" ("time:DateTimeInterval")))
+          ("dct:date" ("owl:Class" ("time:DateTimeInterval")))
+          ("dct:language" ("owl:Class" ("dct:LinguisticSystem")))
+          ("dct:isPartOf" ("owl:Class" ("owl:Class")))
+          ("dct:hasPart" ("owl:Class" ("owl:Class")))
+          ("zkt:result" ("owl:Class" ("owl:Class")))
+          ("zkt:dosage" ("zkt:Event" ("value")))
+          ;;
+          ("foaf:memberOf" ("foaf:Person" ("foaf:Group")))
+          ;;
+          ("time:hasDateTimeDescription" ("owl:Class" ("time:DateTimeDescription")))
+          ("time:minutes" ("prov:Activity" ("value")))
+          ("time:hours" ("prov:Activity" ("value")))
+          ("time:days" ("prov:Activity" ("value")))
+          ;;
+          ("zkt:distanceKM" ("zkt:Event" ("value")))))
+
+
+
   (defun zettelkasten-txt-query ()
     (interactive)
     (counsel-ag nil "~/.custom-temp/pdfs-extracted" nil))
@@ -2219,6 +2531,12 @@ tags:
         (dired-find-file))
     (if (equal major-mode 'org-mode)
         (org-open-at-point))))
+
+(use-package zettelkasten-ext
+  :straight (zettelkasten-ext :local-repo "~/.emacs.d/lisp/zettelkasten-ext")
+  :bind (("C-ä" . hydra-zettelkasten/body))
+)
+
 
 ;;; Hydras
 (defhydra hydra-system (:color red)
