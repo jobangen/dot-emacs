@@ -409,9 +409,166 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
 (org-link-set-parameters "arch" :follow #'myarchive-open)
 
 (defun myarchive-open (path)
-  (let* ((year (s-left 4 path))
-         (fname (concat "/home/job/archive/date-description/" year "/" path "*")))
+  (let ((fname (concat "/home/job/archive/date-description/" path "*")))
     (find-file-other-window fname t)))
+
+;; https://stackoverflow.com/questions/37038441/generate-a-random-5-letternumber-string-at-cursor-point-all-lower-case/37039205
+(defun job/random-alnum ()
+  (let* ((alnum "abcdefghijklmnopqrstuvwxyz0123456789")
+         (i (% (abs (random)) (length alnum))))
+    (substring alnum i (1+ i))))
+
+(defun job/random-string (n)
+  "Generate a slug of n random alphanumeric characters.
+   Inefficient implementation; don't use for large n."
+  (if (= 0 n)
+      ""
+    (concat (job/random-alnum) (job/random-string (1- n)))))
+
+(defun job/process-file ()
+  (interactive)
+  (let* ((id-len 21)
+         (filename (dired-get-filename))
+         (fnamebase (file-name-base filename))
+         (filetype (downcase (file-name-extension filename)))
+         (dt-old nil)
+         (id-old nil)
+         (modtime (format-time-string "%Y-%m-%dT%H.%M.%S"
+                                      (nth 5 (file-attributes filename))))
+         (datetime-options (list modtime
+                                 ;; (format-time-string
+                                 ;;  "%Y-%m-%dT%H.%M.%S" (current-time))
+                                 ))
+         (tags (filetags-extract-filetags filename))) ;; todo, save old
+    (recenter-top-bottom)
+    (cond ((s-starts-with? "Direkt_Depot_8010659390" fnamebase)
+           (let* ((datestring (s-right 8 fnamebase))
+                  (year (s-left 4 datestring))
+                  (month (substring datestring 4 6))
+                  (day (s-right 2 datestring)))
+             (message datestring)
+             (push (format "%s-%s-%s" year month day)
+                   datetime-options)
+             (setq tags (append tags '("in" "diba"))))))
+    (save-match-data
+      (string-match (rx
+                     (group
+                      (repeat 4 (any "0-9")) "-"
+                      (repeat 2 (any "0-9")) "-"
+                      (repeat 2 (any "0-9"))
+                      (zero-or-one
+                       (and "T"
+                            (repeat 2 (any "0-9")) "."
+                            (repeat 2 (any "0-9")) "."
+                            (repeat 2 (any "0-9")))))
+                     (zero-or-one "-")
+                     (zero-or-one
+                      (group (or (repeat 1 (any "a-z" "0-9"))
+                                 (repeat 5 (any "a-z" "0-9"))
+                                 (repeat 10 (any "a-z" "0-9"))))
+                      "--"))
+                    fnamebase)
+      (push (match-string 1 fnamebase) datetime-options)
+      (setq dt-old (match-string 1 fnamebase)) ;; not elegant
+      (setq id-old (match-string 2 fnamebase)))
+    (dired-display-file)
+    (other-window 1)
+    (ignore-errors (pdf-view-fit-width-to-window))
+    (previous-window-any-frame)
+    (let* ((dt-new (if (equal filetype "jpg")
+                       modtime
+                     (completing-read "Datetime: " datetime-options)))
+           (id-rand (if (and (equal dt-old dt-new)
+                             (< 0 (length id-old))
+                             (= 20 (+ (length dt-new) (length id-old))))
+                        id-old
+                      (job/random-string (- (- id-len 1) (length dt-new)))))
+           (tags-new (mapcar (lambda (tag)
+                               (concat "+" tag))
+                             tags))
+           (filename-proc (read-string
+                           "File description: "
+                           (downcase
+                            (s-left
+                             40
+                             (car (split-string
+                                   (s-chop-prefixes
+                                    (list dt-old "--" "-" id-old "--")
+                                    fnamebase)))))))
+           (filename-new (format "%s-%s--%s.%s"
+                                 dt-new
+                                 id-rand
+                                 filename-proc
+                                 filetype)))
+      ;; (message tags-new)
+      (rename-file filename filename-new)
+      (filetags-update-tags-write
+       (concat (dired-current-directory) filename-new)
+       tags-new)
+      (revert-buffer)
+      (recenter-top-bottom)
+      (unless (or (equal filetype "jpg")
+                  (equal filetype "jpeg"))
+        (filetags-dired-update-tags)
+        (recenter-top-bottom))
+      (next-line)
+       (job/process-file)
+      ;; (job-dired-cp-mv-files-to-destinations)
+      ;; (sleep-for 3)
+       )))
+
+;;;###autoload
+(defun job/tags-loop ()
+  (interactive)
+  (dired-display-file)
+  (filetags-dired-update-tags)
+  (next-line)
+  (job/tags-loop))
+
+
+
+(defun job/process-pdf ()
+  (interactive)
+  (let* ((filename (thing-at-point 'filename))
+         (datetime nil)
+         (tags nil))
+    (cond ((s-starts-with? "Direkt_Depot_8010659390" filename)
+           (let* ((datestring (s-right 8 (file-name-base filename)))
+                  (year (s-left 4 datestring))
+                  (month (substring datestring 4 6))
+                  (day (s-right 2 datestring)))
+             (setq datetime (parse-time-string (format "%s-%s-%s" year month day)))
+             (setq tags '("+in" "+dkb")))))
+    (dired-display-file)
+    (other-window 1)
+    (pdf-view-fit-width-to-window)
+    (other-window 1)
+    (let* ((datestring (if datetime
+                           (format "%s-%s-%s"
+                                   (nth 5 date) ;; year
+                                   (s-pad-left 2 "0" (int-to-string
+                                                      (nth 4 date))) ;; month
+                                   (s-pad-left 2 "0" (int-to-string
+                                                      (nth 3 date)))) ;; day
+                         (read-string "Datestring: ")))
+           (rand-string (job/random-string 5))
+           (filename-proc (read-string "File description: "
+                                       (downcase (s-left 40 (s-chop-suffix ".pdf" filename)))))
+           (filename-new (format "%s-%s--%s.pdf"
+                                 datestring
+                                 rand-string
+                                 filename-proc)))
+      (rename-file filename filename-new)
+      (filetags-update-tags-write
+       (concat (dired-current-directory) filename-new)
+       tags)
+      (revert-buffer)
+      (filetags-dired-update-tags)
+      (job-dired-cp-mv-files-to-destinations)
+      ;; (sleep-for 3)
+      ;; (job/process-pdf) ; geht nicht, weil er das gnome-terminal nicht abwartet
+      )))
+
 
 ;;; pdf-tools
 ;; https://www.reddit.com/r/emacs/comments/9p2yyq/marking_and_splitting_pdfs_with_pdfstools/
