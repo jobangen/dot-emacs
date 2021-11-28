@@ -1719,6 +1719,9 @@ of a BibTeX field into the template. Fork."
           ("Tag: Location" "%(binary) -f /home/job/proj/ledger-data/main.ledger --decimal-comma bal -X € --limit 'tag(\"Location\")' '--account=tag(\"Location\")' --real -d \"l<=2\" Expenses Income")))
   )
 
+(use-package ledger-capture
+  :straight (ledger-capture :local-repo "~/src/soa2ledger"))
+
 (use-package ledger-job
   :straight (ledger-job :local-repo "~/.emacs.d/lisp/ledger-job")
   :after (ledger-mode)
