@@ -130,6 +130,7 @@
 
 (use-package no-littering)
 
+(global-set-key (kbd "s-<tab>") 'other-window)
 
 ;;; org
 (use-package dot-org
@@ -187,7 +188,7 @@
 (use-package ivy-hydra            :after (ivy hydra))
 (use-package ivy-pass             :defer t :after (ivy pass))
 (use-package neato-graph-bar      :defer t)
-(use-package neotree              :defer 3)
+(use-package neotree              :defer t)
 (use-package nov                  :mode ("\\.epub\\'" . nov-mode))
 (use-package orglink :hook (TeX-mode . orglink-mode))
 (use-package pass                 :defer t)
@@ -217,7 +218,7 @@
     (setq-default abbrev-mode t)))
 
 (use-package academic-phrases
-  :defer 2
+  :defer t
   :straight (academic-phrases :type git
                               :host github
                               :repo "nashamri/academic-phrases"))
@@ -233,6 +234,7 @@
     (setq aw-dispatch-always nil)))
 
 (use-package auto-yasnippet
+  :disabled
   :bind (("H-w" . aya-create)
          ("H-y" . aya-expand)))
 
@@ -531,7 +533,7 @@
   :config
   (setq bu-bibtex-fields-ignore-list '("")))
 
-(use-package blacken)
+(use-package blacken :defer t)
 
 (use-package blimp
   :disabled
@@ -676,6 +678,7 @@
 
 ;;; D
 (use-package diary-lib
+  :disabled
   :config
   (setq diary-file "~/Dropbox/db/diary")
   (setq diary-date-forms diary-iso-date-forms)
@@ -693,11 +696,13 @@
   (add-hook 'diary-list-entries-hook 'diary-sort-entries t))
 
 (use-package deadgrep
-  :straight (:type git
-                   :host github
-                   :repo "Wilfred/deadgrep"))
+  :commands deadgrep
+  :straight (deadgrep :type git
+                      :host github
+                      :repo "Wilfred/deadgrep"))
 
 (use-package deft
+  :disabled
   :defer t
   :bind (:map deft-mode-map
               ("C-h" . deft-filter-decrement)
@@ -847,101 +852,18 @@
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 ;;; E
-(use-package edbi)
+(use-package edbi :disabled)
 
 (use-package ediff
   :config (set 'ediff-window-setup-function 'ediff-setup-windows-plain))
 
 (use-package elfeed
+  :commands elfeed
   :bind (:map elfeed-show-mode-map
               ("z" . zettelkasten-elfeed-new-zettel)
+              ("Z" . zettelkasten-elfeed-new-bib)
               ("d" . doi-utils-add-entry-from-elfeed-entry)
-              ("n" . zettelkasten-elfeed-skip))
-
-
-  :init
-;;; from scimax
-  (defun doi-utils-add-entry-from-elfeed-entry ()
-    "Add elfeed entry to bibtex."
-    (interactive)
-    (require 'org-ref)
-    (let* ((title (elfeed-entry-title elfeed-show-entry))
-           (url (elfeed-entry-link elfeed-show-entry))
-           (content (elfeed-deref (elfeed-entry-content elfeed-show-entry)))
-           (entry-id (elfeed-entry-id elfeed-show-entry))
-           (entry-link (elfeed-entry-link elfeed-show-entry))
-           (entry-id-str (concat (car entry-id)
-                                 "|"
-                                 (cdr entry-id)
-                                 "|"
-                                 url)))
-      (if (string-match "DOI: \\(.*\\)$" content)
-          (doi-add-bibtex-entry (match-string 1 content)
-                                (ido-completing-read
-                                 "Bibfile: "
-                                 (append (f-entries "." (lambda (f)
-                                                          (and (not (string-match "#" f))
-                                                               (f-ext? f "bib"))))
-                                         org-ref-default-bibliography)))
-        (let ((dois (org-ref-url-scrape-dois url)))
-          (cond
-           ;; One doi found. Assume it is what we want.
-           ((= 1 (length dois))
-            (doi-utils-add-bibtex-entry-from-doi
-             (car dois)
-             (ido-completing-read
-              "Bibfile: "
-              (append (f-entries "." (lambda (f)
-                                       (and (not (string-match "#" f))
-                                            (f-ext? f "bib"))))
-                      org-ref-default-bibliography)))
-            action)
-           ;; Multiple DOIs found
-           ((> (length dois) 1)
-            (ivy-read "Select a DOI" (let ((dois '()))
-                                       (with-current-buffer (url-retrieve-synchronously url)
-                                         (loop for doi-pattern in org-ref-doi-regexps
-                                               do
-                                               (goto-char (point-min))
-                                               (while (re-search-forward doi-pattern nil t)
-                                                 (pushnew
-                                                  ;; Cut off the doi, sometimes
-                                                  ;; false matches are long.
-                                                  (cons (format "%40s | %s"
-                                                                (substring
-                                                                 (match-string 1)
-                                                                 0 (min
-                                                                    (length (match-string 1))
-                                                                    40))
-                                                                doi-pattern)
-                                                        (match-string 1))
-                                                  dois
-                                                  :test #'equal)))
-                                         (reverse dois)))
-                      :action
-                      (lambda (x)
-                        (let ((bibfile (car org-ref-default-bibliography))
-                              (doi (cdr x)))
-                          (ignore-errors
-                            (doi-utils-add-bibtex-entry-from-doi
-                             doi
-                             bibfile)
-                            ;; this removes two blank lines before each entry.
-                            (bibtex-beginning-of-entry)
-                            (delete-char -2))
-                          ;; edit entry
-                          (delete-other-windows)
-                          (split-window-horizontally)
-                          (other-window 1 nil)
-                          (find-file bibfile)
-                          (goto-char (point-max))
-                          (bibtex-beginning-of-entry)
-                          (when (search-forward "year" nil t)
-                            (replace-match "date"))
-                          (bibtex-clean-entry t)
-                          ;; (save-buffer)
-                          ;; (org-ref-open-bibtex-notes)
-                          ))))))))))
+              ("n" . zettelkasten-elfeed-skip)))
 
 (use-package elfeed-score
   :config
@@ -1116,7 +1038,7 @@ If so, ask if it needs to be saved."
   :config
   (setq flyspell-correct-interface 'flyspell-correct-ivy))
 
-;;; G
+;;; g
 (use-package german-holidays
   :defer 2
   :config
@@ -1170,18 +1092,21 @@ If so, ask if it needs to be saved."
        (define-key message-mode-map (kbd "C-c t") #'gnorb-gnus-outgoing-do-todo))))
 
 (use-package gnuplot
+  :disabled
   :straight (gnuplot-mode :type git
                           :host github
                           :repo "bruceravel/gnuplot-mode")
   :mode ("\\.plot\\'" . gnuplot-mode))
 
 (use-package gnus
+  :disabled
   :commands gnus
   :straight nil
   :init
   (setq gnus-init-file (no-littering-expand-etc-file-name "gnus-config.el")))
 
 (use-package gnus-recent
+  :disabled
   :after gnus
   :straight (gnus-recent :type git
                          :host github
@@ -1579,6 +1504,7 @@ of a BibTeX field into the template. Fork."
   )
 
 (use-package ivy-posframe
+  :disabled
   :after (ivy posframe)
   :config
   (setq ivy-posframe-display-functions-alist
@@ -1644,6 +1570,7 @@ of a BibTeX field into the template. Fork."
 
 ;;; K
 (use-package key-chord
+  :disabled
   :defer 2
   :after (avy ace-window)
   :init
@@ -1656,6 +1583,7 @@ of a BibTeX field into the template. Fork."
     (key-chord-define-global "jf" 'ace-window)))
 
 (use-package keyfreq
+  :disabled
   :init
   (keyfreq-autosave-mode 1)
   (keyfreq-mode 1)
@@ -1693,6 +1621,7 @@ of a BibTeX field into the template. Fork."
 
 ;;; L
 (use-package langtool
+  :disabled
   :defer t
   :init
   (setq langtool-language-tool-jar "~/programme/LanguageTool-3.1/languagetool-commandline.jar"))
@@ -1734,6 +1663,7 @@ of a BibTeX field into the template. Fork."
          ("C-<" . link-hint-open-link)))
 
 (use-package linkmarks
+  :disabled
   :straight (linkmarks :type git
                        :host github
                        :repo "dustinlacewell/linkmarks")
@@ -1741,12 +1671,12 @@ of a BibTeX field into the template. Fork."
   (setq linkmarks-file "~/Dropbox/db/zk/zettel/zettelkasten-index.org")
 
   (cl-defun job/linkmarks-select ()
-  (interactive)
-  (-let* ((targets (linkmarks--in-file))
-          (choices (mapcar 'car targets))
-          (choice (completing-read "Entry: " choices))
-          ((_ link) (-first (lambda (i) (equal (car i) choice)) targets)))
-    (org-open-link-from-string link)))
+    (interactive)
+    (-let* ((targets (linkmarks--in-file))
+            (choices (mapcar 'car targets))
+            (choice (completing-read "Entry: " choices))
+            ((_ link) (-first (lambda (i) (equal (car i) choice)) targets)))
+      (org-open-link-from-string link)))
 
   (defun job/linkmarks-capture ()
     (interactive)
@@ -2131,7 +2061,7 @@ rotate entire document."
 
 (use-package pos-tip)                   ;for sdcv
 
-(use-package posframe)
+(use-package posframe :defer t)
 
 (use-package projectile
   :defer 2
@@ -2413,6 +2343,7 @@ rotate entire document."
 
 ;;; Z
 (use-package zetteldeft
+  :disabled
   :straight (zetteldeft :type git
                         :host github
                         :repo "EFLS/zetteldeft")
@@ -2436,11 +2367,12 @@ tags:
     (interactive)
     (goto-char (point-min))
     (ignore-errors
-    (while t
-      (zetteldeft-follow-link)))))
+      (while t
+        (zetteldeft-follow-link)))))
 
 (use-package zettelkasten
   :straight (zettelkasten :local-repo "~/.emacs.d/lisp/zettelkasten")
+  :commands zettelkasten-insert-link-at-point
   :bind (("C->" . zettelkasten-open-backlink)
          :map org-mode-map
          ("C-c C-w" . zettelkasten-org-refile-wrapper))
@@ -2460,6 +2392,7 @@ tags:
   (setq zettelkasten-texts-directory "~/archive/texts/")
   (setq zettelkasten-db-update-method 'when-idle)
   (setq zettelkasten-org-agenda-integration t)
+  (setq zettelkasten-collection-predicate "prov:wasMemberOf")
 
   (setq zettelkasten-filename-to-id-func 'job/zettelkasten-fname-to-id)
 
@@ -2478,98 +2411,100 @@ tags:
               filename))))
 
   (setq zettelkasten-classes
-        '("owl:Class"
-          ;; Event, Procedure, Relationship
-          ("prov:Activity"
-           ("zkt:Event"
-            ("zkt:Sitzung")
-            ("zkt:Seminar")
-            ("zkt:Experience"))
-           ("zkt:Procedure"
-            ("zkt:ApplicationProcedure")
-            ("zkt:Project"
-             ("zkt:PhD")))
-           ("zkt:Relationship"
-            ("zkt:ContractualRelationship"
-             ("zkt:Employment")))
+        '(("owl:Class")
+          ("owl:Thing"
+           ("time:ProperInterval"
+            ("time:DateTimeInterval"))
+           ;;
+           ("prov:InstantaneousEvent"
+            ("zkt:Waypoint"))
+           ;; Event, Procedure, Relationship
+           ("prov:Activity"
+            ("zkt:Event"
+             ("zkt:Experience")) ;; TODO
+            ("zkt:Procedure"
+             ("zkt:ApplicationProcedure")
+             ("zkt:Project"
+              ("zkt:PhD")))
+            ("zkt:Relationship"
+             ("zkt:ContractualRelationship"
+              ("zkt:Employment")))
 
-           (("zktm:HealthcareActivity"
-             ("zktm:Treatment"
-              ("zktm:Vaccination"))
-             ("zktm:Diagnostics"))
-            ("zkt:SpatialMovement")))
-          ;;
-          ("prov:Entity"
-           ("zkt:LinguisticForm")
-           ("skos:Concept")
-           ("prov:Collection")
-           ("prov:Plan"
-            ("dct:LinguisticSystem")
-            ("skos:Concept prov:Plan")
-            ("zkt:Rezept")
-            ("zktm:Vaccine"))
-           ("zkt:RealObject"
-            ("dct:Software")
-            ("dct:BibliographicResource"
-             ("zktb:ProperBibliographicResource"
-              ("zktb:Article"
-               ("zktb:Review"))
-              ("zktb:Book")
-              ("zktb:InBook")
-              ("zktb:Collection")
-              ("zktb:Lexikon")
-              ("zktb:InCollection")
-              ("zktb:Journal")
-              ("zktb:Issue")
-              ("zktb:Thesis")
-              ("zktb:ClassicalText")
-              ("zktb:Report"))
-             ("zkt:BibliographicEphemera"
-              ("zkt:DocumentPart"         ;; paragraph etc
-               ("zkt:FormalDocumentPart") ;; with headline? Section, Chapter
-               ("zkt:Quote") ;; cites other text, is part of document
-               ("zkt:JobPosting")
-               ("zkt:CoverLetter"))
-              ("zkt:Draft")
-              ("zkt:SlideShow")
-              ("zkt:Excerpt")
-              ("zkt:Letter")
-              ("zkt:Contract")
-              ("zkt:Mitschrift")
-              ("zkt:Note")))))
-          ;;
-          ("prov:Agent"
-           ("foaf:Agent"
-            ("foaf:Person")
-            ("foaf:Organization"))
-           ("prov:Person"
-            ("foaf:Person")
-            ("prov:Person foaf:Person"))
-           ("prov:SoftwareAgent")
-           ("prov:Organization"
-            ("foaf:Group")
-            ("foaf:Organization")))
-          ;;
-          ("prov:InstantaneousEvent"
-           ("zkt:Waypoint"))
-          ;;
-          ("prov:Location"
-           ("zkt:RealObject prov:Location geo:Point"
-            ("zkt:TrainStation")
-            ("zkt:Airport")))
-          ("time:ProperInterval")
-          ("time:DateTimeInterval")
-          ("time:DateTimeDescription")
-          ("dct:Collection")
-          ("dct:PhysicalResource")
-          ("skos:ConceptScheme")
-          ("skos:Collection")
-          ("prov:Influence"
-           ("zkt:SemanticRelation")
-           ("prov:EntityInfluence"
-            ("prov:Usage")
-            ("zkt:Perception")))
-          "value"))
+            (("zktm:HealthcareActivity"
+              ("zktm:Treatment"
+               ("zktm:Vaccination"))
+              ("zktm:Diagnostics"))
+             ("zkt:SpatialMovement")))
+           ;;
+           ("prov:Entity"
+            ("zkt:LinguisticForm")
+            ("skos:Concept")
+            ("prov:Bundle")
+            ("prov:Collection")
+            ("prov:Plan"
+             ("dct:LinguisticSystem")
+             ("skos:Concept prov:Plan")
+             ("zkt:Rezept")
+             ("zktm:Vaccine"))
+            ("zkt:RealObject"
+             ("dct:Software")
+             ("dct:BibliographicResource"
+              ("zktb:ProperBibliographicResource"
+               ("zktb:Article"
+                ("zktb:Review"))
+               ("zktb:Book")
+               ("zktb:InBook")
+               ("zktb:Collection")
+               ("zktb:Lexikon")
+               ("zktb:InCollection")
+               ("zktb:Journal")
+               ("zktb:Issue")
+               ("zktb:Thesis")
+               ("zktb:ClassicalText")
+               ("zktb:Report"))
+              ("zkt:BibliographicEphemera"
+               ("zkt:DocumentPart"         ;; paragraph etc
+                ("zkt:FormalDocumentPart") ;; with headline? Section, Chapter
+                ("zkt:Quote") ;; cites other text, is part of document
+                ("zkt:JobPosting")
+                ("zkt:CoverLetter"))
+               ("zkt:Draft")
+               ("zkt:SlideShow")
+               ("zkt:Excerpt")
+               ("zkt:Letter")
+               ("zkt:Contract")
+               ("zkt:Mitschrift")
+               ("zkt:Note")))))
+           ;;
+           ("prov:Agent"
+            ("foaf:Agent"
+             ("foaf:Person")
+             ("foaf:Organization"))
+            ("prov:Person"
+             ("foaf:Person")
+             ("prov:Person foaf:Person"))
+            ("prov:SoftwareAgent")
+            ("prov:Organization"
+             ("foaf:Group")
+             ("foaf:Organization")))
+           ;;
+           ("prov:Location"
+            ("zkt:RealObject prov:Location geo:Point"
+             ("zkt:TrainStation")
+             ("zkt:Airport")))
+           ("time:DateTimeDescription")
+           ("dct:Collection")
+           ("dct:PhysicalResource")
+           ("skos:ConceptScheme")
+           ("skos:Collection")
+           ("prov:Influence"
+            ("prov:AgentInfluence"
+             ("prov:Association"))
+            ("zkt:SemanticRelation")
+            ("prov:EntityInfluence"
+             ("prov:Usage")
+             ("zkt:Perception")))
+           ("geo:Point"))))
 
   (setq zettelkasten-predicates
         '(nil ("rdf:type")
@@ -2627,12 +2562,12 @@ tags:
                 ("prov:specializationOf" ;;entity -- entity
                  ))
                ("prov:hadMember")
-               ("prov:memberOf")
+               ("prov:wasMemberOf")
                ("prov:atLocation"
-                ("zkt:startedAtLocation")
-                ("zkt:endedAtLocation")) ;; ... at Location
-               ("prov:generatedAtTime")  ;; entity at instant
+                )                       ;; ... at Location
+               ("prov:generatedAtTime") ;; entity at instant
                ("prov:qualifiedInfluence"
+                ("prov:qualifiedAssociation")
                 ("prov:qualifiedUsage"
                  ("zkt:qualifiedPerception")))
                ("skos:semanticRelation"
@@ -2663,6 +2598,7 @@ tags:
                ("skos:memberOf")
                ("skos:inScheme")
                ("skos:definition"))
+              ;; owl-time
               ("time:intervalStartedBy" "time:intervalStarts"
                "time:intervalFinishedBy" "time:intervalFinishes"
                "time:after" "time:before"
@@ -2692,6 +2628,83 @@ tags:
               ("zkt:dosage")
               ("prov:entity")))
 
+  (setq zettelkasten-db-predicate-data
+        '([nil "rdf:type" nil "owl:Class" "zkr:isInstanceOf"]
+          [nil "zkt:symbolized" "zkt:LinguisticForm" "skos:Concept" "zkt:wasSymbolizedBy"]
+          [nil "zkt:wasSymbolizedBy" "skos:Concept" "zkt:LinguisticForm" "zkt:symbolized"]
+          [nil "zkt:refersTo" "skos:Concept" "owl:Thing" "zkt:wasReferedToBy"]
+          [nil "zkt:wasReferedToBy" "owl:Thing" "skos:Concept" "zkt:refersTo"]
+          [nil "zkt:standsFor" "zkt:LinguisticForm" "owl:Thing" nil]
+          [nil "prov:wasAttributedTo" "prov:Entity" "prov:Agent" "prov:contributed"]
+          ;; 
+          [nil "zktb:wasAuthoredBy" "prov:Entity" "prov:Agent" "zktb:authored"]
+          [nil "zktb:wasEditedBy" "prov:Entity" "prov:Agent" "zktb:edited"]
+          [nil "zkt:wasCoinedBy" "prov:Entity" "prov:Agent" "zktb:coined"]
+          ;; 
+          [nil "prov:wasAssociatedWith" "prov:Activity" "prov:Agent" "prov:wasAssociateFor"]
+          [nil "zkt:hadParticipant" "prov:Activity" "prov:Agent" "zkt:participatedIn"]
+          [nil "zkt:hadNonParticipant" "prov:Activity" "prov:Agent" "zkt:participatednotin"]
+          [nil "zkt:hadActiveAssociate" "prov:Activity" "prov:Agent" "zkt:wasActiveAssociateFor"]
+          [nil "zkt:hadPassiveAssociate" "prov:Activity" "prov:Agent" "zkt:wasPassiveAssociateFor"]
+          [nil "zkt:hadResponsibleParty" "prov:Activity" "prov:Agent" "zkt:responsibleFor"]
+          ;; 
+          [nil "zkt:wasPerformedBy" "prov:Activity" "prov:Agent" "zkt:performed"]
+          [nil "zkt:wasPerformedWith" "prov:Activity" "prov:Agent" "zkt:hadP"]
+          [nil "zkt:wasOrganizedBy" "prov:Activity" "prov:Agent" "zkt:organized"]
+          [nil "zkt:wasDirectedAt" "prov:Activity" "prov:Agent" "zkt:wasTargetOf"]
+          [nil "zkt:wasLedBy" "prov:Activity" "prov:Agent" "zkt:led" ]
+          [nil "zkt:wasPerformedOn" "prov:Activity" "prov:Agent" "zkt:hadPerformedOn"]
+          ;;
+          [nil "prov:wasGeneratedBy" "prov:Entity" "prov:Activity" "prov:generated"]
+          [nil "prov:used" "prov:Activity" "prov:Entity" "prov:wasUsedBy"]
+          [nil "prov:wasInformedBy" "prov:Activity" "prov:Activity" "prov:informed"]
+          ;;
+          [nil "prov:wasDerivedFrom" "prov:Entity" "prov:Entity" "prov:hadDerivation"]
+          [nil "prov:wasRevisionOf" "prov:Entity" "prov:Entity" "prov:hadRevision"]
+          [nil "prov:hadPrimarySource" "prov:Entity" "prov:Entity" "prov:wasPrimarySourceOf"]
+          ;;
+          [nil "prov:atLocation" "owl:Thing" "prov:Location" "prov:locationOf"]
+          [nil "prov:wasMemberOf" "prov:Entity" "prov:Collection" "prov:hadMember"]
+          ;; Qualified
+          ["prov:qualifiedInfluence" "owl:Thing" "prov:Influence" nil]
+          []
+          ;;
+          [nil "skos:broaderTransitive" "skos:Concept" "skos:Concept" "skos:narrowerTransitive"]
+          [nil "skos:broader" "skos:Concept" "skos:Concept" "skos:narrower"]
+          [nil "skos:narrowerTransitive" "skos:Concept" "skos:Concept" "skos:broaderTransitive"]
+          [nil "skos:narrower" "skos:Concept" "skos:Concept" "skos:broader"]
+          [nil "skos:narrowMatch" "skos:Concept" "skos:Concept" "skos:broadMatch"]
+          [nil "skos:broadMatch" "skos:Concept" "skos:Concept" "skos:narrowMatch"]
+          [nil "skos:related" "skos:Concept" "skos:Concept" "skos:related"]
+          [nil "skos:subject" "owl:Thing" "owl:Thing" "skos:isSubjectOf"]
+          [nil "skos:primarySubject" "owl:Thing" "owl:Thing" "skos:isPrimarySubjectOf"]
+          [nil "skos:isSubjectOf" "owl:Thing" "owl:Thing" "skos:subject"]
+          [nil "skos:isPrimarySubjectOf" "owl:Thing" "owl:Thing" "skos:primarySubject"]
+          ;;
+          [nil "dct:issued" "prov:Entity" "time:DateTimeInterval" nil]
+          [nil "dct:date" "owl:Thing" "time:DateTimeInterval" nil]
+          [nil "dct:language" "owl:Thing" "dct:LinguisticSystem" nil]
+          [nil "dct:isPartOf" "owl:Thing" "owl:Thing" "dct:hasPart"]
+          [nil "dct:hasPart" "owl:Thing" "owl:Thing" "dct:isPartOf"]
+          [nil "zkt:result" "owl:Thing" "owl:Thing" nil]
+          [nil "zkt:dosage" "zkt:Event" "owl::Class" nil]
+          ;; owl-time
+          [nil "time:intervalStartedBy" "time:ProperInterval" "time:ProperInterval" "time:intervalStarts"]
+          [nil "time:intervalStarts" "time:ProperInterval" "time:ProperInterval" "time:intervalStartedBy"]
+          [nil "time:intervalFinishes" "time:ProperInterval" "time:ProperInterval" "time:intervalFinishedBy"]
+          [nil "time:intervalFinishedBy" "time:ProperInterval" "time:ProperInterval" "time:intervalFinishes"]
+          ;;
+          [nil "foaf:memberOf" "foaf:Person" "foaf:Group" "foaf:member"]
+          [nil "foaf:member" "foaf:Group" "foaf:Person" "foaf:memberOf"]
+          ;;
+          [nil "time:hasDateTimeDescription" "owl:Thing" "time:DateTimeDescription" nil]
+          [nil "time:minutes" "prov:Activity" "df:value"  nil]
+          [nil "time:hours" "prov:Activity" "df:value" nil]
+          [nil "time:days" "prov:Activity" "df:value" nil]
+          ;; 
+          [nil "zkt:distanceKM" "zkt:Event" "df:value" nil]
+          ))
+
   (setq zettelkasten-predicate-domain-range
         '(("zkt:symbolizes" ("zkt:LinguisticForm" ("skos:Concept")))
           ("zkt:wasSymbolizedBy" ("skos:Concept" ("zkt:LinguisticForm")))
@@ -2709,6 +2722,8 @@ tags:
           ("zkt:hadNonParticipant" ("zkt:Event" ("prov:Agent")))
           ("zkt:hadActiveAssociate" ("zkt:Event" ("prov:Agent")))
           ("zkt:hadPassiveAssociate" ("zkt:Event" ("prov:Agent")))
+          ("zkt:hadResponsibleParty" ("zkt:Event" ("prov:Agent")))
+          ("zkt:hadResponsibleParty" ("prov:Activity" ("prov:Agent")))
           ;;
           ("zkt:wasPerformedBy" ("zkt:Event" ("prov:Agent")))
           ("zkt:wasPerformedWith" ("zkt:Event" ("prov:Agent")))
@@ -2750,16 +2765,19 @@ tags:
           ("dct:isPartOf" ("owl:Class" ("owl:Class")))
           ("dct:hasPart" ("owl:Class" ("owl:Class")))
           ("zkt:result" ("owl:Class" ("owl:Class")))
-          ("zkt:dosage" ("zkt:Event" ("value")))
+          ("zkt:dosage" ("zkt:Event" ("df:value")))
           ;;
+          ;;
+
           ("foaf:memberOf" ("foaf:Person" ("foaf:Group")))
+          ("foaf:member" ("foaf:Group" ("foaf:Person")))
           ;;
           ("time:hasDateTimeDescription" ("owl:Class" ("time:DateTimeDescription")))
-          ("time:minutes" ("prov:Activity" ("value")))
-          ("time:hours" ("prov:Activity" ("value")))
-          ("time:days" ("prov:Activity" ("value")))
+          ("time:minutes" ("prov:Activity" ("df:value")))
+          ("time:hours" ("prov:Activity" ("df:value")))
+          ("time:days" ("prov:Activity" ("df:value")))
           ;;
-          ("zkt:distanceKM" ("zkt:Event" ("value")))))
+          ("zkt:distanceKM" ("zkt:Event" ("df:value")))))
 
 
 

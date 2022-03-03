@@ -348,7 +348,7 @@ With a prefix ARG, remove start location."
     (setq org-ref-notes-directory (expand-file-name zettel-txt-dir))
     (setq org-ref-notes-function #'org-ref-notes-function-many-files)
     (setq orhc-bibtex-cache-file (no-littering-expand-var-file-name "org/ref/bibtex-cache.el"))
-    (setq org-ref-default-bibliography "~/Dropbox/db/biblio.bib")
+    (setq org-ref-default-bibliography '("~/Dropbox/db/biblio.bib"))
     (setq org-ref-default-citation-link "autocite")
     (setq bibtex-completion-bibliography "~/Dropbox/db/biblio.bib"
           bibtex-completion-library-path (expand-file-name texte-dir)

@@ -1,12 +1,14 @@
 # -*- mode: snippet -*-
 # name: Wandern
-# key: no
+# key: ev
 # --
-** ${1:time} Wandern$2 ${3:distance}km ${4:min}min
+** ${1:start}-${2:end} Wandern$3 ${4:distance}km ${5:min}min
 :PROPERTIES:
 :CUSTOM_ID: zk-`(file-name-base)`-wandern
 :RDF_TYPE: zkt:Event
-:TURTLE: zkt:distanceKM::$3 time:minutes::$4 zkt:wasPerformedBy::@me
+:STARTED_AT: `(file-name-base)`T$1:00+`(job/current-timezone-offset-hours)`
+:ENDED_AT: `(file-name-base)`T$2:00+`(job/current-timezone-offset-hours)`
+:TURTLE: zkt:distanceKM::$4 time:minutes::$5 zkt:wasPerformedBy::@me
 :END:
 <`(file-name-base)`>
 - [[zk:zk-`(file-name-base)`-wandern::zkt:wasReferedToBy::Wandern][Wandern]]

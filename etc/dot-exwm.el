@@ -42,7 +42,7 @@
 ;;;###autoload
 (defun job/org-agenda ()
   (interactive)
-  (exwm-workspace-switch-create 0)
+;; (exwm-workspace-switch-create 0)
   (org-agenda))
 
 ;;;###autoload

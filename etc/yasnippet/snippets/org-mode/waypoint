@@ -6,7 +6,7 @@
 :PROPERTIES:
 :CUSTOM_ID: zk-`(file-name-base)`-wp-$3
 :RDF_TYPE: zkt:Waypoint
-:TURTLE: dct:isPartOf::`(zettelkasten-get-id-of-parent)`
+:TURTLE: dct:isPartOf::`(car (zettelkasten-get-property-or-filetag-upwards (buffer-file-name) (org-element-parse-buffer) "CUSTOM_ID" t))`
 :END:
 <`(file-name-base)`>
 - atTime: [[zk:zk-`(file-name-base)`-wp-$3::prov:atTime::`(file-name-base)`T$1:00+`(job/current-timezone-offset-hours)`][$1:00]]

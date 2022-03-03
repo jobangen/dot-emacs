@@ -608,27 +608,6 @@ SCHEDULED: %t
 :jump-to-captured t
 )
 
-("J" "Journal")
-("Jc" "Code" entry (file+olp+datetree "journal-code.org")
-"* %^{Title} %^G
-:PROPERTIES:
-:CREATED: %U
-:CATEGORY: pers
-:END:
-
-[[%l][Source]]
-,#+begin_src %^{Language}
-%i
-,#+end_src
-%?"
-:immediate-finish t
-:jump-to-captured t)
-
-("Je" "Electricity" plain (file "~/proj/electricity/electricity.csv")
-"2018-10-18 13:43,41307.6,%(org-read-date),%?"
-:immediate-finish t
-:jump-to-captured t)
-
 ("m" "mail todo" entry (file "inbox.org")
  "* TODO %^{Task}  :@mail:
 SCHEDULED: %t
