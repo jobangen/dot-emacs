@@ -90,9 +90,15 @@
   (interactive)
   (string-equal system-type "windows-nt"))
 
+(defvar linux-p
+  (string= "gnu/linux" system-type))
+
+(defvar windows-p
+  (string= "" system-type))
+
 ;; Dir
 (defvar backup-dir
-   (expand-file-name (convert-standard-filename "backups/") user-emacs-directory))
+  (expand-file-name (convert-standard-filename "backups/") user-emacs-directory))
 
 (defvar autosave-dir
    (expand-file-name (convert-standard-filename "autosave/")  user-emacs-directory))
