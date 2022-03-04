@@ -110,28 +110,37 @@
     (expand-file-name (convert-standard-filename file) custom-temp))
 
 (defvar texte-dir
-   (expand-file-name "~/archive/texts/"))
+  (if windows-p
+      "O:/archive/texts"
+    (expand-file-name "~/archive/texts/")))
 
 (defvar dropbox-dir
-  (if (system-type-is-gnu)
-    (expand-file-name "~/Dropbox/"))
-  (if (system-type-is-windows)
-    (expand-file-name "C:/Users/job/Dropbox/")))
+  (if windows-p
+      nil
+    (expand-file-name "~/Dropbox/")))
 
 (defvar db-dir
   (expand-file-name (convert-standard-filename "db/") dropbox-dir))
 
 (setq org-directory
-      (expand-file-name (convert-standard-filename "db/org/") dropbox-dir))
+      (if windows-p
+          "O:/archive/../"
+        (expand-file-name (convert-standard-filename "db/org/") dropbox-dir)))
 
 (defvar zettel-dir
-  (expand-file-name (convert-standard-filename "db/zk/zettel/") dropbox-dir))
+  (if windows-p
+      "O:/archive/proj/"
+    (expand-file-name (convert-standard-filename "db/zk/zettel/") dropbox-dir)))
 
 (defvar zettel-txt-dir
-  (expand-file-name (convert-standard-filename "db/zk/zettel/txt/") dropbox-dir))
+  (if windows-p
+      "O:/archive/txt/"
+    (expand-file-name (convert-standard-filename "db/zk/zettel/txt/") dropbox-dir)))
 
 (defvar job/bibliography-file
-  (expand-file-name (convert-standard-filename "db/biblio.bib") dropbox-dir))
+  (if windows-p
+      "O:archive/proj/biblio.bib"
+    expand-file-name (convert-standard-filename "db/biblio.bib") dropbox-dir))
 
 
 (use-package no-littering)

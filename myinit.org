@@ -16,7 +16,8 @@ menu-bar-mode
 müssen manuell deaktiviert werden
 ** Font
 #+begin_src emacs-lisp
-(add-to-list 'default-frame-alist '(font . "Inconsolata-12"))
+(unless windows-p
+ (add-to-list 'default-frame-alist '(font . "Inconsolata-12")))
 #+end_src
 
 ** Themes
