@@ -2435,8 +2435,7 @@ tags:
             ("zkt:Waypoint"))
            ;; Event, Procedure, Relationship
            ("prov:Activity"
-            ("zkt:Event"
-             ("zkt:Experience")) ;; TODO
+            ("zkt:Experience");; TODO
             ("zkt:Procedure"
              ("zkt:ApplicationProcedure")
              ("zkt:Project"
@@ -2457,6 +2456,7 @@ tags:
             ("prov:Bundle")
             ("prov:Collection")
             ("prov:Plan"
+             ("zkt:Task")
              ("dct:LinguisticSystem")
              ("skos:Concept prov:Plan")
              ("zkt:Rezept")
@@ -2717,84 +2717,8 @@ tags:
           [nil "time:hours" "prov:Activity" "df:value" nil]
           [nil "time:days" "prov:Activity" "df:value" nil]
           ;; 
-          [nil "zkt:distanceKM" "zkt:Event" "df:value" nil]
+          [nil "zkt:distanceKM" "prov:Activity" "df:value" nil]
           ))
-
-  (setq zettelkasten-predicate-domain-range
-        '(("zkt:symbolizes" ("zkt:LinguisticForm" ("skos:Concept")))
-          ("zkt:wasSymbolizedBy" ("skos:Concept" ("zkt:LinguisticForm")))
-          ("zkt:refersTo" ("skos:Concept" ("owl:Class")))
-          ("zkt:wasReferedToBy" ("owl:Class" ("skos:Concept")))
-          ("zkt:standsFor" ("zkt:LinguisticForm" ("owl:Class")))
-          ("prov:wasAttributedTo" ("prov:Entity" ("prov:Agent")))
-          ("zktb:wasAuthoredBy" ("prov:Entity" ("prov:Agent")))
-          ("zktb:wasEditedBy" ("prov:Entity" ("prov:Agent")))
-          ("zkt:wasCoinedBy" ("prov:Entity" ("prov:Agent")))
-          ;;
-          ("prov:wasAssociatedWith" ("prov:Activity" ("prov:Agent")))
-          ;;
-          ("zkt:hadParticipant" ("zkt:Event" ("prov:Agent")))
-          ("zkt:hadNonParticipant" ("zkt:Event" ("prov:Agent")))
-          ("zkt:hadActiveAssociate" ("zkt:Event" ("prov:Agent")))
-          ("zkt:hadPassiveAssociate" ("zkt:Event" ("prov:Agent")))
-          ("zkt:hadResponsibleParty" ("zkt:Event" ("prov:Agent")))
-          ("zkt:hadResponsibleParty" ("prov:Activity" ("prov:Agent")))
-          ;;
-          ("zkt:wasPerformedBy" ("zkt:Event" ("prov:Agent")))
-          ("zkt:wasPerformedWith" ("zkt:Event" ("prov:Agent")))
-          ("zkt:wasOrganizedBy" ("zkt:Event" ("prov:Agent")))
-          ("zkt:wasDirectedAt" ("zkt:Event" ("prov:Agent")))
-          ;;
-          ("zkt:wasLedBy" ("zkt:Event" ("prov:Agent")))
-          ("zkt:wasPerformedOn" ("zkt:Event" ("prov:Agent")))
-          ;;
-          ("prov:wasGeneratedBy" ("prov:Entity" ("prov:Activity")))
-          ;;
-          ("prov:used" ("prov:Activity" ("prov:Entity")))
-          ;;
-          ("prov:wasInformedBy" ("prov:Activity" ("prov:Activity")))
-          ;;
-          ("prov:wasDerivedFrom" ("prov:Entity" ("prov:Entity")))
-          ("prov:wasRevisionOf" ("prov:Entity" ("prov:Entity")))
-          ("prov:hadPrimarySource" ("prov:Entity" ("prov:Entity")))
-          ;;
-          ("prov:atLocation" ("owl:Class" ("prov:Location")))
-
-          ("prov:memberOf" ("prov:Entity" ("prov:Collection")))
-          ;;
-          ("skos:broaderTransitive" ("skos:Concept" ("skos:Concept")))
-          ("skos:broader" ("skos:Concept" ("skos:Concept")))
-          ("skos:narrowerTransitive" ("skos:Concept" ("skos:Concept")))
-          ("skos:narrower" ("skos:Concept" ("skos:Concept")))
-          ("skos:narrowMatch" ("skos:Concept" ("skos:Concept")))
-          ("skos:broadMatch" ("skos:Concept" ("skos:Concept")))
-          ("skos:related" ("skos:Concept" ("skos:Concept")))
-          ("skos:subject" ("owl:Class" ("owl:Class")))
-          ("skos:primarySubject" ("owl:Class" ("owl:Class")))
-          ("skos:isSubjectOf" ("owl:Class" ("owl:Class")))
-          ("skos:isPrimarySubjectOf" ("owl:Class" ("owl:Class")))
-          ;;
-          ("dct:issued" ("prov:Entity" ("time:DateTimeInterval")))
-          ("dct:date" ("owl:Class" ("time:DateTimeInterval")))
-          ("dct:language" ("owl:Class" ("dct:LinguisticSystem")))
-          ("dct:isPartOf" ("owl:Class" ("owl:Class")))
-          ("dct:hasPart" ("owl:Class" ("owl:Class")))
-          ("zkt:result" ("owl:Class" ("owl:Class")))
-          ("zkt:dosage" ("zkt:Event" ("df:value")))
-          ;;
-          ;;
-
-          ("foaf:memberOf" ("foaf:Person" ("foaf:Group")))
-          ("foaf:member" ("foaf:Group" ("foaf:Person")))
-          ;;
-          ("time:hasDateTimeDescription" ("owl:Class" ("time:DateTimeDescription")))
-          ("time:minutes" ("prov:Activity" ("df:value")))
-          ("time:hours" ("prov:Activity" ("df:value")))
-          ("time:days" ("prov:Activity" ("df:value")))
-          ;;
-          ("zkt:distanceKM" ("zkt:Event" ("df:value")))))
-
-
 
   (defun zettelkasten-txt-query ()
     (interactive)

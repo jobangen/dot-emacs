@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Activity
+# key: ac
+# --
+** ${1:Time} ${2:Description}
+:PROPERTIES:
+:CUSTOM_ID: zk-`(file-name-base)`-${3:ID}
+:RDF_TYPE: `(completing-read "Type: " (-flatten zettelkasten-classes))`
+:STARTED_AT: `(file-name-base)`T$1:00+`(job/current-timezone-offset-hours)`
+:END:
+<`(file-name-base)`>
+$0

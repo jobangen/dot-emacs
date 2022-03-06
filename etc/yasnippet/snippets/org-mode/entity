@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Entity
+# key: en
+# --
+** ${1:Descripton}
+:PROPERTIES:
+:CUSTOM_ID: `(zettelkasten-id-get-create nil t)`
+:RDF_TYPE: `(completing-read "Type: " (-flatten zettelkasten-classes))`
+:TURTLE: prov:generatedAtTime::`(format-time-string "%Y-%m-%dT%H:%M:%S")`+`(job/current-timezone-offset-hours)`
+:END:
+<`(format-time-string "%Y-%m-%d")`>
+$0
