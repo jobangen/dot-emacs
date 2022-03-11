@@ -14,7 +14,7 @@
 tool-bar-mode
 menu-bar-mode
 müssen manuell deaktiviert werden
-** Font
+** Fonttufte
 #+begin_src emacs-lisp
 (unless windows-p
  (add-to-list 'default-frame-alist '(font . "Inconsolata-12")))

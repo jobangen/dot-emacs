@@ -13,17 +13,17 @@
 (setq org-ellipsis "⬎")
 (setq org-hidden-keywords '(title))
 (setq org-hide-emphasis-markers t)
-(font-lock-add-keywords 'org-mode
-                        '(("^ *\\([-]\\) "
-                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+;; (font-lock-add-keywords 'org-mode
+;;                         '(("^ *\\([-]\\) "
+;;                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 
 (use-package org-superstar
   :hook (org-mode . org-superstar-mode)
   :config
-  (setq org-superstar-headline-bullets-list '("" ""))
+  (setq org-superstar-headline-bullets-list '("°"))
   (setq org-superstar-cycle-headline-bullets nil)
-  (setq org-superstar-leading-bullet "..")
+  (setq org-superstar-leading-bullet "°")
 )
 
 
@@ -236,7 +236,7 @@
   (setq org-journal-dir "/home/job/Dropbox/db/zk/zettel/jr/")
   (setq org-journal-file-format "%Y-%m-%d.org")
   (setq org-journal-date-format "%Y-%m-%d, %A")
-  (setq org-journal-enable-agenda-integration t)
+  (setq org-journal-enable-agenda-integration nil)
   (setq org-journal-carryover-items "")
   (setq org-journal-date-prefix "* ")
   (setq org-journal-file-header "#+TITLE: jr: %Y-%m-%d, %a, W%W:
@@ -261,6 +261,7 @@
                               :repo "dfeich/org-listcruncher"))
 
 (use-package org-noter
+  :unless windows-p
   :config
   (setq org-noter-notes-search-path '("~/Dropbox/db/zk/zettel"))
   (setq org-noter-arrow-delay 0.1)
@@ -273,6 +274,7 @@
             #'zettelkasten-heading-to-docpart))
 
 (use-package org-noter-pdftools
+  :unless windows-p
   ;; :disabled ;; funktioniert nicht, warten?
   :after org-noter
   :straight
@@ -290,6 +292,7 @@
   :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
 
 (use-package org-pdftools
+  :unless windows-p
   ;; :hook (org-load . org-pdftools-setup-link)
   ;; :init
   ;; (add-hook 'org-store-link-functions 'org-pdftools-store-link)
@@ -330,9 +333,10 @@ With a prefix ARG, remove start location."
     (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 
 (use-package org-recoll
+  :disabled
   :straight (org-recoll :type git
-                    :host github
-                    :repo "alraban/org-recoll"))
+                        :host github
+                        :repo "alraban/org-recoll"))
 
 (use-package org-ref
   :init
@@ -355,6 +359,7 @@ With a prefix ARG, remove start location."
           bibtex-completion-notes-path (expand-file-name zettel-txt-dir))))
 
 (use-package org-secretary
+  :disabled
   :straight (org-secretary :local-repo "~/.emacs.d/lisp/org-secretary/"))
 
 
@@ -374,6 +379,7 @@ With a prefix ARG, remove start location."
 (setq org-export-with-properties '("DESCRIPTOR" "COLLECTION"))
 
 (use-package org-mind-map
+  :disabled
   :init
   (require 'ox-org)
   ;; Uncomment the below if 'ensure-system-packages` is installed

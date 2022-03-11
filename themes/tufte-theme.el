@@ -12,7 +12,7 @@ more...")
       ;; #191919
       (tufte-vlight "#b4b4b4")
       (tufte-light "grey50")
-      (tufte-sans-serif-font "Helvetica Neue LT Std")
+      (tufte-sans-serif-font job/sans-serif-font)
 
       (cancel '(:slant italic :strike-through t :foreground "gray55"))
       (clock-line '(:box (:line-width 1 :color "#335EA8") :foreground "black" :background "#EEC900"))

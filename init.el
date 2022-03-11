@@ -73,28 +73,20 @@
 
 (use-package diminish)
 
-(setq custom-file "~/.emacs.d/custom.el")
+(setq custom-file (expand-file-name "~/.emacs.d/custom.el"))
+(unless (file-exists-p custom-file)
+  (write-region "" nil custom-file))
 (load custom-file)
 
 (use-package dot-exwm :straight exwm)
 
 ;;; Setup
 ;; https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
-(defun system-type-is-gnu ()
-  "Return true if system is GNU/Linux-based"
-  (interactive)
-  (string-equal system-type "gnu/linux"))
-
-(defun system-type-is-windows ()
-  "Return true if system is Windows-based"
-  (interactive)
-  (string-equal system-type "windows-nt"))
-
 (defvar linux-p
   (string= "gnu/linux" system-type))
 
 (defvar windows-p
-  (string= "" system-type))
+  (string= "windows-nt" system-type))
 
 ;; Dir
 (defvar backup-dir
@@ -139,13 +131,18 @@
 
 (defvar job/bibliography-file
   (if windows-p
-      "O:archive/proj/biblio.bib"
-    expand-file-name (convert-standard-filename "db/biblio.bib") dropbox-dir))
+      "o:archive/proj/biblio.bib"
+    (expand-file-name (convert-standard-filename "db/biblio.bib") dropbox-dir)))
 
 
 (use-package no-littering)
 
 (global-set-key (kbd "s-<tab>") 'other-window)
+
+;;; Fonts
+(setq job/sans-serif-font (if windows-p
+                               "Arial"
+                             "Helvetica Neue LT Std"))
 
 ;;; org
 (use-package dot-org
@@ -1664,9 +1661,14 @@ of a BibTeX field into the template. Fork."
   )
 
 (use-package ledger-capture
-  :straight (ledger-capture :local-repo "~/src/soa2ledger"))
+  :unless windows-p
+  :straight (ledger-capture :type git
+                            :host github
+                            :repo "jobangen/soa2ledger"))
 
 (use-package ledger-job
+  :disabled
+  :unless windows-p
   :straight (ledger-job :local-repo "~/.emacs.d/lisp/ledger-job")
   :after (ledger-mode)
   :bind (:map ledger-mode-map
@@ -1800,161 +1802,162 @@ of a BibTeX field into the template. Fork."
   (modalka-define-kbd "," "C-,")
   (modalka-define-kbd "<SPC>" "C-<SPC>"))
 
-(use-package mu4e
-  :straight (mu4e :type git
-                  :host github
-                  :repo "djcb/mu"
-                  :files ("mu4e/*.el"))
-  :config
-  (require 'smtpmail)
-  (require 'org-mu4e)
-  (setq org-mu4e-link-query-in-headers-mode nil)
+(unless windows-p
+ (use-package mu4e
+   :straight (mu4e :type git
+                   :host github
+                   :repo "djcb/mu"
+                   :files ("mu4e/*.el"))
+   :config
+   (require 'smtpmail)
+   (require 'org-mu4e)
+   (setq org-mu4e-link-query-in-headers-mode nil)
 
-  (setq user-full-name "Jan Ole Bangen")
-  (setq mail-user-agent 'mu4e-user-agent)
-  (setq mu4e-root-maildir "/home/job/.mail/")
-  (setq mu4e-get-mail-command "mbsync -a")
-  (setq mu4e-update-interval 1200)
-  (setq mu4e-completing-read-function 'completing-read)
-  (setq mu4e-use-fancy-chars nil)
+   (setq user-full-name "Jan Ole Bangen")
+   (setq mail-user-agent 'mu4e-user-agent)
+   (setq mu4e-root-maildir "/home/job/.mail/")
+   (setq mu4e-get-mail-command "mbsync -a")
+   (setq mu4e-update-interval 1200)
+   (setq mu4e-completing-read-function 'completing-read)
+   (setq mu4e-use-fancy-chars nil)
 
-  (setq mu4e-context-policy 'pick-first)
-  (setq mu4e-compose-context-policy nil)
-  (setq mu4e-compose-format-flowed t)
-  ;; (add-hook 'mu4e-compose-mode-hook 'visual-clean)
-  (add-hook 'mu4e-compose-mode-hook 'flyspell-mode)
-  ;; (add-hook 'mu4e-compose-mode-hook (lambda () (use-hard-newlines 1)))
-  (setq mu4e-confirm-quit nil)
-  (setq mu4e-attachment-dir "~/tmp/2del")
-  (setq mu4e-change-filenames-when-moving t)
-  (setq mu4e-headers-include-related nil)
-  (setq mu4e-view-show-addresses 't)
-  (setq mu4e-view-use-gnus t)
-  (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
-  (setq message-kill-buffer-on-exit t)
-  (setq mu4e-headers-results-limit 100)
-  (setq mu4e-view-show-images t
-        mu4e-show-images t
-        mu4e-view-image-max-width 800)
-  (setq mu4e-user-mail-address-list '("jobangen@gmail.com"
-                                      "jobangen@zedat.fu-berlin.de"))
+   (setq mu4e-context-policy 'pick-first)
+   (setq mu4e-compose-context-policy nil)
+   (setq mu4e-compose-format-flowed t)
+   ;; (add-hook 'mu4e-compose-mode-hook 'visual-clean)
+   (add-hook 'mu4e-compose-mode-hook 'flyspell-mode)
+   ;; (add-hook 'mu4e-compose-mode-hook (lambda () (use-hard-newlines 1)))
+   (setq mu4e-confirm-quit nil)
+   (setq mu4e-attachment-dir "~/tmp/2del")
+   (setq mu4e-change-filenames-when-moving t)
+   (setq mu4e-headers-include-related nil)
+   (setq mu4e-view-show-addresses 't)
+   (setq mu4e-view-use-gnus t)
+   (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
+   (setq message-kill-buffer-on-exit t)
+   (setq mu4e-headers-results-limit 100)
+   (setq mu4e-view-show-images t
+         mu4e-show-images t
+         mu4e-view-image-max-width 800)
+   (setq mu4e-user-mail-address-list '("jobangen@gmail.com"
+                                       "jobangen@zedat.fu-berlin.de"))
 
-  (setq send-mail-function 'smtpmail-send-it
-        message-send-mail-function 'smtpmail-send-it)
+   (setq send-mail-function 'smtpmail-send-it
+         message-send-mail-function 'smtpmail-send-it)
 
-  (setq mu4e-compose-complete-only-after (format-time-string
-                                          "%Y-%m-%d"
-                                          (time-subtract
-                                           (current-time) (days-to-time 365))))
+   (setq mu4e-compose-complete-only-after (format-time-string
+                                           "%Y-%m-%d"
+                                           (time-subtract
+                                            (current-time) (days-to-time 365))))
 
-  (setq mu4e-index-cleanup nil)  ;; nil speeds up
-  (setq mu4e-index-lazy-check t) ;; t speeds up
+   (setq mu4e-index-cleanup nil)  ;; nil speeds up
+   (setq mu4e-index-lazy-check t) ;; t speeds up
 
-  (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
-  (add-to-list 'mu4e-view-actions '("attachmentActions" . mu4e-view-attachment-action) t)
+   (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+   (add-to-list 'mu4e-view-actions '("attachmentActions" . mu4e-view-attachment-action) t)
 
-  (setq mu4e-contexts
-        `(,(make-mu4e-context
-            :name "gmail"
-            :match-func
-            (lambda (msg)
-              (when msg
-                (string-prefix-p "/gmail" (mu4e-message-field msg :maildir))))
-            :vars '((mu4e-drafts-folder . "/gmail/drafts")
-                    (mu4e-sent-folder . "/gmail/sent")
-                    (mu4e-trash-folder . "/gmail/trash")
-                    (mu4e-refile-folder . "/gmail/arch")
-                    (mu4e-sent-messages-behavior . delete)
-                    (user-mail-address . "jobangen@gmail.com")
-                    (smtpmail-smtp-server . "smtp.gmail.com")
-                    (smtpmail-smtp-service . 587)))
-          ,(make-mu4e-context
-            :name "zedat"
-            :match-func
-            (lambda (msg)
-              (when msg
-                (string-prefix-p "/zedat" (mu4e-message-field msg :maildir))))
-            :vars '((mu4e-drafts-folder . "/zedat/drafts")
-                    (mu4e-sent-folder . "/zedat/sent")
-                    (mu4e-trash-folder . "/zedat/Trash")
-                    (mu4e-refile-folder . "/zedat/2021")
-                    (mu4e-sent-messages-behavior . sent)
-                    (user-mail-address . "jobangen@zedat.fu-berlin.de")
-                    (smtpmail-smtp-server . "mail.zedat.fu-berlin.de")
-                    (smtpmail-smtp-service . 587)))))
+   (setq mu4e-contexts
+         `(,(make-mu4e-context
+             :name "gmail"
+             :match-func
+             (lambda (msg)
+               (when msg
+                 (string-prefix-p "/gmail" (mu4e-message-field msg :maildir))))
+             :vars '((mu4e-drafts-folder . "/gmail/drafts")
+                     (mu4e-sent-folder . "/gmail/sent")
+                     (mu4e-trash-folder . "/gmail/trash")
+                     (mu4e-refile-folder . "/gmail/arch")
+                     (mu4e-sent-messages-behavior . delete)
+                     (user-mail-address . "jobangen@gmail.com")
+                     (smtpmail-smtp-server . "smtp.gmail.com")
+                     (smtpmail-smtp-service . 587)))
+           ,(make-mu4e-context
+             :name "zedat"
+             :match-func
+             (lambda (msg)
+               (when msg
+                 (string-prefix-p "/zedat" (mu4e-message-field msg :maildir))))
+             :vars '((mu4e-drafts-folder . "/zedat/drafts")
+                     (mu4e-sent-folder . "/zedat/sent")
+                     (mu4e-trash-folder . "/zedat/Trash")
+                     (mu4e-refile-folder . "/zedat/2021")
+                     (mu4e-sent-messages-behavior . sent)
+                     (user-mail-address . "jobangen@zedat.fu-berlin.de")
+                     (smtpmail-smtp-server . "mail.zedat.fu-berlin.de")
+                     (smtpmail-smtp-service . 587)))))
 
-  (setq mu4e-bookmarks
-        `(,(make-mu4e-bookmark
-            :name "Inboxes"
-            :query "maildir:/gmail/inbox OR maildir:/zedat/inbox"
-            :key ?i)
-          ,(make-mu4e-bookmark
-            :name "Unread messages"
-            :query "flag:unread AND NOT flag:trashed"
-            :key ?u)
-          ,(make-mu4e-bookmark
-            :name "Flagged messages"
-            :query "flag:flagged"
-            :key ?f)
-          ,(make-mu4e-bookmark
-            :name "Today's messages"
-            :query "date:today..now AND NOT flag:trashed"
-            :key ?t)
-          ,(make-mu4e-bookmark
-            :name "Yesterday's messages"
-            :query (lambda ()
-                     (concat "NOT flag:trashed AND date:"
-                             (format-time-string
-                              "%Y%m%d"
-                              (subtract-time (current-time) (days-to-time 1)))))
-            :key ?y)
-          ,(make-mu4e-bookmark
-            :name "Last 7 days"
-            :query "date:7d..now AND NOT flag:trashed"
-            :key ?w)))
+   (setq mu4e-bookmarks
+         `(,(make-mu4e-bookmark
+             :name "Inboxes"
+             :query "maildir:/gmail/inbox OR maildir:/zedat/inbox"
+             :key ?i)
+           ,(make-mu4e-bookmark
+             :name "Unread messages"
+             :query "flag:unread AND NOT flag:trashed"
+             :key ?u)
+           ,(make-mu4e-bookmark
+             :name "Flagged messages"
+             :query "flag:flagged"
+             :key ?f)
+           ,(make-mu4e-bookmark
+             :name "Today's messages"
+             :query "date:today..now AND NOT flag:trashed"
+             :key ?t)
+           ,(make-mu4e-bookmark
+             :name "Yesterday's messages"
+             :query (lambda ()
+                      (concat "NOT flag:trashed AND date:"
+                              (format-time-string
+                               "%Y%m%d"
+                               (subtract-time (current-time) (days-to-time 1)))))
+             :key ?y)
+           ,(make-mu4e-bookmark
+             :name "Last 7 days"
+             :query "date:7d..now AND NOT flag:trashed"
+             :key ?w)))
 
-  ;; https://github.com/sje30/emacs/blob/master/mu4e-view-save-all-attachments.el
-  (defvar bulk-saved-attachments-dir (expand-file-name "~/tmp/2del"))
+   ;; https://github.com/sje30/emacs/blob/master/mu4e-view-save-all-attachments.el
+   (defvar bulk-saved-attachments-dir (expand-file-name "~/tmp/2del"))
 
-  (defun cleanse-subject (sub)
-    (replace-regexp-in-string
-     "[^A-Z0-9]+"
-     "-"
-     (downcase sub)))
+   (defun cleanse-subject (sub)
+     (replace-regexp-in-string
+      "[^A-Z0-9]+"
+      "-"
+      (downcase sub)))
 
-  (defun mu4e-view-save-all-attachments (&optional arg)
-    "Save all MIME parts from current mu4e gnus view buffer."
-    ;; Copied from mu4e-view-save-attachments
-    (interactive "P")
-    (cl-assert (and (eq major-mode 'mu4e-view-mode)
-                    (derived-mode-p 'gnus-article-mode)))
-    (let* ((msg (mu4e-message-at-point))
-           (id (cleanse-subject (mu4e-message-field msg :subject)))
-           (attachdir (concat bulk-saved-attachments-dir "/" id))
-	   (parts (mu4e~view-gather-mime-parts))
-           (handles '())
-           (files '())
-           dir)
-      (mkdir attachdir t)
-      (dolist (part parts)
-        (let ((fname (or
-		      (cdr (assoc 'filename (assoc "attachment" (cdr part))))
-                      (seq-find #'stringp
-                                (mapcar (lambda (item) (cdr (assoc 'name item)))
-                                        (seq-filter 'listp (cdr part)))))))
-          (when fname
-            (push `(,fname . ,(cdr part)) handles)
-            (push fname files))))
-      (if files
-          (progn
-            (setq dir
-		  (if arg (read-directory-name "Save to directory: ")
-		    attachdir))
-            (cl-loop for (f . h) in handles
-                     when (member f files)
-                     do (mm-save-part-to-file h (expand-file-name f dir))))
-        (mu4e-message "No attached files found"))))
-  )
+   (defun mu4e-view-save-all-attachments (&optional arg)
+     "Save all MIME parts from current mu4e gnus view buffer."
+     ;; Copied from mu4e-view-save-attachments
+     (interactive "P")
+     (cl-assert (and (eq major-mode 'mu4e-view-mode)
+                     (derived-mode-p 'gnus-article-mode)))
+     (let* ((msg (mu4e-message-at-point))
+            (id (cleanse-subject (mu4e-message-field msg :subject)))
+            (attachdir (concat bulk-saved-attachments-dir "/" id))
+	    (parts (mu4e~view-gather-mime-parts))
+            (handles '())
+            (files '())
+            dir)
+       (mkdir attachdir t)
+       (dolist (part parts)
+         (let ((fname (or
+		       (cdr (assoc 'filename (assoc "attachment" (cdr part))))
+                       (seq-find #'stringp
+                                 (mapcar (lambda (item) (cdr (assoc 'name item)))
+                                         (seq-filter 'listp (cdr part)))))))
+           (when fname
+             (push `(,fname . ,(cdr part)) handles)
+             (push fname files))))
+       (if files
+           (progn
+             (setq dir
+		   (if arg (read-directory-name "Save to directory: ")
+		     attachdir))
+             (cl-loop for (f . h) in handles
+                      when (member f files)
+                      do (mm-save-part-to-file h (expand-file-name f dir))))
+         (mu4e-message "No attached files found"))))
+   ))
 
 (use-package multiple-cursors
   :bind (("C-S-c C-S-c" . mc/edit-lines)
@@ -1968,6 +1971,7 @@ of a BibTeX field into the template. Fork."
 
 ;;; P
 (use-package pdf-tools
+  :unless windows-p
   :demand t
   :bind (:map pdf-view-mode-map
               ("C-s" . isearch-forward)
@@ -2069,6 +2073,7 @@ rotate entire document."
   (advice-add 'pdf-annot-edit-contents-commit :after 'job/save-buffer-no-args))
 
 (use-package pomodoro
+  :disabled
   :defer t
   :straight (:type git
                    :host github
@@ -2153,6 +2158,7 @@ rotate entire document."
 
 ;;; S
 (use-package sdcv
+  :disabled
   :straight (sdcv :type git
                   :host github
                   :repo "stardiviner/sdcv.el")
@@ -2166,13 +2172,14 @@ rotate entire document."
           "English - German")))
 
 
-(use-package sensitive-mode
-  :straight (sensitive-mode :local-repo "~/.emacs.d/lisp/sensitive-mode")
-  :mode ("\\.gpg\\'" . sensitive-mode)
-  :config
-  (setq epg-gpg-program "gpg2")
-  ;; fragt in emacs nach pw; braucht "allow-loopback-pinentry" in gpg-agent.conf
-  (setq epa-pinentry-mode 'loopback))
+(unless windows-p
+  (use-package sensitive-mode
+    :straight (sensitive-mode :local-repo "~/.emacs.d/lisp/sensitive-mode")
+    :mode ("\\.gpg\\'" . sensitive-mode)
+    :config
+    (setq epg-gpg-program "gpg2")
+    ;; fragt in emacs nach pw; braucht "allow-loopback-pinentry" in gpg-agent.conf
+    (setq epa-pinentry-mode 'loopback)))
 
 (use-package shell
   :bind (:map shell-mode-map
@@ -2191,13 +2198,14 @@ rotate entire document."
     (comint-read-input-ring t))
   (add-hook 'shell-mode-hook 'my-shell-mode-hook))
 
-(use-package shell-interaction
-  :defer 2
-  :straight (shell-interaction :local-repo "~/.emacs.d/lisp/shell-interaction")
-  :init
-    (eval-after-load 'shell-interaction
-    `(make-directory ,(concat user-emacs-directory "var/shell-interaction") t))
-)
+(unless windows-p
+ (use-package shell-interaction
+   :defer 2
+   :straight (shell-interaction :local-repo "~/.emacs.d/lisp/shell-interaction")
+   :init
+   (eval-after-load 'shell-interaction
+     `(make-directory ,(concat user-emacs-directory "var/shell-interaction") t))
+   ))
 
 (use-package showtip)                   ; for sdcv
 
@@ -2386,7 +2394,9 @@ tags:
         (zetteldeft-follow-link)))))
 
 (use-package zettelkasten
-  :straight (zettelkasten :local-repo "~/.emacs.d/lisp/zettelkasten")
+  :straight (zettelkasten :type git
+                          :host github
+                          :repo "jobangen/zettelkasten")
   :commands zettelkasten-insert-link-at-point
   :bind (("C->" . zettelkasten-open-backlink)
          :map org-mode-map
@@ -2732,8 +2742,11 @@ tags:
         (org-open-at-point))))
 
 (use-package zettelkasten-ext
-  :straight (zettelkasten-ext :local-repo "~/.emacs.d/lisp/zettelkasten-ext")
-  :bind (("C-ä" . hydra-zettelkasten/body))
+  :straight (zettelkasten-ext :type git
+                              :host github
+                              :repo "jobangen/zettelkasten-ext")
+  :bind (("C-ä" . hydra-zettelkasten/body)
+         ("C-æ" . hydra-zettelkasten/body))
 )
 
 
