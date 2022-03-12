@@ -233,7 +233,9 @@
 (use-package org-journal
   :init
   (setq org-journal-file-type 'daily)
-  (setq org-journal-dir "/home/job/Dropbox/db/zk/zettel/jr/")
+  (if linux-p
+      (setq org-journal-dir "/home/job/Dropbox/db/zk/zettel/jr/")
+    (setq org-journal-dir "o:/archive/zettel/jr/"))
   (setq org-journal-file-format "%Y-%m-%d.org")
   (setq org-journal-date-format "%Y-%m-%d, %A")
   (setq org-journal-enable-agenda-integration nil)
@@ -243,7 +245,7 @@
 #+RDF_TYPE: time:DateTimeInterval
 
 * Meta
-[[zk:time:intervalDuring::%Y-w%W][Week]] [[zk:time:hasDateTimeDescription::dtd-%Y-%m-%d][DTD]]
+ [[zk:time:hasDateTimeDescription::dtd-%Y-%m-%d][DTD]]
 
 ")
   (setq org-journal-time-prefix "** ")
