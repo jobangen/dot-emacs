@@ -2416,7 +2416,7 @@ tags:
       (org-refile arg)))
 
   (when windows-p
-    (setq zettelkasten-db-emacsql-lib 'emacql-sqlite3))
+    (setq zettelkasten-db-emacsql-lib 'emacsql-sqlite3))
   (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
   (setq zettelkasten-zettel-directory "/home/job/Dropbox/db/zk/zettel/")
   (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")

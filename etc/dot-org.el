@@ -194,6 +194,7 @@
   :load-path "~/.emacs.d/straight/repos/org/contrib/lisp")
 
 (use-package org-contacts
+  :unless windows-p
   :straight org
   :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
   :config

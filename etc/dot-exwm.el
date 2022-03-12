@@ -1,10 +1,11 @@
 ;;;_,EXWM
-(require 'exwm)
+(unless windows-p
+ (require 'exwm)
 
-(require 'exwm-randr)
-(setq exwm-randr-workspace-monitor-plist '(1 "DP1" 1 "HDMI1"))
-(exwm-randr-enable)
-
+ (require 'exwm-randr)
+ (setq exwm-randr-workspace-monitor-plist '(1 "DP1" 1 "HDMI1"))
+ (exwm-randr-enable)
+ )
 ;;; Workspaces
 (setq exwm-workspace-number 7)
 
@@ -212,7 +213,9 @@
       (set-fringe-mode '(1 . 1))))
 
 (message "Enabling EXWM.")
-(exwm-enable)
+(unless windows-p
+  (exwm-enable))
+
 
 (provide 'dot-exwm)
 ;;; dot-exwm.el ends here
