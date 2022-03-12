@@ -1581,6 +1581,7 @@ of a BibTeX field into the template. Fork."
 
 
 (use-package ivy-rich
+  :unless windows-p
   :init (ivy-rich-mode 1))
 
 (use-package all-the-icons-ivy-rich
@@ -1659,10 +1660,12 @@ of a BibTeX field into the template. Fork."
   (setq langtool-language-tool-jar "~/programme/LanguageTool-3.1/languagetool-commandline.jar"))
 
 (use-package latex-extra
+  :unless windows-p
   :diminish latex-extra-mode
   :hook (TeX-mode . latex-extra-mode))
 
 (use-package ledger-mode
+  :unless windows-p
   :mode "\\.ledger\\'"
   :config
   (setq ledger-binary-path "/home/job/src/ledger/ledger")
@@ -1775,6 +1778,7 @@ of a BibTeX field into the template. Fork."
   (setq magit-diff-refine-hunk 'all))
 
 (use-package magit-gitflow
+  :unless windows-p
   :config
   (add-hook 'magit-mode-hook 'turn-on-magit-gitflow))
 
@@ -1786,6 +1790,7 @@ of a BibTeX field into the template. Fork."
   :init (setq markdown-command "multimarkdown"))
 
 (use-package messages-are-flowing
+  :unless windows-p
   :commands (messages-are-flowing-use-and-mark-hard-newlines)
   :after (message)
   :hook (message-mode . messages-are-flowing-use-and-mark-hard-newlines))
@@ -2099,9 +2104,12 @@ rotate entire document."
                    :host github
                    :repo "vderyagin/pomodoro.el"))
 
-(use-package pos-tip)                   ;for sdcv
+(use-package pos-tip
+  :unless windows-p)                   ;for sdcv
 
-(use-package posframe :defer t)
+(use-package posframe
+  :disabled
+  :defer t)
 
 (use-package projectile
   :defer 2
@@ -2227,7 +2235,8 @@ rotate entire document."
      `(make-directory ,(concat user-emacs-directory "var/shell-interaction") t))
    ))
 
-(use-package showtip)                   ; for sdcv
+(use-package showtip
+  :disabled)                   ; for sdcv
 
 (use-package smart-mode-line
   :init
@@ -2346,6 +2355,7 @@ rotate entire document."
   (winner-mode))
 
 (use-package writegood-mode
+  :unless windows-p
   :defer t
   :config
   (progn
@@ -2365,11 +2375,13 @@ rotate entire document."
               "\\)\\b"))))
 
 (use-package wwg
+  :unless windows-p
   :straight (wwg :type git
-                    :host github
-                    :repo "ag91/writer-word-goals"))
+                 :host github
+                 :repo "ag91/writer-word-goals"))
 
 (use-package www-synonyms
+  :unless windows-p
   :commands www-synonyms-insert-synonym
   :config
   (setq www-synonyms-key "gaGF6dLppnG6whJVPKFg")
@@ -2431,17 +2443,23 @@ tags:
         (zettelkasten-refile arg)
       (org-refile arg)))
 
-  (when windows-p
-    (setq zettelkasten-db-emacsql-lib 'emacsql-sqlite3))
-  (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
-  (setq zettelkasten-zettel-directory "/home/job/Dropbox/db/zk/zettel/")
+  (if windows-p
+      (progn
+        (setq zettelkasten-db-emacsql-lib 'emacsql-sqlite3)
+        (setq zettelkasten-main-directory "o:/archive/zettel/")
+        (setq zettelkasten-zettel-directory "o:/archive/zettel")
+        (setq zettelkasten-texts-directory "~/archive/txt-docs/"))
+      (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
+      (setq zettelkasten-zettel-directory "/home/job/Dropbox/db/zk/zettel/")
+      (setq zettelkasten-texts-directory "~/archive/texts/")
+
+    )
+  
   (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
   (setq zettelkasten-bibliography-file job/bibliography-file)
-  (setq zettelkasten-texts-directory "~/archive/texts/")
   (setq zettelkasten-db-update-method 'when-idle)
-  (setq zettelkasten-org-agenda-integration t)
+  (setq zettelkasten-org-agenda-integration nil)
   (setq zettelkasten-collection-predicate "prov:wasMemberOf")
-
   (setq zettelkasten-filename-to-id-func 'job/zettelkasten-fname-to-id)
 
 
@@ -2845,12 +2863,20 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
   ("q"   nil :color blue))
 (bind-key* "C-c p" 'hydra-projectile/body)
 
+(if (window-system)
+    (progn
+      (menu-bar-mode -1)
+      (tooltip-mode -1)
+      (tool-bar-mode -1)
+      (scroll-bar-mode -1)
+      (set-fringe-mode '(1 . 1))))
+
 (unless windows-p
- (setq initial-buffer-choice
-       (lambda ()
-         (delete-other-windows)
-         (org-journal-new-entry t)
-         (split-window-right)
-         (other-window 1)
-         (org-agenda-list 7)
-         (get-buffer "*Org Agenda*"))))
+  (setq initial-buffer-choice
+        (lambda ()
+          (delete-other-windows)
+          (org-journal-new-entry t)
+          (split-window-right)
+          (other-window 1)
+          (org-agenda-list 7)
+          (get-buffer "*Org Agenda*"))))
