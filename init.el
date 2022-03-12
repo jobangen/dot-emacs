@@ -1009,6 +1009,7 @@
   (add-hook 'flycheck-mode-hook #'flycheck-virtualenv-setup))
 
 (use-package flyspell
+  :unless windows-p
   :diminish flyspell-mode
   :hook (text-mode . flyspell-mode)
   :init
