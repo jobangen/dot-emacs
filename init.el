@@ -78,15 +78,16 @@
   (write-region "" nil custom-file))
 (load custom-file)
 
-(use-package dot-exwm :straight exwm)
-
-;;; Setup
-;; https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
 (defvar linux-p
   (string= "gnu/linux" system-type))
 
 (defvar windows-p
   (string= "windows-nt" system-type))
+
+(use-package dot-exwm :straight exwm)
+
+;;; Setup
+;; https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
 
 ;; Dir
 (defvar backup-dir
