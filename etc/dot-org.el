@@ -10,7 +10,9 @@
 ;;; aesthetics
 (setq org-startup-folded nil)
 (setq org-startup-indented t)
-(setq org-ellipsis "⬎")
+(if linux-p
+    (setq org-ellipsis "⬎")
+  (setq org-ellipsis "..."))
 (setq org-hidden-keywords '(title))
 (setq org-hide-emphasis-markers t)
 ;; (font-lock-add-keywords 'org-mode
@@ -150,7 +152,7 @@
 
 
 ;; (setq org-agenda-diary-file "journal.org")
-(setq org-agenda-include-diary t)
+(setq org-agenda-include-diary nil)
 
 ;; (setq org-agenda-files '())
 

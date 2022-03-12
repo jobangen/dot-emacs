@@ -84,7 +84,9 @@
 (defvar windows-p
   (string= "windows-nt" system-type))
 
-(use-package dot-exwm :straight exwm)
+(use-package dot-exwm
+  :unless windows-p
+  :straight exwm)
 
 ;;; Setup
 ;; https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
@@ -189,7 +191,9 @@
 
 ;;; Libraries
 (use-package counsel-projectile   :defer 3)
-(use-package define-word          :commands define-word define-word-at-point)
+(use-package define-word
+  :unless windows-p
+  :commands define-word define-word-at-point)
 ;; (use-package ess                  :commands R)
 (use-package emacsql)
 (if linux-p
@@ -198,18 +202,18 @@
     :init
     (add-to-list 'exec-path "c:/users/jba054/src/sqlite-tools-win32-x86-3380000")))
 (use-package flyspell-correct-ivy :after (flyspell-correct ivy flyspell))
-(use-package git-timemachine      :defer t)
-(use-package goldendict           :commands goldendict-dwim)
+(use-package git-timemachine :disabled      :defer t)
+(use-package goldendict :disabled           :commands goldendict-dwim)
 (use-package hydra)
 (use-package iso-transl           :defer 2 :straight nil)
 (use-package ivy-hydra            :after (ivy hydra))
-(use-package ivy-pass             :defer t :after (ivy pass))
-(use-package neato-graph-bar      :defer t)
-(use-package neotree              :defer t)
-(use-package nov                  :mode ("\\.epub\\'" . nov-mode))
-(use-package orglink :hook (TeX-mode . orglink-mode))
-(use-package pass                 :defer t)
-(use-package peep-dired           :defer t)
+(use-package ivy-pass :unless windows-p             :defer t :after (ivy pass))
+(use-package neato-graph-bar :unless windows-p      :defer t)
+(use-package neotree :disabled              :defer t)
+(use-package nov :disabled                  :mode ("\\.epub\\'" . nov-mode))
+(use-package orglink :unless windows-p :hook (TeX-mode . orglink-mode))
+(use-package pass :unless windows-p                 :defer t)
+(use-package peep-dired :disabled           :defer t)
 (use-package rainbow-delimiters   :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 (use-package ttl-mode             :defer t)
 (use-package wgrep                :defer 3)
@@ -235,12 +239,14 @@
     (setq-default abbrev-mode t)))
 
 (use-package academic-phrases
+  :disabled
   :defer t
   :straight (academic-phrases :type git
                               :host github
                               :repo "nashamri/academic-phrases"))
 
 (use-package ace-window
+  :disabled
   :after (avy)
   :bind ("C-c k" . ace-delete-window)
   :demand t
@@ -265,6 +271,7 @@
 
 ;;; B
 (use-package bash-completion
+  :unless windows-p
   :init
   (bash-completion-setup))
 
@@ -609,6 +616,7 @@
   (add-hook 'calendar-today-visible-hook 'calendar-mark-today))
 
 (use-package calfw
+  :disabled
   ;; :bind (("C-c f" . job/open-org-calendar))
   :config
   (setq calendar-week-start-day 1)
@@ -619,6 +627,7 @@
     (cfw:open-org-calendar)))
 
 (use-package calfw-org
+  :disabled
   :after (calfw)
   :config
   (setq cfw:org-agenda-schedule-args '(:sexp :timestamp))
@@ -713,6 +722,7 @@
   (add-hook 'diary-list-entries-hook 'diary-sort-entries t))
 
 (use-package deadgrep
+  :unless windows-p
   :commands deadgrep
   :straight (deadgrep :type git
                       :host github
@@ -730,6 +740,7 @@
   (setq deft-new-file-format "%Y-%m-%d-%H%M"))
 
 (use-package dot-auctex :straight auctex
+  :unless windows-p
   :demand t
   :mode ("\\.tex$" . TeX-latex-mode)
   :hook ((TeX-mode . TeX-fold-mode)
@@ -818,6 +829,7 @@
 ;;             (extension "zip" "rar" "gz" "bz2" "tar" "org_archive"))))))
 
 (use-package dired-launch
+  :unless windows-p
   :hook (dired-mode . dired-launch-mode)
   :bind (:map dired-mode-map
               ("J" . dired-launch-command)
@@ -825,7 +837,7 @@
   :diminish dired-launch-mode
   :init
   (setf dired-launch-extensions-map
-        '( ;;Archives
+        '(;;Archives
           ("gz" ("file-roller"))
           ;; Office
           ("odt" ("libreoffice"))
@@ -875,6 +887,7 @@
   :config (set 'ediff-window-setup-function 'ediff-setup-windows-plain))
 
 (use-package elfeed
+  :unless windows-p
   :commands elfeed
   :bind (:map elfeed-show-mode-map
               ("z" . zettelkasten-elfeed-new-zettel)
@@ -883,6 +896,7 @@
               ("n" . zettelkasten-elfeed-skip)))
 
 (use-package elfeed-score
+  :unless windows-p
   :config
   (progn
     (elfeed-score-enable)
@@ -895,6 +909,7 @@
 
 
 (use-package elfeed-org
+  :unless windows-p
   :after elfeed
   :init
   (elfeed-org)
@@ -929,6 +944,7 @@
 )
 
 (use-package engine-mode
+  :unless windows-p
   :defer 2
   :config
   (engine-mode t)
@@ -991,7 +1007,6 @@
    '(flycheck-python-pycompile-executable "python3")
    '(flycheck-python-pylint-executable "python3"))
   (add-hook 'flycheck-mode-hook #'flycheck-virtualenv-setup))
-
 
 (use-package flyspell
   :diminish flyspell-mode
@@ -2830,11 +2845,12 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
   ("q"   nil :color blue))
 (bind-key* "C-c p" 'hydra-projectile/body)
 
-(setq initial-buffer-choice
-      (lambda ()
-        (delete-other-windows)
-        (org-journal-new-entry t)
-        (split-window-right)
-        (other-window 1)
-        (org-agenda-list 7)
-        (get-buffer "*Org Agenda*")))
+(unless windows-p
+ (setq initial-buffer-choice
+       (lambda ()
+         (delete-other-windows)
+         (org-journal-new-entry t)
+         (split-window-right)
+         (other-window 1)
+         (org-agenda-list 7)
+         (get-buffer "*Org Agenda*"))))
