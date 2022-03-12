@@ -2396,7 +2396,8 @@ tags:
 (use-package zettelkasten
   :straight (zettelkasten :type git
                           :host github
-                          :repo "jobangen/zettelkasten")
+                          :repo "jobangen/zettelkasten"
+                          :files ("*.el"))
   :commands zettelkasten-insert-link-at-point
   :bind (("C->" . zettelkasten-open-backlink)
          :map org-mode-map
