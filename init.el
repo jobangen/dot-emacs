@@ -2733,7 +2733,7 @@ tags:
           [nil "prov:atLocation" "owl:Thing" "prov:Location" "prov:locationOf"]
           [nil "prov:wasMemberOf" "prov:Entity" "prov:Collection" "prov:hadMember"]
           ;; Qualified
-          ["prov:qualifiedInfluence" "owl:Thing" "prov:Influence" nil]
+          [nil "prov:qualifiedInfluence" "owl:Thing" "prov:Influence" nil]
           ;;
           [nil "skos:broaderTransitive" "skos:Concept" "skos:Concept" "skos:narrowerTransitive"]
           [nil "skos:broader" "skos:Concept" "skos:Concept" "skos:narrower"]
