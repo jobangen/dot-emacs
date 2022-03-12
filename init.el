@@ -191,7 +191,11 @@
 (use-package define-word          :commands define-word define-word-at-point)
 ;; (use-package ess                  :commands R)
 (use-package emacsql)
-(use-package emacsql-sqlite)
+(if linux-p
+    (use-package emacsql-sqlite)
+  (use-package emacsql-sqlite3
+    :init
+    (add-to-list 'exec-path "c:/users/jba054/src/sqlite-tools-win32-x86-3380000")))
 (use-package flyspell-correct-ivy :after (flyspell-correct ivy flyspell))
 (use-package git-timemachine      :defer t)
 (use-package goldendict           :commands goldendict-dwim)
