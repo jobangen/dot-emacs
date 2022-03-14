@@ -2581,6 +2581,7 @@ tags:
                 ("zkt:wasReferedToBy")  ;concept-thing
                 ("zkt:standsFor")       ;word-thing
                 ("prov:wasAttributedTo" ;; entity to agent
+                 ("zkt:hadAdressat")
                  ("zktb:wasAuthoredBy")
                  ("zktb:wasEditedBy")
                  ("zktb:introductionBy")
@@ -2702,7 +2703,8 @@ tags:
           [nil "zkt:wasReferedToBy" "owl:Thing" "skos:Concept" "zkt:refersTo"]
           [nil "zkt:standsFor" "zkt:LinguisticForm" "owl:Thing" nil]
           [nil "prov:wasAttributedTo" "prov:Entity" "prov:Agent" "prov:contributed"]
-          ;; 
+          ;;
+          [nil "zkt:hadAdressat" "prov:Entity" "prov:Agend" "zkt:wasAdressatOf"]
           [nil "zktb:wasAuthoredBy" "prov:Entity" "prov:Agent" "zktb:authored"]
           [nil "zktb:wasEditedBy" "prov:Entity" "prov:Agent" "zktb:edited"]
           [nil "zkt:wasCoinedBy" "prov:Entity" "prov:Agent" "zktb:coined"]
