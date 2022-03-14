@@ -21,19 +21,21 @@
 
 
 (use-package org-superstar
+  :unless windows-p
   :hook (org-mode . org-superstar-mode)
   :config
   (setq org-superstar-headline-bullets-list '("°"))
   (setq org-superstar-cycle-headline-bullets nil)
   (setq org-superstar-leading-bullet "°")
-)
-
+  )
 
 ;;; refile
 (setq org-outline-path-complete-in-steps nil)
 (setq org-refile-use-outline-path 'file)
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
-(setq org-refile-targets
+(if windows-p
+    nil
+  (setq org-refile-targets
       '((("~/Dropbox/db/org/pers.org") :maxlevel . 3)
         (("~/Dropbox/db/org/wiss.org") :maxlevel . 6)
         (("~/Dropbox/db/org/irw.org") :maxlevel . 4)
@@ -41,7 +43,8 @@
         (("~/Dropbox/db/org/antiq.org") :maxlevel . 2)
         (("~/Dropbox/db/contacts.org") :maxlevel . 2)
         (("~/Dropbox/db/org/goals.org") :maxlevel . 2)
-        (("~/Dropbox/db/org/projects.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
+        (("~/Dropbox/db/org/projects.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)"))))
+
 
 
 ;;; archive
@@ -88,6 +91,7 @@
 
 ;;; priorities
 (use-package org-fancy-priorities
+  :unless windows-p
   :diminish
   :hook (org-mode . org-fancy-priorities-mode)
   :config
@@ -238,7 +242,7 @@
   (setq org-journal-file-type 'daily)
   (if linux-p
       (setq org-journal-dir "/home/job/Dropbox/db/zk/zettel/jr/")
-    (setq org-journal-dir "o:/archive/zettel/jr/"))
+    (setq org-journal-dir "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/jr/"))
   (setq org-journal-file-format "%Y-%m-%d.org")
   (setq org-journal-date-format "%Y-%m-%d, %A")
   (setq org-journal-enable-agenda-integration nil)
@@ -344,6 +348,7 @@ With a prefix ARG, remove start location."
                         :repo "alraban/org-recoll"))
 
 (use-package org-ref
+  :unless windows-p
   :init
   (bind-key "C-c )" 'org-autocite-complete-link org-mode-map)
   (setq org-ref-completion-library 'org-ref-ivy-cite)
@@ -371,8 +376,9 @@ With a prefix ARG, remove start location."
 
 ;;; org-babel
 (setq org-babel-python-command "python3")
-(org-babel-lob-ingest "/home/job/proj/2018-11-06 lilli-diss/org/variablen.org")
-(org-babel-lob-ingest "/home/job/proj/2018-11-06 lilli-diss/org/forschungsfragen.org")
+(unless windows-p
+  (org-babel-lob-ingest "/home/job/proj/2018-11-06 lilli-diss/org/variablen.org")
+  (org-babel-lob-ingest "/home/job/proj/2018-11-06 lilli-diss/org/forschungsfragen.org"))
 (setq org-babel-default-header-args:python '((:noweb . "yes")
                                              (:results . "output wrap")))
 

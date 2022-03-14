@@ -151,7 +151,7 @@
 (use-package dot-org
   :demand t
   :straight org
-  :bind (("C-c a" . job/org-agenda)
+  :bind (("C-c a" . org-agenda)
          ("C-c c" . org-capture)
          ("C-c i" . org-clock-in)
          ("C-c l" . org-store-link)
@@ -767,7 +767,6 @@
 
 (use-package dot-defun
   :straight nil
-  :after (pdf-tools)
   :demand t
   :bind (("C-a" . job/beginning-of-line-or-indentation)
          ("C-k" . job/kill-line)
@@ -2447,9 +2446,9 @@ tags:
   (if windows-p
       (progn
         (setq zettelkasten-db-emacsql-lib 'emacsql-sqlite3)
-        (setq zettelkasten-main-directory "o:/archive/zettel/")
-        (setq zettelkasten-zettel-directory "o:/archive/zettel")
-        (setq zettelkasten-texts-directory "~/archive/txt-docs/"))
+        (setq zettelkasten-main-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel")
+        (setq zettelkasten-zettel-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel")
+        (setq zettelkasten-texts-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/txt-docs/"))
       (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
       (setq zettelkasten-zettel-directory "/home/job/Dropbox/db/zk/zettel/")
       (setq zettelkasten-texts-directory "~/archive/texts/")
@@ -2459,7 +2458,7 @@ tags:
   (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
   (setq zettelkasten-bibliography-file job/bibliography-file)
   (setq zettelkasten-db-update-method 'when-idle)
-  (setq zettelkasten-org-agenda-integration nil)
+  (setq zettelkasten-org-agenda-integration t)
   (setq zettelkasten-collection-predicate "prov:wasMemberOf")
   (setq zettelkasten-filename-to-id-func 'job/zettelkasten-fname-to-id)
 

@@ -1722,7 +1722,7 @@ are referenced by its edges, but functions for these tasks need region."
     ;; finally, switch to that window
     (other-window 1)))
 
-(define-key dired-mode-map "Y" 'my/ora-dired-rsync)
+(unless windows-p (define-key dired-mode-map "Y" 'my/ora-dired-rsync))
 
 #+end_src
 ** my/move-file-here
