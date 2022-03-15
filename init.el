@@ -143,9 +143,15 @@
 (global-set-key (kbd "s-<tab>") 'other-window)
 
 ;;; Fonts
-(setq job/sans-serif-font (if windows-p
-                               "Arial"
-                             "Helvetica Neue LT Std"))
+
+(if windows-p
+    (progn
+      (set-face-attribute 'default nil :height 140)
+      (add-to-list 'default-frame-alist '(font . "Consolas")) 
+      (setq job/sans-serif-font "Arial"))
+  (setq job/sans-serif-font "Helvetica Neue LT Std")
+  (add-to-list 'default-frame-alist '(font . "Inconsolata-12")))
+
 
 ;;; org
 (use-package dot-org
