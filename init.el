@@ -106,7 +106,7 @@
 
 (defvar texte-dir
   (if windows-p
-      "O:/archive/texts"
+      "c:/Users/jba054/OneDrive - University of Bergen/archive/txt-docs/"
     (expand-file-name "~/archive/texts/")))
 
 (defvar dropbox-dir
@@ -119,7 +119,7 @@
 
 (setq org-directory
       (if windows-p
-          "O:/archive/../"
+          nil
         (expand-file-name (convert-standard-filename "db/org/") dropbox-dir)))
 
 (defvar zettel-dir
@@ -129,16 +129,16 @@
 
 (defvar zettel-txt-dir
   (if windows-p
-      "O:/archive/txt/"
+      "c:/Users/jba054/OneDrive - University of Bergen/archive/txt/"
     (expand-file-name (convert-standard-filename "db/zk/zettel/txt/") dropbox-dir)))
+
+(use-package no-littering)
+
 
 (defvar job/bibliography-file
   (if windows-p
-      "o:archive/proj/biblio.bib"
+      "c:/Users/jba054/OneDrive - University of Bergen/archive/biblio.bib"
     (expand-file-name (convert-standard-filename "db/biblio.bib") dropbox-dir)))
-
-
-(use-package no-littering)
 
 (global-set-key (kbd "s-<tab>") 'other-window)
 

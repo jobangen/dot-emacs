@@ -566,6 +566,8 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 "* TODO %^{Task} :%^G
 SCHEDULED: %t
 :PROPERTIES:
+:CUSTOM_ID: %(format-time-string \"zk-%Y%m%d%TH%M%S\")
+:RDF_TYPE: zkt:Task
 :GENERATED_AT_TIME: %(concat (format-time-string \"%Y-%m-%dT%H:%M:%S+\") (job/current-timezone-offset-hours)) 
 :TURTLE: zkt:wasAdressat::@me
 :END:
@@ -575,9 +577,10 @@ SCHEDULED: %t
  "* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:
 SCHEDULED: %t
 :PROPERTIES:
+:CUSTOM_ID: %(format-time-string \"zk-%Y%m%d%TH%M%S\")
+:RDF_TYPE: zkt:Task
 :GENERATED_AT_TIME: %(concat (format-time-string \"%Y-%m-%dT%H:%M:%S+\") (job/current-timezone-offset-hours)) 
-:CREATED: %U
-:CATEGORY:  %\\2
+:TURTLE: zkt:wasAdressat::@me
 :EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
 :END:
 %?\n")

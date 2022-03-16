@@ -95,7 +95,8 @@
   :diminish
   :hook (org-mode . org-fancy-priorities-mode)
   :config
-  (setq org-fancy-priorities-list '("𝍠" "𝍡" "𝍢" "𝍣" "𝍤")))
+  (unless windows-p
+    (setq org-fancy-priorities-list '("𝍠" "𝍡" "𝍢" "𝍣" "𝍤"))))
 
 
 ;;; tags
@@ -348,7 +349,6 @@ With a prefix ARG, remove start location."
                         :repo "alraban/org-recoll"))
 
 (use-package org-ref
-  :unless windows-p
   :init
   (bind-key "C-c )" 'org-autocite-complete-link org-mode-map)
   (setq org-ref-completion-library 'org-ref-ivy-cite)
@@ -362,9 +362,9 @@ With a prefix ARG, remove start location."
     (setq org-ref-notes-directory (expand-file-name zettel-txt-dir))
     (setq org-ref-notes-function #'org-ref-notes-function-many-files)
     (setq orhc-bibtex-cache-file (no-littering-expand-var-file-name "org/ref/bibtex-cache.el"))
-    (setq org-ref-default-bibliography '("~/Dropbox/db/biblio.bib"))
+    (setq org-ref-default-bibliography `(,job/bibliography-file))
     (setq org-ref-default-citation-link "autocite")
-    (setq bibtex-completion-bibliography "~/Dropbox/db/biblio.bib"
+    (setq bibtex-completion-bibliography job/bibliography-file
           bibtex-completion-library-path (expand-file-name texte-dir)
           bibtex-completion-notes-path (expand-file-name zettel-txt-dir))))
 
