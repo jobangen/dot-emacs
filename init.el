@@ -165,6 +165,10 @@
          :map org-agenda-mode-map
          ("C-c d" . job/org-agenda-add-tags-today))
   :init
+  (if windows-p
+      (progn
+        (setq org-default-notes-file "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/2022-03-16-0946-inbox.org"))
+    (setq org-default-notes-file "inbox.org"))
   (setq org-agenda-time-grid '((daily today require-timed)
                                (800 1000 1200 1400 1600 1800 2000)
                                "" "-------------"))
@@ -2452,8 +2456,8 @@ tags:
   (if windows-p
       (progn
         (setq zettelkasten-db-emacsql-lib 'emacsql-sqlite3)
-        (setq zettelkasten-main-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel")
-        (setq zettelkasten-zettel-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel")
+        (setq zettelkasten-main-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/")
+        (setq zettelkasten-zettel-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/")
         (setq zettelkasten-texts-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/txt-docs/"))
       (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
       (setq zettelkasten-zettel-directory "/home/job/Dropbox/db/zk/zettel/")

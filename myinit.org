@@ -130,9 +130,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
   :config
   (progn
     ;;Pfade
-    (setq org-default-notes-file "inbox.org"
-)
-
     ;; shift-select
     (setq org-support-shift-select 'always)
     ;;keine automatischen Leerzeilen vor Entries
@@ -565,11 +562,12 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 
 ("d" "Daily Tasks" entry (function org-journal-find-location) (file "~/templates/org/daily.org") :immediate-finish t :jump-to-captured t)
 
-("t" "Todo" entry (file "inbox.org")
+("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
 "* TODO %^{Task} :%^G
 SCHEDULED: %t
 :PROPERTIES:
-:CREATED: %U
+:GENERATED_AT_TIME: %(concat (format-time-string \"%Y-%m-%dT%H:%M:%S+\") (job/current-timezone-offset-hours)) 
+:TURTLE: zkt:wasAdressat::@me
 :END:
 %?")
 
@@ -577,13 +575,14 @@ SCHEDULED: %t
  "* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:
 SCHEDULED: %t
 :PROPERTIES:
+:GENERATED_AT_TIME: %(concat (format-time-string \"%Y-%m-%dT%H:%M:%S+\") (job/current-timezone-offset-hours)) 
 :CREATED: %U
 :CATEGORY:  %\\2
 :EFFORT: %^{Effort|0:10|0:15|0:20|0:30|0:45|1:00|1:30|2:00|3:00|4:00|5:00|6:00|7:00|8:00}
 :END:
 %?\n")
 
-("n" "note" entry (file+headline "inbox.org" "Notes")
+("n" "note" entry (file+headline org-default-notes-file "Notes")
  "* %^{Note}
 :PROPERTIES:
 :CREATED: %U
