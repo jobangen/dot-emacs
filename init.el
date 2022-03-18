@@ -2459,19 +2459,16 @@ tags:
         (setq zettelkasten-main-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/")
         (setq zettelkasten-zettel-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/")
         (setq zettelkasten-texts-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/txt-docs/"))
-      (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
-      (setq zettelkasten-zettel-directory "/home/job/Dropbox/db/zk/zettel/")
-      (setq zettelkasten-texts-directory "~/archive/texts/")
+    (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
+    (setq zettelkasten-zettel-directory "/home/job/Dropbox/db/zk/zettel/")
+    (setq zettelkasten-texts-directory "~/archive/texts/"))
 
-    )
-  
   (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
   (setq zettelkasten-bibliography-file job/bibliography-file)
   (setq zettelkasten-db-update-method 'when-idle)
   (setq zettelkasten-org-agenda-integration t)
   (setq zettelkasten-collection-predicate "prov:wasMemberOf")
   (setq zettelkasten-filename-to-id-func 'job/zettelkasten-fname-to-id)
-
 
   (defun job/zettelkasten-fname-to-id (filename)
     (cond ((s-prefix? "txt" filename)
@@ -2485,6 +2482,21 @@ tags:
           (t (s-left
               (length (format-time-string zettelkasten-file-id-format))
               filename))))
+
+  (defun org-add-invalidated-property ()
+    (when (string= (org-get-todo-state) "DONE")
+      (org-set-property
+       "INVALIDATED"
+       (concat
+        (format-time-string "%Y-%m-%dT%H:%M:%S+")
+        (job/current-timezone-offset-hours)))))
+
+    (defun org-delete-invalidated-property ()
+      (when (string= (org-get-todo-state) "TODO")
+        (org-entry-delete (point) "INVALIDATED")))
+
+  (add-hook 'org-after-todo-state-change-hook 'org-add-invalidated-property)
+  (add-hook 'org-after-todo-state-change-hook 'org-delete-invalidated-property)
 
   (setq zettelkasten-classes
         '(("owl:Class")
