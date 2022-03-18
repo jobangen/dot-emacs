@@ -129,7 +129,7 @@
 
 (defvar zettel-txt-dir
   (if windows-p
-      "c:/Users/jba054/OneDrive - University of Bergen/archive/txt/"
+      "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/txt/"
     (expand-file-name (convert-standard-filename "db/zk/zettel/txt/") dropbox-dir)))
 
 (use-package no-littering)
