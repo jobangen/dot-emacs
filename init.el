@@ -49,8 +49,8 @@
 
 (setq reb-re-syntax 'rx)
 
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "firefox")
+(setq browse-url-browser-function 'browse-url-generic)
+(setq browse-url-generic-program "firefox")
 
 ;;; Bootstrap
 (let ((bootstrap-file (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))
@@ -88,6 +88,10 @@
   :unless windows-p
   :straight exwm)
 
+  (if windows-p
+       (setq job/sans-serif-font "Arial") 
+  (setq job/sans-serif-font "Helvetica Neue LT Std"))
+
 ;;; Setup
 ;; https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
 
@@ -119,7 +123,7 @@
 
 (setq org-directory
       (if windows-p
-          nil
+          ""
         (expand-file-name (convert-standard-filename "db/org/") dropbox-dir)))
 
 (defvar zettel-dir
@@ -144,13 +148,6 @@
 
 ;;; Fonts
 
-(if windows-p
-    (progn
-      (set-face-attribute 'default nil :height 140)
-      (add-to-list 'default-frame-alist '(font . "Consolas")) 
-      (setq job/sans-serif-font "Arial"))
-  (setq job/sans-serif-font "Helvetica Neue LT Std")
-  (add-to-list 'default-frame-alist '(font . "Inconsolata-12")))
 
 
 ;;; org
@@ -1205,10 +1202,11 @@ If so, ask if it needs to be saved."
 
 ;;; H
 (use-package helpful
-  :bind (:map help-map
-              ("f" . helpful-callable)
-              ("v" . helpful-variable)
-              ("k" . helpful-key)))
+  :bind (("C-c C-?" . help)
+         (:map help-map
+               ("f" . helpful-callable)
+               ("v" . helpful-variable)
+               ("k" . helpful-key))))
 
 (use-package hl-line+
   :hook
@@ -1744,41 +1742,69 @@ of a BibTeX field into the template. Fork."
   :diminish lispy-mode)
 
 (use-package lsp-mode
-  :hook ((python-mode . lsp)
+  :hook (((python-mode                  ;; pylsp
+           js-mode) . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp
   :config
-  (setq lsp-pyls-plugins-flake8-enabled t
-        lsp-headerline-breadcrumb-enable t
-        lsp-modeline-diagnostics-enable t
-        lsp-diagnostic-clean-after-change t)
+  
+  (setq lsp-auto-guess-root t)
+  (setq lsp-log-io nil)
+  (setq lsp-restart 'auto-restart)
+  (setq lsp-enable-symbol-highlighting t)
+  (setq lsp-enable-on-type-formatting nil)
+  (setq lsp-signature-auto-activate nil)
+  (setq lsp-signature-render-documentation nil)
+  (setq lsp-eldoc-hook nil)
+  (setq lsp-modeline-code-actions-enable nil)
+  (setq lsp-modeline-diagnostics-enable nil)
+  (setq lsp-headerline-breadcrumb-enable nil)
+  (setq lsp-semantic-tokens-enable nil)
+  (setq lsp-enable-folding nil)
+  (setq lsp-enable-imenu nil)
+  (setq lsp-enable-snippet nil)
+  (setq read-process-output-max (* 1024 1024)) ;; 1MB
+  (setq lsp-idle-delay 0.5)
+
+  (setq lsp-pyls-plugins-flake8-enabled t)
 
   (lsp-register-custom-settings
-   '(("pyls.plugins.pyls_mypy.enabled" t t)
-     ("pyls.plugins.pyls_mypy.live_mode" nil t)
-     ("pyls.plugins.pyls_black.enabled" t t)
-     ("pyls.plugins.pyls_isort.enabled" t t)
+   '(("pylsp.plugins.pyls_mypy.enabled" t t)
+     ("pylsp.plugins.pyls_mypy.live_mode" nil t)
+     ("pylsp.plugins.pyls_black.enabled" t t)
+     ("pylsp.plugins.pyls_isort.enabled" t t)
 
      ;; disable the following: dublicates by flake8
-     ("pyls.plugins.pycodestyle.enabled" nil t)
-     ("pyls.plugins.mccabe.enabled" nil t)
-     ("pyls.plugins.pyflakes.enabled" nil t)
+     ("pylsp.plugins.pycodestyle.enabled" nil t)
+     ("pylsp.plugins.mccabe.enabled" nil t)
+     ("pylsp.plugins.pyflakes.enabled" nil t)
      ))
   )
 
 (use-package lsp-ui
   :commands lsp-ui-mode
   :config
-  (setq lsp-ui-sideline-show-hover t
-        lsp-ui-sideline-delay 0.5
-        lsp-ui-doc-enable t
-        lsp-ui-sideline-ignore-duplicate nil
-        lsp-ui-doc-delay 5
-        lsp-ui-doc-position 'bottom
-        lsp-ui-doc-alignment 'frame
-        lsp-ui-doc-header nil
-        lsp-ui-doc-include-signature t
-        lsp-ui-doc-use-childframe t))
+  (setq lsp-ui-doc-enable t)
+  (setq lsp-ui-doc-delay 0.2)
+  (setq lsp-ui-doc-use-childframe t)
+  (setq lsp-ui-doc-header nil)
+  (setq lsp-ui-doc-include-signature t)
+  (setq lsp-ui-doc-max-width 100)
+  (setq lsp-ui-doc-max-height 35)
+  (setq lsp-ui-doc-position 'bottom)
+  (setq lsp-ui-doc-alignment 'frame)
+
+  (setq lsp-ui-sideline-ignore-duplicate t)
+  (setq lsp-ui-sideline-show-hover t)
+  (setq lsp-ui-sideline-delay 0.05)
+  (setq lsp-ui-sideline-show-code-actions t)
+  (setq lsp-ui-sideline-show-symbol t)
+  (setq lsp-ui-sideline-show-diagnostics t)
+  
+  (setq lsp-ui-doc-border (face-foreground 'default))
+
+  
+  )
 
 ;;; M
 (use-package magit
@@ -2442,8 +2468,9 @@ tags:
                           :files ("*.el"))
   :commands zettelkasten-insert-link-at-point
   :bind (("C->" . zettelkasten-open-backlink)
-         :map org-mode-map
-         ("C-c C-w" . zettelkasten-org-refile-wrapper))
+         ;; :map org-mode-map
+         ;; ("C-c C-w" . zettelkasten-org-refile-wrapper)
+         )
   :init
   (defun zettelkasten-org-refile-wrapper (&optional arg)
     (interactive "P")
@@ -2567,13 +2594,13 @@ tags:
            ("prov:Agent"
             ("foaf:Agent"
              ("foaf:Person")
-             ("foaf:Organization"))
+             ("foaf:Organization")
+             ("foaf:Group"))
             ("prov:Person"
              ("foaf:Person")
              ("prov:Person foaf:Person"))
             ("prov:SoftwareAgent")
             ("prov:Organization"
-             ("foaf:Group")
              ("foaf:Organization")))
            ;;
            ("prov:Location"
@@ -2893,6 +2920,17 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
       (tool-bar-mode -1)
       (scroll-bar-mode -1)
       (set-fringe-mode '(1 . 1))))
+
+(if windows-p
+    (progn
+      (set-face-attribute 'default nil :height 135)
+      (add-to-list 'default-frame-alist '(font . "Consolas")) )
+  (add-to-list 'default-frame-alist '(font . "Inconsolata-12")))
+
+(defun job/set-face-attr-height ()
+  "Set char height."
+  (interactive)
+  (set-face-attribute 'default nil :height (string-to-number (read-string "Height: "))))
 
 (unless windows-p
   (setq initial-buffer-choice

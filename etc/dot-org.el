@@ -34,16 +34,17 @@
 (setq org-refile-use-outline-path 'file)
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
 (if windows-p
-    nil
+    (setq org-refile-targets
+          '((("c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/2022-03-07-1153-termportalen.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
   (setq org-refile-targets
-      '((("~/Dropbox/db/org/pers.org") :maxlevel . 3)
-        (("~/Dropbox/db/org/wiss.org") :maxlevel . 6)
-        (("~/Dropbox/db/org/irw.org") :maxlevel . 4)
-        (("~/proj/diss/diss.org") :maxlevel . 4)
-        (("~/Dropbox/db/org/antiq.org") :maxlevel . 2)
-        (("~/Dropbox/db/contacts.org") :maxlevel . 2)
-        (("~/Dropbox/db/org/goals.org") :maxlevel . 2)
-        (("~/Dropbox/db/org/projects.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)"))))
+        '((("~/Dropbox/db/org/pers.org") :maxlevel . 3)
+          (("~/Dropbox/db/org/wiss.org") :maxlevel . 6)
+          (("~/Dropbox/db/org/irw.org") :maxlevel . 4)
+          (("~/proj/diss/diss.org") :maxlevel . 4)
+          (("~/Dropbox/db/org/antiq.org") :maxlevel . 2)
+          (("~/Dropbox/db/contacts.org") :maxlevel . 2)
+          (("~/Dropbox/db/org/goals.org") :maxlevel . 2)
+          (("~/Dropbox/db/org/projects.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)"))))
 
 
 
@@ -91,11 +92,11 @@
 
 ;;; priorities
 (use-package org-fancy-priorities
-  :unless windows-p
   :diminish
   :hook (org-mode . org-fancy-priorities-mode)
   :config
-  (unless windows-p
+  (if windows-p
+      (setq org-fancy-priorities-list '("[A]" "[B]" "[C]" "[D]" "[E]"))
     (setq org-fancy-priorities-list '("𝍠" "𝍡" "𝍢" "𝍣" "𝍤"))))
 
 
