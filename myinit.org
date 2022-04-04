@@ -563,7 +563,7 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 ("d" "Daily Tasks" entry (function org-journal-find-location) (file "~/templates/org/daily.org") :immediate-finish t :jump-to-captured t)
 
 ("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
-"* TODO %^{Task} :%^G
+"* TODO %^{Task} %^G
 SCHEDULED: %t
 :PROPERTIES:
 :CUSTOM_ID: %(format-time-string \"zk-%Y%m%dT%H%M%S\")

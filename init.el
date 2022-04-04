@@ -2164,9 +2164,22 @@ rotate entire document."
   )
 
 (use-package python
+  :bind (:map python-mode-map
+              ("C-c C-c" . job/python-shell-send-buffer-dwim))
   :config
   (setq python-shell-interpreter "ipython3")
-  (setq python-shell-interpreter-args "-i --simple-prompt"))
+  (setq python-shell-interpreter-args "-i --simple-prompt")
+  (defun job/python-shell-send-buffer-dwim ()
+    (interactive)
+    (if (and (get-buffer "*Python*") (get-buffer-process "*Python*"))
+        (progn
+          (switch-to-buffer-other-window "*Python*")
+          (end-of-buffer)
+          (other-window 1)
+          (python-shell-send-buffer))
+      (run-python)
+      (other-window 1)
+      (job/python-shell-send-buffer-dwim))))
 
 (use-package pyvenv
   :config
