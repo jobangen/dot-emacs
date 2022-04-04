@@ -1742,8 +1742,9 @@ of a BibTeX field into the template. Fork."
   :diminish lispy-mode)
 
 (use-package lsp-mode
-  :hook (((python-mode                  ;; pylsp
-           js-mode) . lsp-deferred)
+  :hook (((python-mode ;; pylsp
+           js-mode)    ;; ts-ls
+          . lsp-deferred)
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp
   :config
