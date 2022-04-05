@@ -2318,10 +2318,16 @@ rotate entire document."
   :config
   (setq shell-pop-universal-key "C-c j")
   (setq shell-pop-default-directory "~/")
-  (setq shell-pop-shell-type
-        (quote ("ansi-term" "*ansi-term*"
-                (lambda nil (ansi-term shell-pop-term-shell)))))
-  (setq shell-pop-term-shell "/usr/bin/zsh")
+  (if windows-p
+      (setq shell-pop-shell-type
+            '("eshell" "*eshell*"
+              (lambda nil (eshell shell-pop-term-shell))))
+    (setq shell-pop-shell-type
+          '("ansi-term" "*ansi-term*"
+            (lambda nil (ansi-term shell-pop-term-shell)))))
+
+  (when linux-p
+    (setq shell-pop-term-shell "/usr/bin/zsh"))
   (setq shell-pop-window-size 45)
   ;; need to do this manually or not picked up by `shell-pop'
   (shell-pop--set-shell-type 'shell-pop-shell-type shell-pop-shell-type))
