@@ -107,14 +107,16 @@
 
 ; Tags with fast selection keys
 (if windows-p
-    (setq org-tag-alist '((:startgroup)
+    (setq org-tag-alist '((:startgrouptag)
+                          ("ansatt" . ?a)
                           ("termp". ?t)
-                          (:endgroup)
-                          (:startgroup)
-                          ("dev")
-                          ("plan")
-                          ("comm")
-                          (:endgroup)))
+                          (:endgrouptag)
+                          (:startgrouptag)
+                          ("dev" . ?d)
+                          ("plan" . ?p)
+                          ("comm" . ?c)
+                          ("learn" . ?l)
+                          (:endgrouptag)))
     (setq org-tag-alist '((:startgroup)
                           ("arbeit"    . ?a)
                           ("pers"      . ?p)
