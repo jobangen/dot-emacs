@@ -1347,8 +1347,8 @@ If so, ask if it needs to be saved."
 
 * Meta
 - Auth:
-- Date: [[zk:dct:issued::${date}][${date}]]
-- Lang: [[zk:dct:language::${language}][${language}]]
+- Date: [[${=key=}::zk:dct:issued::${date}][${date}]]
+- Lang: [[${=key=}::zk:dct:language::${language}][${language}]]
 
 * Inhalt
 
