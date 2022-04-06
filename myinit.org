@@ -577,7 +577,8 @@ SCHEDULED: %t
  "* TODO %^{Task} :%^{Category|wiss|arbeit|pers}:
 SCHEDULED: %t
 :PROPERTIES:
-:CUSTOM_ID: %(format-time-string \"%Y-%m-%dT%H%M%S.%1N\")
+:CUSTOM_ID: %(format-time-string \"%Y-%m-%d
+T%H%M%S.%1N\")
 :RDF_TYPE: zkt:Task
 :GENERATED_AT_TIME: %(concat (format-time-string \"%Y-%m-%dT%H:%M:%S+\") (job/current-timezone-offset-hours)) 
 :TURTLE: zkt:hadAdressat::@me
