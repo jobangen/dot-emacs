@@ -1811,11 +1811,13 @@ of a BibTeX field into the template. Fork."
 (use-package magit
   :bind (("C-x g" . magit-status))
   :commands magit-list-repositories
+  :init
+  (if windows-p
+      (setq magit-repository-directories '(("c:/Users/jba054/src" . 2)
+                                           ("c:/Users/jba054/.emacs.d" . 1))))
   :config
   (setq magit-last-seen-setup-instructions "1.4.0")
-  (setq magit-diff-refine-hunk 'all)
-  (setq magit-repository-directories '(("c:/Users/jba054/src" . 2)
-                                       ("c:/Users/jba054/.emacs.d" . 1))))
+  (setq magit-diff-refine-hunk 'all))
 
 (use-package magit-gitflow
   :unless windows-p
