@@ -1810,6 +1810,7 @@ of a BibTeX field into the template. Fork."
 ;;; M
 (use-package magit
   :bind (("C-x g" . magit-status))
+  :commands magit-list-repositories
   :config
   (setq magit-last-seen-setup-instructions "1.4.0")
   (setq magit-diff-refine-hunk 'all)
