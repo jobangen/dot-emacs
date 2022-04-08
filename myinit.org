@@ -217,7 +217,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                    (org-agenda-remove-tags t)
                    (org-agenda-prefix-format " %i       %?-12t% s")
                    ))
-          (tags "INBOX"
+          (tags-todo "+INBOX|+gtd"
                 ((org-agenda-overriding-header "Inbox:")
                  (org-agenda-prefix-format " %i       %?-12t% s")
                  (org-agenda-remove-tags t)))
@@ -566,7 +566,7 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 "* TODO %^{Task} %^G
 SCHEDULED: %t
 :PROPERTIES:
-:CUSTOM_ID: %(format-time-string \"%Y%-m%-dT%H%M%S.%1N\")
+:CUSTOM_ID: %(format-time-string \"%Y-%m-%dT%H%M%S.%1N\")
 :RDF_TYPE: zkt:Task
 :GENERATED_AT_TIME: %(concat (format-time-string \"%Y-%m-%dT%H:%M:%S+\") (job/current-timezone-offset-hours)) 
 :TURTLE: zkt:hadAdressat::@me
