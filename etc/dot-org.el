@@ -157,12 +157,15 @@
   (interactive)
   (org-agenda-goto)
   (job/org-add-tags-today)
-  (other-window 1))
+  (switch-to-buffer-other-window "*Org Agenda*"))
 
 (defun job/org-add-tags-today ()
   (interactive)
   (org-back-to-heading)
-  (let* ((current-tags (org-get-at-bol 'tags))
+  (let* ((current-tags (mapcar
+                        (lambda (tag)
+                          (org-no-properties tag))
+                        (org-get-tags nil t)))
          (add-tags (list (format-time-string "%d")
                          (format-time-string "%Y")
                          (format-time-string "%m")))
