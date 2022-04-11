@@ -36,7 +36,9 @@
 (if windows-p
     (setq org-refile-targets
           '((("c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/2022-03-07-1153-termportalen.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")
-            (("c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/2022-03-09-1112-position-systemutviklar-uib.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
+            (("c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/2022-03-09-1112-position-systemutviklar-uib.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")
+            (("c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/2022-04-11-1033-terminologi-py-automation.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")
+            ))
   (setq org-refile-targets
         '((("~/Dropbox/db/org/pers.org") :maxlevel . 3)
           (("~/Dropbox/db/org/wiss.org") :maxlevel . 6)

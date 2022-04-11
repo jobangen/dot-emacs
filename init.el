@@ -2536,7 +2536,9 @@ tags:
               filename))))
 
   (defun org-add-invalidated-property ()
-    (when (string= (org-get-todo-state) "DONE")
+    (when (or (string= (org-get-todo-state) "DONE")
+              (string= (org-get-todo-state) "CANCELLED")
+              (string= (org-get-todo-state) "DELEGATED"))
       (org-set-property
        "INVALIDATED"
        (concat
