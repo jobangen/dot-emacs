@@ -2780,7 +2780,7 @@ tags:
           [nil "zkt:standsFor" "zkt:LinguisticForm" "owl:Thing" nil]
           [nil "prov:wasAttributedTo" "prov:Entity" "prov:Agent" "prov:contributed"]
           ;;
-          [nil "zkt:hadAdressat" "prov:Entity" "prov:Agend" "zkt:wasAdressatOf"]
+          [nil "zkt:hadAdressat" "prov:Entity" "prov:Agent" "zkt:wasAdressatOf"]
           [nil "zktb:wasAuthoredBy" "prov:Entity" "prov:Agent" "zktb:authored"]
           [nil "zktb:wasEditedBy" "prov:Entity" "prov:Agent" "zktb:edited"]
           [nil "zkt:wasCoinedBy" "prov:Entity" "prov:Agent" "zktb:coined"]
