@@ -2041,6 +2041,12 @@ of a BibTeX field into the template. Fork."
   :commands (olivetti-mode))
 
 ;;; P
+(use-package plantuml-mode
+  :init
+  (if windows-p
+      (setq org-plantuml-jar-path (expand-file-name "c:/Users/jba054/src/plantuml/plantuml-1.2022.4.jar")))
+  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
+
 (use-package pdf-tools
   :unless windows-p
   :demand t

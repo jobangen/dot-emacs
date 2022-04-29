@@ -892,11 +892,13 @@ http://doc.norang.ca/org-mode.org
                                (sql . t)
                                (ledger . t)
                                (latex . t)
+                               (plantuml . t)
                                ;(restclient . t)
                                ))
 
   (defun my-org-confirm-babel-evaluate (lang body)
     (not (string= lang "sh"))
+    (not (string= lang "plantuml"))
     (not (string= lang "dot")))  ; don't ask
   (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
 
