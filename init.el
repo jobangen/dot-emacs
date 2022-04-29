@@ -49,8 +49,12 @@
 
 (setq reb-re-syntax 'rx)
 
+
 (setq browse-url-browser-function 'browse-url-generic)
-(setq browse-url-generic-program "firefox")
+(if windows-p
+    (setq browse-url-generic-program "c:/Program Files/Mozilla Firefox/firefox.exe")
+  (setq browse-url-generic-program "firefox"))
+
 
 ;;; Bootstrap
 (let ((bootstrap-file (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))
