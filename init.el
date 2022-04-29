@@ -2964,10 +2964,17 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
       (add-to-list 'default-frame-alist '(font . "Consolas")) )
   (add-to-list 'default-frame-alist '(font . "Inconsolata-12")))
 
-(defun job/set-face-attr-height ()
+(defun job/set-face-attr-height (&optional height)
   "Set char height."
   (interactive)
-  (set-face-attribute 'default nil :height (string-to-number (read-string "Height: "))))
+  (set-face-attribute 'default nil :height (or height (string-to-number (read-string "Height: ")))))
+
+
+(defun job/set-uib ()
+  (interactive)
+  (setq split-width-threshold 160)
+  (job/set-face-attr-height 145))
+
 
 (unless windows-p
   (setq initial-buffer-choice
