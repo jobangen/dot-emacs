@@ -223,7 +223,6 @@
 (use-package orglink :unless windows-p :hook (TeX-mode . orglink-mode))
 (use-package pass :unless windows-p                 :defer t)
 (use-package peep-dired :disabled           :defer t)
-(use-package rainbow-delimiters   :hook (emacs-lisp-mode . rainbow-delimiters-mode))
 (use-package ttl-mode             :defer t)
 (use-package wgrep                :defer 3)
 
@@ -2200,6 +2199,15 @@ rotate entire document."
   )
 
 ;;; R
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode)
+  :config
+  (set-face-attribute 'rainbow-delimiters-unmatched-face nil
+            :foreground "red"
+            :inherit 'error
+            :box t)
+  )
+
 (use-package reftex
   :hook (TeX-mode . reftex-mode)
   :diminish reftex-mode
