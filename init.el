@@ -50,12 +50,6 @@
 (setq reb-re-syntax 'rx)
 
 
-(setq browse-url-browser-function 'browse-url-generic)
-(if windows-p
-    (setq browse-url-generic-program "c:/Program Files/Mozilla Firefox/firefox.exe")
-  (setq browse-url-generic-program "firefox"))
-
-
 ;;; Bootstrap
 (let ((bootstrap-file (concat user-emacs-directory "straight/repos/straight.el/bootstrap.el"))
       (bootstrap-version 3))
@@ -153,6 +147,10 @@
 ;;; Fonts
 
 
+(setq browse-url-browser-function 'browse-url-generic)
+(if windows-p
+    (setq browse-url-generic-program "c:/Program Files/Mozilla Firefox/firefox.exe")
+  (setq browse-url-generic-program "firefox"))
 
 ;;; org
 (use-package dot-org
