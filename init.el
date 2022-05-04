@@ -255,10 +255,8 @@
                               :repo "nashamri/academic-phrases"))
 
 (use-package ace-window
-  :disabled
   :after (avy)
-  :bind ("C-c k" . ace-delete-window)
-  :demand t
+  :bind ("M-o" . ace-window)
   :config
   (progn
     (setq aw-scope 'frame)
