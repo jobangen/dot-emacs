@@ -2463,6 +2463,8 @@ rotate entire document."
   (setq www-synonyms-lang "de_DE"))
 
 ;;; Y
+(use-package yaml-mode)
+
 (use-package yasnippet
   :diminish yas-minor-mode
   :config
