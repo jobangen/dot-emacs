@@ -1806,6 +1806,8 @@ of a BibTeX field into the template. Fork."
   
   )
 
+(use-package lua-mode)
+
 ;;; M
 (use-package magit
   :bind (("C-x g" . magit-status))
