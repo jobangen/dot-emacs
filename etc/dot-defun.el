@@ -576,5 +576,16 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
 ;; https://www.reddit.com/r/emacs/comments/9p2yyq/marking_and_splitting_pdfs_with_pdfstools/
 
 
+;;; uib pyautomation
+;;;###autoload
+(defun pyautomation-update-wikidata ()
+  (interactive)
+  (async-shell-command "cd c:/Users/jba054/src/terminologi-py-automation/termbot/scripts && python tp_update_wikidata.py"
+                       "*Update wikidata*")
+  (switch-to-buffer-other-window "*Update wikidata*")
+  (goto-char (point-max))
+  (other-window 1))
+
+
 (provide 'dot-defun)
 ;;; dot-defun.el ends here
