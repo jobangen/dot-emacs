@@ -162,7 +162,8 @@
          ("C-c l" . org-store-link)
          ("C-c C-j" . org-journal-new-entry)
          :map org-agenda-mode-map
-         ("C-c d" . job/org-agenda-add-tags-today))
+         ("C-c d" . job/org-agenda-add-tags-today)
+         ("C-c w" . job/org-agenda-add-tag-this-week))
   :init
   (if windows-p
       (progn
