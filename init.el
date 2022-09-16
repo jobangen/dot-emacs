@@ -206,6 +206,7 @@
   :commands define-word define-word-at-point)
 ;; (use-package ess                  :commands R)
 (use-package emacsql)
+(emacsql-fix-vector-indentation)
 (if linux-p
     (use-package emacsql-sqlite)
   (use-package emacsql-sqlite3
