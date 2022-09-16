@@ -2399,6 +2399,7 @@ rotate entire document."
 (use-package tramp
   :straight nil
   :init
+  (setq tramp-default-method "ssh")
   (setq tramp-persistency-file-name (no-littering-expand-var-file-name "tramp-history.el")))
 
 (use-package ts
