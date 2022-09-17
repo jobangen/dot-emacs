@@ -1078,6 +1078,13 @@ If so, ask if it needs to be saved."
   :config
   (setq flyspell-correct-interface 'flyspell-correct-ivy))
 
+(use-package forge
+  :after magit
+  :config
+  (setq auth-sources '("~/.authinfo.gpg"))
+  (add-to-list 'forge-alist '("git.app.uib.no" "git.app.uib.no/api/v4" "git.app.uib.no" forge-gitlab-repository)))
+
+
 ;;; g
 (use-package german-holidays
   :defer 2
