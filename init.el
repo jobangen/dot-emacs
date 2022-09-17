@@ -943,12 +943,12 @@
   (use-package py-autopep8)
   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
-  (use-package flycheck)
-                                        ;  (when (require 'flycheck nil t)
-                                        ;    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-                                        ;    (add-hook 'elpy-mode-hook 'flycheck-mode))
+  )
 
-)
+(use-package flycheck
+  :config
+  (if windows-p
+      (setq flycheck-lua-luacheck-executable "c:/Users/jba054/src/luacheck/luacheck.exe")))
 
 (use-package engine-mode
   :unless windows-p
