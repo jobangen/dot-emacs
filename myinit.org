@@ -579,6 +579,16 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 :END:
  %?")
 
+("I" "Issue" entry (file+headline org-default-notes-file "Tasks")
+ "* ISSUE %i :issue:
+:PROPERTIES:
+:CUSTOM_ID: %(format-time-string \"%Y-%m-%dT%H%M%S.%1N\")
+:RDF_TYPE: zkt:Task
+:GENERATED_AT_TIME: %(concat (format-time-string \"%Y-%m-%dT%H:%M:%S+\") (job/current-timezone-offset-hours))
+:END:
+%a
+%?")
+
 ("i" "interruption" entry (file "inbox.org")
  "* %^{Task} :%^{Category|wiss|arbeit|pers}:
 :PROPERTIES:
