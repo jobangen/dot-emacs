@@ -461,22 +461,21 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
   ;; Ein "!" bedeutet Zeitstempel
   ;; Ein "@" bedeutet Notiz
   (setq org-todo-keywords
-        (quote ((sequence "TODO(t)" "NEXT(n!)" "STARTED(s!)" "|" "DONE(d)")
-                (sequence "AREA(a)" "PROJ(p)" "WAITING(w@/!)" "HOLD(h@/!)" "|"  "DELEGATED(D@/!)" "CANCELLED(c@/!)")
-                (sequence "|" "IDEE(i)" "ENTWURF(e)"))))
+        (quote ((sequence "TODO(t)" "NEXT(n!)" "|" "DONE(d)")
+                (sequence "AREA(a)" "PROJ(p)" "ISSUE(i)" "WAITING(w@/!)" "HOLD(h@/!)" "|"  "DELEGATED(D@/!)" "CANCELLED(c@/!)"))))
 
   (setq org-clock-in-switch-to-state 'bh/clock-in-to-next)
 
   (defun bh/clock-in-to-next (kw)
-    "Switch a task from TODO to STARTED when clocking in.
+    "Switch a task from TODO to NEXT when clocking in.
   Skips capture tasks, projects, and subprojects.
-  Switch projects and subprojects from STARTED back to TODO"
+  Switch projects and subprojects from NEXT back to TODO"
     (when (not (and (boundp 'org-capture-mode) org-capture-mode))
       (cond
        ((and (member (org-get-todo-state) (list "TODO"  "DONE" "WAITING" "HOLD" "DELEGATED" "CANCELLED"))
              (bh/is-task-p))
-        "STARTED")
-       ((and (member (org-get-todo-state) (list "STARTED"))
+        "NEXT")
+       ((and (member (org-get-todo-state) (list "NEXT"))
              (bh/is-project-p))
         "TODO"))))
 
@@ -492,8 +491,8 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
   (setq org-todo-keyword-faces ;; in theme!
         (quote (("AREA" :foreground "blue" :weight semi-bold)
                 ("PROJ" :foreground "dark red" :weight semi-bold)
+                ("ISSUE" :foreground "blue" :weight semi-bold)
                 ("NEXT" :foreground "blue" :weight semi-bold)
-                ("STARTED" :foreground "blue" :weight semi-bold)
                 ("WAITING" :foreground "orange" :weight semi-bold)
                 ("HOLD" :foreground "magenta" :weight semi-bold))))
 #+end_src
