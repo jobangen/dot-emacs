@@ -1681,22 +1681,25 @@ of a BibTeX field into the template. Fork."
   :hook (TeX-mode . latex-extra-mode))
 
 (use-package ledger-mode
-  :unless windows-p
   :mode "\\.ledger\\'"
   :config
-  (setq ledger-binary-path "/home/job/src/ledger/ledger")
-  (setq ledger-reconcile-default-commodity "€")
-  (setq ledger-schedule-file "/home/job/proj/ledger-data/schedule.ledger")
-  (setq ledger-reports
-        '(("Dashboard" "%(binary) python /home/job/proj/ledger-data/ledger-dashboard.py")
-          ("Budget" "%(binary) -f /home/job/proj/ledger-data/main.ledger --decimal-comma -X € bal ^Budget:Funds ^Budget:Savings")
-          ("Assets vs. Liabilities" "%(binary) -f /home/job/proj/ledger-data/main.ledger --decimal-comma  bal -X € --real -d \"l<=3\" Assets Liabilities ")
-          ("Income vs. Expenses" "%(binary) -f /home/job/proj/ledger-data/main.ledger --decimal-comma bal -X € --real Income Expenses ")
-          ("reg" "%(binary) -f /home/job/proj/ledger-data/main.ledger -p \"this year\" --decimal-comma -X € reg %(account)")
-          ("payee" "%(binary) -f %(ledger-file) --decimal-comma -X € reg @%(payee)")
-          ("account" "%(binary) -f %(ledger-file) --decimal-comma -X € reg %(account)")
-          ("Budgeting" "%(binary) python /home/job/proj/ledger-data/ledger-budgeting.py")
-          ("Tag: Location" "%(binary) -f /home/job/proj/ledger-data/main.ledger --decimal-comma bal -X € --limit 'tag(\"Location\")' '--account=tag(\"Location\")' --real -d \"l<=2\" Expenses Income")))
+  (if windows-p
+      (progn
+        (setq ledger-binary-path "c:/Users/jba054/src/ledger.exe")
+)
+    (setq ledger-binary-path "/home/job/src/ledger/ledger")
+    (setq ledger-reconcile-default-commodity "€")
+    (setq ledger-schedule-file "/home/job/proj/ledger-data/schedule.ledger")
+    (setq ledger-reports
+          '(("Dashboard" "%(binary) python /home/job/proj/ledger-data/ledger-dashboard.py")
+            ("Budget" "%(binary) -f /home/job/proj/ledger-data/main.ledger --decimal-comma -X € bal ^Budget:Funds ^Budget:Savings")
+            ("Assets vs. Liabilities" "%(binary) -f /home/job/proj/ledger-data/main.ledger --decimal-comma  bal -X € --real -d \"l<=3\" Assets Liabilities ")
+            ("Income vs. Expenses" "%(binary) -f /home/job/proj/ledger-data/main.ledger --decimal-comma bal -X € --real Income Expenses ")
+            ("reg" "%(binary) -f /home/job/proj/ledger-data/main.ledger -p \"this year\" --decimal-comma -X € reg %(account)")
+            ("payee" "%(binary) -f %(ledger-file) --decimal-comma -X € reg @%(payee)")
+            ("account" "%(binary) -f %(ledger-file) --decimal-comma -X € reg %(account)")
+            ("Budgeting" "%(binary) python /home/job/proj/ledger-data/ledger-budgeting.py")
+            ("Tag: Location" "%(binary) -f /home/job/proj/ledger-data/main.ledger --decimal-comma bal -X € --limit 'tag(\"Location\")' '--account=tag(\"Location\")' --real -d \"l<=2\" Expenses Income"))))
   )
 
 (use-package ledger-capture
