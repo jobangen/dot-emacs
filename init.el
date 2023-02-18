@@ -1082,7 +1082,12 @@ If so, ask if it needs to be saved."
   :after magit
   :config
   (setq auth-sources '("~/.authinfo.gpg"))
-  (add-to-list 'forge-alist '("git.app.uib.no" "git.app.uib.no/api/v4" "git.app.uib.no" forge-gitlab-repository)))
+  (add-to-list 'forge-alist '("git.app.uib.no" "git.app.uib.no/api/v4" "git.app.uib.no" forge-gitlab-repository))
+
+  (use-package orgit)
+  (use-package orgit-forge)
+  )
+
 
 
 ;;; g
