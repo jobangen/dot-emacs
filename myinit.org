@@ -574,7 +574,9 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 ("n" "note" entry (file+headline org-default-notes-file "Notes")
  "* %^{Note}
 :PROPERTIES:
-:CREATED: %U
+:CUSTOM_ID: %(format-time-string \"%Y-%m-%dT%H%M%S.%1N\")
+:RDF_TYPE: zkt:Note
+:GENERATED_AT_TIME: %(concat (format-time-string \"%Y-%m-%dT%H:%M:%S+\") (job/current-timezone-offset-hours))
 :END:
  %?")
 
