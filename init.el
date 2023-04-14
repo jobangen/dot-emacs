@@ -2995,6 +2995,14 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
   (interactive)
   (set-face-attribute 'default nil :height (or height (string-to-number (read-string "Height: ")))))
 
+(defun job/toggle-line-spacing ()
+  "Toggle line spacing of current buffer between nil and 0.5."
+  (interactive)
+  (if line-spacing
+      (setq line-spacing nil)
+    (setq line-spacing 0.5))
+  (redraw-frame (selected-frame)))
+
 
 (defun job/set-uib ()
   (interactive)
