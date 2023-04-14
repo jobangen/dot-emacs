@@ -2,10 +2,11 @@
 
 (require 'org)
 
-
 (setq org-image-actual-width 600)
+(require 'org-id)
 (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
 (setq org-id-method 'ts)
+(setq org-id-ts-format "%Y-%m-%dT%H%M%S.%1N")
 
 ;;; aesthetics
 (setq org-startup-folded nil)
@@ -40,7 +41,8 @@
             (("c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/2022-04-11-1033-terminologi-py-automation.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|issue\\)")
             (("c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/2022-07-22-1008-emacs.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|issue\\)")
             (("c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/2022-07-25-1524-jterm.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|issue\\)")
-            (("c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/2022-03-16-0946-inbox.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|issue\\)")))
+            (("c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/2022-03-16-0946-inbox.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|issue\\)")
+            (("c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/2023-03-14-0934-marcus-next.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|issue\\)")))
   (setq org-refile-targets
         '((("~/Dropbox/db/org/pers.org") :maxlevel . 3)
           (("~/Dropbox/db/org/wiss.org") :maxlevel . 6)
@@ -115,6 +117,7 @@
     (setq org-tag-alist '((:startgrouptag)
                           ("ansatt" . ?a)
                           ("termp". ?t)
+                          ("marcus" . ?m)
                           (:endgrouptag)
                           (:startgrouptag)
                           ("dev" . ?d)
@@ -123,7 +126,10 @@
                           ("comm" . ?c)
                           ("learn" . ?l)
                           ("gtd" . ?g)
-                          (:endgrouptag)))
+                          (:endgrouptag)
+                          ("review" . ?r)
+                          ("incubate" . ?i)
+                          ("refilet" . ?R)))
     (setq org-tag-alist '((:startgroup)
                           ("arbeit"    . ?a)
                           ("pers"      . ?p)
@@ -153,7 +159,7 @@
 
 ;;; Projects
 (setq org-stuck-projects
-           '("+project/-DONE" ("TODO" "NEXT" "STARTED") ("longterm")))
+           '("+project/-DONE" ("TODO" "NEXT") ("longterm")))
 
 
 ;;; org-agenda
@@ -161,6 +167,12 @@
   (interactive)
   (org-agenda-goto)
   (job/org-add-tags-today)
+  (switch-to-buffer-other-window "*Org Agenda*"))
+
+(defun job/org-agenda-add-tag-this-week ()
+  (interactive)
+  (org-agenda-goto)
+  (job/org-add-tag-this-week)
   (switch-to-buffer-other-window "*Org Agenda*"))
 
 (defun job/org-add-tags-today ()
@@ -176,7 +188,16 @@
          (tags (-distinct (append add-tags current-tags))))
     (org-set-tags tags)))
 
-
+(defun job/org-add-tag-this-week ()
+  (interactive)
+  (org-back-to-heading)
+  (let* ((current-tags (mapcar
+                        (lambda (tag)
+                          (org-no-properties tag))
+                        (org-get-tags nil t)))
+         (add-tags (list (format-time-string "%YW%W") ))
+         (tags (-distinct (append add-tags current-tags))))
+    (org-set-tags tags)))
 
 ;; (setq org-agenda-diary-file "journal.org")
 (setq org-agenda-include-diary nil)
@@ -332,7 +353,7 @@
   (with-eval-after-load 'org
     (org-pdftools-setup-link))
   (setq org-pdftools-link-prefix "pdf")
-  (setq org-pdftools-use-freepointer-annot t) 
+  (setq org-pdftools-use-freepointer-annot t)
   (setq org-pdftools-use-isearch-link nil)
 
   (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
