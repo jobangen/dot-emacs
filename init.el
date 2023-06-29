@@ -139,7 +139,7 @@
 
 (defvar job/bibliography-file
   (if windows-p
-      "c:/Users/jba054/OneDrive - University of Bergen/archive/biblio.bib"
+      "c:/Users/jba054/src/bibliography/biblio.bib"
     (expand-file-name (convert-standard-filename "db/biblio.bib") dropbox-dir)))
 
 (global-set-key (kbd "s-<tab>") 'other-window)
