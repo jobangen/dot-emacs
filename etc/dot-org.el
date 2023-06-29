@@ -570,7 +570,9 @@ With a prefix ARG, remove start location."
                         :host github
                         :repo "lechten/org-reveal")
   :config
-  (setq org-reveal-root "file:///home/job/src/reveal.js"))
+  (if windows-p
+      (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
+    (setq org-reveal-root "file:///home/job/src/reveal.js")))
 
 (use-package ox-publish
   :straight
