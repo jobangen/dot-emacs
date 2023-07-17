@@ -586,6 +586,101 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
   (goto-char (point-max))
   (other-window 1))
 
+;;; writing
+(defvar job/writing-file)
+(defvar job/writing-session-number 0)
+(defvar job/writing-wordcounter-day 0)
+(defvar job/writing-wordaim-day 1000)
+(defvar job/writing-wordcounter-session 0)
+(defvar job/writing-wordaim-session 250)
+
+(defun job/writing-get-current-word-count ()
+  "Get word count of current tex file."
+  (string-to-number
+   (car (split-string
+         (tex-count-words (point-min) (point-max))))))
+
+(defun job/writing-set-current-file ()
+  "Set current buffer as writing file."
+  (setq job/writing-file (buffer-file-name)))
+
+;;;###autoload
+(defun job/writing-new-day ()
+  "Start new day: Set writing aim for today and reset counter to current count."
+  (interactive)
+  (let ((aim (read-number "Aim for today: " job/writing-wordaim-day)))
+    (job/writing-set-current-file)
+    (setq
+    job/writing-wordcounter-day (job/writing-get-current-word-count))
+    (setq job/writing-wordaim-day aim)))
+
+;;;###autoload
+(defun job/writing-new-session ()
+  "Start new session.
+Set writing aim for current session and reset counter to current
+count."
+  (interactive)
+  (let ((aim (read-number "Aim for this session: " job/writing-wordaim-session)))
+    (job/writing-set-current-file)
+    (setq job/writing-session-number (+ 1 job/writing-session-number))
+    (setq job/writing-wordcounter-session (job/writing-get-current-word-count))
+    (setq job/writing-wordaim-session aim)))
+
+;;;###autoload
+(defun job/writing-finish-session ()
+  "Finish current session by writing data to session note."
+  (interactive)
+  (find-file job/writing-file)
+  (let ((current-count (- (job/writing-get-current-word-count)
+                          job/writing-wordcounter-session)))
+    (job/writing-ensure-session-note)
+    (outline-next-heading)
+    (open-line 1)
+    (insert (format"| %s | %s | %s |" job/writing-session-number current-count job/writing-wordaim-session))
+    (org-table-align)
+    ))
+
+(defun job/writing-ensure-session-note ()
+  "Ensure writing note for today."
+  (zettelkasten-journal-daily-file)
+  (goto-char (point-min))
+  (unless (search-forward "** Writing Note" nil t)
+    (progn
+      (search-forward ":RDF_TYPE: time:DateTimeDescription")
+      (outline-next-heading)
+      (open-line 1)
+      (insert (format-time-string "** Writing Note %Y-%m-%d"))
+      (org-set-property "CUSTOM_ID" (format-time-string "%Y-%m-%dT%H%M%S.%1N"))
+      (org-set-property "RDF_TYPE" "zkt:Note")
+      (org-set-property "GENERATED_AT_TIME"
+                        (concat (format-time-string "%Y-%m-%dT%H:%M:%S+")
+                                (job/current-timezone-offset-hours)))
+      (outline-next-heading)
+      (open-line 1)
+      (insert (format "- Daily goal: %s\n" job/writing-wordaim-day))
+      (insert "| Session | Written | Goal |\n")
+      (insert "|---------+---------+------|")
+      )))
+
+;;;###autoload
+(defun job/writing-get-status ()
+  "Write current writing status to minibuffer."
+  (interactive)
+  (when (equal job/writing-file (buffer-file-name))
+    (let* ((day-progress (- (job/writing-get-current-word-count)
+                            job/writing-wordcounter-day))
+           (day-percentage (truncate (* 100 (/ (float day-progress)
+                                               job/writing-wordaim-day))))
+           (session-progress (- (job/writing-get-current-word-count)
+                                job/writing-wordcounter-session))
+           (session-percentage (truncate (* 100 (/ (float session-progress)
+                                                   job/writing-wordaim-session)))))
+      (message "[Writing] Day: %s%% (%s/%s), Session: %s%% (%s/%s)"
+               day-percentage day-progress job/writing-wordaim-day
+               session-percentage session-progress job/writing-wordaim-session))))
+
+(run-with-idle-timer
+ 3 t #'job/writing-get-status)
 
 (provide 'dot-defun)
 ;;; dot-defun.el ends here
