@@ -632,11 +632,17 @@ count."
   (interactive)
   (find-file job/writing-file)
   (let ((current-count (- (job/writing-get-current-word-count)
-                          job/writing-wordcounter-session)))
+                          job/writing-wordcounter-session))
+        (session-dur (read-string "Session duration: ")))
     (job/writing-ensure-session-note)
     (outline-next-heading)
     (open-line 1)
-    (insert (format"| %s | %s | %s |" job/writing-session-number current-count job/writing-wordaim-session))
+    (insert (format
+             "| %s | %s | %s | %s |"
+             job/writing-session-number
+             session-dur
+             current-count
+             job/writing-wordaim-session))
     (org-table-align)
     ))
 
@@ -658,8 +664,8 @@ count."
       (outline-next-heading)
       (open-line 1)
       (insert (format "- Daily goal: %s\n" job/writing-wordaim-day))
-      (insert "| Session | Written | Goal |\n")
-      (insert "|---------+---------+------|")
+      (insert "| Session | Duration | Written | Goal |\n")
+      (insert "|---------+----------+---------+------|")
       )))
 
 ;;;###autoload
@@ -675,8 +681,9 @@ count."
                                 job/writing-wordcounter-session))
            (session-percentage (truncate (* 100 (/ (float session-progress)
                                                    job/writing-wordaim-session)))))
-      (message "[Writing] Day: %s%% (%s/%s), Session: %s%% (%s/%s)"
+      (message "[Writing] Day: %s%% (%s/%s), Session %s: %s%% (%s/%s)"
                day-percentage day-progress job/writing-wordaim-day
+               job/writing-session-number
                session-percentage session-progress job/writing-wordaim-session))))
 
 (run-with-idle-timer
