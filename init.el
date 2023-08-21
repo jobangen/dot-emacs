@@ -2561,7 +2561,7 @@ tags:
 
   (if windows-p
       (progn
-        (setq zettelkasten-db-emacsql-lib 'emacsql-sqlite3)
+        (setq zettelkasten-db-emacsql-lib 'emacsql-sqlite-builtin)
         (setq zettelkasten-main-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/")
         (setq zettelkasten-zettel-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/")
         (setq zettelkasten-texts-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/txt-docs/"))
