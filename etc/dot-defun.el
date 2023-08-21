@@ -587,7 +587,7 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
   (other-window 1))
 
 ;;; writing
-(defvar job/writing-file)
+(defvar job/writing-file "")
 (defvar job/writing-session-number 0)
 (defvar job/writing-wordcounter-day 0)
 (defvar job/writing-wordaim-day 1000)
@@ -609,9 +609,10 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
   "Start new day: Set writing aim for today and reset counter to current count."
   (interactive)
   (let ((aim (read-number "Aim for today: " job/writing-wordaim-day)))
+    (setq job/writing-session-number 0)
     (job/writing-set-current-file)
     (setq
-    job/writing-wordcounter-day (job/writing-get-current-word-count))
+     job/writing-wordcounter-day (job/writing-get-current-word-count))
     (setq job/writing-wordaim-day aim)))
 
 ;;;###autoload
@@ -638,11 +639,14 @@ count."
     (outline-next-heading)
     (open-line 1)
     (insert (format
-             "| %s | %s | %s | %s |"
+             "| %s | %s | %s | %s | %s%% |"
              job/writing-session-number
              session-dur
              current-count
-             job/writing-wordaim-session))
+             job/writing-wordaim-session
+             (truncate (* 100 (/ (float current-count)
+                                 job/writing-wordaim-session)))
+             ))
     (org-table-align)
     ))
 
@@ -664,8 +668,8 @@ count."
       (outline-next-heading)
       (open-line 1)
       (insert (format "- Daily goal: %s\n" job/writing-wordaim-day))
-      (insert "| Session | Duration | Written | Goal |\n")
-      (insert "|---------+----------+---------+------|")
+      (insert "| Nr. | Duration | S. Written | S. Goal | S. Perc. |\n")
+      (insert "|-----+----------+------------+---------+----------|")
       )))
 
 ;;;###autoload
