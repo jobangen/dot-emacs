@@ -2670,7 +2670,8 @@ tags:
                ("zkt:Letter")
                ("zkt:Contract")
                ("zkt:Mitschrift")
-               ("zkt:Note")))))
+               ("zkt:Note")
+               ("zkt:Zettel")))))
            ;;
            ("prov:Agent"
             ("foaf:Agent"
@@ -2705,6 +2706,12 @@ tags:
   (setq zettelkasten-predicates
         '(nil ("rdf:type")
               (("prov:wasInfluencedBy"
+                ("zkt:followedBy") ; zettel-zettel
+                ("zkt:follows")
+                ("zkt:hasBranch")
+                ("zkt:branchesOffFrom")
+                ("zkt:crossreferences")
+                ("zkt:crossreferencedBy")
                 ("zkt:symbolizes")      ;word-concept
                 ("zkt:wasSymbolizedBy")
                 ("zkt:refersTo")        ;concept-thing
@@ -2833,6 +2840,13 @@ tags:
           [nil "zkt:wasReferedToBy" "owl:Thing" "skos:Concept" "zkt:refersTo"]
           [nil "zkt:standsFor" "zkt:LinguisticForm" "owl:Thing" nil]
           [nil "prov:wasAttributedTo" "prov:Entity" "prov:Agent" "prov:contributed"]
+          ;; Zettelkasten
+          [nil "zkt:followedBy" "zkt:Zettel" "zkt:Zettel" "zkt:follows"]
+          [nil "zkt:follows" "zkt:Zettel" "zkt:Zettel" "zkt:followedBy"]
+          [nil "zkt:crossreferences" "zkt:Zettel" "zkt:Zettel" "zkt:crossreferencedBy"]
+          [nil "zkt:crossreferencedBy" "zkt:Zettel" "zkt:Zettel" "zkt:crossreferences"]
+          [nil "zkt:hasBranch" "zkt:Zettel" "zkt:Zettel" "zkt:branchesOffFrom"]
+          [nil "zkt:branchesOffFrom" "zkt:Zettel" "zkt:Zettel" "zkt:hasBranch"]
           ;;
           [nil "zkt:hadAdressat" "prov:Entity" "prov:Agent" "zkt:wasAdressatOf"]
           [nil "zktb:wasAuthoredBy" "prov:Entity" "prov:Agent" "zktb:authored"]
