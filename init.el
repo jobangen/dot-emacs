@@ -14,6 +14,7 @@
 (transient-mark-mode 1) ;; No region when it is not highlighted
 (global-font-lock-mode 1) ;;syntax highlighting everywhere
 (global-visual-line-mode 1) ;;Add proper word wrapping
+(global-display-line-numbers-mode)
 (global-auto-revert-mode t) ;;aktualisiert buffer automatisch
 (setq auto-revert-interval 3) ;; Prüfinterval in Sek.
 (setq auto-revert-verbose nil)
@@ -763,7 +764,6 @@
   :mode ("\\.tex$" . TeX-latex-mode)
   :hook ((TeX-mode . TeX-fold-mode)
          (TeX-mode . variable-pitch-mode)
-         (TeX-mode . linum-mode)
          (TeX-mode . LaTeX-math-mode))
   :config
   (eval-after-load 'tex-mode
@@ -947,8 +947,6 @@
   (setq python-shell-interpreter "ipython3")
   (setq python-shell-interpreter-args "-i --simple-prompt")
   (setq elpy-rpc-backend "jedi")
-
-  (add-hook 'elpy-mode-hook 'linum-mode)
 
   (use-package py-autopep8)
   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
@@ -1763,10 +1761,6 @@ of a BibTeX field into the template. Fork."
                                "* %?\n%a\nadded: %U\n\n" :kill-buffer t)))
       (linkmarks--setup)
       (org-capture))))
-
-(use-package linum
-  :straight nil
-  :hook (python-mode . linum-mode))
 
 (use-package lispy
   :hook (emacs-lisp-mode . lispy-mode)
