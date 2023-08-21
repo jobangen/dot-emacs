@@ -2255,7 +2255,7 @@ rotate entire document."
     (setq reftex-external-file-finders
           '(("tex" . "kpsewhich -format=.tex %f")
             ("bib" . "kpsewhich -format=.bib %f")))
-    (setq reftex-default-bibliography '("~/Dropbox/db/biblio.bib"))
+    (setq reftex-default-bibliography `(,job/bibliography-file))
     (eval-after-load 'reftex-vars
       '(progn
          (setq reftex-cite-format
