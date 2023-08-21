@@ -2074,7 +2074,10 @@ of a BibTeX field into the template. Fork."
   :init
   (if windows-p
       (setq org-plantuml-jar-path (expand-file-name "c:/Users/jba054/src/plantuml/plantuml-1.2022.4.jar")))
-  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
+  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+
+  (add-to-list 'org-babel-default-header-args:plantuml
+               '(:cmdline . "-charset utf-8")))
 
 (use-package pdf-tools
   :unless windows-p
