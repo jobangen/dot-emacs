@@ -2443,7 +2443,9 @@ rotate entire document."
   :config
   (progn
     (setq undo-tree-visualizer-timestamps nil)
-    (setq undo-tree-visualizer-diff t)))
+    (setq undo-tree-visualizer-diff t)
+    (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/var/undo")))
+    ))
 
 ;;; V
 (use-package volatile-highlights
