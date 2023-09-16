@@ -242,23 +242,86 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
           (todo "HOLD"
                 ((org-agenda-overriding-header "Postponed Tasks:")
                  (org-agenda-remove-tags t)))))
+ 
         ("t" "Today"
-         ((tags-todo (format-time-string "+%Y+%m+%d")
-                     ((org-agenda-overriding-header "Today's Tasks:")
-                      (org-agenda-remove-tags t)
-                      (org-agenda-prefix-format " %i       %?-12t% s [%e] ")))
-          (todo "STARTED"
-                ((org-agenda-overriding-header "Started:")
+         (
+          (tags-todo "orgtaskoverview"
+                ((org-agenda-overriding-header (zettelkasten-task-overview-plot))
+                 (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
                  (org-agenda-remove-tags t)
-                 (org-agenda-skip-function
-                  '(org-agenda-skip-subtree-if
-                    'regexp ":today:"))))
+                 ))
+          (tags-todo "sticky"
+                ((org-agenda-overriding-header "Sticky Tasks:")
+                 (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
+                 (org-agenda-remove-tags t)
+                 ))
           (todo "NEXT"
                 ((org-agenda-overriding-header "Next Tasks:")
+                 (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
                  (org-agenda-remove-tags t)
-                 (org-agenda-skip-function
-                  '(org-agenda-skip-entry-if
-                    'regexp ":today:"))))))
+                 ))
+          (tags-todo (format-time-string "+%YW%W")
+                     ((org-agenda-overriding-header "This week's Tasks:")
+                      (org-agenda-remove-tags t)
+                      (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
+                      (org-agenda-skip-function
+                       '(org-agenda-skip-entry-if 'todo '("NEXT")))
+                      )
+                   )
+          (tags-todo (concat (format-time-string "+%YW")
+                             (number-to-string (- (string-to-number (format-time-string "%W")) 1))
+                             (format-time-string "-%YW%W"))
+                     ((org-agenda-overriding-header "Last week's Tasks:")
+                      (org-agenda-remove-tags t)
+                      (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
+                      (org-agenda-skip-function
+                       '(org-agenda-skip-entry-if 'todo '("NEXT")))
+                      )
+                     )
+          (tags-todo (concat (format-time-string "-%YW%W")
+                             (format-time-string "-%YW")
+                             (number-to-string (- (string-to-number (format-time-string "%W")) 1))
+                             (format-time-string "+{^%YW.*}")
+                             )
+                     ((org-agenda-overriding-header "This Year's Tasks:")
+                      (org-agenda-remove-tags t)
+                      (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
+                      (org-agenda-skip-function
+                       '(org-agenda-skip-entry-if 'todo '("NEXT")))
+                      )
+                     )
+          ))
+        ("w" "Tasks with"
+         ((todo "TODO"
+           ((org-agenda-overriding-header (concat "Tasks with: " (zettelkasten-ext-get-person-id)))
+            (org-agenda-remove-tags t)
+            (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
+            (org-agenda-skip-function 
+             '(org-agenda-skip-entry-if
+               'notregexp (concat "zkt:hadAdressat::" zettelkasten-ext-with-agent-id)))))))
+
+        ("r" "Review"
+         ((tags-todo "+INBOX|+gtd|"
+                     ((org-agenda-overriding-header "Inbox:")
+                      (org-agenda-prefix-format " %i       %?-12t% s")
+                      (org-agenda-remove-tags t)))
+          (tags "+review"
+                ((org-agenda-overriding-header "Review:")
+                 (org-agenda-prefix-format " %i       %?-12t% s")
+                 (org-agenda-remove-tags t)))
+          (tags "+incubate"
+                ((org-agenda-overriding-header "Incubate:")
+                 (org-agenda-prefix-format " %i       %?-12t% s")
+                 (org-agenda-remove-tags t)))
+          (tags-todo "/WAITING"
+                     ((org-agenda-overriding-header "Waiting but unscheduled:")
+                      (org-agenda-prefix-format " %i       %?-12t% s")
+                      (org-agenda-skip-function
+                       '(org-agenda-skip-entry-if
+                         'deadline
+                         'scheduled))
+                      (org-agenda-remove-tags t)))
+          ))
         ("d" "Dissertation"
          ((tags-todo "+diss+einleitung"
                      ((org-agenda-overriding-header "Kapitel: Einleitung")
@@ -308,14 +371,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
           (tags-todo "+zkt-refile-followup-self"
                      ((org-agenda-overriding-header "Misc")
                       (org-agenda-remove-tags t)))))
-        ("l" "Literatur"
-         ((tags-todo "literature"
-                     ((org-agenda-overriding-header "Texts & Tasks")
-                      (org-agenda-remove-tags t)
-                      (org-tags-match-list-sublevels
-                       'indented)
-                      (org-agenda-sorting-strategy
-                       '(category-up))))))
         ("p" "Produktion"
          ((tags-todo "produktion"
                      ((org-agenda-overriding-header "Projekte:")
@@ -364,9 +419,8 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
           (tags "TODO=\"PROJ\"-KBreview-KBblocked-KBstarted-KBtodo-longterm"
                 ((org-agenda-overriding-header "Backlog:")
                  (org-agenda-remove-tags t)))
-          )
+          ))
 
-         )
         ("j" "TODO dowith and TASK with"
          ((org-sec-with-view "TODO dowith")
           (org-sec-where-view "TODO doat")
