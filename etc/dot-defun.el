@@ -580,11 +580,13 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
 ;;;###autoload
 (defun pyautomation-update-wikidata ()
   (interactive)
-  (async-shell-command "cd c:/Users/jba054/src/terminologi-py-automation/termbot/scripts && python tp_update_wikidata.py"
-                       "*Update wikidata*")
-  (switch-to-buffer-other-window "*Update wikidata*")
-  (goto-char (point-max))
-  (other-window 1))
+  (let ((instance (completing-read "Instance:" '("termwikitest" "termwikiprod"))))
+ (pyvenv-activate "c:/Users/jba054/src/terminologi-py-automation/.venv")
+ (async-shell-command (format "cd c:/Users/jba054/src/terminologi-py-automation/termbot/scripts && python tp_update_wikidata.py --instance=%s" instance)
+                        "*Update wikidata*")
+   (switch-to-buffer-other-window "*Update wikidata*")
+   (goto-char (point-max))
+   (other-window 1)))
 
 ;;; writing
 (defvar job/writing-file "")
