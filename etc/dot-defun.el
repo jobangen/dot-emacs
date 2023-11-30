@@ -695,5 +695,10 @@ count."
 (run-with-idle-timer
  3 t #'job/writing-get-status)
 
+(defun job/start-gitbash ()
+  "Start gitbash in current folder."
+  (interactive)
+  (async-start-process "gitbash" "C:/Program Files/Git/git-bash.exe" nil))
+
 (provide 'dot-defun)
 ;;; dot-defun.el ends here
