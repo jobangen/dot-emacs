@@ -665,6 +665,33 @@
           ("Greek" "α" "β" "Y" "δ" "ε" "ζ" "η" "θ" "ι" "κ" "λ" "μ" "ν" "ξ" "ο" "π" "ρ" "σ" "τ" "υ" "φ" "χ" "ψ" "ω")
           ("Other Languages" "Œ"))))
 
+
+(use-package shell-maker
+  :straight (shell-maker
+             :type git
+             :host github
+             :repo "xenodium/chatgpt-shell" :files ("shell-maker.el")))
+
+(use-package chatgpt-shell
+  :requires shell-maker
+  :straight (chatgpt-shell
+             :type git
+             :host github :repo "xenodium/chatgpt-shell" :files ("chatgpt-shell.el"))
+  :bind (("C-c g" . job/chatgpt-shell-dwim)
+         ("C-c G" . chatgpt-shell-prompt))
+  :init
+  (setq chatgpt-shell-openai-key
+        (auth-source-pick-first-password :host "api.openai.com"))
+  (defun job/chatgpt-shell-dwim ()
+    (interactive)
+    (if (string-equal major-mode "chatgpt-shell-mode")
+        (progn
+          (bury-buffer)
+          (other-window 1))
+      (other-window 1)
+      (chatgpt-shell))))
+
+
 (use-package company
   :config
   (setq company-idle-delay 0)
