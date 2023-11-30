@@ -2199,6 +2199,10 @@ rotate entire document."
 
   (advice-add 'pdf-annot-edit-contents-commit :after 'job/save-buffer-no-args))
 
+(use-package pet
+  :config
+  (add-hook 'python-base-mode-hook 'pet-mode -10))
+
 (use-package pomodoro
   :disabled
   :defer t
