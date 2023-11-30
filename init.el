@@ -786,7 +786,6 @@
   (setq deft-new-file-format "%Y-%m-%d-%H%M"))
 
 (use-package dot-auctex :straight auctex
-  :unless windows-p
   :demand t
   :mode ("\\.tex$" . TeX-latex-mode)
   :hook ((TeX-mode . TeX-fold-mode)
