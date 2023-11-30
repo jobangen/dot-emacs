@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: møte
+# key: møte
+# --
+** ${1:Time}-${2:End} ${3:Description}
+:PROPERTIES:
+:CUSTOM_ID: zk-`(file-name-base)`-${4:ID}
+:RDF_TYPE: prov:Activity
+:STARTED_AT: `(file-name-base)`T$1:00+`(job/current-timezone-offset-hours)`
+:ENDED_AT: `(file-name-base)`T$2:00+`(job/current-timezone-offset-hours)`
+:END:
+<`(file-name-base)`>
+$0
+
+*** Mitschr.: $3
+:PROPERTIES:
+:RDF_TYPE: zkt:Mitschrift
+:CUSTOM_ID: zk-`(file-name-base)`-$4-mitschr
+:TURTLE:   prov:wasGeneratedBy::zk-`(file-name-base)`-$4 zktb:wasAuthoredBy::@me
+:GENERATED_AT_TIME: `(format-time-string "%Y-%m-%dT%H:%M:%S+")``(job/current-timezone-offset-hours)`
+:END:
