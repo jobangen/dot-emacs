@@ -6,10 +6,23 @@
 (setq TeX-parse-self t)
 (setq TeX-PDF-mode t)
 
+;;SyncTeX
+(setq TeX-source-correlate-mode t)
+(setq TeX-source-correlate-method 'synctex)
+(setq TeX-source-correlate-start-server t)
 
 ;; Use pdf-tools to open PDF files
-(setq TeX-view-program-selection '((output-pdf "PDF Tools"))
-      TeX-source-correlate-start-server t)
+(if windows-p
+    (progn
+      (setq TeX-view-program-list
+            '(("SumatraPDF"
+               ("C:/Users/jba054/AppData/Local/SumatraPDF/SumatraPDF.exe -reuse-instance"
+                (mode-io-correlate " -forward-search \"%b\" %n")
+                " %o"))))
+      (setq TeX-view-program-selection '((output-pdf "SumatraPDF"))))
+  (setq TeX-view-program-selection '((output-pdf "PDF Tools"))))
+
+
 
 (setq LaTeX-csquotes-open-quote "\\enquote{")
 (setq LaTeX-csquotes-close-quote "}")
@@ -49,8 +62,6 @@
          "emph" "textit" "textsl" "textmd" "textrm"
          "textsf" "texttt" "textbf" "textsc" "textup")))))
 
-;;SyncTeX
-(setq TeX-source-correlate-mode 'synctex)
 
 ;; aus fixme.el kopiert
 (defun LaTeX-fixme-targeted-annotation-hack (optional)
