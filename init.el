@@ -703,11 +703,12 @@
   )
 
 (use-package contacts
+  :disabled
   :straight (scimax :type git
                     :host github
                     :repo "jkitchin/scimax"
                     :files ("contacts.el"))
-  :bind (("C-c g" . ivy-contacts))
+  ;; :bind (("C-c g" . ivy-contacts))
   :config
   (setq contacts-files '("~/Dropbox/db/contacts.org"))
   (setq contacts-cache-file (no-littering-expand-var-file-name "contacts-cache.el")))
