@@ -1113,11 +1113,9 @@ If so, ask if it needs to be saved."
   (setq flyspell-correct-interface 'flyspell-correct-ivy))
 
 (use-package forge
-  :disabled
   :straight (forge :type git
                    :host github
-                   :repo "magit/forge"
-                   :branch "v0.3.0")
+                   :repo "magit/forge")
   :after magit
   :config
   (setq auth-sources '("~/.authinfo.gpg"))
