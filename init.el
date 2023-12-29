@@ -872,41 +872,44 @@
 ;;             (extension "zip" "rar" "gz" "bz2" "tar" "org_archive"))))))
 
 (use-package dired-launch
-  :unless windows-p
   :hook (dired-mode . dired-launch-mode)
   :bind (:map dired-mode-map
               ("J" . dired-launch-command)
               ("K" . dired-launch-with-prompt-command))
   :diminish dired-launch-mode
   :init
-  (setf dired-launch-extensions-map
-        '(;;Archives
-          ("gz" ("file-roller"))
-          ;; Office
-          ("odt" ("libreoffice"))
-          ("doc" ("libreoffice"))
-          ("docx" ("libreoffice"))
-          ("csv" ("libreoffice"))
-          ("ppt" ("libreoffice"))
-          ("pptx" ("libreoffice"))
-          ("pdf" ("evince" "gimp-2.10"))
-          ("PDF" ("evince " "gimp-2.10"))
-          ;; Web
-          ("html" ("firefox"))
-          ;; Pictures
-          ("jpg" ("eog" "gimp-2.10"))
-          ("png" ("feh" "eog" "gimp-2.10"))
-          ("svg" ("eog" "gimp-2.10"))
-          ;; Audio
-          ("wav" ("rhythmbox"))
-          ("WAV" ("rhythmbox"))
-          ("mp3" ("rhythmbox"))
-          ;; Video
-          ("mov" ("totem" "vlc"))
-          ;; gpx
-          ("gpx" ("viking"))
-          ;; Other
-          ("mm" ("freeplane")))))
+  (if windows-p
+      (setf dired-launch-extensions-map '())
+    (setf dired-launch-extensions-map
+          '(;;Archives
+            ("gz" ("file-roller"))
+            ;; Office
+            ("odt" ("libreoffice"))
+            ("doc" ("libreoffice"))
+            ("docx" ("libreoffice"))
+            ("csv" ("libreoffice"))
+            ("ppt" ("libreoffice"))
+            ("pptx" ("libreoffice"))
+            ("pdf" ("evince" "gimp-2.10"))
+            ("PDF" ("evince " "gimp-2.10"))
+            ;; Web
+            ("html" ("firefox"))
+            ;; Pictures
+            ("jpg" ("eog" "gimp-2.10"))
+            ("png" ("feh" "eog" "gimp-2.10"))
+            ("svg" ("eog" "gimp-2.10"))
+            ;; Audio
+            ("wav" ("rhythmbox"))
+            ("WAV" ("rhythmbox"))
+            ("mp3" ("rhythmbox"))
+            ;; Video
+            ("mov" ("totem" "vlc"))
+            ;; gpx
+            ("gpx" ("viking"))
+            ;; Other
+            ("mm" ("freeplane")))))
+
+  )
 
 (use-package dired-subtree
   :bind (:map dired-mode-map
