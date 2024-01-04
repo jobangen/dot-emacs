@@ -14,7 +14,7 @@
 (transient-mark-mode 1) ;; No region when it is not highlighted
 (global-font-lock-mode 1) ;;syntax highlighting everywhere
 (global-visual-line-mode 1) ;;Add proper word wrapping
-(global-display-line-numbers-mode)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (global-auto-revert-mode t) ;;aktualisiert buffer automatisch
 (setq auto-revert-interval 3) ;; Prüfinterval in Sek.
 (setq auto-revert-verbose nil)
