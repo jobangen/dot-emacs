@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Fond
+# key: Assets:SB1:Fond:???
+# expand-env: ((yas-indent-line 'fixed))
+# --
+Assets:SB1:Fond:${1:$$(yas-choose-value '("ODINLikviditetD" "SpareBank1Horisont80N"))}    ${2:shares} \"$1\" ; @ NOK ${3:NOK per share}
