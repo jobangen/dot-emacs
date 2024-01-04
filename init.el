@@ -1384,16 +1384,23 @@ If so, ask if it needs to be saved."
 
   (defun bibtex-completion-open-pdf-external (keys &optional fallback-action)
     (let ((bibtex-completion-pdf-open-function
-           (lambda (fpath) (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath))))
+           (lambda (fpath)
+
+             (if windows-p
+                 (start-process "sumatra" "*bibtex-sumatra*" "C:/Users/jba054/AppData/Local/SumatraPDF/SumatraPDF.exe" fpath)
+               (start-process "evince" "*bibtex-evince*" "/usr/bin/evince" fpath)))))
       (bibtex-completion-open-pdf keys fallback-action)))
 
   (ivy-bibtex-ivify-action bibtex-completion-open-pdf-external ivy-bibtex-open-pdf-external)
 
+
   (ivy-add-actions
    'ivy-bibtex
-   '(("P" ivy-bibtex-open-pdf-external "Open PDF file in Evince")))
-(setq bibtex-completion-notes-template-multiple-files
-      "#+TITLE: ${author} ${date}: ${title}
+   '(("P" ivy-bibtex-open-pdf-external "Open PDF file in external Viewer")))
+
+
+  (setq bibtex-completion-notes-template-multiple-files
+        "#+TITLE: ${author} ${date}: ${title}
 #+DATE: [${timestamp}]
 #+RDF_TYPE: zktb:${=type=}
 #+DESCRIPTOR: ${keywords}
