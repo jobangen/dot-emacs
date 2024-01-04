@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: commit
+# key: c
+# --
+${2:$$(yas-completing-read "Type: " '("fix: " "feat: " "perf: " "test: " "docs: " "style: " "refactor: " "build: " "ci: "))} $0
