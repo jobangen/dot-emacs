@@ -1738,7 +1738,18 @@ of a BibTeX field into the template. Fork."
   (if windows-p
       (progn
         (setq ledger-binary-path "c:/Users/jba054/src/ledger.exe")
-)
+        (setq ledger-reconcile-default-commodity "NOK")
+        (setq ledger-reports
+              '(("Assets vs. Liabilities" "%(binary) -f \"c:/Users/jba054/OneDrive - University of Bergen/archive/ledger/main.ledger\" --decimal-comma bal -X NOK --real -d \"l<=5\" (Assets or Liabilities or Equity:Transfer:BrkToFelles) and not Felleskonto")
+                ("Account" "%(binary) -f \"c:/Users/jba054/OneDrive - University of Bergen/archive/ledger/main.ledger\" --decimal-comma -X NOK reg %(account)")
+                ("Account monthly average" "%(binary) -f \"c:/Users/jba054/OneDrive - University of Bergen/archive/ledger/main.ledger\" --decimal-comma -X NOK reg %(account) -M --average")
+                ("Income vs. Expenses/Transfer" "%(binary) -f \"c:/Users/jba054/OneDrive - University of Bergen/archive/ledger/sb1.ledger\" --decimal-comma -X NOK --real --invert bal Income Expenses Equity:Transfer:BrkToFelles")
+                ("Payee" "%(binary) -f  \"c:/Users/jba054/OneDrive - University of Bergen/archive/ledger/main.ledger\" --decimal-comma -X NOK reg @%(payee)")
+                ("Expenses vs. Transfer (shared)" "%(binary) -f \"~/OneDrive - University of Bergen/archive/ledger/sb1-felles.ledger\" --decimal-comma -X NOK --real --invert bal Expenses Equity:Transfer")
+                ("Budget (shared)" "%(binary) -f \"~/OneDrive - University of Bergen/archive/ledger/sb1-felles.ledger\" --decimal-comma -X NOK bal Budget")
+                ("Assets vs. Liabilities (shared)" "%(binary) -f \"c:/Users/jba054/OneDrive - University of Bergen/archive/ledger/sb1-felles.ledger\" --decimal-comma bal -X NOK --real -d \"l<=5\" (Assets or Liabilities)")
+                ))
+        )
     (setq ledger-binary-path "/home/job/src/ledger/ledger")
     (setq ledger-reconcile-default-commodity "€")
     (setq ledger-schedule-file "/home/job/proj/ledger-data/schedule.ledger")
@@ -1755,7 +1766,6 @@ of a BibTeX field into the template. Fork."
   )
 
 (use-package ledger-capture
-  :unless windows-p
   :straight (ledger-capture :type git
                             :host github
                             :repo "jobangen/soa2ledger"))
