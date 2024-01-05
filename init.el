@@ -2,6 +2,12 @@
 (setq package-enable-at-startup nil)
 (server-start)
 
+(defvar linux-p
+  (string= "gnu/linux" system-type))
+
+(defvar windows-p
+  (string= "windows-nt" system-type))
+
 ;;; Config
 (setq split-width-threshold 110)
 (setq split-height-threshold nil)
@@ -25,6 +31,8 @@
 (set-language-environment "UTF-8")
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
+(if windows-p
+    (set-clipboard-coding-system 'utf-16le))
 
 (setq-default indent-tabs-mode nil ;; Insert tabs as spaces (not tabs)
               indicate-buffer-boundaries 'left ;; Graphical gimmick
@@ -76,12 +84,6 @@
 (unless (file-exists-p custom-file)
   (write-region "" nil custom-file))
 (load custom-file)
-
-(defvar linux-p
-  (string= "gnu/linux" system-type))
-
-(defvar windows-p
-  (string= "windows-nt" system-type))
 
 (use-package dot-exwm
   :unless windows-p
