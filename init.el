@@ -2417,7 +2417,7 @@ rotate entire document."
   :bind (("C-c j" . shell-pop))
   :config
   (setq shell-pop-universal-key "C-c j")
-  (setq shell-pop-default-directory "~/")
+  (setq shell-pop-default-directory nil)
   (if windows-p
       (setq shell-pop-shell-type
             '("eshell" "*eshell*"
