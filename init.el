@@ -276,17 +276,47 @@
     (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
     (setq aw-dispatch-always nil)))
 
+(use-package add-node-modules-path      ;; javascript
+  :defer t
+  :hook (((js2-mode rjsx-mode) . add-node-modules-path)))
+
 (use-package auto-yasnippet
   :disabled
   :bind (("H-w" . aya-create)
          ("H-y" . aya-expand)))
 
 (use-package avy
-  :bind ("M-s" . avy-goto-word-1)
+  :bind (("M-s" . avy-goto-char-timer)
+         ("M-j". avy-goto-char-timer)
+         )
   :config
+  (defun avy-action-org-todo (pt)
+    (save-excursion
+      (goto-char pt)
+      (if (string-equal major-mode "org-agenda-mode")
+          (org-agenda-todo)
+        (org-todo)
+        )
+      )
+    t)
+
+  (defun avy-action-copy-whole-line (pt)
+    (save-excursion
+      (goto-char pt)
+      (cl-destructuring-bind (start . end)
+          (bounds-of-thing-at-point 'line)
+        (copy-region-as-kill start end)))
+    (select-window
+     (cdr
+      (ring-ref avy-ring 0)))
+    t)
+
+
   (progn
     (setq avy-all-windows t)
-    (setq avy-keys '(?w ?e ?r ?u ?i ?o ?a ?s ?d ?f ?g ?h ?j ?k ?l ?ö ?v ?b ?n ?m))
+    ;; (setq avy-keys '(?w ?e ?r ?u ?i ?o ?a ?s ?d ?f ?g ?h ?j ?k ?l ?ö ?v ?b ?n ?m))
+    (setq avy-keys '(?a ?s ?d ?f ?j ?k ?l ?ø))
+    (setf (alist-get ?t avy-dispatch-alist) 'avy-action-org-todo)
     (define-key input-decode-map (kbd "C-i") (kbd "H-i"))))
 
 ;;; B
