@@ -239,6 +239,7 @@
 (use-package peep-dired :disabled           :defer t)
 (use-package ttl-mode             :defer t)
 (use-package wgrep                :defer 3)
+(use-package ob-mermaid)
 
 (org-babel-load-file "~/.emacs.d/myinit.org")
 
