@@ -2659,23 +2659,15 @@ tags:
             ("time:DateTimeInterval"))
            ;;
            ("prov:InstantaneousEvent"
-            ("zkt:Waypoint"))
+            ("prov:Start"
+             "prov:End"))
+           ("prov:Role")
            ;; Event, Procedure, Relationship
            ("prov:Activity"
             ("zkt:Experience") ;; TODO
             ("zkt:Procedure"
-             ("zkt:ApplicationProcedure")
              ("zkt:Project"
-              ("zkt:PhD")))
-            ("zkt:Relationship"
-             ("zkt:ContractualRelationship"
-              ("zkt:Employment")))
-
-            (("zktm:HealthcareActivity"
-              ("zktm:Treatment"
-               ("zktm:Vaccination"))
-              ("zktm:Diagnostics"))
-             ("zkt:SpatialMovement")))
+              ("zkt:PhD"))))
            ;;
            ("prov:Entity"
             ("zkt:LinguisticForm")
@@ -2751,17 +2743,20 @@ tags:
 
   (setq zettelkasten-predicates
         '(nil ("rdf:type")
-              (("prov:wasInfluencedBy"
-                ("zkt:followedBy") ; zettel-zettel
+              (("prov:hadRole")
+               ("prov:wasInfluencedBy"
+                ;;  zettelkasten
+                ("zkt:followedBy")      ; zettel-zettel
                 ("zkt:follows")
                 ("zkt:hasBranch")
                 ("zkt:branchesOffFrom")
                 ("zkt:crossreferences")
                 ("zkt:crossreferencedBy")
+
                 ("zkt:symbolizes")      ;word-concept
                 ("zkt:wasSymbolizedBy")
                 ("zkt:refersTo")        ;concept-thing
-                ("zkt:wasReferedToBy")  ;concept-thing
+                ("zkt:wasReferedToBy")  ;thing-concept
                 ("zkt:standsFor")       ;word-thing
                 ("prov:wasAttributedTo" ;; entity to agent
                  ("zkt:hadAdressat")
@@ -2840,10 +2835,8 @@ tags:
 
               ;; SKOS
               (
-               ("skos:subject"
-                ("skos:primarySubject"))
-               ("skos:isSubjectOf"
-                ("skos:isPrimarySubjectOf"))
+               ("skos:subject")
+               ("skos:isSubjectOf")
                ("skos:member")
                ("skos:memberOf")
                ("skos:inScheme")
@@ -2876,10 +2869,15 @@ tags:
               ("zktm:atBodilyLocation")
               ("zkt:hadQualia")
               ("zkt:dosage")
-              ("prov:entity")))
+              ("prov:entity")
+              ("prov:agent")
+              ))
 
   (setq zettelkasten-db-predicate-data
         '([nil "rdf:type" nil "owl:Class" "zkr:isInstanceOf"]
+          ;; prov attributes
+          [nil "prov:hadRole" "owl:Thing" "prov:Role" "zkp:wasFilledBy"]
+          [nil "prov:agent" "owl:Thing" "prov:Agent" "zkp:wasAgentIn"]
           [nil "zkt:symbolized" "zkt:LinguisticForm" "skos:Concept" "zkt:wasSymbolizedBy"]
           [nil "zkt:wasSymbolizedBy" "skos:Concept" "zkt:LinguisticForm" "zkt:symbolized"]
           [nil "zkt:refersTo" "skos:Concept" "owl:Thing" "zkt:wasReferedToBy"]
@@ -2925,6 +2923,7 @@ tags:
           [nil "prov:wasMemberOf" "prov:Entity" "prov:Collection" "prov:hadMember"]
           ;; Qualified
           [nil "prov:qualifiedInfluence" "owl:Thing" "prov:Influence" nil]
+          [nil "prov:qualifiedAssociation" "prov:Activity" "prov:Association" nil]
           ;;
           [nil "skos:broaderTransitive" "skos:Concept" "skos:Concept" "skos:narrowerTransitive"]
           [nil "skos:broader" "skos:Concept" "skos:Concept" "skos:narrower"]
@@ -2934,9 +2933,7 @@ tags:
           [nil "skos:broadMatch" "skos:Concept" "skos:Concept" "skos:narrowMatch"]
           [nil "skos:related" "skos:Concept" "skos:Concept" "skos:related"]
           [nil "skos:subject" "owl:Thing" "owl:Thing" "skos:isSubjectOf"]
-          [nil "skos:primarySubject" "owl:Thing" "owl:Thing" "skos:isPrimarySubjectOf"]
           [nil "skos:isSubjectOf" "owl:Thing" "owl:Thing" "skos:subject"]
-          [nil "skos:isPrimarySubjectOf" "owl:Thing" "owl:Thing" "skos:primarySubject"]
           ;;
           [nil "dct:issued" "prov:Entity" "time:DateTimeInterval" nil]
           [nil "dct:date" "owl:Thing" "time:DateTimeInterval" nil]
