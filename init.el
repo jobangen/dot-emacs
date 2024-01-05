@@ -972,17 +972,16 @@
   (elmacro-mode))
 
 (use-package elpy
-  :disabled
   :init
-  ;; (elpy-enable)
-  (setq python-shell-interpreter "ipython3")
-  (setq python-shell-interpreter-args "-i --simple-prompt")
+  (elpy-enable)
+  (setq python-shell-interpreter "python")
+  ;; (setq python-shell-interpreter-args "-i --simple-prompt")
+  (setq python-shell-interpreter-args "-i")
   (setq elpy-rpc-backend "jedi")
 
-  (use-package py-autopep8)
-  (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-
-  )
+  ;; (use-package py-autopep8)
+  ;; (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+)
 
 (use-package flycheck
   :config
@@ -1049,9 +1048,9 @@
   :custom
   (flycheck-display-errors-delay .3)
   (custom-set-variables
-   '(flycheck-python-flake8-executable "python3")
-   '(flycheck-python-pycompile-executable "python3")
-   '(flycheck-python-pylint-executable "python3"))
+   '(flycheck-python-flake8-executable "python")
+   '(flycheck-python-pycompile-executable "python")
+   '(flycheck-python-pylint-executable "python"))
   (add-hook 'flycheck-mode-hook #'flycheck-virtualenv-setup))
 
 (use-package flyspell
@@ -2256,22 +2255,36 @@ rotate entire document."
   )
 
 (use-package python
-  :bind (:map python-mode-map
-              ("C-c C-c" . job/python-shell-send-buffer-dwim))
+  ;; :bind (:map python-mode-map
+  ;;             ("C-c C-c" . job/python-shell-send-buffer-dwim))
   :config
-  (setq python-shell-interpreter "ipython3")
-  (setq python-shell-interpreter-args "-i --simple-prompt")
+  (setq python-shell-interpreter "python")
+  ;; (setq python-shell-interpreter-args "--simpl-i e-prompt")
+
+  (use-package python-isort
+    :config
+    (add-hook 'python-mode-hook 'python-isort-on-save-mode))
+
   (defun job/python-shell-send-buffer-dwim ()
     (interactive)
-    (if (and (get-buffer "*Python*") (get-buffer-process "*Python*"))
-        (progn
-          (switch-to-buffer-other-window "*Python*")
-          (end-of-buffer)
-          (other-window 1)
-          (python-shell-send-buffer))
-      (run-python)
-      (other-window 1)
-      (job/python-shell-send-buffer-dwim))))
+    (when (get-buffer "*Python*")
+      (kill-buffer "*Python*"))
+    (run-python)
+    (other-window 1)
+    (python-shell-send-buffer)
+
+    
+    ;; (job/python-shell-send-buffer-dwim)
+    ;; (if (and (get-buffer "*Python*") (get-buffer-process "*Python*"))
+    ;;     (progn
+    ;;       (switch-to-buffer-other-window "*Python*")
+    ;;       (end-of-buffer)
+    ;;       (other-window 1)
+    ;;       (python-shell-send-buffer))
+    ;;   (run-python)
+    ;;   (other-window 1)
+    ;;   (job/python-shell-send-buffer-dwim))
+    ))
 
 (use-package pyvenv
   :config
