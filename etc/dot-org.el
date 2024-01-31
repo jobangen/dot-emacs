@@ -36,13 +36,11 @@
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
 (if windows-p
     (setq org-refile-targets
-          '((("~/OneDrive - University of Bergen/archive/zettel/2022-03-07-1153-termportalen.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|issue\\)")
-            (("~/OneDrive - University of Bergen/archive/zettel/2022-03-09-1112-position-systemutviklar-uib.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\)")
-            (("~/OneDrive - University of Bergen/archive/zettel/2022-04-11-1033-terminologi-py-automation.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|issue\\)")
-            (("~/OneDrive - University of Bergen/archive/zettel/2022-07-22-1008-emacs.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|issue\\)")
-            (("~/OneDrive - University of Bergen/archive/zettel/2022-07-25-1524-jterm.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|issue\\)")
-            (("~/OneDrive - University of Bergen/archive/zettel/2022-03-16-0946-inbox.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|issue\\)")
-            (("~/OneDrive - University of Bergen/archive/zettel/2023-03-14-0934-marcus-next.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|issue\\)")))
+          '((("~/OneDrive - University of Bergen/archive/zettel/2022-03-07-1153-termportalen.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
+            (("~/OneDrive - University of Bergen/archive/zettel/2022-03-09-1112-position-systemutviklar-uib.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\)")
+            (("~/OneDrive - University of Bergen/archive/zettel/2022-07-22-1008-emacs.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
+            (("~/OneDrive - University of Bergen/archive/zettel/2022-03-16-0946-inbox.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
+            (("~/OneDrive - University of Bergen/archive/zettel/2023-03-14-0934-marcus-next.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")))
   (setq org-refile-targets
         '((("~/Dropbox/db/org/pers.org") :maxlevel . 3)
           (("~/Dropbox/db/org/wiss.org") :maxlevel . 6)
