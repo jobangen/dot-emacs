@@ -1359,7 +1359,8 @@ If so, ask if it needs to be saved."
 
 (use-package hippie-expand
   :straight nil
-  :bind ("M-<tab>" . hippie-expand)
+  :bind ( ("M-<tab>" . hippie-expand)
+          ("C-<tab>" .  hippie-expand))
   :init
   (setq hippie-expand-verbose t)
 
@@ -1436,8 +1437,8 @@ If so, ask if it needs to be saved."
   (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 
   (setq ivy-re-builders-alist
-      '((ivy-bibtex . ivy--regex-ignore-order)
-        (t . ivy--regex-plus)))
+        '((ivy-bibtex . ivy--regex-ignore-order)
+          (t . ivy--regex-plus)))
 
   (ivy-bibtex-ivify-action bibtex-completion-edit-logs ivy-bibtex-edit-logs)
   (ivy-add-actions
@@ -1676,9 +1677,7 @@ of a BibTeX field into the template. Fork."
       (search-backward-regexp "autocite" nil t)
       (search-forward "{" nil t)
       (kill-ring-save (point) (search-forward-regexp "[a-z0-9-]*" nil t)))
-    (ivy-bibtex))
-
-  )
+    (ivy-bibtex)))
 
 (use-package ivy-posframe
   :disabled
