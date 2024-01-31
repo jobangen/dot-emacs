@@ -166,7 +166,7 @@
          ("C-c C-j" . org-journal-new-entry)
          :map org-agenda-mode-map
          ("C-c d" . job/org-agenda-add-tags-today)
-         ("C-c w" . job/org-agenda-add-tag-this-week))
+         ("C-c w" . job/add-tag-this-week-dwim))
   :init
   (if windows-p
       (progn

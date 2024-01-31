@@ -167,12 +167,6 @@
   (job/org-add-tags-today)
   (switch-to-buffer-other-window "*Org Agenda*"))
 
-(defun job/org-agenda-add-tag-this-week ()
-  (interactive)
-  (org-agenda-goto)
-  (job/org-add-tag-this-week)
-  (switch-to-buffer-other-window "*Org Agenda*"))
-
 (defun job/org-add-tags-today ()
   (interactive)
   (org-back-to-heading)
@@ -185,6 +179,17 @@
                          (format-time-string "%m")))
          (tags (-distinct (append add-tags current-tags))))
     (org-set-tags tags)))
+
+(defun job/add-tag-this-week-dwim ()
+  (interactive)
+  (let ((agendap (equal major-mode 'org-agenda-mode)))
+    (when agendap
+      (org-agenda-goto))
+    (job/org-add-tag-this-week)
+    (when agendap
+      (save-buffer)
+      (switch-to-buffer-other-window "*Org Agenda*"))))
+
 
 (defun job/org-add-tag-this-week ()
   (interactive)
