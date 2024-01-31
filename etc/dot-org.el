@@ -1,6 +1,22 @@
-;;;_,dot-org
+;;; dot-org -- org related functionality
 
-(require 'org)
+;;; Commentary:
+;;; org-related functionality
+;;; Code:
+
+(require 'org-agenda)
+
+(use-package org)
+
+
+(use-package org-contrib
+  :config
+  (require 'org-effectiveness))
+
+(use-package org-edna
+  :config
+  (org-edna-mode))
+
 
 (setq org-image-actual-width 600)
 (require 'org-id)
@@ -181,6 +197,7 @@
     (org-set-tags tags)))
 
 (defun job/add-tag-this-week-dwim ()
+  "Add tag for this week in \"org-mode\" and \"org-agenda-mode\" buffers."
   (interactive)
   (let ((agendap (equal major-mode 'org-agenda-mode)))
     (when agendap
@@ -188,17 +205,17 @@
     (job/org-add-tag-this-week)
     (when agendap
       (save-buffer)
-      (switch-to-buffer-other-window "*Org Agenda*"))))
+      (switch-to-buffer-other-window "*Org Agenda*")
+      (org-agenda-redo-all))))
 
 
 (defun job/org-add-tag-this-week ()
-  (interactive)
   (org-back-to-heading)
   (let* ((current-tags (mapcar
                         (lambda (tag)
                           (org-no-properties tag))
                         (org-get-tags nil t)))
-         (add-tags (list (format-time-string "%YW%W") ))
+         (add-tags (list (format-time-string "%YW%W")))
          (tags (-distinct (append add-tags current-tags))))
     (org-set-tags tags)))
 
