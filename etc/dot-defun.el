@@ -1,4 +1,5 @@
 ;;;_,dot-defun
+(require 'magit)
 
 ;;;###autoload
 (defun job/update-zoom ()
@@ -699,6 +700,19 @@ count."
   "Start gitbash in current folder."
   (interactive)
   (async-start-process "gitbash" "C:/Program Files/Git/git-bash.exe" nil))
+
+;;; DU
+(defun job/du-get-fbk-data ()
+  (interactive)
+  (pyvenv-activate "c:/Users/jba054/src/dataset-termportalen/python/.venv")
+  (async-shell-command "cd c:/Users/jba054/src/dataset-termportalen/python && python fbk_get_process.py")
+  (magit-status-setup-buffer "c:/Users/jba054/src/dataset-termportalen")
+  )
+
+
+(defun job/du-scp-fbk-to-prod ()
+  (interactive)
+  (async-shell-command "scp c:/Users/jba054/src/dataset-termportalen/python/FBK_tmp.ttl termwiki_fuseki_prod:/home/centos/FBK.ttl"))
 
 (provide 'dot-defun)
 ;;; dot-defun.el ends here
