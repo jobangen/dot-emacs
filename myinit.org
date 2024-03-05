@@ -193,7 +193,7 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 
 ;;(setq org-agenda-dim-blocked-tasks t)
 (setq org-agenda-dim-blocked-tasks nil) ;; soll schneller sein
-(setq org-agenda-skip-scheduled-if-deadline-is-shown 'not-today)
+(setq org-agenda-skip-scheduled-if-deadline-is-shown t)
 (setq org-agenda-start-on-weekday nil)
 
 (setq org-agenda-inhibit-startup t)
@@ -260,16 +260,30 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                  (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
                  (org-agenda-remove-tags t)
                  ))
+          (agenda ""
+                  ((org-agenda-overriding-header "")
+                   (org-agenda-span 1)
+                   (org-agenda-remove-tags t)
+                   (org-agenda-prefix-format " %i       %?-12t% s")
+                   (org-agenda-sorting-strategy
+                    '(priority-down))
+                   (org-agenda-skip-function
+                    '(org-agenda-skip-entry-if 'todo '("NEXT" "WAITING")))
+                   ;; (org-agenda-skip-function
+                   ;; '(org-agenda-skip-entry-if 'deadline))
+                   ))
           (tags-todo (format-time-string "+%YW%W")
                      ((org-agenda-overriding-header "This week's Tasks:")
                       (org-agenda-remove-tags t)
+                      (org-agenda-sorting-strategy
+                       '(priority-down))
                       (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
                       (org-agenda-skip-function
                        '(org-agenda-skip-entry-if 'todo '("NEXT")))
                       )
                    )
           (tags-todo (concat (format-time-string "+%YW")
-                             (number-to-string (- (string-to-number (format-time-string "%W")) 1))
+                             (format "%02d" (- (string-to-number (format-time-string "%W")) 1))
                              (format-time-string "-%YW%W"))
                      ((org-agenda-overriding-header "Last week's Tasks:")
                       (org-agenda-remove-tags t)
@@ -617,6 +631,7 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 
 ("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
 "* TODO %^{Task} %^G
+SCHEDULED: %(org-insert-time-stamp (org-read-date nil t))<2024-03-05 tir.>
 :PROPERTIES:
 :CUSTOM_ID: %(format-time-string \"%Y-%m-%dT%H%M%S.%1N\")
 :RDF_TYPE: zkt:Task
