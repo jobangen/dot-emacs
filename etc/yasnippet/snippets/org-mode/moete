@@ -10,6 +10,7 @@
 :ENDED_AT: `(file-name-base)`T$2:00+`(job/current-timezone-offset-hours)`
 :END:
 <`(file-name-base)`>
+- [[zk:zk-`(file-name-base)`-$4::zkt:wasReferedToBy::Treffen{CP}][Treffen/Møte]]
 $0
 
 *** Mitschr.: $3

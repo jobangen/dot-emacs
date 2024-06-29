@@ -3,4 +3,4 @@
 # key: Assets:SB1:ASK:???
 # expand-env: ((yas-indent-line 'fixed))
 # --
-Assets:SB1:ASK:${1:$$(yas-choose-value '("DNBBarnefondA" "DNBEuropaIndeksN" "StorebrandRenewableEnergyN"))}     ${2:shares} $1 ; @ NOK ${3:NOK per share}
+Assets:SB1:ASK:${1:$$(yas-choose-value '("DNBBarnefondA" "DNBEuropaIndeksN" "StorebrandRenewableEnergyN"))}     ${2:shares} $1 @ NOK ${3:NOK per share}

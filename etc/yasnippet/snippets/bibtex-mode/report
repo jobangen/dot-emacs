@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: report
-# key: rep
+# key: report
 # --
 @Report{,
   author = 	 {$1},
