@@ -1203,10 +1203,9 @@ If so, ask if it needs to be saved."
   :config
   (setq auth-sources '("~/.authinfo.gpg"))
   (add-to-list 'forge-alist '("git.app.uib.no" "git.app.uib.no/api/v4" "git.app.uib.no" forge-gitlab-repository))
-
+  (add-to-list 'forge-alist '("itgit.app.uib.no" "itgit.app.uib.no/api/v4" "itgit.app.uib.no" forge-gitlab-repository))
   (use-package orgit)
-  (use-package orgit-forge)
-  )
+  (use-package orgit-forge))
 
 
 
