@@ -609,7 +609,10 @@
   :config
   (setq bu-bibtex-fields-ignore-list '("")))
 
-(use-package blacken :defer t)
+(use-package blacken ;; python
+  :after elpy
+  :hook (python-mode-hook . blacken-mode)
+  )
 
 (use-package blimp
   :disabled
