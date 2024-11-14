@@ -2641,7 +2641,9 @@ rotate entire document."
   (setq www-synonyms-lang "de_DE"))
 
 ;;; Y
-(use-package yaml-mode)
+(use-package yaml-mode
+  :config
+  (add-hook 'yaml-mode-hook 'highlight-indentation-mode))
 
 (use-package yasnippet
   :diminish yas-minor-mode
