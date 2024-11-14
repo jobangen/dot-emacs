@@ -2494,6 +2494,10 @@ rotate entire document."
   (add-to-list 'sml/replacer-regexp-list '("^~/archiv/" ":arch:") t)
   (add-to-list 'sml/replacer-regexp-list '("^~/archive/texts/" ":TXT:") t))
 
+(use-package smart-shift
+  :config
+  (global-smart-shift-mode 1))
+
 (use-package smartparens
   :defer 2
   :diminish smartparens-mode
