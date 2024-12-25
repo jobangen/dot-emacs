@@ -250,11 +250,6 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                  (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
                  (org-agenda-remove-tags t)
                  ))
-          (tags-todo "sticky"
-                ((org-agenda-overriding-header "Sticky Tasks:")
-                 (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
-                 (org-agenda-remove-tags t)
-                 ))
           (todo "NEXT"
                 ((org-agenda-overriding-header "Next Tasks:")
                  (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
@@ -265,36 +260,21 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                    (org-agenda-span 1)
                    (org-agenda-remove-tags t)
                    (org-agenda-prefix-format " %i       %?-12t% s")
-                   (org-agenda-sorting-strategy
-                    '(priority-down))
+;                   (org-agenda-sorting-strategy
+;                    '(priority-down))
                    (org-agenda-skip-function
                     '(org-agenda-skip-entry-if 'todo '("NEXT" "WAITING")))
                    ;; (org-agenda-skip-function
                    ;; '(org-agenda-skip-entry-if 'deadline))
                    ))
-          (tags-todo (format-time-string "+%YW%W")
-                     ((org-agenda-overriding-header "This week's Tasks:")
-                      (org-agenda-remove-tags t)
-                      (org-agenda-sorting-strategy
-                       '(priority-down))
-                      (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
-                      (org-agenda-skip-function
-                       '(org-agenda-skip-entry-if 'todo '("NEXT")))
-                      )
-                   )
-          (tags-todo (concat (format-time-string "+%YW")
-                             (format "%02d" (- (string-to-number (format-time-string "%W")) 1))
-                             (format-time-string "-%YW%W"))
-                     ((org-agenda-overriding-header "Last week's Tasks:")
-                      (org-agenda-remove-tags t)
-                      (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
-                      (org-agenda-skip-function
-                       '(org-agenda-skip-entry-if 'todo '("NEXT")))
-                      )
-                     )
+          (tags-todo "sticky"
+                ((org-agenda-overriding-header "Sticky Tasks:")
+                 (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
+                 (org-agenda-remove-tags t)
+                 ))
           (tags-todo (concat (format-time-string "-%YW%W")
                              (format-time-string "-%YW")
-                             (number-to-string (- (string-to-number (format-time-string "%W")) 1))
+                             (format "%02d" (- (string-to-number (format-time-string "%W")) 1))
                              (format-time-string "+{^%YW.*}")
                              )
                      ((org-agenda-overriding-header "This Year's Tasks:")
@@ -549,10 +529,13 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 
   (setq org-todo-state-tags-triggers
         (quote
-         ((done ("today") ("KBbacklog") ("KBtodo") ("KBstarted") ("KBblocked") ("KBreview"))
+         (
+          (done ("today") ("KBbacklog") ("KBtodo") ("KBstarted") ("KBblocked") ("KBreview") ("proj"))
           ("WAITING" ("today"))
           ("HOLD" ("KBbacklog") ("KBtodo") ("KBstarted") ("KBblocked") ("KBreview"))
-          ("TODO" ("today")))))
+          ("TODO" ("today") ("proj"))
+          ("PROJ" ("proj" . t))
+)))
 
 
   ;; Formatierung für TODO-tags
@@ -620,18 +603,15 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 #+begin_src emacs-lisp
 (setq org-capture-templates '(
 
-("c" "Contact" entry (file (lambda () (expand-file-name (concat db-dir "contacts.org"))))
- "* %(org-contacts-template-name)
-:PROPERTIES:
-:EMAIL: %(org-contacts-template-email)
-:END:"
+("c" "Clock" plain (clock)
+ "%?"
 )
 
 ("d" "Daily Tasks" entry (function org-journal-find-location) (file "~/templates/org/daily.org") :immediate-finish t :jump-to-captured t)
 
 ("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
 "* TODO %^{Task} %^G
-SCHEDULED: %(org-insert-time-stamp (org-read-date nil t))<2024-03-05 tir.>
+SCHEDULED: %(org-insert-time-stamp (org-read-date nil t))
 :PROPERTIES:
 :CUSTOM_ID: %(format-time-string \"%Y-%m-%dT%H%M%S.%1N\")
 :RDF_TYPE: zkt:Task
@@ -727,6 +707,8 @@ Subject: [[%l][%:subject]]
 "
 )
 ))
+
+
 #+end_src
 
 ** dependencies
@@ -970,15 +952,19 @@ http://doc.norang.ca/org-mode.org
                                (R . t)
                                (gnuplot . t)
                                (sql . t)
-                               (ledger . t)
+                               (sqlite . t)
+                         ;;      (ledger . t)
                                (latex . t)
                                (plantuml . t)
+                               (mermaid . t)
                                ;(restclient . t)
                                ))
 
   (defun my-org-confirm-babel-evaluate (lang body)
     (not (string= lang "sh"))
     (not (string= lang "plantuml"))
+    (not (string= lang "mermaid"))
+    (not (string= lang "python"))
     (not (string= lang "dot")))  ; don't ask
   (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
 

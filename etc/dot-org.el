@@ -56,7 +56,9 @@
             (("~/OneDrive - University of Bergen/archive/zettel/2022-03-09-1112-position-systemutviklar-uib.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\)")
             (("~/OneDrive - University of Bergen/archive/zettel/2022-07-22-1008-emacs.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
             (("~/OneDrive - University of Bergen/archive/zettel/2022-03-16-0946-inbox.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
-            (("~/OneDrive - University of Bergen/archive/zettel/2023-03-14-0934-marcus-next.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")))
+            (("~/OneDrive - University of Bergen/archive/zettel/2023-03-14-0934-marcus-next.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
+            (("~/OneDrive - University of Bergen/archive/zettel/2024-11-18-0908-project-clarino.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
+))
   (setq org-refile-targets
         '((("~/Dropbox/db/org/pers.org") :maxlevel . 3)
           (("~/Dropbox/db/org/wiss.org") :maxlevel . 6)
@@ -272,6 +274,11 @@
   (setq org-contacts-icon-use-gravatar nil)
   (setq org-contacts-birthday-format "%l (%y)"))
 
+(use-package org-depend
+  :straight org-contrib
+  ;; :load-path "~/.emacs.d/straight/repos/org-contrib/lisp/org-depend.el"
+  )
+
 (use-package org-drill
   :disabled
   :config
@@ -288,7 +295,7 @@
                           :host github
                           :repo "l3kn/org-el-cache"))
 
- (use-package org-indent
+(use-package org-indent
    :straight org
    :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
    :commands org-indent-mode
@@ -438,10 +445,14 @@ With a prefix ARG, remove start location."
 
 
 ;;; org-babel
-(setq org-babel-python-command "python3")
+(setq org-babel-python-command "python")
 (unless windows-p
   (org-babel-lob-ingest "/home/job/proj/2018-11-06 lilli-diss/org/variablen.org")
   (org-babel-lob-ingest "/home/job/proj/2018-11-06 lilli-diss/org/forschungsfragen.org"))
+(when windows-p
+  (org-babel-lob-ingest "~/src/innovation2/org/variablen.org")
+  (org-babel-lob-ingest "~/src/innovation2/org/forschungsfragen.org"))
+
 (setq org-babel-default-header-args:python '((:noweb . "yes")
                                              (:results . "output wrap")))
 

@@ -1,5 +1,4 @@
 ;;;_,dot-defun
-(require 'magit)
 
 ;;;###autoload
 (defun job/update-zoom ()
@@ -701,18 +700,17 @@ count."
   (interactive)
   (async-start-process "gitbash" "C:/Program Files/Git/git-bash.exe" nil))
 
+(defun job/create-new-dd-folder ()
+  (interactive)
+  (find-file "c:/Users/jba054/OneDrive - University of Bergen/archive/date-description/2024")
+  (revert-buffer)
+  (let ((date (org-read-date))
+        (desc (read-string "Folder name: ")))
+    (find-file "c:/Users/jba054/OneDrive - University of Bergen/archive/date-description/2024")
+    (dired-create-directory (concat date "--" desc)))
+  (revert-buffer))
+
 ;;; DU
-(defun job/du-get-fbk-data ()
-  (interactive)
-  (pyvenv-activate "c:/Users/jba054/src/dataset-termportalen/python/.venv")
-  (async-shell-command "cd c:/Users/jba054/src/dataset-termportalen/python && python fbk_get_process.py")
-  (magit-status-setup-buffer "c:/Users/jba054/src/dataset-termportalen")
-  )
-
-
-(defun job/du-scp-fbk-to-prod ()
-  (interactive)
-  (async-shell-command "scp c:/Users/jba054/src/dataset-termportalen/python/FBK_tmp.ttl termwiki_fuseki_prod:/home/centos/FBK.ttl"))
 
 (provide 'dot-defun)
 ;;; dot-defun.el ends here

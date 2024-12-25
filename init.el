@@ -91,8 +91,8 @@
   :straight exwm)
 
   (if windows-p
-       (setq job/sans-serif-font "Arial") 
-  (setq job/sans-serif-font "Helvetica Neue LT Std"))
+      (setq job/sans-serif-font "Arial")
+    (setq job/sans-serif-font "Helvetica Neue LT Std"))
 
 ;;; Setup
 ;; https://sigquit.wordpress.com/2008/09/28/single-dot-emacs-file/
@@ -610,6 +610,7 @@
   (setq bu-bibtex-fields-ignore-list '("")))
 
 (use-package blacken ;; python
+  :disabled
   :after elpy
   :hook (python-mode-hook . blacken-mode)
   )
@@ -714,9 +715,10 @@
   :straight (chatgpt-shell
              :type git
              :host github :repo "xenodium/chatgpt-shell" :files ("chatgpt-shell.el"))
-  :bind (("C-c g" . job/chatgpt-shell-dwim)
+  :bind (;; ("C-c g" . job/chatgpt-shell-dwim)
          ("C-c G" . chatgpt-shell-prompt))
   :init
+  (setq chatgpt-shell-model-version "gpt-3.5-turbo-0125")
   (setq chatgpt-shell-openai-key
         (auth-source-pick-first-password :host "api.openai.com"))
   (defun job/chatgpt-shell-dwim ()
@@ -742,7 +744,7 @@
                         Don't explain code snippets.
                         Whenever you output updated code for the user, only show diffs, instead of entire snippets.
                         The user uses python 3 and you adapt your answers to the programming language.")
-          ("Frontend" ly-raw string "\"The user is a programmer with very limited time.
+          ("Frontend" . "The user is a programmer with very limited time.
                         You treat their time as precious. You do not repeat obvious things, including their query.
                         You are as concise as possible in responses.
                         You never apologize for confusions because it would waste their time.
@@ -750,7 +752,7 @@
                         Always show code snippets in markdown blocks with language labels.
                         Don't explain code snippets.
                         Whenever you output updated code for the user, only show diffs, instead of entire snippets.
-                        The user uses nuxt 3 with typescript and you adapt your answers to this framework if relevant for the answer.\"")
+                        The user uses nuxt 3 with typescript and you adapt your answers to this framework if relevant for the answer.")
           ("eLisp" . "The user is a programmer with very limited time.
                         You treat their time as precious. You do not repeat obvious things, including their query.
                         You are as concise as possible in responses.
@@ -771,6 +773,72 @@
                         The user work with linked data and uses RDF, OWL, SKOS and SPARQL-queries. You adapt your answers to these technologies if relevant")))
 
   )
+
+(use-package claude-shell
+  :straight (claude-shell :type git :host github :repo "arminfriedl/claude-shell")
+  :bind (("C-c g" . job/claude-shell-dwim))
+  :config
+  (setq claude-shell-api-token (lambda () (auth-source-pick-first-password :host "api.anthropic.com")))
+  (setq claude-shell-streaming t)
+  (setq claude-shell-system-prompts
+        `(
+          ("General" . "You use markdown liberally to structure responses. Always show code snippets in markdown blocks with language labels.")
+          ;; Based on https://github.com/benjamin-asdf/dotfiles/blob/8fd18ff6bd2a1ed2379e53e26282f01dcc397e44/mememacs/.emacs-mememacs.d/init.el#L768
+          ("Programming" . "The user is a programmer with very limited time.
+                        You treat their time as precious. You do not repeat obvious things, including their query.
+                        You are as concise as possible in responses.
+                        You never apologize for confusions because it would waste their time.
+                        You use markdown liberally to structure responses.
+                        Always show code snippets in markdown blocks with language labels.
+                        Don't explain code snippets.
+                        Whenever you output updated code for the user, only show diffs, instead of entire snippets.")
+          ("Language" . "You are a language teacher and assist with translation, correcting texts and other language related tasks.
+                        You comment briefly on the task and explain changes in translation and explain important word choices. If the prompt starts with a language code like nb you translate the following text to that language.")
+          ("Python" . "The user is a programmer with very limited time.
+                        You treat their time as precious. You do not repeat obvious things, including their query.
+                        You are as concise as possible in responses.
+                        You never apologize for confusions because it would waste their time.
+                        You use markdown liberally to structure responses.
+                        Always show code snippets in markdown blocks with language labels.
+                        Don't explain code snippets.
+                        Whenever you output updated code for the user, only show diffs, instead of entire snippets.
+                        The user uses python 3 and you adapt your answers to the programming language.")
+          ("Frontend" . "The user is a programmer with very limited time.
+                        You treat their time as precious. You do not repeat obvious things, including their query.
+                        You are as concise as possible in responses.
+                        You never apologize for confusions because it would waste their time.
+                        You use markdown liberally to structure responses.
+                        Always show code snippets in markdown blocks with language labels.
+                        Don't explain code snippets.
+                        Whenever you output updated code for the user, only show diffs, instead of entire snippets.
+                        The user uses nuxt 3 with typescript and you adapt your answers to this framework if relevant for the answer.")
+          ("eLisp" . "The user is a programmer with very limited time.
+                        You treat their time as precious. You do not repeat obvious things, including their query.
+                        You are as concise as possible in responses.
+                        You never apologize for confusions because it would waste their time.
+                        You use markdown liberally to structure responses.
+                        Always show code snippets in markdown blocks with language labels.
+                        Don't explain code snippets.
+                        Whenever you output updated code for the user, only show diffs, instead of entire snippets.
+                        The user uses eLisp and emacs 29 and you adapt your answers to the programming language and emacs version.")
+          ("Linked Data" . "The user is a programmer with very limited time.
+                        You treat their time as precious. You do not repeat obvious things, including their query.
+                        You are as concise as possible in responses.
+                        You never apologize for confusions because it would waste their time.
+                        You use markdown liberally to structure responses.
+                        Always show code snippets in markdown blocks with language labels.
+                        Don't explain code snippets.
+                        Whenever you output updated code for the user, only show diffs, instead of entire snippets.
+                        The user work with linked data and uses RDF, OWL, SKOS and SPARQL-queries. You adapt your answers to these technologies if relevant.")))
+
+  (defun job/claude-shell-dwim ()
+    (interactive)
+    (if (string-equal major-mode "claude-shell-mode")
+        (progn
+          (bury-buffer)
+          (other-window 1))
+      (other-window 1)
+      (claude-shell))))
 
 
 (use-package company
@@ -798,6 +866,7 @@
   :bind (("C-c o" . counsel-outline)
          ("C-M-s" . counsel-ag)
          ("C-x l" . counsel-locate)
+         ("C-x f" . counsel-flycheck)
          ("M-y" . counsel-yank-pop)
          ("M-x" . counsel-M-x)
          ("C-x C-m" . counsel-M-x)
@@ -1014,11 +1083,10 @@
   :config (set 'ediff-window-setup-function 'ediff-setup-windows-plain))
 
 (use-package elfeed
-  :unless windows-p
   :commands elfeed
   :bind (:map elfeed-show-mode-map
-              ("z" . zettelkasten-elfeed-new-zettel)
-              ("Z" . zettelkasten-elfeed-new-bib)
+              ("Z" . zettelkasten-elfeed-new-zettel)
+              ("z" . zettelkasten-elfeed-new-bib)
               ("d" . doi-utils-add-entry-from-elfeed-entry)
               ("n" . zettelkasten-elfeed-skip)))
 
@@ -1036,11 +1104,10 @@
 
 
 (use-package elfeed-org
-  :unless windows-p
   :after elfeed
   :init
   (elfeed-org)
-  (setq rmh-elfeed-org-files (list "~/.emacs.d/etc/elfeed.org")))
+  (setq rmh-elfeed-org-files (list "~/.emacs.d/etc/elfeed/elfeed.org")))
 
 
 (use-package elmacro
@@ -1051,21 +1118,48 @@
   (elmacro-mode))
 
 (use-package elpy
+  :ensure t
+  :bind (:map elpy-mode-map
+              ("C-c C-c" . job/elpy-shell-dwim))
   :init
+  (setq elpy-test-runner 'elpy-test-pytest-runner)
+  (setq python-indent-offset 4)
+  ;; Use the working environment as the RPC environment
+  (when (load "flycheck" t t)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules)))
+  
   (elpy-enable)
-  (setq python-shell-interpreter "python")
-  ;; (setq python-shell-interpreter-args "-i --simple-prompt")
-  (setq python-shell-interpreter-args "-i")
-  (setq elpy-rpc-backend "jedi")
 
-  ;; (use-package py-autopep8)
-  ;; (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-)
+  (defun job/elpy-shell-dwim ()
+    (interactive)
+    (when (get-buffer "*Python*")
+      (let ((process (get-buffer-process "*Python*")))
+        (when process
+          (set-process-query-on-exit-flag process nil)))
+      (kill-buffer "*Python*"))
+    (elpy-shell-send-buffer)
+    ;; (switch-to-buffer-other-window "*Python*")
+    (end-of-buffer)
+    (other-window 1)
+    (when (get-buffer "*projectile-files-errors*")
+      (kill-buffer "*projectile-files-errors*")
+      )
+    ))
 
-(use-package flycheck
+(use-package flycheck-eglot
+  :disabled
+  :ensure t
+  :after (flycheck eglot)
   :config
-  (if windows-p
-      (setq flycheck-lua-luacheck-executable "c:/Users/jba054/src/luacheck/luacheck.exe")))
+  (global-flycheck-eglot-mode 1))
+
+(use-package eglot
+  :disabled
+  :config
+  (fset #'jsonrpc--log-event #'ignore)
+  (setq eglot-events-buffer-size 0)
+  (setq eglot-sync-connect nil))
+
 
 (use-package engine-mode
   :unless windows-p
@@ -1115,22 +1209,63 @@
   :straight (filetags :type git
                       :host github
                       :repo "DerBeutlin/filetags.el")
+  :commands filetags-extract-filetags
   :bind (:map dired-mode-map
               ("#" . filetags-dired-update-tags))
   :init
   (setq filetags-load-controlled-vocabulary-from-file t))
 
+
 (use-package flycheck
-  :defer 2
+  ;; :defer 2
   :diminish
-  :init (global-flycheck-mode)
-  :custom
-  (flycheck-display-errors-delay .3)
+  ;; :init (global-flycheck-mode)
+  :hook (python-mode . flycheck-mode)
+  :config
+  (setq flycheck-display-errors-delay 0.3)
   (custom-set-variables
    '(flycheck-python-flake8-executable "python")
    '(flycheck-python-pycompile-executable "python")
    '(flycheck-python-pylint-executable "python"))
-  (add-hook 'flycheck-mode-hook #'flycheck-virtualenv-setup))
+  
+  (flycheck-def-config-file-var flycheck-python-ruff-config python-ruff
+                                '("pyproject.toml" "ruff.toml" ".ruff.toml"))
+
+  (flycheck-define-checker python-ruff
+    "A Python syntax and style checker using the ruff.
+To override the path to the ruff executable, set
+`flycheck-python-ruff-executable'.
+
+See URL `https://beta.ruff.rs/docs/'."
+    :command ("ruff"
+              "check"
+              (config-file "--config" flycheck-python-ruff-config)
+              "--output-format=concise"
+              "--stdin-filename" source-original
+              "-")
+    :standard-input t
+    :error-filter (lambda (errors)
+                    (let ((errors (flycheck-sanitize-errors errors)))
+                      (seq-map #'flycheck-flake8-fix-error-level errors)))
+    :error-patterns
+    ((warning line-start
+              (file-name) ":" line ":" (optional column ":") " "
+              (id (one-or-more (any alpha)) (one-or-more digit)) " "
+              (message (one-or-more not-newline))
+              line-end))
+    :modes (python-mode python-ts-mode)
+    :next-checkers ((warning . python-pyright)))
+
+  (defun python-flycheck-setup ()
+    (progn
+      (flycheck-select-checker 'python-ruff)
+      (flycheck-add-next-checker 'python-ruff 'python-pyright)))
+
+  (add-to-list 'flycheck-checkers 'python-ruff)
+  (add-hook 'python-mode-local-vars-hook #'python-flycheck-setup 'append)
+
+  (if windows-p
+      (setq flycheck-lua-luacheck-executable "c:/Users/jba054/src/luacheck/luacheck.exe")))
 
 (use-package flyspell
   :unless windows-p
@@ -1742,6 +1877,7 @@ of a BibTeX field into the template. Fork."
 (use-package all-the-icons)
 
 (use-package all-the-icons-dired
+  :disabled
   :config
   (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
 
@@ -1825,8 +1961,7 @@ of a BibTeX field into the template. Fork."
                 ("Payee" "%(binary) -f  \"c:/Users/jba054/OneDrive - University of Bergen/archive/ledger/main.ledger\" --decimal-comma -X NOK reg @%(payee)")
                 ("Expenses vs. Transfer (shared)" "%(binary) -f \"~/OneDrive - University of Bergen/archive/ledger/sb1-felles.ledger\" --decimal-comma -X NOK --real --invert bal Expenses Equity:Transfer")
                 ("Budget (shared)" "%(binary) -f \"~/OneDrive - University of Bergen/archive/ledger/sb1-felles.ledger\" --decimal-comma -X NOK bal Budget")
-                ("Assets vs. Liabilities (shared)" "%(binary) -f \"c:/Users/jba054/OneDrive - University of Bergen/archive/ledger/sb1-felles.ledger\" --decimal-comma bal -X NOK --real -d \"l<=5\" (Assets or Liabilities)")
-                ))
+                ("Assets vs. Liabilities (shared)" "%(binary) -f \"c:/Users/jba054/OneDrive - University of Bergen/archive/ledger/sb1-felles.ledger\" --decimal-comma bal -X NOK --real -d \"l<=5\" (Assets or Liabilities)")))
         )
     (setq ledger-binary-path "/home/job/src/ledger/ledger")
     (setq ledger-reconcile-default-commodity "€")
@@ -1846,7 +1981,22 @@ of a BibTeX field into the template. Fork."
 (use-package ledger-capture
   :straight (ledger-capture :type git
                             :host github
-                            :repo "jobangen/soa2ledger"))
+                            :repo "jobangen/soa2ledger")
+  :config
+  (defun job/soa2ledger ()
+    (interactive)
+    (let* ((account (completing-read "Account: " '("sb1-personal-csv" "sb1-felles-csv")))
+           (file (read-file-name "File: " "~/Downloads/" nil t))
+           (dryrun (if (yes-or-no-p "Dryrun?") "--dryrun" "")))
+      (async-shell-command (format "cd c:/Users/jba054/src/soa2ledger/ && python soa2ledger.py --account=%s --import_file=%s %s" account file dryrun) "*soa2ledger*"))))
+
+(use-package ledger-ext
+  :straight (ledger-ext :type git
+                            :host github
+                            :repo "jobangen/ledger-ext")
+  :bind (:map ledger-mode-map
+              ("C-c C-o C-n" . ledger-ext-plot-wrapper)))
+
 
 (use-package ledger-job
   :disabled
@@ -1889,6 +2039,7 @@ of a BibTeX field into the template. Fork."
   :diminish lispy-mode)
 
 (use-package lsp-mode
+  :disabled
   :hook (((python-mode ;; pylsp
            js-mode)    ;; ts-ls
           . lsp-deferred)
@@ -1948,11 +2099,8 @@ of a BibTeX field into the template. Fork."
   (setq lsp-ui-sideline-show-code-actions t)
   (setq lsp-ui-sideline-show-symbol t)
   (setq lsp-ui-sideline-show-diagnostics t)
-  
-  (setq lsp-ui-doc-border (face-foreground 'default))
 
-  
-  )
+  (setq lsp-ui-doc-border (face-foreground 'default)))
 
 (use-package lua-mode)
 
@@ -2297,7 +2445,8 @@ rotate entire document."
 
   (advice-add 'pdf-annot-edit-contents-commit :after 'job/save-buffer-no-args))
 
-(use-package pet
+(use-package pet ;; python
+  :disabled
   :config
   (add-hook 'python-base-mode-hook 'pet-mode -10))
 
@@ -2315,12 +2464,20 @@ rotate entire document."
   :disabled
   :defer t)
 
+(use-package prettier-js ;; javascript
+  :defer t
+  :diminish prettier-js-mode
+  :hook (((js2-mode rjsx-mode vue-mode) . prettier-js-mode))
+  :config
+  (setq prettier-js-args '("--parser vue")))
+
 (use-package projectile
   :defer 2
   :diminish projectile-mode
   :config
   (progn
     (projectile-mode)
+    (setq projectile-indexing-method 'alien)
     (setq projectile-completion-system 'ivy)
     (setq projectile-enable-caching t)
     (setq projectile-switch-project-action 'projectile-dired)))
@@ -2334,13 +2491,16 @@ rotate entire document."
 (use-package python
   ;; :bind (:map python-mode-map
   ;;             ("C-c C-c" . job/python-shell-send-buffer-dwim))
+  ;; :hook (python-mode . eglot-ensure)
   :config
   (setq python-shell-interpreter "python")
-  ;; (setq python-shell-interpreter-args "--simpl-i e-prompt")
-
+  (setq python-shell-interpreter-args "-m IPython --simple-prompt -i")
+  
   (use-package python-isort
     :config
+    (setq python-isort-arguments '("--profile" "black" "--stdout" "--atomic" "-"))
     (add-hook 'python-mode-hook 'python-isort-on-save-mode))
+  
 
   (defun job/python-shell-send-buffer-dwim ()
     (interactive)
@@ -2363,10 +2523,16 @@ rotate entire document."
     ;;   (job/python-shell-send-buffer-dwim))
     ))
 
-(use-package pyvenv
+(use-package pyvenv ;; python
   :config
   ;; (setq pyvenv-workon "emacs")  ; Default venv
   (pyvenv-tracking-mode 1)
+
+  (defun job/create-venv-here ()
+    "Create a new Python virtual environment in VENV-DIR."
+    (interactive)
+    (shell-command "python -m venv .venv")
+    )
   )
 
 ;;; R
@@ -2405,24 +2571,25 @@ rotate entire document."
     (setq reftex-cite-prompt-optional-args t)
     (setq reftex-cite-cleanup-optional-arg t)))
 
-(use-package remem
-  :commands remem-toggle
-  :config
-  (setq remem-database-dir (job/custom-temp-file-name "ra-index"))
-  (setq remem-scopes-list '(("zettelkasten" 5 2 500)
-                            ("texte" 5 2 500)))
-  (setq remem-print-exact-relevance-p t)
-  (setq remem-load-original-suggestion t)
-  (setq remem-log-p t)
-  (setq remem-logfile (expand-file-name "~/.custom-temp/.remem-log-file"))
+(use-package restclient)
 
-  (setq remem-format-default
-        '((0 2 (field 0 mouse-face remem-hilite2) nil)        ; Number
-          (1 2 (face remem-even field 1) nil)                 ; sim
-          (9 3 (face remem-odd field 9 mouse-face remem-hilite) nil) ; person
-          (8 25 (face remem-even field 8 mouse-face remem-hilite) nil) ; subject
-          (28 50 (face remem-odd field 28 mouse-face remem-hilite) nil))) ; keywords
+(use-package rjsx-mode ;; javascript
+  :mode ("\\.js\\'"
+         "\\.jsx\\'")
+  :config
+  (setq js2-mode-show-parse-errors nil
+        js2-mode-show-strict-warnings nil
+        js2-basic-offset 2
+        js-indent-level 2)
+  (setq-local flycheck-disabled-checkers (cl-union flycheck-disabled-checkers
+                                                   '(javascript-jshint))) ; jshint doesn't work for JSX
   )
+
+
+(use-package ruff-format
+  :straight (ruff-format :type git
+                         :host github
+                         :repo "scop/emacs-ruff-format"))
 
 ;;; S
 (use-package sdcv
@@ -2559,7 +2726,8 @@ rotate entire document."
       ("s" tile-select)
       ("0" (tile :strategy tile-one))
       ("n" tile)
-      ("l" winner-undo))
+      ;; ("l" winner-undo)
+      )
     (setq tile-cycler
           (tile-strategies :strategies
                            (list imalison:tall-tile-strategy
@@ -2597,15 +2765,16 @@ rotate entire document."
   :init
   (volatile-highlights-mode t))
 
+(use-package vue-mode
+  :mode "\\.vue\\'")
+
+
 ;;; W
 (use-package which-key
   :diminish which-key-mode
   :init
   (which-key-mode))
 
-(use-package winner
-  :init
-  (winner-mode))
 
 (use-package writegood-mode
   :unless windows-p
@@ -2706,6 +2875,7 @@ tags:
         (setq zettelkasten-db-emacsql-lib 'emacsql-sqlite-builtin)
         (setq zettelkasten-main-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/")
         (setq zettelkasten-zettel-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/")
+        (setq zettelkasten-inbox-file (concat zettelkasten-zettel-directory "2022-03-16-0946-inbox.org"))
         (setq zettelkasten-texts-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/txt-docs/"))
     (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
     (setq zettelkasten-zettel-directory "/home/job/Dropbox/db/zk/zettel/")
@@ -2741,9 +2911,9 @@ tags:
         (format-time-string "%Y-%m-%dT%H:%M:%S+")
         (job/current-timezone-offset-hours)))))
 
-    (defun org-delete-invalidated-property ()
-      (when (string= (org-get-todo-state) "TODO")
-        (org-entry-delete (point) "INVALIDATED")))
+  (defun org-delete-invalidated-property ()
+    (when (string= (org-get-todo-state) "TODO")
+      (org-entry-delete (point) "INVALIDATED")))
 
   (add-hook 'org-after-todo-state-change-hook 'org-add-invalidated-property)
   (add-hook 'org-after-todo-state-change-hook 'org-delete-invalidated-property)
@@ -2768,6 +2938,7 @@ tags:
            ("prov:Entity"
             ("zkt:LinguisticForm")
             ("skos:Concept")
+            ("skos:Concept zkt:Zettel")
             ("prov:Bundle")
             ("prov:Collection")
             ("prov:Plan"
@@ -3064,7 +3235,10 @@ tags:
     (if (equal major-mode 'dired-mode)
         (dired-find-file))
     (if (equal major-mode 'org-mode)
-        (org-open-at-point))))
+        (org-open-at-point)))
+
+  (zettelkasten-update-org-agenda-files)
+  )
 
 (use-package zettelkasten-ext
   :straight (zettelkasten-ext :type git
@@ -3098,7 +3272,8 @@ tags:
 (bind-key "<f1>" 'hydra-system/body)
 
 ;;;
-(desktop-save-mode 1) ;; Erinnert die zuletzt geöffneten Dateien
+;; (desktop-save-mode 1)
+;; Erinnert die zuletzt geöffneten Dateien
 (setq desktop-restore-eager 5)
 (setq desktop-files-not-to-save "\\(^/[^/:]*:\\|(ftp)$\\|KILL\\)")
 (setq desktop-restore-frames nil)
