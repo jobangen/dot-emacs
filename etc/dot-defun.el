@@ -702,11 +702,11 @@ count."
 
 (defun job/create-new-dd-folder ()
   (interactive)
-  (find-file "c:/Users/jba054/OneDrive - University of Bergen/archive/date-description/2024")
+  (find-file "c:/Users/jba054/OneDrive - University of Bergen/archive/date-description/2025")
   (revert-buffer)
   (let ((date (org-read-date))
         (desc (read-string "Folder name: ")))
-    (find-file "c:/Users/jba054/OneDrive - University of Bergen/archive/date-description/2024")
+    (find-file "c:/Users/jba054/OneDrive - University of Bergen/archive/date-description/2025")
     (dired-create-directory (concat date "--" desc)))
   (revert-buffer))
 
