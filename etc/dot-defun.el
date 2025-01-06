@@ -704,10 +704,12 @@ count."
   (interactive)
   (find-file "c:/Users/jba054/OneDrive - University of Bergen/archive/date-description/2025")
   (revert-buffer)
-  (let ((date (org-read-date))
+  (let* ((id-len 21)
+        (date (org-read-date))
+        (rand (job/random-string (- (- id-len 1) (length date))))
         (desc (read-string "Folder name: ")))
     (find-file "c:/Users/jba054/OneDrive - University of Bergen/archive/date-description/2025")
-    (dired-create-directory (concat date "--" desc)))
+    (dired-create-directory (concat date "-" rand "--" desc)))
   (revert-buffer))
 
 ;;; DU
