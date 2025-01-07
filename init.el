@@ -110,6 +110,14 @@
 (defun job/custom-temp-file-name (file)
     (expand-file-name (convert-standard-filename file) custom-temp))
 
+(defvar archive-dir
+  (if windows-p
+      (expand-file-name "~/OneDrive - University of Bergen/archive/")))
+
+(defvar date-description-dir
+  (if windows-p
+      (expand-file-name (file-name-concat archive-dir "date-description/"))))
+
 (defvar texte-dir
   (if windows-p
       "c:/Users/jba054/OneDrive - University of Bergen/archive/txt-docs/"

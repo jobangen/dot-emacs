@@ -411,7 +411,7 @@ With numeric prefix arg DEC, decrement the integer by DEC amount."
 (org-link-set-parameters "arch" :follow #'myarchive-open)
 
 (defun myarchive-open (path)
-  (let ((fname (concat "/home/job/archive/date-description/" path "*")))
+  (let ((fname (concat date-description-dir path "*")))
     (find-file-other-window fname t)))
 
 ;; https://stackoverflow.com/questions/37038441/generate-a-random-5-letternumber-string-at-cursor-point-all-lower-case/37039205
