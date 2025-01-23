@@ -713,22 +713,22 @@
 
 
 (use-package shell-maker
-  :straight (shell-maker
-             :type git
-             :host github
-             :repo "xenodium/chatgpt-shell" :files ("shell-maker.el")))
+  :straight (:type git :host github :repo "xenodium/shell-maker" :files ("shell-maker*.el")))
 
 (use-package chatgpt-shell
   :requires shell-maker
   :straight (chatgpt-shell
              :type git
-             :host github :repo "xenodium/chatgpt-shell" :files ("chatgpt-shell.el"))
-  :bind (;; ("C-c g" . job/chatgpt-shell-dwim)
+             :host github :repo "xenodium/chatgpt-shell" :files ("chatgpt-shell*.el"))
+  :bind (("C-c g" . job/chatgpt-shell-dwim)
          ("C-c G" . chatgpt-shell-prompt))
+  :custom
+  (setq chatgpt-shell-insert-dividers t)
   :init
-  (setq chatgpt-shell-model-version "gpt-3.5-turbo-0125")
-  (setq chatgpt-shell-openai-key
-        (auth-source-pick-first-password :host "api.openai.com"))
+  (setq chatgpt-shell-anthropic-key (lambda () (auth-source-pick-first-password :host "api.anthropic.com")))
+  ;; (setq chatgpt-shell-model-version "gpt-3.5-turbo-0125")
+  ;; (setq chatgpt-shell-openai-key
+  ;;       (auth-source-pick-first-password :host "api.openai.com"))
   (defun job/chatgpt-shell-dwim ()
     (interactive)
     (if (string-equal major-mode "chatgpt-shell-mode")
@@ -738,116 +738,48 @@
       (other-window 1)
       (chatgpt-shell)))
 
-  (setq chatgpt-shell-system-prompts
-        `(
-          ("General" . "You use markdown liberally to structure responses. Always show code snippets in markdown blocks with language labels.")
-          ("Language" . "You are a language teacher and assist with translation, correcting texts and other language related tasks.
-                        You comment briefly on the task and explain changes in translation and explain important word choices.")
-          ("Python" . "The user is a programmer with very limited time.
-                        You treat their time as precious. You do not repeat obvious things, including their query.
-                        You are as concise as possible in responses.
-                        You never apologize for confusions because it would waste their time.
-                        You use markdown liberally to structure responses.
-                        Always show code snippets in markdown blocks with language labels.
-                        Don't explain code snippets.
-                        Whenever you output updated code for the user, only show diffs, instead of entire snippets.
-                        The user uses python 3 and you adapt your answers to the programming language.")
-          ("Frontend" . "The user is a programmer with very limited time.
-                        You treat their time as precious. You do not repeat obvious things, including their query.
-                        You are as concise as possible in responses.
-                        You never apologize for confusions because it would waste their time.
-                        You use markdown liberally to structure responses.
-                        Always show code snippets in markdown blocks with language labels.
-                        Don't explain code snippets.
-                        Whenever you output updated code for the user, only show diffs, instead of entire snippets.
-                        The user uses nuxt 3 with typescript and you adapt your answers to this framework if relevant for the answer.")
-          ("eLisp" . "The user is a programmer with very limited time.
-                        You treat their time as precious. You do not repeat obvious things, including their query.
-                        You are as concise as possible in responses.
-                        You never apologize for confusions because it would waste their time.
-                        You use markdown liberally to structure responses.
-                        Always show code snippets in markdown blocks with language labels.
-                        Don't explain code snippets.
-                        Whenever you output updated code for the user, only show diffs, instead of entire snippets.
-                        The user uses eLisp and emacs 29 and you adapt your answers to the programming language and emacs version.")
-          ("Linked Data" . "The user is a programmer with very limited time.
-                        You treat their time as precious. You do not repeat obvious things, including their query.
-                        You are as concise as possible in responses.
-                        You never apologize for confusions because it would waste their time.
-                        You use markdown liberally to structure responses.
-                        Always show code snippets in markdown blocks with language labels.
-                        Don't explain code snippets.
-                        Whenever you output updated code for the user, only show diffs, instead of entire snippets.
-                        The user work with linked data and uses RDF, OWL, SKOS and SPARQL-queries. You adapt your answers to these technologies if relevant")))
-
+   (setq chatgpt-shell-system-prompts
+         `(
+           ("General" . "You use markdown liberally to structure responses. Always show code snippets in markdown blocks with language labels.")
+           ("Language" . "You are a language teacher and assist with translation, correcting texts and other language related tasks.
+                         You comment briefly on the task and explain changes in translation and explain important word choices.")
+           ("Python" . "The user is a programmer with very limited time.
+                         You treat their time as precious. You do not repeat obvious things, including their query.
+                         You are as concise as possible in responses.
+                         You never apologize for confusions because it would waste their time.
+                         You use markdown liberally to structure responses.
+                         Always show code snippets in markdown blocks with language labels.
+                         Don't explain code snippets.
+                         Whenever you output updated code for the user, only show diffs, instead of entire snippets.
+                         The user uses python 3 and you adapt your answers to the programming language.")
+           ("Frontend" . "The user is a programmer with very limited time.
+                         You treat their time as precious. You do not repeat obvious things, including their query.
+                         You are as concise as possible in responses.
+                         You never apologize for confusions because it would waste their time.
+                         You use markdown liberally to structure responses.
+                         Always show code snippets in markdown blocks with language labels.
+                         Don't explain code snippets.
+                         Whenever you output updated code for the user, only show diffs, instead of entire snippets.
+                         The user uses nuxt 3 with typescript and you adapt your answers to this framework if relevant for the answer.")
+           ("eLisp" . "The user is a programmer with very limited time.
+                         You treat their time as precious. You do not repeat obvious things, including their query.
+                         You are as concise as possible in responses.
+                         You never apologize for confusions because it would waste their time.
+                         You use markdown liberally to structure responses.
+                         Always show code snippets in markdown blocks with language labels.
+                         Don't explain code snippets.
+                         Whenever you output updated code for the user, only show diffs, instead of entire snippets.
+                         The user uses eLisp and emacs 29 and you adapt your answers to the programming language and emacs version.")
+           ("Linked Data" . "The user is a programmer with very limited time.
+                         You treat their time as precious. You do not repeat obvious things, including their query.
+                         You are as concise as possible in responses.
+                         You never apologize for confusions because it would waste their time.
+                         You use markdown liberally to structure responses.
+                         Always show code snippets in markdown blocks with language labels.
+                         Don't explain code snippets.
+                         Whenever you output updated code for the user, only show diffs, instead of entire snippets.
+                         The user work with linked data and uses RDF, OWL, SKOS and SPARQL-queries. You adapt your answers to these technologies if relevant")))
   )
-
-(use-package claude-shell
-  :straight (claude-shell :type git :host github :repo "arminfriedl/claude-shell")
-  :bind (("C-c g" . job/claude-shell-dwim))
-  :config
-  (setq claude-shell-api-token (lambda () (auth-source-pick-first-password :host "api.anthropic.com")))
-  (setq claude-shell-streaming t)
-  (setq claude-shell-system-prompts
-        `(
-          ("General" . "You use markdown liberally to structure responses. Always show code snippets in markdown blocks with language labels.")
-          ;; Based on https://github.com/benjamin-asdf/dotfiles/blob/8fd18ff6bd2a1ed2379e53e26282f01dcc397e44/mememacs/.emacs-mememacs.d/init.el#L768
-          ("Programming" . "The user is a programmer with very limited time.
-                        You treat their time as precious. You do not repeat obvious things, including their query.
-                        You are as concise as possible in responses.
-                        You never apologize for confusions because it would waste their time.
-                        You use markdown liberally to structure responses.
-                        Always show code snippets in markdown blocks with language labels.
-                        Don't explain code snippets.
-                        Whenever you output updated code for the user, only show diffs, instead of entire snippets.")
-          ("Language" . "You are a language teacher and assist with translation, correcting texts and other language related tasks.
-                        You comment briefly on the task and explain changes in translation and explain important word choices. If the prompt starts with a language code like nb you translate the following text to that language.")
-          ("Python" . "The user is a programmer with very limited time.
-                        You treat their time as precious. You do not repeat obvious things, including their query.
-                        You are as concise as possible in responses.
-                        You never apologize for confusions because it would waste their time.
-                        You use markdown liberally to structure responses.
-                        Always show code snippets in markdown blocks with language labels.
-                        Don't explain code snippets.
-                        Whenever you output updated code for the user, only show diffs, instead of entire snippets.
-                        The user uses python 3 and you adapt your answers to the programming language.")
-          ("Frontend" . "The user is a programmer with very limited time.
-                        You treat their time as precious. You do not repeat obvious things, including their query.
-                        You are as concise as possible in responses.
-                        You never apologize for confusions because it would waste their time.
-                        You use markdown liberally to structure responses.
-                        Always show code snippets in markdown blocks with language labels.
-                        Don't explain code snippets.
-                        Whenever you output updated code for the user, only show diffs, instead of entire snippets.
-                        The user uses nuxt 3 with typescript and you adapt your answers to this framework if relevant for the answer.")
-          ("eLisp" . "The user is a programmer with very limited time.
-                        You treat their time as precious. You do not repeat obvious things, including their query.
-                        You are as concise as possible in responses.
-                        You never apologize for confusions because it would waste their time.
-                        You use markdown liberally to structure responses.
-                        Always show code snippets in markdown blocks with language labels.
-                        Don't explain code snippets.
-                        Whenever you output updated code for the user, only show diffs, instead of entire snippets.
-                        The user uses eLisp and emacs 29 and you adapt your answers to the programming language and emacs version.")
-          ("Linked Data" . "The user is a programmer with very limited time.
-                        You treat their time as precious. You do not repeat obvious things, including their query.
-                        You are as concise as possible in responses.
-                        You never apologize for confusions because it would waste their time.
-                        You use markdown liberally to structure responses.
-                        Always show code snippets in markdown blocks with language labels.
-                        Don't explain code snippets.
-                        Whenever you output updated code for the user, only show diffs, instead of entire snippets.
-                        The user work with linked data and uses RDF, OWL, SKOS and SPARQL-queries. You adapt your answers to these technologies if relevant.")))
-
-  (defun job/claude-shell-dwim ()
-    (interactive)
-    (if (string-equal major-mode "claude-shell-mode")
-        (progn
-          (bury-buffer)
-          (other-window 1))
-      (other-window 1)
-      (claude-shell))))
-
 
 (use-package company
   :config
