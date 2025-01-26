@@ -735,8 +735,10 @@
         (progn
           (bury-buffer)
           (other-window 1))
-      (other-window 1)
-      (chatgpt-shell)))
+      (if (use-region-p)
+          (chatgpt-shell-prompt-compose t)
+        (other-window 1)
+        (chatgpt-shell))))
 
    (setq chatgpt-shell-system-prompts
          `(
