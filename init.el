@@ -2070,8 +2070,8 @@ of a BibTeX field into the template. Fork."
   :commands magit-list-repositories
   :init
   (if windows-p
-      (setq magit-repository-directories '((repos-dir . 2)
-                                           ((expand-file-name (user-emacs-directory)) . 1))))
+      (setq magit-repository-directories '((,repos-dir . 2)
+                                           (,(expand-file-name (user-emacs-directory)) . 1))))
   :config
   (setq magit-last-seen-setup-instructions "1.4.0")
   (setq magit-diff-refine-hunk 'all))
