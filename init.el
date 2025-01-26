@@ -618,7 +618,6 @@
   (setq bu-bibtex-fields-ignore-list '("")))
 
 (use-package blacken ;; python
-  :disabled
   :after elpy
   :hook (python-mode-hook . blacken-mode)
   )
