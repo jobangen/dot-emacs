@@ -80,11 +80,11 @@
 (setq use-package-verbose t)
 (setq use-package-enable-imenu-support t)
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/etc"))
+(add-to-list 'load-path (expand-file-name (concat user-emacs-directory "etc/")))
 
 (use-package diminish)
 
-(setq custom-file (expand-file-name "~/.emacs.d/custom.el"))
+(setq custom-file (expand-file-name (concat user-emacs-directory "custom.el")))
 (unless (file-exists-p custom-file)
   (write-region "" nil custom-file))
 (load custom-file)
@@ -102,13 +102,13 @@
 
 ;; Dir
 (defvar backup-dir
-  (expand-file-name (convert-standard-filename "backups/") user-emacs-directory))
+  (expand-file-name (concat user-emacs-directory "backups/")))
 
 (defvar autosave-dir
-   (expand-file-name (convert-standard-filename "autosave/")  user-emacs-directory))
+  (expand-file-name (concat user-emacs-directory "autosave/")))
 
 (defvar custom-temp
-   (expand-file-name "~/.custom-temp/"))
+  (expand-file-name "~/.custom-tmp/"))
 
 (defun job/custom-temp-file-name (file)
     (expand-file-name (convert-standard-filename file) custom-temp))
@@ -119,42 +119,52 @@
 
 (defvar date-description-dir
   (if windows-p
-      (expand-file-name (file-name-concat archive-dir "date-description/"))))
-
-(defvar texte-dir
-  (if windows-p
-      "c:/Users/jba054/OneDrive - University of Bergen/archive/txt-docs/"
-    (expand-file-name "~/archive/texts/")))
-
-(defvar dropbox-dir
-  (if windows-p
-      nil
-    (expand-file-name "~/Dropbox/")))
-
-(defvar db-dir
-  (expand-file-name (convert-standard-filename "db/") dropbox-dir))
-
-(setq org-directory
-      (if windows-p
-          ""
-        (expand-file-name (convert-standard-filename "db/org/") dropbox-dir)))
+      (expand-file-name (concat archive-dir "date-description/"))))
 
 (defvar zettel-dir
   (if windows-p
+      (expand-file-name (concat archive-dir "zettel/"))
       "O:/archive/proj/"
     (expand-file-name (convert-standard-filename "db/zk/zettel/") dropbox-dir)))
 
 (defvar zettel-txt-dir
   (if windows-p
-      "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/txt/"
+      (expand-file-name (concat zettel-dir "txt/"))
     (expand-file-name (convert-standard-filename "db/zk/zettel/txt/") dropbox-dir)))
+
+(defvar texte-dir
+  (if windows-p
+      (expand-file-name (concat archive-dir "txt-docs/"))
+    (expand-file-name "~/archive/texts/")))
+
+(defvar repos-dir
+  (if windows-p
+      (if frankonia-p
+          (expand-file-name "~/repos/")
+        (expand-file-name "~/src"))))
+
+;; Deprecated
+(defvar dropbox-dir
+  (if windows-p
+      nil
+    (expand-file-name "~/Dropbox/")))
+
+;; Deprecated
+(defvar db-dir
+  (expand-file-name (convert-standard-filename "db/") dropbox-dir))
+
+;; Deprecated
+(setq org-directory
+      (if windows-p
+          ""
+        (expand-file-name (convert-standard-filename "db/org/") dropbox-dir)))
+
 
 (use-package no-littering)
 
-
 (defvar job/bibliography-file
   (if windows-p
-      "c:/Users/jba054/src/bibliography/biblio.bib"
+      (expand-file-name (concat repos-dir "/bibliography/biblio.bib"))
     (expand-file-name (convert-standard-filename "db/biblio.bib") dropbox-dir)))
 
 (global-set-key (kbd "s-<tab>") 'other-window)
@@ -182,7 +192,7 @@
   :init
   (if windows-p
       (progn
-        (setq org-default-notes-file "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/2022-03-16-0946-inbox.org"))
+        (setq org-default-notes-file (expand-file-name (concat zettel-dir "2022-03-16-0946-inbox.org"))))
     (setq org-default-notes-file "inbox.org"))
   (setq org-agenda-time-grid '((daily today require-timed)
                                (800 1000 1200 1400 1600 1800 2000)
@@ -1901,7 +1911,7 @@ of a BibTeX field into the template. Fork."
   :config
   (if windows-p
       (progn
-        (setq ledger-binary-path "c:/Users/jba054/src/ledger.exe")
+        (setq ledger-binary-path (expand-file-name "~/src/ledger/ledger.exe"))
         (setq ledger-reconcile-default-commodity "NOK")
         (setq ledger-reports
               '(("Assets vs. Liabilities" "%(binary) -f \"c:/Users/jba054/OneDrive - University of Bergen/archive/ledger/main.ledger\" --decimal-comma bal -X NOK --real -d \"l<=5\" (Assets or Liabilities or Equity:Transfer:BrkToFelles) and not Felleskonto")
@@ -2060,8 +2070,8 @@ of a BibTeX field into the template. Fork."
   :commands magit-list-repositories
   :init
   (if windows-p
-      (setq magit-repository-directories '(("c:/Users/jba054/src" . 2)
-                                           ("c:/Users/jba054/.emacs.d" . 1))))
+      (setq magit-repository-directories '((repos-dir . 2)
+                                           ((expand-file-name (user-emacs-directory)) . 1))))
   :config
   (setq magit-last-seen-setup-instructions "1.4.0")
   (setq magit-diff-refine-hunk 'all))
@@ -2823,15 +2833,14 @@ tags:
   (if windows-p
       (progn
         (setq zettelkasten-db-emacsql-lib 'emacsql-sqlite-builtin)
-        (setq zettelkasten-main-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/")
-        (setq zettelkasten-zettel-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/zettel/")
+        (setq zettelkasten-zettel-directory zettel-dir)
         (setq zettelkasten-inbox-file (concat zettelkasten-zettel-directory "2022-03-16-0946-inbox.org"))
-        (setq zettelkasten-texts-directory "c:/Users/jba054/OneDrive - University of Bergen/archive/txt-docs/"))
+        (setq zettelkasten-texts-directory zettel-txt-dir))
     (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
     (setq zettelkasten-zettel-directory "/home/job/Dropbox/db/zk/zettel/")
     (setq zettelkasten-texts-directory "~/archive/texts/"))
 
-  (setq zettelkasten-temp-directory "~/.emacs.d/var/zettelkasten/")
+  (setq zettelkasten-temp-directory (expand-file-name (concat user-emacs-directory "var/zettelkasten/")))
   (setq zettelkasten-bibliography-file job/bibliography-file)
   (setq zettelkasten-db-update-method 'when-idle)
   (setq zettelkasten-org-agenda-integration t)
