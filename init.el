@@ -920,8 +920,9 @@
               (";" . dired-subtree-insert)
               ("i" . dired-subtree-remove)
               ("P" . peep-dired)
-              ("," .  job-dired-cp-mv-files-to-destinations))
-  :init
+              ("," . job-dired-cp-mv-files-to-destinations))
+  :config
+  (setq dired-compress-directory-default-suffix ".tgz")
   (setq dired-recursive-deletes 'always)
   (setq dired-recursive-copies 'always)
   (setq dired-dwim-target t)
@@ -929,8 +930,13 @@
         trash-directory "~/.local/share/Trash/files")
   (setq dired-listing-switches "--group-directories-first -alh1v")
   (put 'dired-find-alternate-file 'disabled nil)
-  (add-hook 'dired-after-readin-hook 'hl-line-mode)
-  )
+  (add-hook 'dired-after-readin-hook 'hl-line-mode))
+
+(use-package dired-aux
+  :straight nil
+  :config
+  (add-to-list 'dired-compress-files-alist '("\\.tgz\\'" . "tar -cf - %i | gzip -c9 > %o")))
+
 
 (use-package dired-collapse
   :disabled
