@@ -363,6 +363,7 @@
   :config
   (setq bibtex-dialect 'biblatex)
   (setq bibtex-maintain-sorted-entries t)
+  (setq bibtex-comment-start "%")
   (setq bibtex-autokey-year-use-crossref-entry t
         bibtex-autokey-year-length 10
         bibtex-autokey-year-title-separator "-"
