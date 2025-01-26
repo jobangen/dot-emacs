@@ -8,6 +8,9 @@
 (defvar windows-p
   (string= "windows-nt" system-type))
 
+(defvar frankonia-p
+  (string= "frankonia" system-name))
+
 ;;; Config
 (setq split-width-threshold 110)
 (setq split-height-threshold nil)
