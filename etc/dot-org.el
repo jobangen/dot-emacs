@@ -611,19 +611,20 @@ With a prefix ARG, remove start location."
   (setq org-publish-use-timestamps-flag nil)
   (setq org-publish-project-alist
         '(
+          ;; Publish org files to html folder
           ("innovati-notes"
-           :base-directory "/home/job/proj/2018-11-06 lilli-diss/org/"
+           :base-directory "~/src/innovati2/org/"
            :base-extension "org"
-           :publishing-directory "/home/job/proj/2018-11-06 lilli-diss/html/"
+           :publishing-directory "~/src/innovation2/html/"
            :recursive t
            :publishing-function org-html-publish-to-html
            :headline-levels 4     ; Just the default for this project.
            :auto-preamble t)
-
+          ;; Publish attachments etc. to html folder
           ("innovati-static"
-           :base-directory "/home/job/proj/2018-11-06 lilli-diss/org/"
+           :base-directory "~/src/innovation2/org/"
            :base-extension "css\\|js\\|png\\|jpg\\|gif\\|eps\\|pdf\\|mp3\\|ogg\\|swf\\|csv\\|txt\\|sh\\|py"
-           :publishing-directory "/home/job/proj/2018-11-06 lilli-diss/html/"
+           :publishing-directory (expand-file-name "~/src/innovati2/html/")
            :recursive t
            :publishing-function org-publish-attachment)
           ("innovati" :components ("innovati-notes" "innovati-static"))
