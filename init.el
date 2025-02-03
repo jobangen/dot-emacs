@@ -2915,6 +2915,7 @@ tags:
                 ("zktb:Review"))
                ("zktb:Book")
                ("zktb:InBook")
+               ("zktb:Ontology")
                ("zktb:Collection")
                ("zktb:Lexikon")
                ("zktb:InCollection")
@@ -3146,6 +3147,9 @@ tags:
           [nil "prov:wasRevisionOf" "prov:Entity" "prov:Entity" "prov:hadRevision"]
           [nil "prov:hadPrimarySource" "prov:Entity" "prov:Entity" "prov:wasPrimarySourceOf"]
           ;;
+          [nil "prov:specializationOf" "prov:Entity" "prov:Entity" "generalizationOf"]
+          [nil "prov:alternateOf" "prov:Entity" "prov:Entity" "prov:alternateOf"]
+          ;;
           [nil "prov:atLocation" "owl:Thing" "prov:Location" "prov:locationOf"]
           [nil "prov:wasMemberOf" "prov:Entity" "prov:Collection" "prov:hadMember"]
           ;; Qualified
@@ -3197,8 +3201,7 @@ tags:
     (if (equal major-mode 'org-mode)
         (org-open-at-point)))
 
-  (zettelkasten-update-org-agenda-files)
-  )
+  (zettelkasten-update-org-agenda-files))
 
 (use-package zettelkasten-ext
   :straight (zettelkasten-ext :type git
