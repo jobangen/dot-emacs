@@ -2919,6 +2919,7 @@ tags:
                ("zktb:Collection")
                ("zktb:Lexikon")
                ("zktb:InCollection")
+               ("zktb:InProceedings")
                ("zktb:Journal")
                ("zktb:Issue")
                ("zktb:Thesis")
