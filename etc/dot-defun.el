@@ -700,15 +700,23 @@ count."
   (interactive)
   (async-start-process "gitbash" "C:/Program Files/Git/git-bash.exe" nil))
 
+(defun job/start-windows-terminal ()
+  (interactive)
+  (async-start-process
+   "wt"
+   "C:/Program Files/WindowsApps/Microsoft.WindowsTerminal_1.21.10351.0_x64__8wekyb3d8bbwe/wt.exe"
+   nil
+   "-d" (replace-regexp-in-string "/" "\\" (expand-file-name default-directory) t t)))
+
 (defun job/create-new-dd-folder ()
   (interactive)
-  (find-file "c:/Users/jba054/OneDrive - University of Bergen/archive/date-description/2025")
+  (find-file (expand-file-name "~/OneDrive - University of Bergen/archive/date-description/2025"))
   (revert-buffer)
   (let* ((id-len 21)
-        (date (org-read-date))
-        (rand (job/random-string (- (- id-len 1) (length date))))
-        (desc (read-string "Folder name: ")))
-    (find-file "c:/Users/jba054/OneDrive - University of Bergen/archive/date-description/2025")
+         (date (org-read-date))
+         (rand (job/random-string (- (- id-len 1) (length date))))
+         (desc (read-string "Folder name: ")))
+    (find-file (expand-file-name "~/OneDrive - University of Bergen/archive/date-description/2025"))
     (dired-create-directory (concat date "-" rand "--" desc)))
   (revert-buffer))
 
