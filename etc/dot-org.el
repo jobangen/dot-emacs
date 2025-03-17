@@ -30,7 +30,7 @@
 (if linux-p
     (setq org-ellipsis "⬎")
   (setq org-ellipsis "..."))
-(setq org-hidden-keywords '(title))
+;; (setq org-hidden-keywords '(title))
 (setq org-hide-emphasis-markers t)
 ;; (font-lock-add-keywords 'org-mode
 ;;                         '(("^ *\\([-]\\) "
@@ -495,7 +495,7 @@ With a prefix ARG, remove start location."
   :defer 2
   :straight org
   :config
-  (setq org-latex-listings t)
+  (setq org-latex-src-block-backend t)
   (add-to-list 'org-latex-packages-alist '("" "booktabs" t))
   (add-to-list 'org-latex-packages-alist '("" "ellipsis" t))
   (add-to-list 'org-latex-packages-alist '("" "csquotes" t))
@@ -516,6 +516,18 @@ With a prefix ARG, remove start location."
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+
+  (add-to-list 'org-latex-classes
+               '("scrartcl"
+                 "\\RequirePackage[l2tabu, orthodox]{nag}
+          \\documentclass[DIV12, a4paper, 12pt]{scrartcl}
+         [NO-DEFAULT-PACKAGES]
+         [PACKAGES]
+         [EXTRA]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+
   (add-to-list 'org-latex-classes
                '("scrbook"
                  "\\RequirePackage[l2tabu, orthodox]{nag}
