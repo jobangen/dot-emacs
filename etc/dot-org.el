@@ -605,6 +605,13 @@ With a prefix ARG, remove start location."
       (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
     (setq org-reveal-root "file:///home/job/src/reveal.js")))
 
+(use-package org-review
+  :config
+  (add-hook 'org-agenda-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-c C-r")
+                             'org-review-insert-next-review))))
+
 (use-package ox-publish
   :straight
   :config
