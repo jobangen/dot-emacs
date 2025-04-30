@@ -704,7 +704,7 @@ count."
   (interactive)
   (async-start-process
    "wt"
-   "C:/Program Files/WindowsApps/Microsoft.WindowsTerminal_1.22.10731.0_x64__8wekyb3d8bbwe/wt.exe"
+   "C:/Program Files/WindowsApps/Microsoft.WindowsTerminal_1.22.11141.0_x64__8wekyb3d8bbwe/wt.exe"
    nil
    "-d" (replace-regexp-in-string "/" "\\" (expand-file-name default-directory) t t)))
 
