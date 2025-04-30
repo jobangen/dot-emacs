@@ -3319,6 +3319,18 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
   (setq split-width-threshold 160)
   (job/set-face-attr-height 145))
 
+(use-package aidermacs
+  :straight (aidermacs :type git
+                       :host github
+                       :repo "MatthewZMD/aidermacs")
+
+
+  :config
+  (setq aidermacs-default-model "sonnet")
+  (add-hook 'aidermacs-before-run-backend-hook
+            (lambda ()
+              (setenv "ANTHROPIC_API_KEY" (auth-source-pick-first-password :host "api.anthropic.com")))))
+
 
 (unless windows-p
   (setq initial-buffer-choice
