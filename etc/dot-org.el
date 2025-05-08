@@ -38,13 +38,11 @@
 
 
 (use-package org-superstar
-  :unless windows-p
   :hook (org-mode . org-superstar-mode)
   :config
-  (setq org-superstar-headline-bullets-list '("°"))
+  (setq org-superstar-headline-bullets-list '("•"))
   (setq org-superstar-cycle-headline-bullets nil)
-  (setq org-superstar-leading-bullet "°")
-  )
+  (setq org-superstar-leading-bullet "◦"))
 
 ;;; refile
 (setq org-outline-path-complete-in-steps nil)
@@ -634,7 +632,7 @@ With a prefix ARG, remove start location."
           ("innovati-notes"
            :base-directory "~/src/innovati2/org/"
            :base-extension "org"
-           :publishing-directory "~/src/innovation2/html/"
+           :publishing-directory "~/src/innovati2/html/"
            :recursive t
            :publishing-function org-html-publish-to-html
            :headline-levels 4     ; Just the default for this project.
