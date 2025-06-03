@@ -447,9 +447,10 @@ With a prefix ARG, remove start location."
 (unless windows-p
   (org-babel-lob-ingest "/home/job/proj/2018-11-06 lilli-diss/org/variablen.org")
   (org-babel-lob-ingest "/home/job/proj/2018-11-06 lilli-diss/org/forschungsfragen.org"))
-(when windows-p
-  (org-babel-lob-ingest "~/src/innovation2/org/variablen.org")
-  (org-babel-lob-ingest "~/src/innovation2/org/forschungsfragen.org"))
+;; (when windows-p
+;;   (org-babel-lob-ingest "~/src/innovation2/org/variablen.org")
+;;   (org-babel-lob-ingest "~/src/innovation2/org/forschungsfragen.org")
+;;   )
 
 (setq org-babel-default-header-args:python '((:noweb . "yes")
                                              (:results . "output wrap")))
