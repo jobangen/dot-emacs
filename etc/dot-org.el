@@ -40,9 +40,9 @@
 (use-package org-superstar
   :hook (org-mode . org-superstar-mode)
   :config
-  (setq org-superstar-headline-bullets-list '("•"))
+  (setq org-superstar-headline-bullets-list '("●"))
   (setq org-superstar-cycle-headline-bullets nil)
-  (setq org-superstar-leading-bullet "◦"))
+  (setq org-superstar-leading-bullet "●"))
 
 ;;; refile
 (setq org-outline-path-complete-in-steps nil)
@@ -311,7 +311,7 @@
   (setq org-journal-file-type 'daily)
   (if linux-p
       (setq org-journal-dir "~/Dropbox/db/zk/zettel/jr/")
-    (setq org-journal-dir "~/OneDrive - University of Bergen/archive/zettel/jr/"))
+    (setq org-journal-dir "~/OneDrive - University of Bergen/archive/zk/zettel/jr/"))
   (setq org-journal-file-format "%Y-%m-%d.org")
   (setq org-journal-date-format "%Y-%m-%d, %A")
   (setq org-journal-enable-agenda-integration nil)
