@@ -50,12 +50,12 @@
 (setq org-refile-allow-creating-parent-nodes (quote confirm))
 (if windows-p
     (setq org-refile-targets
-          '((("~/OneDrive - University of Bergen/archive/zettel/2022-03-07-1153-termportalen.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
-            (("~/OneDrive - University of Bergen/archive/zettel/2022-03-09-1112-position-systemutviklar-uib.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\)")
-            (("~/OneDrive - University of Bergen/archive/zettel/2022-07-22-1008-emacs.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
-            (("~/OneDrive - University of Bergen/archive/zettel/2022-03-16-0946-inbox.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
-            (("~/OneDrive - University of Bergen/archive/zettel/2023-03-14-0934-marcus-next.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
-            (("~/OneDrive - University of Bergen/archive/zettel/2024-11-18-0908-project-clarino.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
+          `((,(concat zettel-dir "2022-03-07-1153-termportalen.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
+            (,(concat zettel-dir "2022-03-09-1112-position-systemutviklar-uib.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\)")
+            (,(concat zettel-dir "2022-07-22-1008-emacs.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
+            (,(concat zettel-dir "2022-03-16-0946-inbox.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
+            (,(concat zettel-dir "2023-03-14-0934-marcus-next.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
+            (,(concat zettel-dir "2024-11-18-0908-project-clarino.org") :regexp . "\\(?:Notes\\|Tasks\\|refilet\\|proj\\|issue\\)")
 ))
   (setq org-refile-targets
         '((("~/Dropbox/db/org/pers.org") :maxlevel . 3)
