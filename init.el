@@ -1860,6 +1860,15 @@ of a BibTeX field into the template. Fork."
   :config
   (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
 
+;;; J
+(use-package just-mode)
+
+(use-package justl
+  :ensure t
+  :custom
+  (justl-executable "~/src/just/just.exe"))
+
+
 
 
 ;;; K
