@@ -8,7 +8,7 @@ more...")
       ;; tufte palette colors
       (tufte-bg "#fbf8f0")
       (tufte-hl-bg "#a5d9e2")
-      (tufte-fg "#272727")
+      (tufte-fg "#333333")
       ;; #191919
       (tufte-vlight "#b4b4b4")
       (tufte-light "grey50")
@@ -27,7 +27,7 @@ more...")
       (diff-removed '(:foreground "#840000" :background "#ffd2d2"))
       (directory '(:foreground "blue"))
       (highlight-line '(:background "#FFFFD7")) ; #F5F5F5
-      (link '(:weight normal :underline t :foreground "#001efd"))
+      (link '(:weight normal :underline t :foreground "#0019d4"))
       (mail-header-name '(:weight bold :foreground "#A3A3A2"))
       (mail-header-other '(:slant normal :foreground "#666666"))
       (mail-read '(:weight normal :foreground "black"))
@@ -78,6 +78,9 @@ more...")
   `(variable-pitch ((,class (:family "EtBembo"))))
   `(fixed-pitch ((,class (:family "Inconsolata"))))
   `(hl-sentence-face ((,class (:foreground "#gray12"))))
+
+  ;;; ace window
+  `(aw-leading-char-face ((,class (:height 1.5 :foreground "red" :weight bold))))
 
 ;;; Mode line faces.
   `(mode-line ((,class (:box (:line-width 1 :color "#1A2F54") :foreground "#85CEEB" :background "#2F69BF"))))
@@ -180,9 +183,9 @@ more...")
   `(org-tag ((,class (:weight normal :foreground ,tufte-vlight)))) ;;Formatierung der tags
                                         ;   `(org-target ((,class (:foreground "#FF6DAF"))))
   `(org-time-grid ((,class (:foreground ,tufte-light))))
-  `(org-todo ((,class (:weight semi-bold :foreground "red"))))
-  `(org-superstar-leading ((,class (:foreground ,tufte-vlight))))
-  `(org-superstar-header-bullet ((,class :height 1.0)))
+  `(org-todo ((,class (:weight semi-bold :foreground "#DC143C"))))
+  `(org-superstar-leading ((,class (:height 0.8 :foreground "#cccccc"))))
+  `(org-superstar-header-bullet ((,class :height 0.8 :foreground "#666666")))
   `(org-ref-cite-face ((,class ,link)))
                                         ;   `(org-upcoming-deadline ((,class (:foreground "#FF5555"))))
                                         ;   `(org-verbatim ((,class (:foreground "#0066CC"))))
