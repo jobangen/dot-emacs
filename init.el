@@ -121,10 +121,14 @@
   (if windows-p
       (expand-file-name (concat archive-dir "date-description/"))))
 
+(defvar zettelkasten-dir
+  (if windows-p
+      (expand-file-name (concat archive-dir "zk/"))
+    (expand-file-name (convert-standard-filename "db/zk/") dropbox-dir)))
+
 (defvar zettel-dir
   (if windows-p
-      (expand-file-name (concat archive-dir "zettel/"))
-      "O:/archive/proj/"
+      (expand-file-name (concat archive-dir "zk/zettel/"))
     (expand-file-name (convert-standard-filename "db/zk/zettel/") dropbox-dir)))
 
 (defvar zettel-txt-dir
@@ -2861,7 +2865,8 @@ tags:
   (if windows-p
       (progn
         (setq zettelkasten-db-emacsql-lib 'emacsql-sqlite-builtin)
-        (setq zettelkasten-zettel-directory zettel-dir)
+        (setq zettelkasten-main-directory zettelkasten-dir)
+        (setq zettelkasten-zettel-directory (concat zettelkasten-main-directory "zettel/"))
         (setq zettelkasten-inbox-file (concat zettelkasten-zettel-directory "2022-03-16-0946-inbox.org"))
         (setq zettelkasten-texts-directory zettel-txt-dir))
     (setq zettelkasten-main-directory "~/Dropbox/db/zk/")
@@ -2870,7 +2875,7 @@ tags:
 
   (setq zettelkasten-temp-directory (expand-file-name (concat user-emacs-directory "var/zettelkasten/")))
   (setq zettelkasten-bibliography-file job/bibliography-file)
-  (setq zettelkasten-db-update-method 'when-idle)
+  (setq zettelkasten-db-update-method 'immediately-async)
   (setq zettelkasten-org-agenda-integration t)
   (setq zettelkasten-collection-predicate "prov:wasMemberOf")
   (setq zettelkasten-filename-to-id-func 'job/zettelkasten-fname-to-id)
@@ -2943,6 +2948,7 @@ tags:
                ("zktb:Book")
                ("zktb:InBook")
                ("zktb:Ontology")
+               ("zktb:MvCollection")
                ("zktb:Collection")
                ("zktb:Lexikon")
                ("zktb:InCollection")
@@ -2951,6 +2957,7 @@ tags:
                ("zktb:Issue")
                ("zktb:Thesis")
                ("zktb:ClassicalText")
+               ("zktb:Periodical")
                ("zktb:Report"))
               ("zkt:BibliographicEphemera"
                ("zkt:DocumentPart"         ;; paragraph etc
@@ -3174,12 +3181,14 @@ tags:
           [nil "prov:wasDerivedFrom" "prov:Entity" "prov:Entity" "prov:hadDerivation"]
           [nil "prov:wasRevisionOf" "prov:Entity" "prov:Entity" "prov:hadRevision"]
           [nil "prov:hadPrimarySource" "prov:Entity" "prov:Entity" "prov:wasPrimarySourceOf"]
+          [nil "prov:wasQuotedFrom" "prov:Entity" "prov:Entity" "prov:quotedAs"]
           ;;
           [nil "prov:specializationOf" "prov:Entity" "prov:Entity" "generalizationOf"]
           [nil "prov:alternateOf" "prov:Entity" "prov:Entity" "prov:alternateOf"]
           ;;
           [nil "prov:atLocation" "owl:Thing" "prov:Location" "prov:locationOf"]
           [nil "prov:wasMemberOf" "prov:Entity" "prov:Collection" "prov:hadMember"]
+          [nil "prov:hadMember" "prov:Collection" "prov:Entity" "prov:wasMemberOf"]
           ;; Qualified
           [nil "prov:qualifiedInfluence" "owl:Thing" "prov:Influence" nil]
           [nil "prov:qualifiedAssociation" "prov:Activity" "prov:Association" nil]
