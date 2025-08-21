@@ -1,4 +1,12 @@
 ;; -*- lexical-binding: t; -*-
+(if init-file-debug
+    (setq use-package-verbose t
+          use-package-expand-minimally nil
+          use-package-compute-statistics t
+          debug-on-error t)
+  (setq use-package-verbose nil
+        use-package-expand-minimally t))
+
 (setq package-enable-at-startup nil)
 (server-start)
 
