@@ -738,7 +738,7 @@
 
 
 (use-package shell-maker
-  :straight (:type git :host github :repo "xenodium/shell-maker" :files ("shell-maker*.el")))
+  :straight (:type git :host github :repo "xenodium/shell-maker" :files ("shell-maker.el" "markdown-overlays.el")))
 
 (use-package chatgpt-shell
   :requires shell-maker
