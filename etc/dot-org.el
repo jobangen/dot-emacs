@@ -117,7 +117,7 @@
   :hook (org-mode . org-fancy-priorities-mode)
   :config
   (if windows-p
-      (setq org-fancy-priorities-list '("[A]" "[B]" "[C]" "[D]" "[E]"))
+      (setq org-fancy-priorities-list '("[A]" "[B]" "[C]" "[D]" "[E]", "[F]", "[G]"))
     (setq org-fancy-priorities-list '("𝍠" "𝍡" "𝍢" "𝍣" "𝍤"))))
 
 

@@ -500,8 +500,17 @@ _y_: ?y? year       _q_: quit          _L__l__c_: ?l?"
 ** Prioritäten
 #+begin_src emacs-lisp
 (setq org-highest-priority ?A)
-(setq org-default-priority ?D)
-(setq org-lowest-priority ?E)
+(setq org-default-priority ?E)
+(setq org-lowest-priority ?G)
+
+(setq org-priority-faces '((?A . (:foreground "red" :weight bold))
+                           (?B . (:foreground "orange red"))
+                           (?C . (:foreground "orange"))
+                           (?D . (:foreground "medium sea green"))
+                           (?E . (:foreground "steel blue"))
+                           (?F . (:foreground "slate gray"))
+                           (?G . ((:foreground "gray")))
+))
 #+end_src
 
 ** todo-states und -tags
