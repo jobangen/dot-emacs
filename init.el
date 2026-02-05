@@ -213,17 +213,22 @@
   (setq org-agenda-block-separator "")
 
   )
+
+(setq icons-dir (concat user-emacs-directory "icons/"))
+
 (if windows-p
     (setq org-agenda-category-icon-alist
-          '(("mobile" "/home/job/.emacs.d/icons/arrow-right-hollow-12.png" nil nil :ascent center)
-            ("inbox" "~/.emacs.d/icons/fast-forward-16.png" nil nil :ascent center)
+          `(("mobile" "/home/job/.emacs.d/icons/arrow-right-hollow-12.png" nil nil :ascent center)
+            ("inbox" ,(concat icons-dir "double-arrow-right.svg") nil nil :ascent center :mask heuristic)
             ("appt" "/home/job/.emacs.d/icons/appt-16.png" nil nil :ascent center)
             ("mail" "/home/job/.emacs.d/icons/mail-16.png" nil nil :ascent center)
             ("diss" "/home/job/.emacs.d/icons/phd-16.png" nil nil :ascent center)
-            ("wiss" "/home/job/.emacs.d/icons/search.png" nil nil :ascent center)
+            ("research" ,(concat icons-dir "search.svg") nil nil :ascent center)
             ("pers" "/home/job/.emacs.d/icons/user-16.png" nil nil :ascent center)
-            ("zkt" "/home/job/.emacs.d/icons/network-16.png" nil nil :ascent center)
-            ("arbeit" "~/.emacs.d/icons/briefcase-16.png" nil nil :ascent center)))
+            ("zkt" ,(concat icons-dir "network.svg") nil nil :ascent center)
+            ("work" ,(concat icons-dir "briefcase.svg") nil nil :ascent center)
+            ("emacs" ,(concat icons-dir "emacs.svg") nil nil :ascent center)
+            ))
   (setq org-agenda-category-icon-alist
         '(("mobile" "/home/job/.emacs.d/icons/arrow-right-hollow-12.png" nil nil :ascent center)
           ("inbox" "/home/job/.emacs.d/icons/arrow-right-hollow-12.png" nil nil :ascent center)
