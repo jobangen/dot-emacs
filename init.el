@@ -2828,34 +2828,6 @@ rotate entire document."
     (setq require-final-newline nil)))
 
 ;;; Z
-(use-package zetteldeft
-  :disabled
-  :straight (zetteldeft :type git
-                        :host github
-                        :repo "EFLS/zetteldeft")
-  :config
-  (setq zd-tag-regex "[#@]+[A-Za-z0-9:>-]+")
-  (setq zd-string-after-title
-        (concat "\n#+date: [" (format-time-string "%Y-%m-%d-%H%M") "]
-
-* Schlagwörter
-tags:
-
-* Inhalt
-
-* Literatur
-
-* Links & Files
-
-* Data"))
-
-  (defun job/zd-follow-loop ()
-    (interactive)
-    (goto-char (point-min))
-    (ignore-errors
-      (while t
-        (zetteldeft-follow-link)))))
-
 (use-package zettelkasten
   :straight (zettelkasten :type git
                           :host github

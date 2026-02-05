@@ -287,12 +287,6 @@
   (setq org-drill-add-random-noise-to-intervals-p t)
   (setq org-drill-adjust-intervals-for-early-and-late-repetitions-p t))
 
-(use-package org-el-cache
-  :disabled
-  :straight (org-el-cache :type git
-                          :host github
-                          :repo "l3kn/org-el-cache"))
-
 (use-package org-indent
    :straight org
    :load-path "~/.emacs.d/straight/repos/org/contrib/lisp"
