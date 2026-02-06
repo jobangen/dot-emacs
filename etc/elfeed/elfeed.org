@@ -122,6 +122,8 @@
 **** [[https://www.tandfonline.com/feed/rss/usui20][Archives of Suicide Research]]
 **** [[https://www.tandfonline.com/feed/rss/utis20][The Information Society]]
 **** [[https://www.tandfonline.com/feed/rss/yisr20][Interdisciplinary Science Reviews]]
+**** [[https://www.tandfonline.com/feed/rss/cjcr20][Journal of Contemporary Religion]]
+
 *** Cambridge
 **** [[https://www.cambridge.org/core/rss/product/id/38601D210B54555BDB22082CECA7B6CC][Religious Studies]]
 **** [[https://www.cambridge.org/core/rss/product/id/3D5C40349E588565CAD30F5A7E08F68F][Comparative Studies in Society and History]]
@@ -154,20 +156,18 @@
 **** [[https://onlinelibrary.wiley.com/feed/15338525/most-recent][The Sociological Quarterly]]
 **** [[https://onlinelibrary.wiley.com/feed/1467954x/most-recent][The Sociological Review]]
 **** [[https://onlinelibrary.wiley.com/feed/20597932/most-recent][The Sociological Review Monographs]]
-*** DeGruyter
-**** [[https://www.degruyter.com/journalnewarticlerss/journals/auk/auk-overview.xml][Analyse & Kritik]]
-**** [[https://www.degruyter.com/journalnewarticlerss/journals/fs/fs-overview.xml][Feministische Studien]]
-**** [[https://www.degruyter.com/journalnewarticlerss/journals/fjsb/fjsb-overview.xml][Forschungsjournal Soziale Bewegungen]]
-**** [[https://sciendo.com/backend/api/rss/journal/SCR][Social Change Review]]
+*** DeGruyter ;; De gruyter deactivated RSS feeds
+**** COMMENT [[https://www.degruyter.com/journalnewarticlerss/journals/auk/auk-overview.xml][Analyse & Kritik]]
+**** COMMENT [[https://www.degruyter.com/journalnewarticlerss/journals/fs/fs-overview.xml][Feministische Studien]]
+**** COMMENT [[https://www.degruyter.com/journalnewarticlerss/journals/fjsb/fjsb-overview.xml][Forschungsjournal Soziale Bewegungen]]
+**** COMMENT [[https://sciendo.com/backend/api/rss/journal/SCR][Social Change Review]]
 alter Link: https://content.sciendo.com/journalnewarticlerss/journals/scr/scr-overview.xml
-**** [[https://www.degruyter.com/journalnewarticlerss/journals/sosi/sosi-overview.xml][Sozialer Sinn]]
-**** [[https://www.degruyter.com/journalnewarticlerss/journals/sosys/sosys-overview.xml][Soziale Systeme]]
-**** [[https://www.degruyter.com/journalnewarticlerss/journals/srsr/srsr-overview.xml][Soziologische Revue]]
-**** [[https://sciendo.com/backend/api/rss/journal/SJS][Swiss Journal of Sociology]]
+**** COMMENT [[https://www.degruyter.com/journalnewarticlerss/journals/sosi/sosi-overview.xml][Sozialer Sinn]]
+**** COMMENT [[https://www.degruyter.com/journalnewarticlerss/journals/sosys/sosys-overview.xml][Soziale Systeme]]
+**** COMMENT [[https://www.degruyter.com/journalnewarticlerss/journals/srsr/srsr-overview.xml][Soziologische Revue]]
+**** COMMENT [[https://sciendo.com/backend/api/rss/journal/SJS][Swiss Journal of Sociology]]
 alter Link: https://content.sciendo.com/journalnewarticlerss/journals/sjs/sjs-overview.xml
-**** [[https://www.degruyter.com/journalnewarticlerss/journals/zksp/zksp-overview.xml][Zeitschrift für kritische Sozialtheorie und Philosophie]]
-**** [[https://www.degruyter.com/journalnewarticlerss/journals/zfrs/zfrs-overview.xml][Zeitschrift für Rechtssoziologie]]
-**** [[https://www.degruyter.com/journalnewarticlerss/journals/zsr/zsr-overview.xml][Zeitschrift für Sozialreform]]
-**** [[https://www.degruyter.com/journalnewarticlerss/journals/zfsoz/zfsoz-overview.xml][Zeitschrift für Soziologie]]
-*** T&F
-**** [[https://www.tandfonline.com/feed/rss/cjcr20][Journal of Contemporary Religion]]
+**** COMMENT [[https://www.degruyter.com/journalnewarticlerss/journals/zksp/zksp-overview.xml][Zeitschrift für kritische Sozialtheorie und Philosophie]]
+**** COMMENT [[https://www.degruyter.com/journalnewarticlerss/journals/zfrs/zfrs-overview.xml][Zeitschrift für Rechtssoziologie]]
+**** COMMENT [[https://www.degruyter.com/journalnewarticlerss/journals/zsr/zsr-overview.xml][Zeitschrift für Sozialreform]]
+**** COMMENT [[https://www.degruyter.com/journalnewarticlerss/journals/zfsoz/zfsoz-overview.xml][Zeitschrift für Soziologie]]
