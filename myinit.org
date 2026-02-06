@@ -158,38 +158,15 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
 ** shortcuts for major org-files
 [[https://github.com/baron42bba/.emacs.d/blob/master/bba.org#define-some-shortcuts-to-access-major-org-files][Define some shortcuts to access major org files.]]
 #+begin_src emacs-lisp
-(bind-key "C-c 0" '(lambda ()
+(bind-key "C-c 0" #'(lambda ()
                      (interactive)
                      (switch-to-buffer "*scratch*")))
-(bind-key "C-c 1" '(lambda ()
-                     (interactive)
-                     (find-file
-                      (concat org-directory "inbox.org"))))
-(bind-key "C-c 2" '(lambda ()
-                     (interactive)
-                     (find-file
-                      (concat org-directory "journal.org"))))
-(bind-key "C-c 3" '(lambda ()
-                     (interactive)
-                     (find-file
-                      (concat org-directory "pers.org"))))
-(bind-key "C-c 4" '(lambda ()
-                     (interactive)
-                     (find-file
-                      (concat org-directory "wiss.org"))))
-(bind-key "C-c 5" '(lambda ()
-                     (interactive)
-                     (find-file
-                      (concat org-directory "irw.org"))))
-(bind-key "C-c 9" '(lambda ()
-                     (interactive)
-                     (find-file zettel-dir)))
 #+end_src
 
 ** agenda
 #+begin_src emacs-lisp
 ;; Aktuelle Zeile in der Agenda hervorheben
-(add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1 ))) ;; lieber ins theme?
+(add-hook 'org-agenda-mode-hook #'(lambda () (hl-line-mode 1 ))) ;; lieber ins theme?
 
 ;;(setq org-agenda-dim-blocked-tasks t)
 (setq org-agenda-dim-blocked-tasks nil) ;; soll schneller sein
