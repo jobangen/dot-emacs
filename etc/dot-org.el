@@ -608,7 +608,7 @@ With a prefix ARG, remove start location."
   :config
   (if windows-p
       (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
-    (setq org-reveal-root "file:///home/job/src/reveal.js")))
+    (setq org-reveal-root "file:///home/job/repos/reveal.js")))
 
 (use-package org-review
   :config
