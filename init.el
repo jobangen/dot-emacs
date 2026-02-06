@@ -153,7 +153,7 @@
   (if windows-p
       (if frankonia-p
           (expand-file-name "~/repos/")
-        (expand-file-name "~/src"))))
+        (expand-file-name "~/repos"))))
 
 ;; Deprecated
 (defvar dropbox-dir
