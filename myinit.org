@@ -222,15 +222,16 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
  
         ("t" "Today"
          (
-          (tags-todo "orgtaskoverview"
-                ((org-agenda-overriding-header (zettelkasten-task-overview-plot))
-                 (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
-                 (org-agenda-remove-tags t)
-                 ))
+          (tags-todo "overview"
+           ((org-agenda-overriding-header (zettelkasten-task-overview-wrapper))
+            (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
+            (org-agenda-remove-tags t)
+            ))
           (todo "NEXT"
                 ((org-agenda-overriding-header "Next Tasks:")
-                 (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
+                 (org-agenda-prefix-format " %i      %?-12t% s ")
                  (org-agenda-remove-tags t)
+                 (org-agenda-todo-keyword-format "")
                  ))
           (agenda ""
                   ((org-agenda-overriding-header "")
@@ -246,21 +247,9 @@ http://zeekat.nl/articles/making-emacs-work-for-me.html
                    ))
           (tags-todo "sticky"
                 ((org-agenda-overriding-header "Sticky Tasks:")
-                 (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
+                 (org-agenda-prefix-format " %i       %?-12t% s ")
                  (org-agenda-remove-tags t)
                  ))
-          (tags-todo (concat (format-time-string "-%YW%W")
-                             (format-time-string "-%YW")
-                             (format "%02d" (- (string-to-number (format-time-string "%W")) 1))
-                             (format-time-string "+{^%YW.*}")
-                             )
-                     ((org-agenda-overriding-header "This Year's Tasks:")
-                      (org-agenda-remove-tags t)
-                      (org-agenda-prefix-format " %i       %?-12t% s [%e] ")
-                      (org-agenda-skip-function
-                       '(org-agenda-skip-entry-if 'todo '("NEXT")))
-                      )
-                     )
           ))
         ("w" "Tasks with"
          ((todo "TODO"
