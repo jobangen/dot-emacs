@@ -263,6 +263,7 @@
                                         :files ("*.el")))
 
 (emacsql-fix-vector-indentation)
+(use-package async)
 (use-package flyspell-correct-ivy :after (flyspell-correct ivy flyspell))
 (use-package git-timemachine :disabled      :defer t)
 (use-package goldendict :disabled           :commands goldendict-dwim)
@@ -279,6 +280,8 @@
 (use-package ttl-mode             :defer t)
 (use-package wgrep                :defer 3)
 (use-package ob-mermaid)
+(use-package rg                   :defer t)
+
 
 (org-babel-load-file "~/.emacs.d/myinit.org")
 
