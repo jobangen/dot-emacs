@@ -2838,18 +2838,8 @@ rotate entire document."
                           :files ("*.el"))
   :commands zettelkasten-insert-link-at-point
   :bind (("C->" . zettelkasten-open-backlink)
-         ;; :map org-mode-map
-         ;; ("C-c C-w" . zettelkasten-org-refile-wrapper)
          )
   :init
-  (defun zettelkasten-org-refile-wrapper (&optional arg)
-    (interactive "P")
-    (if (s-starts-with?
-         zettelkasten-zettel-directory
-         (buffer-file-name))
-        (zettelkasten-refile arg)
-      (org-refile arg)))
-
   (if windows-p
       (progn
         (setq zettelkasten-db-emacsql-lib 'emacsql-sqlite-builtin)
@@ -2864,22 +2854,16 @@ rotate entire document."
   (setq zettelkasten-temp-directory (expand-file-name (concat user-emacs-directory "var/zettelkasten/")))
   (setq zettelkasten-bibliography-file job/bibliography-file)
   (setq zettelkasten-db-update-method 'immediately-async)
+  ;; (setq zettelkasten-db-update-method 'immediately)
   (setq zettelkasten-org-agenda-integration t)
   (setq zettelkasten-collection-predicate "prov:wasMemberOf")
-  (setq zettelkasten-filename-to-id-func 'job/zettelkasten-fname-to-id)
+  (setq zettelkasten-subject-predicate "skos:subject")
 
-  (defun job/zettelkasten-fname-to-id (filename)
-    (cond ((s-prefix? "txt" filename)
-           (s-chop-prefix "txt/" filename))
-          ((s-prefix? "jr" filename)
-           (s-chop-prefix "jr/" filename))
-          ((s-prefix? "rdf" filename)
-           (s-chop-prefix "rdf/" filename))
-          ((s-prefix? "eph" filename)
-           (s-left 15 (s-chop-prefix "eph/" filename)))
-          (t (s-left
-              (length (format-time-string zettelkasten-file-id-format))
-              filename))))
+  (setq zettelkasten-link-icon-overlays
+        `(("zkt:hasBranch" . ,(concat icons-dir "arrow-down-right.svg"))
+          ;; ("zkt:crossreferences" . "×")
+          ;; ("dct:isPartOf". "^")
+          ))
 
   (defun org-add-invalidated-property ()
     (when (or (string= (org-get-todo-state) "DONE")
@@ -2935,6 +2919,7 @@ rotate entire document."
                 ("zktb:Review"))
                ("zktb:Book")
                ("zktb:InBook")
+               ("zktb:MvBook")
                ("zktb:Ontology")
                ("zktb:MvCollection")
                ("zktb:Collection")
@@ -3121,8 +3106,7 @@ rotate entire document."
               ("zkt:hadQualia")
               ("zkt:dosage")
               ("prov:entity")
-              ("prov:agent")
-              ))
+              ("prov:agent")))
 
   (setq zettelkasten-db-predicate-data
         '([nil "rdf:type" nil "owl:Class" "zkr:isInstanceOf"]
