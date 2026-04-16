@@ -756,7 +756,9 @@
   :bind (("C-c g" . job/chatgpt-shell-dwim)
          ("C-c G" . chatgpt-shell-prompt))
   :custom
-  (setq chatgpt-shell-insert-dividers t)
+  (chatgpt-shell-insert-dividers t)
+  (chatgpt-shell-streaming nil)
+  (chatgpt-shell-model-version "claude-sonnet-4-5")
   :init
   (setq chatgpt-shell-anthropic-key (lambda () (auth-source-pick-first-password :host "api.anthropic.com")))
   ;; (setq chatgpt-shell-model-version "gpt-3.5-turbo-0125")
