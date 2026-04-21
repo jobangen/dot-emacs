@@ -702,10 +702,12 @@ count."
 
 (defun job/start-windows-terminal ()
   (interactive)
-  (async-start-process
-   "wt"
-   "C:/Program Files/WindowsApps/Microsoft.WindowsTerminal_1.22.11141.0_x64__8wekyb3d8bbwe/wt.exe"
+  (call-process
+   "cmd"
    nil
+   0
+   nil
+   "/c" "start" "wt"
    "-d" (replace-regexp-in-string "/" "\\" (expand-file-name default-directory) t t)))
 
 (defun job/create-new-dd-folder ()
