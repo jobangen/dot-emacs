@@ -710,13 +710,13 @@ count."
 
 (defun job/create-new-dd-folder ()
   (interactive)
-  (find-file (expand-file-name "~/OneDrive - University of Bergen/archive/date-description/2025"))
+  (find-file (expand-file-name "~/OneDrive - University of Bergen/archive/date-description/2026"))
   (revert-buffer)
   (let* ((id-len 21)
          (date (org-read-date))
          (rand (job/random-string (- (- id-len 1) (length date))))
          (desc (read-string "Folder name: ")))
-    (find-file (expand-file-name "~/OneDrive - University of Bergen/archive/date-description/2025"))
+    (find-file (expand-file-name "~/OneDrive - University of Bergen/archive/date-description/2026"))
     (dired-create-directory (concat date "-" rand "--" desc)))
   (revert-buffer))
 
