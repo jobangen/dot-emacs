@@ -330,8 +330,7 @@
 
 (use-package avy
   :bind (("M-s" . avy-goto-char-timer)
-         ("M-j". avy-goto-char-timer)
-         )
+         ("M-j". avy-goto-line))
   :config
   (defun avy-action-org-todo (pt)
     (save-excursion
